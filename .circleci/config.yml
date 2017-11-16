@@ -9,7 +9,7 @@ jobs:
     environment:
       TEST_RESULTS: /tmp/test-results
     steps:
-     - run:
+    - run:
      name: Start container and verify it's working
      command: |
         set -x
