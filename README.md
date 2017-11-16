@@ -1,5 +1,7 @@
 # Picili
 
+[build]: https://circleci.com/gh/samthomson/picili.svg?&style=shield
+
 ## phpmyadmin container
 
 http://localhost:8080
