@@ -1,0 +1,3 @@
+{
+    "eslint.validate": [ "javascript", "html", { "language": "html", "autoFix": true } ]
+}

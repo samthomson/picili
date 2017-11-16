@@ -1,0 +1,138 @@
+version: '2'
+services:
+  applications:
+    build: 
+      context: ./docker-containers/applications
+    volumes:
+      - ./www-workspace:/var/www:cached
+
+  workspace:
+    build:
+      context: ./docker-containers/workspace
+      args:
+        - TZ=${WORKSPACE_TIMEZONE}
+        - NODE_VERSION=${WORKSPACE_NODE_VERSION}
+    environment:
+      # app stuff
+      - DB_NAME=${DB_NAME}
+      - DB_NAME_TESTING=${DB_NAME_TESTING}
+      - DB_HOST=${MYSQL_HOST}
+      - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - APP_KEY=${APP_KEY}
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+      - ELASTICSEARCH_INDEX=${ELASTICSEARCH_INDEX}
+      - ELASTICSEARCH_INDEX_TESTING=${ELASTICSEARCH_INDEX_TESTING}
+      - SEARCH_CONFIDENCE_THRESHOLD=${SEARCH_CONFIDENCE_THRESHOLD}
+      # auto stuff
+      - API_GOOGLE_ELEVATION_KEY=${API_GOOGLE_ELEVATION_KEY}
+      - API_OPEN_CAGE_KEY=${API_OPEN_CAGE_KEY}
+      - AWS_KEY=${AWS_KEY}
+      - AWS_SECRET=${AWS_SECRET}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_BUCKET_NAME=${AWS_BUCKET_NAME}
+      - AWS_BUCKET_NAME_TESTING=${AWS_BUCKET_NAME_TESTING}
+      - API_IMAGGA_KEY=${API_IMAGGA_KEY}
+      - API_IMAGGA_SECRET=${API_IMAGGA_SECRET}
+    volumes_from:
+      - applications
+    ports:
+      - "4200:4200"
+    depends_on: [mysql, applications]
+
+  php-fpm:
+    build:
+      context: ./docker-containers/php-fpm
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=${MYSQL_HOST}
+      - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - DB_PORT=${MYSQL_PORT}
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_USER=${MYSQL_USER}
+      - DB_NAME_TESTING=${DB_NAME_TESTING}
+      - APP_KEY=${APP_KEY}
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+      - ELASTICSEARCH_INDEX=${ELASTICSEARCH_INDEX}
+      - ELASTICSEARCH_INDEX_TESTING=${ELASTICSEARCH_INDEX_TESTING}
+      - SEARCH_CONFIDENCE_THRESHOLD=${SEARCH_CONFIDENCE_THRESHOLD}
+    volumes_from:
+      - applications
+    expose:
+      - "9000"
+
+  nginx:
+      build:
+          context: ./docker-containers/nginx
+          args:
+          - PHP_UPSTREAM=php-fpm
+      volumes_from:
+          - applications
+      volumes:
+          - ./docker-containers/nginx/sites:/etc/nginx/sites-available
+      ports:
+          - "80:80"
+          - "443:443"
+      depends_on: [php-fpm, mysql]
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+    volumes:
+      - mysqldata:/var/lib/mysql
+
+  phpmyadmin:
+    build: ./docker-containers/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - MYSQL_USER=${PMA_USER}
+      - MYSQL_PASSWORD=${PMA_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${PMA_ROOT_PASSWORD}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "mysql"
+
+  elasticsearch:
+    build: ./docker-containers/elasticsearch
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+      - elasticsearch-plugins:/usr/share/elasticsearch/plugins
+    environment:
+      - cluster.name=laradock-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 1024m
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    depends_on:
+      - php-fpm
+
+  kibana:
+    image: kibana:5.4.1
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+
+### Volumes Setup ###
+
+volumes:
+  phpmyadmin:
+    driver: "local"
+  mysqldata:
+    driver: "local"
+  elasticsearch-data:
+    driver: "local"
+  elasticsearch-plugins:
+    driver: "local"

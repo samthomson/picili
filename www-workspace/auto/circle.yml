@@ -1,0 +1,8 @@
+machine:
+  php:
+    version: 7.0.4
+    
+dependencies:
+  pre:
+    - pecl install mongo
+    - composer require jenssegers/mongodb --ignore-platform-reqs

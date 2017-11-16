@@ -1,0 +1,37 @@
+<div #bothContainersWidth id="map-results-container">
+	<div id="map-container" [style.width]="iMapWidth">
+		<sebm-google-map
+			[latitude]="0"
+			[longitude]="0"
+			[(zoom)]="zoom"
+			(boundsChange)="onBoundsChanged($event)"
+			(idle)="onMapIdle()"
+		>
+			<div *ngIf="aMapDots.length > 0">
+
+				<sebm-google-map-marker *ngFor="let oResult of aMapDots; let i = index"
+					[latitude]="oResult.lat"
+					[longitude]="oResult.lon"
+					[iconUrl]="'/assets/images/dot1_p.png'"
+					></sebm-google-map-marker>
+					
+			</div>
+			<div *ngIf="aMapIcons.length > 0">
+
+				<sebm-google-map-marker *ngFor="let oResult of aMapIcons; let i = index"
+					[latitude]="oResult.lat"
+					[longitude]="oResult.lon"
+					[iconUrl]="'https://s3-eu-west-1.amazonaws.com/picili-bucket/t/'+ gbl.sCurrentPageUsername +'/i'+oResult.id+'.jpg'"
+				></sebm-google-map-marker>
+			</div>
+		</sebm-google-map>
+
+	</div>
+	<div id="map-results" [style.width]="iResultsWidth">
+
+		<div *ngIf="!searchService.bHasSearchResults && !searchService.bSearching">
+			no results?
+		</div>
+		<app-result-grid [sDisplayMode]="'map'"></app-result-grid>
+	</div>
+</div>

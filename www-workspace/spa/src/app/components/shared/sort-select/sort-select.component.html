@@ -1,0 +1,19 @@
+
+<div class="ui tiny basic buttons" id="sort-menu" *ngIf="searchService.bHasSearchResults && searchService.mData.search.results.length > 1">
+    <div class="ui button" (click)="setSort('relevance')" [ngClass]="{'active': searchService.sCurrentSort === 'relevance'}" *ngIf="!searchService.bEmptyQuery()">
+        <i class="fa fa-sort-asc" aria-hidden="true"></i>
+        &nbsp;Relevance
+    </div>
+    <div class="ui button" (click)="setSort('date_desc')" [ngClass]="{'active': searchService.sCurrentSort === 'date_desc'}">
+        <i class="fa fa-sort-numeric-desc" aria-hidden="true"></i>
+        &nbsp;Latest
+    </div>
+    <div class="ui button" (click)="setSort('date_asc')" [ngClass]="{'active': searchService.sCurrentSort === 'date_asc'}">
+        <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
+        &nbsp;Oldest
+    </div>
+    <div class="ui button" (click)="setSort('shuffle')" [ngClass]="{'active': searchService.sCurrentSort === 'shuffle'}">
+        <i class="fa fa-random" aria-hidden="true"></i>
+        &nbsp;Shuffle
+    </div>
+</div>

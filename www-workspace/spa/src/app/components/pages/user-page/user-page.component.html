@@ -1,0 +1,168 @@
+
+<app-header></app-header>
+
+
+<div id="menu-search-container">
+    <div id="side-menu">
+        <app-side-menu></app-side-menu>
+    </div>
+    <div id="results-space">
+
+        <div id="search-bar-space" class="ui vertical segment">
+            <div class="ui icon input" id="search-input">
+                <input
+                    type="text"
+                    placeholder="search..."
+                    [(ngModel)]="searchService.mQuery.q"
+                    (ngModelChange)="eTextQueryChange($event)"
+                    (keydown)="keydown($event)"
+                    id="free-text-input"
+                >
+
+                <i class="search icon" *ngIf="bSearchServiceSearching && !searchService.bEmptyQuery()"></i>
+
+                <i class="remove link icon" *ngIf="!bSearchServiceSearching && !searchService.bEmptyQuery()" (click)="clearTextInput()"></i>
+            </div>
+        </div>
+
+        <div id="filters-block" class="ui vertical segment" [ngClass]="{'disabled': searchService.mQuery['filters'].length === 0}">
+
+            <div class="ui label" *ngFor="let filter of searchService.mQuery['filters']; let i = index">
+                <i class="fa" [ngClass]="{'fa-folder': filter['type'] === 'folder', 'fa-globe': filter['type'] === 'map', 'fa-calendar': filter['type'] === 'calendar'}"></i> {{filter['display']}}
+
+                <i class="fa fa-times pointer-link" aria-hidden="true" (click)="removeFilter(i)"></i>
+            </div>
+
+            <!---->
+            <button id="clear-filters" class="ui tiny basic button" *ngIf="searchService.mQuery['filters'].length > 0" (click)="clearFilters()">
+                <i class="fa fa-times pointer-link"></i>
+                Clear filters
+            </button>
+            
+        </div>
+
+
+
+
+        <div *ngIf="searchService.sSearchMode === 'default'">
+            home page?
+        </div>
+
+        <div *ngIf="searchService.sSearchMode === 'search' || searchService.sSearchMode === 'map'">
+            <div id="sort-block" class="ui vertical segment" [ngClass]="{'disabled': searchService.bHasSearchResults === false}">
+                <div *ngIf="searchService.bHasSearchResults" id="sort-info">
+                    showing 1 - {{searchService.mData.search.data.range_max | number}} of  {{searchService.mData.search.data.available | number}} results, <i class="fa fa-bolt" aria-hidden="true"></i> {{searchService.mData.search.data.speed}} ms
+                </div>
+
+                <app-sort-select></app-sort-select>
+            </div>
+        </div>
+
+        <div *ngIf="searchService.sSearchMode === 'calendar'">
+            <div class="ui basic tiny buttons">
+                <div class="ui tiny button" (click)="onSetCalendarSearchMode('day')" [ngClass]="{'active': searchService.sCalendarSearchMode === 'day'}">Day</div>
+                <div class="ui tiny button" (click)="onSetCalendarSearchMode('week')" [ngClass]="{'active': searchService.sCalendarSearchMode === 'week'}">Week</div>
+                <div class="ui tiny button" (click)="onSetCalendarSearchMode('month')" [ngClass]="{'active': searchService.sCalendarSearchMode === 'month'}">Month</div>
+                <!-- 25.4.17 - exclude from MVP
+                <div class="ui tiny button" (click)="onSetCalendarSearchMode('year')" [ngClass]="{'active': searchService.sCalendarSearchMode === 'year'}">Year</div>
+                -->
+            </div>
+            <!--{{searchService.mdDate}}-->
+            <div id="centered-calendar-header">
+            {{sCurrentHeaderDisplay}}
+            </div>
+
+            <div id="cal-sort-menu">
+                <button class="ui left labeled icon tiny basic button" (click)="onCalMove(-1)">
+                    <i class="left arrow icon"></i>
+                    Previous
+                </button>
+
+                <span class="ui large label">{{sCurrentDateDisplay}}<!--{{searchService.mdDate | calendarPeriod}}--></span>
+
+                <button class="ui right labeled icon tiny basic button" (click)="onCalMove(1)">
+                    <i class="right arrow icon"></i>
+                    Next
+                </button>
+            </div>
+        </div>
+
+        <!-- 22.4.17 - excluded from MVP (with '&& false' in next line) -->
+        <div *ngIf="searchService.sSearchMode === 'people' && false">
+            <div class="ui basic tiny buttons">
+                <div class="ui tiny button" (click)="setPeopleSearchGender('both')" [ngClass]="{'active': searchService.sPeopleSearchGender === 'both'}">
+                    <i class="fa fa-female" aria-hidden="true"></i> / <i class="fa fa-female" aria-hidden="true"></i>
+                </div>
+
+                <div class="ui tiny button" (click)="setPeopleSearchGender('male')" [ngClass]="{'active': searchService.sPeopleSearchGender === 'male'}"><i class="fa fa-male" aria-hidden="true"></i></div>
+
+                <div class="ui tiny button" (click)="setPeopleSearchGender('female')" [ngClass]="{'active': searchService.sPeopleSearchGender === 'female'}"><i class="fa fa-female" aria-hidden="true"></i></div>
+            </div>
+
+            <!-- HAPPY|SAD|ANGRY|CONFUSED|DISGUSTED|SURPRISED|CALM|UNKNOWN -->
+            <div class="ui basic tiny buttons">
+                <div class="ui tiny button" (click)="setPeopleSearchState('all')" [ngClass]="{'active': searchService.sPeopleSearchState === 'all'}">All</div>
+
+                <div class="ui tiny button" (click)="setPeopleSearchState('smiling')" [ngClass]="{'active': searchService.sPeopleSearchState === 'smiling'}"><i class="fa fa-smile-o" aria-hidden="true"></i></div>
+
+                <div class="ui tiny button" (click)="setPeopleSearchState('neutral')" [ngClass]="{'active': searchService.sPeopleSearchState === 'neutral'}"><i class="fa fa-meh-o" aria-hidden="true"></i></div>
+
+                <div class="ui tiny button" (click)="setPeopleSearchState('sad')" [ngClass]="{'active': searchService.sPeopleSearchState === 'sad'}"><i class="fa fa-frown-o" aria-hidden="true"></i></div>
+            </div>
+
+            <div class="ui basic tiny buttons">
+                <div class="ui tiny button" (click)="setPeopleSearchGrouping('any')" [ngClass]="{'active': searchService.sPeopleSearchGrouping === 'any'}">Any</div>
+
+                <div class="ui tiny button" (click)="setPeopleSearchGrouping('single')" [ngClass]="{'active': searchService.sPeopleSearchGrouping === 'single'}"><i class="fa fa-user" aria-hidden="true"></i></div>
+
+                <div class="ui tiny button" (click)="setPeopleSearchGrouping('group')" [ngClass]="{'active': searchService.sPeopleSearchGrouping === 'group'}"><i class="fa fa-users" aria-hidden="true"></i></div>
+            </div>
+
+            <!-- <div id="cal-sort-menu">
+                <button class="ui left labeled icon tiny basic button" (click)="onCalMove(-1)">
+                    <i class="left arrow icon"></i>
+                    Previous
+                </button>
+
+                <span class="ui large label">{{sCurrentDateDisplay}}</span>
+
+                <button class="ui right labeled icon tiny basic button" (click)="onCalMove(1)">
+                    <i class="right arrow icon"></i>
+                    Next
+                </button>
+            </div> -->
+        </div>
+
+
+
+        <div id="page-space">
+
+            <div *ngIf="searchService.sSearchMode === 'default'">
+                <h3 class="header">home</h3>
+                <p>display aggregations..</p>
+            </div>
+
+            <app-search *ngIf="searchService.sSearchMode === 'search' && searchService.mData"></app-search>
+
+            <app-folders *ngIf="searchService.sSearchMode === 'folders' && searchService.mData"></app-folders>
+
+            <app-map-page *ngIf="searchService.sSearchMode === 'map'"></app-map-page>
+
+            <app-calendar *ngIf="searchService.sSearchMode === 'calendar'"></app-calendar>
+
+            <!-- 25-4-17 disable these items for now, not making the MVP
+            <app-elevation *ngIf="searchService.sSearchMode === 'altitude'"></app-elevation>
+
+            <app-colour *ngIf="searchService.sSearchMode === 'colour'"></app-colour>
+
+            <app-people *ngIf="searchService.sSearchMode === 'people'"></app-people>
+            -->
+
+            <!--
+                return 'https://s3-eu-west-1.amazonaws.com/'.env('AWS_BUCKET').'/t/'.$iUserId.'/'.$sThumbSize.$iPiciliFileId.'.jpg';
+            -->
+        </div>
+
+    </div>
+</div>
+<app-lightbox id="lightbox" *ngIf="bLightboxOpen"></app-lightbox>

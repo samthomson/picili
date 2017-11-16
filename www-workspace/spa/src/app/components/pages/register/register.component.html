@@ -1,0 +1,67 @@
+
+<div class="ui middle aligned center aligned grid">
+    <div class="middle-form-column">
+        <h2 class="ui header">
+            <div class="content">
+                Register
+            </div>
+        </h2>
+        <form
+            class="ui large form"
+            (ngSubmit)="onRegisterSubmit(frmRegister)"
+            #frmRegister="ngForm"
+        >
+            <div class="ui stacked segment" [ngClass]="{'loading': bAttemptingRegister}">
+
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input
+                        type="text"
+                        name="username"
+                        placeholder="Username"
+                        [(ngModel)]="registerUsername"
+                        >
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input
+                        type="text"
+                        name="email"
+                        placeholder="Email"
+                        [(ngModel)]="registerEmail"
+                        >
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            [(ngModel)]="registerPassword"
+                        >
+                    </div>
+                </div>
+
+                <button [disabled]="bAttemptingRegister" type="submit" class="ui fluid large button primary submit">Register</button>
+            </div>
+
+            <div *ngIf="errors.length > 0" class="ui error message">
+                <ul>
+                    <li *ngFor="let error of errors">{{error}}</li>
+                </ul>
+            </div>
+
+        </form>
+
+        <div class="">
+            or <a class="picili-link" [routerLink]="['/login']">login</a>
+        </div>
+    </div>
+</div>

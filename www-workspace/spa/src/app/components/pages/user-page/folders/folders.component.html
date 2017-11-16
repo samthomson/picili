@@ -1,0 +1,22 @@
+<!-- folder list -->
+<div *ngIf="aFolders.length > 0">
+    <div *ngFor="let oFolder of aFolders">
+
+        <div class="ui piled segment folder-overview pointer-link" (click)="addFolder('folder', oFolder['name'])">
+            <h4 class="ui header">{{oFolder['parent']}}</h4>
+            <div>
+                <img class="folder-thumb" [src]="'https://s3-eu-west-1.amazonaws.com/picili-bucket/t/'+ gbl.sCurrentPageUsername +'/s'+ oFolder['file-id'] +'.jpg'" />
+            </div>
+            <div>
+                <span><i class="fa fa-picture-o" aria-hidden="true"></i> {{oFolder['count'] | number}} picture(s)</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- search results -->
+<div *ngIf="!searchService.bEmptyQuery() && aFolders.length === 0">
+    no results for your query..
+</div>
+<app-result-grid></app-result-grid>

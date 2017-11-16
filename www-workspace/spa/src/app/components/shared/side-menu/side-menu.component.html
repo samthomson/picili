@@ -1,0 +1,26 @@
+
+<ul>
+    <li>
+        <a
+        [routerLink] = "'/' + this.sCurrentPageUsername"
+        [queryParams]="searchService.getQVars()"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >
+            <i class="fa fa-home" aria-hidden="true"></i>
+            <span>Home</span>
+        </a>
+    </li>
+    <li *ngFor="let mMenuItem of maMenuItems">
+        <a
+        [routerLink] = "[ mMenuItem.link ]"
+        [queryParams]="searchService.getQVars()"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >
+            <i class="{{mMenuItem.icon}}" aria-hidden="true"></i>
+            <span>{{mMenuItem.name}}</span>
+        </a>
+    </li>
+
+</ul>

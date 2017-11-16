@@ -1,0 +1,52 @@
+<app-header [bEmpty]="true"></app-header>
+
+<div class="ui middle aligned center aligned grid">
+    <div class="middle-form-column">
+        <h2 class="ui header">
+            <div class="content">
+                Login
+            </div>
+        </h2>
+        <form
+            class="ui large form"
+            (ngSubmit)="onSubmit(f)"
+            #f="ngForm"
+        >
+            <div *ngIf="bLoginFailed" class="ui red segment">
+                <strong>{{error}}</strong>
+            </div>
+
+            <div class="ui stacked segment" [ngClass]="{'loading': bAttemptingLogin}">
+                <div class="field" [ngClass]="{'error': bLoginFailed}">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input
+                        type="text"
+                        name="email"
+                        placeholder="E-mail address"
+                        [(ngModel)]="loginEmail"
+                        >
+                    </div>
+                </div>
+                <div class="field" [ngClass]="{'error': bLoginFailed}">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            [(ngModel)]="loginPassword"
+                        >
+                    </div>
+                </div>
+
+                <button [disabled]="bAttemptingLogin" type="submit" class="ui fluid large button primary submit">Login</button>
+            </div>
+
+        </form>
+
+        <div class="">
+            or <a class="picili-link" [routerLink]="['/register']">register</a>
+        </div>
+    </div>
+</div>

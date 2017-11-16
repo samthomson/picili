@@ -1,0 +1,15 @@
+{
+  "name": "picili-auto-scaler",
+  "version": "1.0.0",
+  "description": "spin up auto processor instances based on throughput and demand",
+  "repository": "part of picili: https://github.com/samthomson/picili",
+  "main": "start.js",
+  "scripts": {
+    "start": "node start.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-cmd": "^3.0.0"
+  }
+}
