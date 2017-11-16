@@ -3,18 +3,15 @@ jobs:
   build:
     docker:
       # using custom image, see .circleci/images/primary/Dockerfile
-      - image: circleci/cci-demo-docker-primary:0.0.2
-      - image: phusion/baseimage:latest
-        
+     - image: circleci/cci-demo-docker-primary:0.0.2
+     - image: phusion/baseimage:latest
     working_directory: /picili
-
     environment:
       TEST_RESULTS: /tmp/test-results
-
     steps:
-    - run:
-      name: Start container and verify it's working
-      command: |
+     - run:
+     name: Start container and verify it's working
+     command: |
         set -x
         docker-compose up -d
         docker run --network container:workspace \
