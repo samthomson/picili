@@ -13,3 +13,4 @@ jobs:
     working_directory: /picili
     steps:
      - checkout
+     - cd /var/www/user-api-laravel && composer install
