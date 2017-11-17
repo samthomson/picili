@@ -47,7 +47,10 @@ jobs:
            www-workspace/migrations.sh
      # run tests
      - run:  
-         name: Run tests
+         name: API tests
          command: |
            www-workspace/user-api-laravel/vendor/bin/phpunit
+     - run:  
+         name: AUTO tests
+         command: |
            www-workspace/auto/vendor/bin/phpunit
