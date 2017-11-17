@@ -1,18 +1,12 @@
 version: 2
 jobs:
-  build:
+  phpunit-tests:
     docker:
       # using custom image, see .circleci/images/primary/Dockerfile
-     - image: circleci/cci-demo-docker-primary:0.0.2
      - image: phusion/baseimage:latest
+     - image: mysql:5.7
+     - image: docker.elastic.co/elasticsearch/elasticsearch:5.4.1
+     - image: laradock/php-fpm:1.4-71
     working_directory: /picili
-    environment:
-      TEST_RESULTS: /tmp/test-results
     steps:
-    - run:
-     name: Start container and verify it's working
-     command: |
-        set -x
-        docker-compose up -d
-        docker run --network container:workspace \
-          appropriate/curl --retry 10 --retry-delay 1 --retry-connrefused http://localhost:80/
+     - checkout
