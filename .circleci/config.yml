@@ -12,12 +12,24 @@ jobs:
      - image: laradock/php-fpm:1.4-71
     working_directory: /picili
     steps:
+     - run:
+         name: Install PHP extensions
+         command: docker-php-ext-install pdo gd
      - checkout
+     # install git
      - run: apt-get -qq update; apt-get -y install git
+     # install composer
      - run:
         name: Install Composer
         command: |
           curl -sS https://getcomposer.org/installer | php
           mv composer.phar /usr/local/bin/composer
      - run: cd www-workspace/user-api-laravel && composer install
+     # install php packages/dependencies
      - run: cd www-workspace/auto && composer install
+     - run: cd www-workspace/auto && composer install
+     # run migrations
+     - run: www-workspace/migrations.sh
+     # run tests
+     - run: www-workspace/user-api-laravel/vendor/bin/phpunit
+     - run: www-workspace/auto/vendor/bin/phpunit
