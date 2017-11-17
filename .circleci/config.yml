@@ -18,4 +18,4 @@ jobs:
         command: |
           curl -sS https://getcomposer.org/installer | php
           mv composer.phar /usr/local/bin/composer
-     - run: cd www-workspace/user-api-laravel && php composer install
+     - run: cd www-workspace/user-api-laravel && composer install
