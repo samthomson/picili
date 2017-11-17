@@ -14,8 +14,8 @@ jobs:
     steps:
      - checkout
      - run:
-       name: Install Composer
-      command: |
+        name: Install Composer
+        command: |
         php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
         php -r "if (hash_file('SHA384', 'composer-setup.php') === trim(file_get_contents('https://composer.github.io/installer.sig'))) { echo 'Installer verified'; } else { echo 'Installer invalid'; unlink('composer-setup.php'); } echo PHP_EOL;"
         php composer-setup.php
