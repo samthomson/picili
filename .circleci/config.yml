@@ -13,4 +13,4 @@ jobs:
     working_directory: /www-workspace
     steps:
      - checkout
-     - run: cd /user-api-laravel && composer install
+     - run: cd user-api-laravel && composer install
