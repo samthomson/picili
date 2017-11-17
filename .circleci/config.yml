@@ -10,7 +10,7 @@ jobs:
          - MYSQL_DATABASE=picili
      - image: docker.elastic.co/elasticsearch/elasticsearch:5.4.1
      - image: laradock/php-fpm:1.4-71
-    working_directory: /www-workspace
+    working_directory: /picili
     steps:
      - checkout
-     - run: cd user-api-laravel && composer install
+     - run: cd www-workspace/user-api-laravel && composer install
