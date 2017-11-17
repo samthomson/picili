@@ -5,6 +5,9 @@ jobs:
       # using custom image, see .circleci/images/primary/Dockerfile
      - image: phusion/baseimage:latest
      - image: mysql:5.7
+       environment:
+         - MYSQL_ROOT_PASSWORD=password
+         - MYSQL_DATABASE=picili
      - image: docker.elastic.co/elasticsearch/elasticsearch:5.4.1
      - image: laradock/php-fpm:1.4-71
     working_directory: /picili
