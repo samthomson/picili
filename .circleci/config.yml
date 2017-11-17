@@ -12,12 +12,12 @@ jobs:
      - image: laradock/php-fpm:1.4-71
     working_directory: /picili
     steps:
+     # install git
+     - run: apt-get -qq update; apt-get -y install git libpng-dev
      - run:
          name: Install PHP extensions
          command: docker-php-ext-install gd
      - checkout
-     # install git
-     - run: apt-get -qq update; apt-get -y install git
      # install composer
      - run:
         name: Install Composer
