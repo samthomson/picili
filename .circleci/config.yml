@@ -16,7 +16,7 @@ jobs:
      - run: apt-get -qq update; apt-get -y install git libpng-dev
      - run:
          name: Install PHP extensions
-         command: docker-php-ext-install gd
+         command: docker-php-ext-install pdo gd
      - checkout
      # install composer
      - run:
