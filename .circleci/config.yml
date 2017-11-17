@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  phpunit-tests:
+  build:
     docker:
       # using custom image, see .circleci/images/primary/Dockerfile
      - image: phusion/baseimage:latest
