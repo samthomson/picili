@@ -2,6 +2,7 @@ version: 2
 dependencies:
   cache_directories:
     - ~/.composer/cache
+    - "www-workspace/user-api-laravel/vendor"
 jobs:
   build:
     docker:
