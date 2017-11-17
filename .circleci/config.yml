@@ -7,6 +7,8 @@ jobs:
        environment:
          - DB_NAME=picili
          - DB_HOST=localhost
+         - DB_NAME_TESTING=picili-testing
+         - DB_PASSWORD=password
      - image: mysql:5.7
        environment:
          - MYSQL_ROOT_PASSWORD=password
