@@ -6,7 +6,7 @@ jobs:
      - image: php:7.1-apache
        environment:
          - DB_NAME=picili
-         - DB_HOST=localhost
+         - DB_HOST=127.0.0.1
          - DB_NAME_TESTING=picili-testing
          - DB_PASSWORD=password
      - image: mysql:5.7
