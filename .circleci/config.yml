@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       # using custom image, see .circleci/images/primary/Dockerfile
-     - image: phusion/baseimage:latest
+     - image: php:7.1-apache
      - image: mysql:5.7
        environment:
          - MYSQL_ROOT_PASSWORD=password
