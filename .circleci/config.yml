@@ -13,7 +13,9 @@ jobs:
     working_directory: /picili
     steps:
      # install git
-     - run: apt-get -qq update; apt-get -y install git libpng-dev
+     - run: 
+         name: Install packages
+         command: apt-get -qq update; apt-get -y install git libpng-dev
      - run:
          name: Install PHP extensions
          command: docker-php-ext-install pdo gd
@@ -26,10 +28,19 @@ jobs:
           mv composer.phar /usr/local/bin/composer
      - run: cd www-workspace/user-api-laravel && composer install
      # install php packages/dependencies
-     - run: cd www-workspace/auto && composer install
-     - run: cd www-workspace/auto && composer install
+     - run: 
+         name: Install php packages/dependencies
+         command: |
+           cd www-workspace/auto && composer install
+           cd www-workspace/auto && composer install
      # run migrations
-     - run: www-workspace/migrations.sh
+     - run: 
+         name: Run migrations
+         command: |
+           www-workspace/migrations.sh
      # run tests
-     - run: www-workspace/user-api-laravel/vendor/bin/phpunit
-     - run: www-workspace/auto/vendor/bin/phpunit
+     - run:  
+         name: Run tests
+         command: |
+           www-workspace/user-api-laravel/vendor/bin/phpunit
+           www-workspace/auto/vendor/bin/phpunit
