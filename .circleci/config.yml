@@ -30,6 +30,9 @@ jobs:
     working_directory: /picili
     steps:
      - checkout
+     - run: 
+         name: Install server packages
+         command: apt-get -qq update; apt-get -y install git libpng-dev mysql-client
      - run:
          name: "Node Versions"
          command: |
@@ -58,9 +61,6 @@ jobs:
          name: Copy spa into API public folder
          command: |
            cp -a www-workspace/spa/dist/. www-workspace/user-api-laravel/public
-     - run: 
-         name: Install packages
-         command: apt-get -qq update; apt-get -y install git libpng-dev mysql-client
      - run:
          name: Install PHP extensions
          command: docker-php-ext-install pdo_mysql gd
