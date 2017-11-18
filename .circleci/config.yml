@@ -59,7 +59,7 @@ jobs:
      - run:  
          name: API tests
          command: |
-           www-workspace/user-api-laravel/vendor/bin/phpunit
+           www-workspace/user-api-laravel/vendor/bin/phpunit -c www-workspace/user-api-laravel/phpunit.xml
      - run:  
          name: AUTO tests
          command: |
