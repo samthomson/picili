@@ -39,13 +39,13 @@ jobs:
            nvm install stable
            nvm use stable
            nvm alias stable
-           node --version
-           npm --version
            apt-get update
            apt-get install nodejs -y
            apt-get install npm -y
            echo 'export PATH=$PATH:/usr/local/bin' >> $HOME/.bashrc
-          #  ln -s /usr/bin/nodejs /usr/bin/node
+           ln -s /usr/bin/nodejs /usr/bin/node
+           node --version
+           npm --version
      - run:
          name: Generate SPA
          command: |
