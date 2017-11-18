@@ -36,6 +36,7 @@ jobs:
            curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh
            nvm install stable
            nvm use stable
+           nvm alias stable
            node --version
            npm --version
     #  - run: ln -s /picili/www-workspace/ 
