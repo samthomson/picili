@@ -46,9 +46,9 @@ jobs:
            ln -s /usr/bin/nodejs /usr/bin/node
            node --version
            npm --version
-     - run:
-         name: Generate SPA
-         command: |
+    #  - run:
+    #      name: Generate SPA
+    #      command: |
            cd www-workspace/spa
            npm cache clean
            npm set registry http://registry.npmjs.org
