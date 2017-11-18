@@ -54,7 +54,6 @@ jobs:
            npm update -g
            npm --version
            node --version
-           npm i node-sass
            npm install -g angular-cli
            ng build
      - run:
