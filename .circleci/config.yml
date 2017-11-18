@@ -16,7 +16,7 @@ jobs:
          - DB_PASSWORD=password
          - APP_KEY=base64:uynE8re8ybt2wabaBjqMwQvLczKlDSQJHCepqxmGffE=
          - JWT_SECRET=dQsobNAzIGnF4sx4PDRAaZWFUEMQulAV
-         - ELASTICSEARCH_HOST=elasticsearch
+         - ELASTICSEARCH_HOST=localhost
          - ELASTICSEARCH_INDEX=files
          - ELASTICSEARCH_INDEX_TESTING=files-testing
          - SEARCH_CONFIDENCE_THRESHOLD=30
