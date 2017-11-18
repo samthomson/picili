@@ -53,8 +53,8 @@ jobs:
            npm cache clean
            npm set registry http://registry.npmjs.org
            npm update -g
-           node --version
            npm --version
+           node --version
            npm install -g angular-cli
            ng build
      - run:
