@@ -44,7 +44,7 @@ jobs:
      - run:
          name: Generate SPA
          command: |
-           cd /picili/www-workspace/spa
+           cd www-workspace/spa
            node --version
            npm --version
            npm install -g angular-cli
