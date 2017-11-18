@@ -45,7 +45,7 @@ jobs:
          command: |
            cd www-workspace/auto && composer install
      # run migrations old
-     run: 
+     - run: 
          name: Run migrations old
          command: |
            www-workspace/migrations.sh
