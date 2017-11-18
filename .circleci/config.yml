@@ -47,7 +47,6 @@ jobs:
            node --version
            npm --version
            cd www-workspace/spa
-           npm cache clean
            npm set registry http://registry.npmjs.org
            npm update -g
            npm --version
