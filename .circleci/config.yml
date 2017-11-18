@@ -64,6 +64,7 @@ jobs:
          name: Serve API Application
          background: true
          command: |
+           cd www-workspace/user-api-laravel && cp .env.testing .env
            cd www-workspace/user-api-laravel && php artisan serve
      # run tests
      - run:  
