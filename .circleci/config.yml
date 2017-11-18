@@ -6,7 +6,7 @@ dependencies:
 jobs:
   build:
     docker:
-      - image: node:8.0
+     - image: node:8.0
       # using custom image, see .circleci/images/primary/Dockerfile
      - image: php:7.1-apache
        environment:
