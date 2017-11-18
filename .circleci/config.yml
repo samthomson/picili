@@ -44,6 +44,7 @@ jobs:
            apt-get update
            apt-get install nodejs -y
            apt-get install npm -y
+           echo 'export PATH=$PATH:/usr/local/bin' >> $HOME/.bashrc
           #  ln -s /usr/bin/nodejs /usr/bin/node
      - run:
          name: Generate SPA
