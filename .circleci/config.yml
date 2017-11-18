@@ -60,12 +60,8 @@ jobs:
     #        www-workspace/migrations-db.sh
     #  - run: cd www-workspace/user-api-laravel && php artisan migrate --force
     #  - run: cd www-workspace/auto && php artisan migrate --force && php artisan migrate --force --path="../picili-shared/Migrations"
-     - run:
-         name: Serve API Application
-         background: true
-         command: |
-           cd www-workspace/user-api-laravel && cp .env.testing .env
-           cd www-workspace/user-api-laravel && php artisan serve
+     - run: cd www-workspace/user-api-laravel && cp .env.testing .env
+     - run: cd www-workspace/user-api-laravel && php artisan serve
      # run tests
      - run:  
          name: API tests
