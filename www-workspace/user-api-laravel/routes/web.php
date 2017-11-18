@@ -46,7 +46,7 @@ Route::group([/*'middleware' => 'jwt.auth'*/], function () {
 });
 
 Route::any( '{catchall?}', function () {
-    $sIndexPath = \File::get(public_path() . DIRECTORY_SEPARATOR . 'index.html');
-    echo "index path: {$sIndexPath}";
+    // $sIndexPath = \File::get(public_path() . DIRECTORY_SEPARATOR . 'index.html');
+    // echo "index path: {$sIndexPath}";
     return response();
 } )->where('catchall', '(.*)');
