@@ -24,6 +24,7 @@ jobs:
      - run: ln -s /picili/www-workspace/ /var/www/www-workspace
     #  - run: cd www-workspace && pwd && ls
      - run: pwd
+     - run: cd ~ && ls
      - run: cd /var/www/www-workspace && ls
     #  - run: 
     #      name: Run migrations
