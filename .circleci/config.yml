@@ -23,7 +23,7 @@ jobs:
     steps:
     #  - run: ln -s /picili/www-workspace/ /var/www
     #  - run: cd www-workspace && pwd && ls
-    #  - run: pwd && ls
+     - run: pwd && ls
     #  - run: 
     #      name: Run migrations
     #      command: |
