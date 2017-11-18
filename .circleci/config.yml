@@ -6,7 +6,6 @@ dependencies:
 jobs:
   build:
     docker:
-      # using custom image, see .circleci/images/primary/Dockerfile
      - image: php:7.1-apache
        environment:
          - DB_NAME=picili
@@ -41,7 +40,6 @@ jobs:
            nvm alias stable
            node --version
            npm --version
-    #  - run: ln -s /picili/www-workspace/ 
      - run: 
          name: Install packages
          command: apt-get -qq update; apt-get -y install git libpng-dev mysql-client
@@ -57,13 +55,12 @@ jobs:
           mv composer.phar /usr/local/bin/composer
     # install php packages/dependencies
      - run: 
-         name: Install API php packages/dependencies
+         name: Install php packages/dependencies
          command: |
-           cd www-workspace/user-api-laravel && composer install
-     - run: 
-         name: Install AUTO php packages/dependencies auto
-         command: |
-           cd www-workspace/auto && composer install
+           cd www-workspace/user-api-laravel
+           composer install
+           cd ../auto
+           composer install
      # run migrations old
     #  - run: 
     #      name: Run migrations old
