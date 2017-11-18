@@ -12,6 +12,7 @@ jobs:
          - DB_NAME=picili
          - DB_HOST=127.0.0.1
          - DB_NAME_TESTING=picili_testing
+         - DB_USERNAME=root
          - DB_PASSWORD=password
      - image: mysql:5.7
        environment:
