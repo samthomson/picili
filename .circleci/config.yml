@@ -72,9 +72,6 @@ jobs:
     #  - run: cd www-workspace/user-api-laravel && php artisan migrate --force
     #  - run: cd www-workspace/auto && php artisan migrate --force && php artisan migrate --force --path="../picili-shared/Migrations"
      - run:
-         name: Install NVM
-         command: bash .circleci/nvm.sh
-     - run:
          name: Generate SPA
          command: |
            cd www-workspace/spa
