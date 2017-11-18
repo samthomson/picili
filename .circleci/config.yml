@@ -49,6 +49,9 @@ jobs:
          name: Generate SPA
          command: |
            cd www-workspace/spa
+           npm cache clean
+           npm set registry http://registry.npmjs.org
+           npm update -g
            node --version
            npm --version
            npm install -g angular-cli
