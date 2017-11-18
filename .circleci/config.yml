@@ -22,7 +22,10 @@ jobs:
     working_directory: /picili
     steps:
      - run: ln -s /picili/www-workspace/ /var/www
-     - run: www-workspace/migrations.sh
+     - run: 
+         name: Run migrations
+         command: |
+           www-workspace/migrations.sh
      # install git
      - run: 
          name: Install packages
