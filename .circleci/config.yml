@@ -44,7 +44,7 @@ jobs:
            apt-get update
            apt-get install nodejs -y
            apt-get install npm -y
-           ln -s /usr/bin/nodejs /usr/bin/node
+          #  ln -s /usr/bin/nodejs /usr/bin/node
      - run:
          name: Generate SPA
          command: |
