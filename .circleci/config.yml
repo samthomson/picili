@@ -40,6 +40,18 @@ jobs:
            nvm alias stable
            node --version
            npm --version
+     - run:
+         name: Generate SPA
+         command: |
+           cd www-workspace/spa
+           node --version
+           npm --version
+           npm install -g angular-cli
+           ng build
+     - run:
+         name: Copy spa into API public folder
+         command: |
+           cp -a www-workspace/spa/dist/. www-workspace/user-api-laravel/public
      - run: 
          name: Install packages
          command: apt-get -qq update; apt-get -y install git libpng-dev mysql-client
@@ -68,18 +80,6 @@ jobs:
     #        www-workspace/migrations-db.sh
     #  - run: cd www-workspace/user-api-laravel && php artisan migrate --force
     #  - run: cd www-workspace/auto && php artisan migrate --force && php artisan migrate --force --path="../picili-shared/Migrations"
-     - run:
-         name: Generate SPA
-         command: |
-           cd www-workspace/spa
-           node --version
-           npm --version
-           npm install -g angular-cli
-           ng build
-     - run:
-         name: Copy spa into API public folder
-         command: |
-           cp -a www-workspace/spa/dist/. www-workspace/user-api-laravel/public
      - run:
          name: Serve API Application
          background: true
