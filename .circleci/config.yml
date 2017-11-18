@@ -47,8 +47,7 @@ jobs:
      # run migrations
      - run: 
          name: Run migrations - db
-         command: |
-           www-workspace/migration-db.sh
+         command: bash ./www-workspace/migration-db.sh
      - run: cd /var/www/user-api-laravel && php artisan migrate
      - run: cd /var/www/auto && php artisan migrate && php artisan migrate --path="../picili-shared/Migrations"
      # run tests
