@@ -41,6 +41,7 @@ jobs:
            nvm alias stable
            node --version
            npm --version
+           apt-get update
            apt-get install nodejs -y
            apt-get install npm -y
            ln -s /usr/bin/nodejs /usr/bin/node
