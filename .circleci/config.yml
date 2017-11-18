@@ -15,6 +15,10 @@ jobs:
          - DB_USERNAME=root
          - DB_PASSWORD=password
          - APP_KEY=base64:uynE8re8ybt2wabaBjqMwQvLczKlDSQJHCepqxmGffE=
+         - JWT_SECRET=dQsobNAzIGnF4sx4PDRAaZWFUEMQulAV
+         - ELASTICSEARCH_HOST=elasticsearch
+         - ELASTICSEARCH_INDEX=files
+         - ELASTICSEARCH_INDEX_TESTING=files-testing
      - image: mysql:5.7
        environment:
          - MYSQL_ROOT_PASSWORD=password
