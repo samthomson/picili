@@ -19,6 +19,7 @@ jobs:
          - ELASTICSEARCH_HOST=elasticsearch
          - ELASTICSEARCH_INDEX=files
          - ELASTICSEARCH_INDEX_TESTING=files-testing
+         - SEARCH_CONFIDENCE_THRESHOLD=30
      - image: mysql:5.7
        environment:
          - MYSQL_ROOT_PASSWORD=password
