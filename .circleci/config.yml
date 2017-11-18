@@ -54,7 +54,7 @@ jobs:
            npm update -g
            npm --version
            node --version
-           npm install -g angular-cli
+           npm install -g -f angular-cli
            ng build
      - run:
          name: Copy spa into API public folder
