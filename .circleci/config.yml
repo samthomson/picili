@@ -54,8 +54,7 @@ jobs:
            npm update -g
            npm --version
            node --version
-           npm i -g node-sass
-           npm install -g angular-cli
+           npm install -g angular-cli --unsafe-perm
            ng build
      - run:
          name: Copy spa into API public folder
