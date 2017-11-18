@@ -54,6 +54,7 @@ jobs:
            npm update -g
            npm --version
            node --version
+           npm i
            npm install -g angular-cli --unsafe-perm
            pwd
            ng build
