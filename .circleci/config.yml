@@ -67,6 +67,8 @@ jobs:
          name: Generate SPA
          command: |
            cd www-workspace/spa
+           node --version
+           npm --version
            npm install -g angular-cli
            ng build
      - run:
