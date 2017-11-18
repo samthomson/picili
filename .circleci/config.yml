@@ -21,16 +21,7 @@ jobs:
      - image: laradock/php-fpm:1.4-71
     working_directory: /picili
     steps:
-     - run: ln -s /picili/www-workspace/ /var/www/www-workspace
-    #  - run: cd www-workspace && pwd && ls
-     - run: pwd
-     - run: cd ~ && ls
-     - run: cd /var/www/www-workspace && ls
-    #  - run: 
-    #      name: Run migrations
-    #      command: |
-    #        ./www-workspace/migrations.sh
-     # install git
+    #  - run: ln -s /picili/www-workspace/ 
      - run: 
          name: Install packages
          command: apt-get -qq update; apt-get -y install git libpng-dev mysql-client
@@ -55,9 +46,11 @@ jobs:
            cd www-workspace/auto && composer install
      # run migrations
      - run: 
-         name: Run migrations
+         name: Run migrations - db
          command: |
-           www-workspace/migrations.sh
+           www-workspace/migration-db.sh
+     - run: cd /var/www/user-api-laravel && php artisan migrate
+     - run: cd /var/www/auto && php artisan migrate && php artisan migrate --path="../picili-shared/Migrations"
      # run tests
      - run:  
          name: API tests
