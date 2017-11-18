@@ -63,4 +63,4 @@ jobs:
      - run:  
          name: AUTO tests
          command: |
-           www-workspace/auto/vendor/bin/phpunit
+           www-workspace/auto/vendor/bin/phpunit -c www-workspace/auto/phpunit.xml
