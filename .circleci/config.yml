@@ -44,7 +44,11 @@ jobs:
          name: Install AUTO php packages/dependencies auto
          command: |
            cd www-workspace/auto && composer install
-     # run migrations
+     # run migrations old
+     run: 
+         name: Run migrations old
+         command: |
+           www-workspace/migrations.sh
      - run: 
          name: Run migrations - db
          command: bash ./www-workspace/migration-db.sh
