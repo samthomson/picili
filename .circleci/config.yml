@@ -25,7 +25,7 @@ jobs:
      - run: 
          name: Run migrations
          command: |
-           www-workspace/migrations.sh
+           ./www-workspace/migrations.sh
      # install git
      - run: 
          name: Install packages
