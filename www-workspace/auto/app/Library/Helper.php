@@ -385,8 +385,8 @@ class Helper {
 
         ini_set('gd.jpeg_ignore_warning', true);
         // calm error reporting, so we can handle corrupt images
-        $sErrorReportingLevel = error_reporting();
-        error_reporting(E_ALL & E_STRICT);
+        // $sErrorReportingLevel = error_reporting();
+        // error_reporting(E_ALL & E_STRICT);
         // read in file, get main colour and pallette
 
         $primaryPalette = Palette::fromFilename($sFullPath);
@@ -415,7 +415,7 @@ class Helper {
             // $aReturnColours['best'] = $colors[0]->toHexString();
             $aReturnColours['best'] = (array)$colors[0];
         }
-        error_reporting($sErrorReportingLevel);
+        // error_reporting($sErrorReportingLevel);
 
         return $aReturnColours;
     }
