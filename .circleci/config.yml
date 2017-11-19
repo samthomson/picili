@@ -110,19 +110,19 @@ jobs:
   test-auto:
     # working_directory: /picili
     docker:
-     - image: circleci/php:7.1-node-browsers
-       environment:
-         - DB_NAME=picili
-         - DB_HOST=127.0.0.1
-         - DB_NAME_TESTING=picili_testing
-         - DB_USERNAME=root
-         - DB_PASSWORD=password
-         - APP_KEY=base64:uynE8re8ybt2wabaBjqMwQvLczKlDSQJHCepqxmGffE=
-         - JWT_SECRET=dQsobNAzIGnF4sx4PDRAaZWFUEMQulAV
-         - ELASTICSEARCH_HOST=localhost
-         - ELASTICSEARCH_INDEX=files
-         - ELASTICSEARCH_INDEX_TESTING=files-testing
-         - SEARCH_CONFIDENCE_THRESHOLD=30
+      - image: circleci/php:7.1-node-browsers
+        environment:
+          - DB_NAME=picili
+          - DB_HOST=127.0.0.1
+          - DB_NAME_TESTING=picili_testing
+          - DB_USERNAME=root
+          - DB_PASSWORD=password
+          - APP_KEY=base64:uynE8re8ybt2wabaBjqMwQvLczKlDSQJHCepqxmGffE=
+          - JWT_SECRET=dQsobNAzIGnF4sx4PDRAaZWFUEMQulAV
+          - ELASTICSEARCH_HOST=localhost
+          - ELASTICSEARCH_INDEX=files
+          - ELASTICSEARCH_INDEX_TESTING=files-testing
+          - SEARCH_CONFIDENCE_THRESHOLD=30
      - image: mysql:5.7
        environment:
          - MYSQL_ROOT_PASSWORD=password
@@ -135,7 +135,9 @@ jobs:
      - checkout
      - run: 
          name: Install server packages
-         command: apt-get -qq update; apt-get -y install -y git libwebp-dev libjpeg-dev libpng-dev mysql-client sudo
+         command: |
+           apt-get update
+           apt-get -y install -y git libwebp-dev libjpeg-dev libpng-dev mysql-client
      - run:
          name: Install PHP extensions
          command: |
