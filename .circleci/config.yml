@@ -102,13 +102,12 @@ jobs:
            cp .env.testing .env
            cp public/spa.html public/index.html
            php artisan serve
-     # run tests
      - run:  
-         name: API tests
+         name: API tests (phpunit)
          command: |
            www-workspace/user-api-laravel/vendor/bin/phpunit -c www-workspace/user-api-laravel/phpunit.xml
   test-auto:
-    # working_directory: /picili
+    working_directory: /picili
     docker:
      - image: louisbl/php:7.1-cli
        environment:
@@ -158,7 +157,7 @@ jobs:
            cd www-workspace/auto
            php artisan db:seed --class=FolderSeeder --force
      - run:  
-         name: AUTO tests
+         name: AUTO tests (phpunit)
          command: |
            www-workspace/auto/vendor/bin/phpunit -c www-workspace/auto/phpunit-circle-ci.xml
 
