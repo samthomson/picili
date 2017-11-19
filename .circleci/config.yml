@@ -110,7 +110,7 @@ jobs:
   test-auto:
     # working_directory: /picili
     docker:
-     - image: circleci/php:7.1-node-browsers
+     - image: louisbl/php:7.1-cli
        environment:
          - DB_NAME=picili
          - DB_HOST=127.0.0.1
