@@ -14,3 +14,5 @@ public/assets
 public/*.html
 public/*.js
 public/*.map
+
+!public/spa.html
