@@ -156,7 +156,7 @@ jobs:
      - run:  
          name: AUTO tests
          command: |
-           www-workspace/auto/vendor/bin/phpunit -c www-workspace/auto/phpunit.xml
+           www-workspace/auto/vendor/bin/phpunit -c www-workspace/auto/phpunit-circle-ci.xml
 
 workflows:
   version: 2
