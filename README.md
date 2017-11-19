@@ -32,9 +32,9 @@ Main parts:
 - Auto-Scaler: A small node project which scales up instances of the Auto project based on demand
 
 Techs:
-SPA: JS Typescript / Angular 2 / SASS
-Auto-Scaler: Nodes JS
-API / Auto: PHP / Laravel
+- SPA: JS Typescript / Angular 2 / SASS
+- Auto-Scaler: Nodes JS
+- API / Auto: PHP / Laravel
 
 Data: MySQL and Elasticsearch
 
