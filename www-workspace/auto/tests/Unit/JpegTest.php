@@ -60,7 +60,7 @@ class JpegTest extends TestCase
         $sTestFolder = resource_path('test-files/jpegs');
         $saPaths = array_diff(scandir($sTestFolder), ['..', '.']);
 
-        $sLandscape = resource_path('test-files/jpegs/sony_a55.jpg');
+        $sLandscape = resource_path('test-files/jpegs/sony_a55.JPG');
         $sTestOutputFolder = resource_path('test-temp');
 
         $iFakeUserId = uniqid();

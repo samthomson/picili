@@ -52,8 +52,7 @@ Do everything dev related in the workspace container:
 
 # run a specific test
 
-vendor/bin/phpunit --filter testUpdateDropboxFilesource Tests/Feature/BlackboxTest
-vendor/bin/phpunit --filter testProcessFile Tests/Unit/JpegTest
+vendor/bin/phpunit --filter testUpdateDropboxFilesource tests/Feature/BlackboxTest
 
 # use site
 
