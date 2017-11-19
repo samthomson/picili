@@ -135,7 +135,7 @@ jobs:
      - checkout
      - run: 
          name: Install server packages
-         command: apt-get -qq update; apt-get -y install -y git libwebp-dev libjpeg-dev libpng-dev mysql-client sudo
+         command: apt-get -qq update; apt-get -y install -y git libwebp-dev libjpeg-dev libpng-dev mysql-client sudo libjpeg libjpeg-dev
      - run:
          name: Install PHP extensions
          command: |
