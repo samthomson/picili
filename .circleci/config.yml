@@ -52,7 +52,6 @@ jobs:
          name: Copy spa into API public folder
          command: |
            cp -a www-workspace/spa/dist/. www-workspace/user-api-laravel/public
-
   test-api:
     docker:
      - image: php:7.1-apache
@@ -108,7 +107,6 @@ jobs:
          name: API tests
          command: |
            www-workspace/user-api-laravel/vendor/bin/phpunit -c www-workspace/user-api-laravel/phpunit.xml
-
   test-auto:
     docker:
      - image: php:7.1-apache
@@ -140,7 +138,7 @@ jobs:
          command: apt-get -qq update; apt-get -y install git libpng-dev mysql-client
      - run:
          name: Install PHP extensions
-         command: docker-php-ext-install pdo_mysql gd
+         command: docker-php-ext-install pdo_mysql php7.1-gd
      - run:
         name: Install Composer
         command: |
