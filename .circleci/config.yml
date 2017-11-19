@@ -135,10 +135,13 @@ jobs:
      - checkout
      - run: 
          name: Install server packages
-         command: apt-get -qq update; apt-get -y install -y git libjpeg62-turbo-dev libpng12-dev mysql-client sudo
+         command: apt-get -qq update; apt-get -y install -y git libwebp-dev libjpeg-dev libpng-dev mysql-client sudo
      - run:
          name: Install PHP extensions
-         command: sudo docker-php-ext-install pdo_mysql gd exif
+         command: |
+           docker-php-ext-install pdo_mysql
+           docker-php-ext-install gd
+           docker-php-ext-install exif
      - run:
         name: Install Composer
         command: |
