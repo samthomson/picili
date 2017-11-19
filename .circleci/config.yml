@@ -150,8 +150,13 @@ jobs:
      - run: 
          name: Install php packages/dependencies
          command: |
-           cd www-workspace//auto
+           cd www-workspace/auto
            composer install
+     - run:
+         name: seed test dirs
+         command:  |
+           www-workspace/auto
+           php artisan db:seed --class=FolderSeeder
      - run:  
          name: AUTO tests
          command: |
