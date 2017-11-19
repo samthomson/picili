@@ -10,6 +10,19 @@ picili is an automated image search engine / browser. It syncronises with a chos
 
 # 1.0 How it works
 
+- polls dropbox every x minutes, gets a list of files.
+- compares to all files it has identified so far.
+- adds any new ones to a local list and quees them to be imported, and removes any now deleted files.
+- queued files are each downloaded locally, processed, and then deleted locally
+- processing consists of
+    - create thumbnails
+    - extract exif information
+    - determine colours
+    - send to subject recognition API
+    - if geo exif data
+        - geocode - get localtion information (via external API)
+        - get altitude (via external API)
+
 # 2.0 Set up picili locally
 
 ## phpmyadmin container
