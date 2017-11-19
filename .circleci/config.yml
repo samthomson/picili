@@ -141,7 +141,6 @@ jobs:
          name: Install PHP extensions
          command: |
            docker-php-ext-install pdo_mysql
-           docker-php-ext-install gd
            docker-php-ext-install exif
      - run:
         name: Install Composer
