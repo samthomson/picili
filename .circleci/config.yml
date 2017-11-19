@@ -155,7 +155,7 @@ jobs:
      - run:
          name: seed test dirs
          command:  |
-           www-workspace/auto
+           cd www-workspace/auto
            php artisan db:seed --class=FolderSeeder
      - run:  
          name: AUTO tests
