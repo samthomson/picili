@@ -143,13 +143,13 @@ class JpegTest extends TestCase
     public function testColourExtraction()
     {
         $saP = [
-            '1.JPG',
-            '2.JPG',
-            '3.JPG',
-            '4.JPG',
-            '5.JPG',
-            '6.JPG',
-            'corrupt.JPG'
+            '1.jpg',
+            '2.jpg',
+            '3.jpg',
+            '4.jpg',
+            '5.jpg',
+            '6.jpg',
+            'corrupt.jpg'
         ];
 
         $aColours = Helper::aGetColours(resource_path('test-files/colour-test/'.$saP[5]));
