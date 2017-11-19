@@ -103,6 +103,7 @@ jobs:
          command: |
            cd www-workspace/user-api-laravel
            cp .env.testing .env
+           cp public/spa.html public/index.html
            php artisan serve
      # run tests
      - run:  
