@@ -135,10 +135,10 @@ jobs:
      - checkout
      - run: 
          name: Install server packages
-         command: apt-get -qq update; apt-get -y install git libpng-dev mysql-client
+         command: apt-get -qq update; apt-get -y install git mysql-client
      - run:
          name: Install PHP extensions
-         command: docker-php-ext-install pdo_mysql gd libpng-dev
+         command: docker-php-ext-install pdo_mysql gd
      - run:
         name: Install Composer
         command: |
