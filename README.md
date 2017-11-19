@@ -10,7 +10,9 @@ picili is an automated image search engine / browser. It syncronises with a chos
 
 ## 1.0 How it works
 
-- polls dropbox every x minutes, gets a list of files.
+- user registers and connects their dropbox account through oauth
+- user then enters a folder on their dropbox where they store their pictures
+- picili polls dropbox every x minutes, gets a list of files.
 - compares to all files it has identified so far.
 - adds any new ones to a local list and quees them to be imported, and removes any now deleted files.
 - queued files are each downloaded locally, processed, and then deleted locally
@@ -22,6 +24,19 @@ picili is an automated image search engine / browser. It syncronises with a chos
     - if geo exif data
         - geocode - get localtion information (via external API)
         - get altitude (via external API)
+
+Main parts:
+- SPA: the front end is a Angular 2 single page application
+- API: a PHP API wrote in laravel which the SPA calls
+- Auto: A seperate project running in the background which is also a Laravel PHP project, this does all the synchronizing and auto tagging.
+- Auto-Scaler: A small node project which scales up instances of the Auto project based on demand
+
+Techs:
+SPA: JS Typescript / Angular 2 / SASS
+Auto-Scaler: Nodes JS
+API / Auto: PHP / Laravel
+
+Data: MySQL and Elasticsearch
 
 ## 2.0 Set up picili locally
 
