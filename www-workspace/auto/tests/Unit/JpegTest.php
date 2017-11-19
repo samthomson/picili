@@ -64,7 +64,6 @@ class JpegTest extends TestCase
         $sTestOutputFolder = resource_path('test-temp');
 
         $iFakeUserId = uniqid();
-        //// mkdir(resource_path("test-temp/$iFakeUserId"));
 
         $oPiciliFileLandscape = new PiciliFile;
         $oPiciliFileLandscape->signature = 'sig1';
@@ -80,9 +79,6 @@ class JpegTest extends TestCase
         $this->assertTrue(isset($oUpdatedPiciliFile->medium_width));
         $this->assertTrue(isset($oUpdatedPiciliFile->medium_height));
 
-
-        // 22-4-2017 now we don't test for physical files since they're posted to aws. todo: but we should test and delete from there..?
-        //9-10-2017 now in testing we do store them locally, so should delete
         // delete all thumb files
         $sThumbDir = $sTestOutputFolder.'/'.$iFakeUserId;
         $saPaths = array_diff(scandir($sThumbDir), ['..', '.']);
@@ -132,7 +128,6 @@ class JpegTest extends TestCase
     {   
         $this->assertEquals(Helper::bIsCorrupt(resource_path('test-files/jpegs/48.jpg')), false);
         $this->assertEquals(Helper::bIsCorrupt(resource_path('test-files/jpegs/gopro_3.JPG')), false);
-
         
         $this->assertEquals(Helper::bIsCorrupt(resource_path('test-files/jpegs/440.jpg')), true);
         // not corrupt - but from sony a55
@@ -154,7 +149,6 @@ class JpegTest extends TestCase
 
         $aColours = Helper::aGetColours(resource_path('test-files/colour-test/'.$saP[5]));
 
-
         $this->assertTrue(isset($aColours['best']));
         $this->assertTrue(is_integer($aColours['best']['r']));
         $this->assertTrue(is_integer($aColours['best']['g']));
@@ -167,10 +161,6 @@ class JpegTest extends TestCase
         // test somewhat corrupt picture
         $aCorruptColours = Helper::aGetColours(resource_path('test-files/colour-test/'.$saP[6]));
         $this->assertTrue(isset($aCorruptColours['best']));
-    }
-    public function testWithBadFiles()
-    {
-        // try and create thumbnails and log it as a failure?
     }
 
     public function testCanReadExif()
@@ -306,12 +296,5 @@ class JpegTest extends TestCase
         // has date literals
         $oDateLiteralTags = $oWithDate->tags->where('type', '=', 'dateliteral');
         $this->assertTrue(count($oDateLiteralTags) > 0);
-    }
-
-    public function testChangedFile()
-    {
-        // test file has changed aesthetically
-
-        // test file has changed meta
     }
 }
