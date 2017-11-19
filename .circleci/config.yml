@@ -4,7 +4,7 @@ dependencies:
     - ~/.composer/cache
     - "www-workspace/user-api-laravel/vendor"
 jobs:
-  build:
+  build-spa:
     docker:
      - image: php:7.1-apache
        environment:
@@ -158,6 +158,6 @@ workflows:
   version: 2
   all:
     jobs:
-      - build
+      - build-spa
       - test-api
       - test-auto
