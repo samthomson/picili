@@ -19,6 +19,55 @@ jobs:
          - ELASTICSEARCH_INDEX=files
          - ELASTICSEARCH_INDEX_TESTING=files-testing
          - SEARCH_CONFIDENCE_THRESHOLD=30
+    working_directory: /picili
+    steps:
+     - checkout
+     - run: 
+         name: Install server packages
+         command: apt-get -qq update; apt-get -y install git
+     - run:
+         name: "Node Versions"
+         command: |
+           curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
+           export NVM_DIR="$HOME/.nvm"
+           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+           nvm install stable
+           nvm use stable
+           nvm alias stable
+           apt-get update
+           apt-get install nodejs -y
+           apt-get install npm -y
+           echo 'export PATH=$PATH:/usr/local/bin' >> $HOME/.bashrc
+           ln -s /usr/bin/nodejs /usr/bin/node
+           node --version
+           npm --version
+           cd www-workspace/spa
+           npm set registry http://registry.npmjs.org
+           npm update -g
+           npm i
+           npm install -g angular-cli --unsafe-perm
+           pwd
+           ng build
+     - run:
+         name: Copy spa into API public folder
+         command: |
+           cp -a www-workspace/spa/dist/. www-workspace/user-api-laravel/public
+
+  test-api:
+    docker:
+     - image: php:7.1-apache
+       environment:
+         - DB_NAME=picili
+         - DB_HOST=127.0.0.1
+         - DB_NAME_TESTING=picili_testing
+         - DB_USERNAME=root
+         - DB_PASSWORD=password
+         - APP_KEY=base64:uynE8re8ybt2wabaBjqMwQvLczKlDSQJHCepqxmGffE=
+         - JWT_SECRET=dQsobNAzIGnF4sx4PDRAaZWFUEMQulAV
+         - ELASTICSEARCH_HOST=localhost
+         - ELASTICSEARCH_INDEX=files
+         - ELASTICSEARCH_INDEX_TESTING=files-testing
+         - SEARCH_CONFIDENCE_THRESHOLD=30
      - image: mysql:5.7
        environment:
          - MYSQL_ROOT_PASSWORD=password
@@ -79,13 +128,6 @@ jobs:
            composer install
            cd ../auto
            composer install
-     # run migrations old
-    #  - run: 
-    #      name: Run migrations old
-    #      command: |
-    #        www-workspace/migrations-db.sh
-    #  - run: cd www-workspace/user-api-laravel && php artisan migrate --force
-    #  - run: cd www-workspace/auto && php artisan migrate --force && php artisan migrate --force --path="../picili-shared/Migrations"
      - run:
          name: Serve API Application
          background: true
@@ -102,3 +144,103 @@ jobs:
          name: AUTO tests
          command: |
            www-workspace/auto/vendor/bin/phpunit -c www-workspace/auto/phpunit.xml
+
+  test-auto:
+    docker:
+     - image: php:7.1-apache
+       environment:
+         - DB_NAME=picili
+         - DB_HOST=127.0.0.1
+         - DB_NAME_TESTING=picili_testing
+         - DB_USERNAME=root
+         - DB_PASSWORD=password
+         - APP_KEY=base64:uynE8re8ybt2wabaBjqMwQvLczKlDSQJHCepqxmGffE=
+         - JWT_SECRET=dQsobNAzIGnF4sx4PDRAaZWFUEMQulAV
+         - ELASTICSEARCH_HOST=localhost
+         - ELASTICSEARCH_INDEX=files
+         - ELASTICSEARCH_INDEX_TESTING=files-testing
+         - SEARCH_CONFIDENCE_THRESHOLD=30
+     - image: mysql:5.7
+       environment:
+         - MYSQL_ROOT_PASSWORD=password
+         - MYSQL_DATABASE=picili
+     - image: docker.elastic.co/elasticsearch/elasticsearch:5.4.1
+       environment:
+         - xpack.security.enabled=false
+     - image: laradock/php-fpm:1.4-71
+    working_directory: /picili
+    steps:
+     - checkout
+     - run: 
+         name: Install server packages
+         command: apt-get -qq update; apt-get -y install git libpng-dev mysql-client
+     - run:
+         name: "Node Versions"
+         command: |
+           curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
+           export NVM_DIR="$HOME/.nvm"
+           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+           nvm install stable
+           nvm use stable
+           nvm alias stable
+           apt-get update
+           apt-get install nodejs -y
+           apt-get install npm -y
+           echo 'export PATH=$PATH:/usr/local/bin' >> $HOME/.bashrc
+           ln -s /usr/bin/nodejs /usr/bin/node
+           node --version
+           npm --version
+           cd www-workspace/spa
+           npm set registry http://registry.npmjs.org
+           npm update -g
+           npm --version
+           node --version
+           npm i
+           npm install -g angular-cli --unsafe-perm
+           pwd
+           ng build
+     - run:
+         name: Copy spa into API public folder
+         command: |
+           cp -a www-workspace/spa/dist/. www-workspace/user-api-laravel/public
+     - run:
+         name: Install PHP extensions
+         command: docker-php-ext-install pdo_mysql gd
+     # install composer
+     - run:
+        name: Install Composer
+        command: |
+          curl -sS https://getcomposer.org/installer | php
+          mv composer.phar /usr/local/bin/composer
+    # install php packages/dependencies
+     - run: 
+         name: Install php packages/dependencies
+         command: |
+           cd www-workspace/user-api-laravel
+           composer install
+           cd ../auto
+           composer install
+     - run:
+         name: Serve API Application
+         background: true
+         command: |
+           cd www-workspace/user-api-laravel
+           cp .env.testing .env
+           php artisan serve
+     # run tests
+     - run:  
+         name: API tests
+         command: |
+           www-workspace/user-api-laravel/vendor/bin/phpunit -c www-workspace/user-api-laravel/phpunit.xml
+     - run:  
+         name: AUTO tests
+         command: |
+           www-workspace/auto/vendor/bin/phpunit -c www-workspace/auto/phpunit.xml
+
+workflows:
+  version: 2
+  all:
+    jobs:
+      - build SPA
+      - test-api
+      - test-auto
