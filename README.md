@@ -8,7 +8,7 @@ picili is an automated image search engine / browser. It syncronises with a chos
 2. [Set up](#20-set-up-picili-locally)
 
 
-# 1.0 How it works
+## 1.0 How it works
 
 - polls dropbox every x minutes, gets a list of files.
 - compares to all files it has identified so far.
@@ -23,9 +23,9 @@ picili is an automated image search engine / browser. It syncronises with a chos
         - geocode - get localtion information (via external API)
         - get altitude (via external API)
 
-# 2.0 Set up picili locally
+## 2.0 Set up picili locally
 
-## phpmyadmin container
+### phpmyadmin container
 
 http://localhost:8080
 - host: mysql
@@ -33,19 +33,19 @@ http://localhost:8080
 - password: password
 (doesn't follow env values at all..)
 
-### connect to db via a sequel client
+#### connect to db via a sequel client
 - host: 127.0.0.1
 - user: root
 - password: password
 
-## kibana
+### kibana
 
 http://localhost:5601/
 
 console browser: http://localhost:5601/app/kibana#/dev_tools/console?_g=()
 
 
-## set up
+### set up
 
 - `docker up` to build
 - bash into *workspace* container `docker-compose run workspace bash`
@@ -64,25 +64,25 @@ Do everything dev related in the workspace container:
 
 
 
-### seeders
+#### seeders
 
 - seeder to create folders: `cd /var/www/auto && php artisan db:seed --class=FolderSeeder`
 
-## run all tests
+### run all tests
 
 /var/www/user-api-laravel/vendor/bin/phpunit
 /var/www/auto/vendor/bin/phpunit
 
-# run a specific test
+## run a specific test
 
 vendor/bin/phpunit --filter testUpdateDropboxFilesource tests/Feature/BlackboxTest
 
-# use site
+## use site
 
 Site runs at http://localhost
 - it's the SPA backed with the API (the spa is just dumped into the api projects public folder)
 
-## commands
+### commands
 
 (to be run from the workspace container)
 
