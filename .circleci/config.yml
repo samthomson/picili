@@ -109,7 +109,7 @@ jobs:
            www-workspace/user-api-laravel/vendor/bin/phpunit -c www-workspace/user-api-laravel/phpunit.xml
   test-auto:
     docker:
-     - image: php:7.1-apache
+     - image: php:7.1-cli
        environment:
          - DB_NAME=picili
          - DB_HOST=127.0.0.1
@@ -135,7 +135,7 @@ jobs:
      - checkout
      - run: 
          name: Install server packages
-         command: apt-get -qq update; apt-get -y install git libjpeg62-turbo-dev libpng-dev mysql-client php7.1-gd
+         command: apt-get -qq update; apt-get -y install git libjpeg62-turbo-dev libpng12-dev mysql-client php7.1-gd
      - run:
          name: Install PHP extensions
          command: docker-php-ext-install pdo_mysql gd exif
