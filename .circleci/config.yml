@@ -1,0 +1,170 @@
+version: 2
+dependencies:
+  cache_directories:
+    - ~/.composer/cache
+    - "www-workspace/user-api-laravel/vendor"
+jobs:
+  build-spa:
+    docker:
+     - image: php:7.1-apache
+       environment:
+         - DB_NAME=picili
+         - DB_HOST=127.0.0.1
+         - DB_NAME_TESTING=picili_testing
+         - DB_USERNAME=root
+         - DB_PASSWORD=password
+         - APP_KEY=base64:uynE8re8ybt2wabaBjqMwQvLczKlDSQJHCepqxmGffE=
+         - JWT_SECRET=dQsobNAzIGnF4sx4PDRAaZWFUEMQulAV
+         - ELASTICSEARCH_HOST=localhost
+         - ELASTICSEARCH_INDEX=files
+         - ELASTICSEARCH_INDEX_TESTING=files-testing
+         - SEARCH_CONFIDENCE_THRESHOLD=30
+    working_directory: /picili
+    steps:
+     - checkout
+     - run: 
+         name: Install server packages
+         command: apt-get -qq update; apt-get -y install git
+     - run:
+         name: "Node Versions"
+         command: |
+           curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
+           export NVM_DIR="$HOME/.nvm"
+           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+           nvm install stable
+           nvm use stable
+           nvm alias stable
+           apt-get update
+           apt-get install nodejs -y
+           apt-get install npm -y
+           echo 'export PATH=$PATH:/usr/local/bin' >> $HOME/.bashrc
+           ln -s /usr/bin/nodejs /usr/bin/node
+           node --version
+           npm --version
+           cd www-workspace/spa
+           npm set registry http://registry.npmjs.org
+           npm update -g
+           npm i
+           npm install -g angular-cli --unsafe-perm
+           pwd
+           ng build
+     - run:
+         name: Copy spa into API public folder
+         command: |
+           cp -a www-workspace/spa/dist/. www-workspace/user-api-laravel/public
+  test-api:
+    docker:
+     - image: php:7.1-apache
+       environment:
+         - DB_NAME=picili
+         - DB_HOST=127.0.0.1
+         - DB_NAME_TESTING=picili_testing
+         - DB_USERNAME=root
+         - DB_PASSWORD=password
+         - APP_KEY=base64:uynE8re8ybt2wabaBjqMwQvLczKlDSQJHCepqxmGffE=
+         - JWT_SECRET=dQsobNAzIGnF4sx4PDRAaZWFUEMQulAV
+         - ELASTICSEARCH_HOST=localhost
+         - ELASTICSEARCH_INDEX=files
+         - ELASTICSEARCH_INDEX_TESTING=files-testing
+         - SEARCH_CONFIDENCE_THRESHOLD=30
+     - image: mysql:5.7
+       environment:
+         - MYSQL_ROOT_PASSWORD=password
+         - MYSQL_DATABASE=picili
+     - image: docker.elastic.co/elasticsearch/elasticsearch:5.4.1
+       environment:
+         - xpack.security.enabled=false
+     - image: laradock/php-fpm:1.4-71
+    working_directory: /picili
+    steps:
+     - checkout
+     - run: 
+         name: Install server packages
+         command: apt-get -qq update; apt-get -y install git libpng-dev mysql-client
+     - run:
+         name: Install PHP extensions
+         command: docker-php-ext-install pdo_mysql gd
+     - run:
+        name: Install Composer
+        command: |
+          curl -sS https://getcomposer.org/installer | php
+          mv composer.phar /usr/local/bin/composer
+     - run: 
+         name: Install php packages/dependencies
+         command: |
+           cd www-workspace/user-api-laravel
+           composer install
+     - run:
+         name: Serve API Application
+         background: true
+         command: |
+           cd www-workspace/user-api-laravel
+           cp .env.testing .env
+           cp public/spa.html public/index.html
+           php artisan serve
+     - run:  
+         name: API tests (phpunit)
+         command: |
+           www-workspace/user-api-laravel/vendor/bin/phpunit -c www-workspace/user-api-laravel/phpunit.xml
+  test-auto:
+    working_directory: /picili
+    docker:
+     - image: louisbl/php:7.1-cli
+       environment:
+         - DB_NAME=picili
+         - DB_HOST=127.0.0.1
+         - DB_NAME_TESTING=picili_testing
+         - DB_USERNAME=root
+         - DB_PASSWORD=password
+         - APP_KEY=base64:uynE8re8ybt2wabaBjqMwQvLczKlDSQJHCepqxmGffE=
+         - JWT_SECRET=dQsobNAzIGnF4sx4PDRAaZWFUEMQulAV
+         - ELASTICSEARCH_HOST=localhost
+         - ELASTICSEARCH_INDEX=files
+         - ELASTICSEARCH_INDEX_TESTING=files-testing
+         - SEARCH_CONFIDENCE_THRESHOLD=30
+     - image: mysql:5.7
+       environment:
+         - MYSQL_ROOT_PASSWORD=password
+         - MYSQL_DATABASE=picili
+     - image: docker.elastic.co/elasticsearch/elasticsearch:5.4.1
+       environment:
+         - xpack.security.enabled=false
+    steps:
+     - checkout
+     - run: 
+         name: Install server packages
+         command: |
+           apt-get update
+           apt-get -y install -y git libwebp-dev libjpeg-dev libpng-dev mysql-client
+     - run:
+         name: Install PHP extensions
+         command: |
+           docker-php-ext-install pdo_mysql
+           docker-php-ext-install exif
+     - run:
+        name: Install Composer
+        command: |
+          curl -sS https://getcomposer.org/installer | php
+          mv composer.phar /usr/local/bin/composer
+     - run: 
+         name: Install php packages/dependencies
+         command: |
+           cd www-workspace/auto
+           composer install
+     - run:
+         name: seed test dirs
+         command:  |
+           cd www-workspace/auto
+           php artisan db:seed --class=FolderSeeder --force
+     - run:  
+         name: AUTO tests (phpunit)
+         command: |
+           www-workspace/auto/vendor/bin/phpunit -c www-workspace/auto/phpunit-circle-ci.xml
+
+workflows:
+  version: 2
+  all:
+    jobs:
+      - build-spa
+      - test-api
+      - test-auto

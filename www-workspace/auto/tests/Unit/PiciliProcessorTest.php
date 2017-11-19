@@ -299,34 +299,6 @@ class PiciliProcessorTest extends TestCase
         $this->assertFalse(file_exists($sTempFileProcessing));
     }
 
-    // todo - this should be moved into http tests
-    public function testDeleteFromS3()
-    {
-        $sTestFileName = 'kodak_z740.JPG';
-        $sTestAWSPath = Helper::sGetAWSBasePath('test').$sTestFileName;
-        // assert files not on aws
-        $s3 = \Storage::disk('s3');
-        $this->assertFalse(\Storage::disk('s3')->exists($sTestAWSPath));
-
-        /// put files on aws
-        $oImage = \Image::make(resource_path('test-files/jpegs/'.$sTestFileName));
-        $sAWSBaseThumbPath = Helper::sGetAWSBasePath('test');
-        Helper::saveStreamToAWS(
-            $sTestAWSPath,
-            $oImage->stream()->__toString()
-        );
-
-        // assert files in aws
-        $this->assertTrue(\Storage::disk('s3')->exists($sTestAWSPath));
-
-        /// use function to remove from aws
-        $bResponse = Helper::deleteFilesFromAWS([$sTestAWSPath]);
-
-        // assert files not in aws
-        $this->assertFalse(\Storage::disk('s3')->exists($sTestAWSPath));
-        $this->assertTrue($bResponse);
-    }
-
     public function testDeleteFromElastic()
     {
         $iUniqueUser = 865;

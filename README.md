@@ -1,5 +1,7 @@
 # Picili
 
+[build]: https://circleci.com/gh/samthomson/picili.svg?&style=shield
+
 ## phpmyadmin container
 
 http://localhost:8080
@@ -50,7 +52,7 @@ Do everything dev related in the workspace container:
 
 # run a specific test
 
-vendor/bin/phpunit --filter testUpdateDropboxFilesource Tests/Feature/BlackboxTest
+vendor/bin/phpunit --filter testUpdateDropboxFilesource tests/Feature/BlackboxTest
 
 # use site
 
