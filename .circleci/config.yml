@@ -158,6 +158,6 @@ workflows:
   version: 2
   all:
     jobs:
-      - build SPA
+      - build
       - test-api
       - test-auto
