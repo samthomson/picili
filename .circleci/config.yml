@@ -130,7 +130,6 @@ jobs:
      - image: docker.elastic.co/elasticsearch/elasticsearch:5.4.1
        environment:
          - xpack.security.enabled=false
-     - image: laradock/php-fpm:1.4-71
     steps:
      - checkout
      - run: 
