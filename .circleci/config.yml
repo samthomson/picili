@@ -135,7 +135,7 @@ jobs:
      - checkout
      - run: 
          name: Install server packages
-         command: apt-get -qq update; apt-get -y install -y git libjpeg62-turbo-dev libpng12-dev mysql-client
+         command: apt-get -qq update; apt-get -y install -y git libjpeg62-turbo-dev libpng12-dev mysql-client sudo
      - run:
          name: Install PHP extensions
          command: sudo docker-php-ext-install pdo_mysql gd exif
