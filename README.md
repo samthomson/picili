@@ -53,6 +53,8 @@ Picili is completely dockerized.
 
 Click 'login' and then register to begin.
 
+To start the auto processor(s): `cd /var/www/auto-scaler && npm start`
+
 ## 3.0 Working on picili
 
 Do everything dev related in the workspace container: `docker-compose run workspace bash`
