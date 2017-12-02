@@ -40,57 +40,31 @@ Data: MySQL and Elasticsearch
 
 ## 2.0 Set up picili locally
 
-### phpmyadmin container
+Picili is completely dockerized.
 
-http://localhost:8080
-- host: mysql
-- user: root
-- password: password
-(doesn't follow env values at all..)
-
-#### connect to db via a sequel client
-- host: 127.0.0.1
-- user: root
-- password: password
-
-### kibana
-
-http://localhost:5601/
-
-console browser: http://localhost:5601/app/kibana#/dev_tools/console?_g=()
-
-
-### set up
-
-- `docker up` to build
-- bash into *workspace* container `docker-compose run workspace bash`
-- install each php projects composer dependencies
-
-```
-docker-compose run workspace bash
-
-CMD cd /var/www/user-api-laravel && composer install
-CMD cd /var/www/auto && composer install
-./migrate.sh
-```
-
-Do everything dev related in the workspace container:
-`docker-compose run workspace bash`
-
-
-
-#### seeders
-
+- `cd` into the root folder and run `docker-compose up -d` to build
+- then bash into *workspace* container: `docker-compose run workspace bash`
+- then from within that container run these commands to install dependencies and seed the database with required tables
+ - `cd /var/www/user-api-laravel && composer install`
+ - `cd /var/www/auto && composer install`
+ - `cd /var/www && ./migrations.sh`
 - seeder to create folders: `cd /var/www/auto && php artisan db:seed --class=FolderSeeder`
+- picili is now ready to run and should be accesable from `http://localhost`
 
-### run all tests
+Click 'login' and then register to begin.
 
-/var/www/user-api-laravel/vendor/bin/phpunit
-/var/www/auto/vendor/bin/phpunit
+## 3.0 Working on picili
+
+Do everything dev related in the workspace container: `docker-compose run workspace bash`
+
+### run tests
+
+API tests: `/var/www/user-api-laravel/vendor/bin/phpunit`
+Auto tests: `/var/www/auto/vendor/bin/phpunit`
 
 ## run a specific test
 
-vendor/bin/phpunit --filter testUpdateDropboxFilesource tests/Feature/BlackboxTest
+`/var/www/user-api-laravel/vendor/bin/phpunit --filter testUpdateDropboxFilesource tests/Feature/BlackboxTest`
 
 ## use site
 
@@ -107,3 +81,24 @@ Site runs at http://localhost
 
 - re-create: `cd /var/www/auto && php artisan elastic-delete && php artisan elastic-create`
 - all (re-create and re-index): `cd /var/www/auto && php artisan elastic-delete && php artisan elastic-create && php artisan index-all`
+
+### containers / services
+
+#### phpmyadmin container
+
+http://localhost:8080
+- host: mysql
+- user: root
+- password: password
+(doesn't follow env values at all..)
+
+##### connect to db via a sequel client
+- host: 127.0.0.1
+- user: root
+- password: password
+
+#### kibana
+
+http://localhost:5601/
+
+console browser: http://localhost:5601/app/kibana#/dev_tools/console?_g=()
