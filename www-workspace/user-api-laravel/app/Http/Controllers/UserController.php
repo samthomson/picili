@@ -222,7 +222,6 @@ class UserController extends Controller
         }
     }
 
-
     public function updatePrivacy(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -241,7 +240,6 @@ class UserController extends Controller
         return response()->json(['success' => true]);
     }
 
-
     public static function connectDropbox(Request $request)
     {
         // get data from request
@@ -252,7 +250,6 @@ class UserController extends Controller
 
         if(isset($dropboxService))
         {
-
             // check if code is valid
 
             // if code is provided get user data and sign in
