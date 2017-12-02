@@ -49,6 +49,7 @@ Picili is completely dockerized.
  - `cd /var/www/auto && composer install`
  - `cd /var/www && ./migrations.sh`
 - seeder to create folders: `cd /var/www/auto && php artisan db:seed --class=FolderSeeder`
+- create elastic mapping: `cd /var/www/auto && php artisan elastic-create`
 - picili is now ready to run and should be accesable from `http://localhost`
 
 Click 'login' and then register to begin.
