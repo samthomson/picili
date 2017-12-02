@@ -188,11 +188,7 @@ class UserController extends Controller
 
         if(isset($oUser->dropboxToken))
         {
-
-            $oUser->dropboxToken->folder = $request->input('folder');
-            $oUser->dropboxToken->save();
-
-            // save it into mongo auto db and schedule first task too
+            // save it into the db and schedule an import task
             $oFolder = DropboxFilesource::where('user_id', $oUser->id)->first();
             if($oFolder === null) {
                 $oFolder = new DropboxFilesource;
