@@ -380,7 +380,6 @@ class BlackboxTest extends TestCase
 
         // test for db modal, verify it is updated
         $oUser = User::with('dropboxToken')->where('username', 'seeduser')->first();
-        $this->assertEquals($oUser->dropboxToken->folder, $sUpdateFolderTo);
 
         // and check an initial import task is created
         $oNewFolderSource = DropboxFilesource::where('user_id', $oUser->id)->first();
