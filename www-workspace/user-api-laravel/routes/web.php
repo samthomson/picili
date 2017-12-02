@@ -11,14 +11,6 @@
 |
 */
 
-/*
-Route::get('/', function () {
-    // return view('index');
-    return File::get(public_path() . '/index.html');
-    // return response()->json([':)']);
-});
-*/
-
 Route::group(['prefix' => 'app', 'middleware' => 'cors'], function () {
 
     Route::post('/register', 'UserController@register');
