@@ -210,11 +210,10 @@ class BlackboxTest extends TestCase
         $oNewToken = new DropboxToken;
         $oNewToken->user_id = 1;
         $oNewToken->access_token = $sTokenValue;
-        $oNewToken->folder = $sTokenFolder;
         $oNewToken->save();
 
         // assert it was saved
-        $oFoundToken = DropboxToken::where('folder', $sTokenFolder)->first();
+        $oFoundToken = DropboxToken::where('user_id', 1)->first();
         $this->assertTrue(isset($oFoundToken));
 
         // assert token is legible
