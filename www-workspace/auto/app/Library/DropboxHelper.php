@@ -480,7 +480,10 @@ class DropboxHelper {
             ->delete();
 
             // remove actual dropbox file
-            DropboxFiles::find($iDropboxFileId)->delete();
+            $oDropboxFileToDelete = DropboxFiles::find($iDropboxFileId);
+            if(isset($oDropboxFileToDelete)) {
+                $oDropboxFileToDelete->delete();
+            }
         }else{
             logger("couldn't find picili file to delete.. already deleted by another task..? dropbox file id was {$iDropboxFileId}, and the path: {$sPath}");
         }
