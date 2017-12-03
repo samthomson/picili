@@ -163,6 +163,25 @@ class JpegTest extends TestCase
         $this->assertTrue(isset($aCorruptColours['best']));
     }
 
+    public function testColourExtractionOnImageThatWasSilentlyFailing()
+    {
+        // tests memory limit is set high enough
+        $saP = [
+            '13.jpg'
+        ];
+
+        $aColours = Helper::aGetColours(resource_path('test-files/colour-test/'.$saP[0]));
+
+        $this->assertTrue(isset($aColours['best']));
+        $this->assertTrue(is_integer($aColours['best']['r']));
+        $this->assertTrue(is_integer($aColours['best']['g']));
+        $this->assertTrue(is_integer($aColours['best']['b']));
+
+        $this->assertTrue(isset($aColours['pallette']));
+        $this->assertTrue(is_array($aColours['pallette']));
+        $this->assertTrue(count($aColours['pallette']) === 5);
+    }
+
     public function testCanReadExif()
     {
         $sTestFolder = resource_path('test-files/jpegs');

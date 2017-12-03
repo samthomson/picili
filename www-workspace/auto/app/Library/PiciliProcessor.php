@@ -29,8 +29,6 @@ class PiciliProcessor {
         $mExtra = null;
         if(isset($oNextTask) && isset($oNextTask->processor))
         {
-            // echo $oNextTask->processor, "\n";
-
             switch($oNextTask->processor)
             {
                 case 'full-dropbox-import':
@@ -39,33 +37,35 @@ class PiciliProcessor {
                         // queue next step - phys
                         Helper::completeATask($oNextTask->id);
                     } else {
-                        switch($mResult['error']['type'])
-                        {
-                            case 'curl-error':
-                                // probably http error, try again quickly
-                                $iTryInSeconds = $mResult['error']['retry_after'];
-                                $oTask = Task::find($oNextTask->id);
+                        if(isset($mResult['error']) && isset($mResult['error']['type'])) {
+                            switch($mResult['error']['type'])
+                            {
+                                case 'curl-error':
+                                    // probably http error, try again quickly
+                                    $iTryInSeconds = $mResult['error']['retry_after'];
+                                    $oTask = Task::find($oNextTask->id);
 
-                                if(isset($oTask
-                                ))
-                                {
-                                    $oTask->dDateAfter = Carbon::now()->addSeconds(10);
-                                    $oTask->save();
-                                }
-                                break;
-                            case 'throttled':
-                                // probably http error, try again quickly
-                                $iTryInSeconds = $mResult['error']['retry_after'];
-                                $oTask = Task::find($oNextTask->id);
+                                    if(isset($oTask
+                                    ))
+                                    {
+                                        $oTask->dDateAfter = Carbon::now()->addSeconds(10);
+                                        $oTask->save();
+                                    }
+                                    break;
+                                case 'throttled':
+                                    // probably http error, try again quickly
+                                    $iTryInSeconds = $mResult['error']['retry_after'];
+                                    $oTask = Task::find($oNextTask->id);
 
-                                if(isset($oTask
-                                ))
-                                {
-                                    $oTask->dDateAfter = Carbon::now()->addSeconds($iTryInSeconds);
-                                    $oTask->save();
-                                }
-                                break;
-                            
+                                    if(isset($oTask
+                                    ))
+                                    {
+                                        $oTask->dDateAfter = Carbon::now()->addSeconds($iTryInSeconds);
+                                        $oTask->save();
+                                    }
+                                    break;
+                                
+                            }
                         }
                     }
                     break;
@@ -98,6 +98,8 @@ class PiciliProcessor {
                     $mResult = self::bProcessPhysicalFile($oNextTask->related_file_id);
                     if($mResult['success']){
                         Helper::completeATask($oNextTask->id);
+                    }else{
+                        logger('physical file processor was not succesful');
                     }
                     break;
 

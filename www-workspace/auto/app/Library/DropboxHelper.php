@@ -42,15 +42,12 @@ class DropboxHelper {
                 $aoDatabaseFiles = ($oFileSource->dropboxFiles !== null ? $oFileSource->dropboxFiles : []);
                 $aDatabaseFiles = [];
 
-
                 // turn relation object into array of objects with path as key
                 foreach ($aoDatabaseFiles as $oDBFile) {
                     $aDatabaseFiles[$oDBFile->dropbox_path] = $oDBFile->toArray();
                 }
 
                 $aaDropboxFileSystemChanges = self::findDifferenceInDropboxFileSystem($aDatabaseFiles, $oDropboxFilesByKey);
-
-
 
                 $saNewFilesForSystem = $aaDropboxFileSystemChanges['new'];
                 $saLostFilesFromSystem = $aaDropboxFileSystemChanges['deleted'];
@@ -509,6 +506,7 @@ class DropboxHelper {
             );
             $iReqs++;
 
+            // only do the comparison logic if our request succeeded in getting a list of files
             if ($aNewEntries['success']) {
 
                 $aEntries = $aNewEntries['entries'];
@@ -522,9 +520,10 @@ class DropboxHelper {
                     }
                     $oaEntries = array_merge($oaEntries, $aEntries['entries']);
             } else {
-                // propogate the erro back
+                // propogate the error back
                 $aError = $aNewEntries['error'];
                 $bComplete = true;
+                $bSuccess = false;
             }
         }
 
@@ -667,15 +666,11 @@ class DropboxHelper {
                 {
                     case 429:
                         // throttled
-                        logger('THROTTLED');
-                        logger($result);
+                        logger('THROTTLED - Dropbox throttled our request, we\'ll retry when they say it\'s ok');
                         $bSuccess = false;
 
-                        
-
                         $iSecs = (int)self::sGetHeaderValue($headers, 'Retry-After');
-                        logger('parsed retry after value: '.$iSecs);
-
+                        
                         if ($iSecs === null) $iSecs = 300;
                         
                         $aError = [

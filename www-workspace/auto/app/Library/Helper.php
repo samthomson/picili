@@ -262,14 +262,24 @@ class Helper {
             // some tasks are instantly requeued
             if($oTask->processor === 'full-dropbox-import')
             {
-                // queue again for next pull
-                Helper::QueueAnItem(
-                    'full-dropbox-import',
-                    $oTask->related_file_id,
-                    $oTask->user_id,
-                    null,
-                    Carbon::now()->addMinutes(1)
-                );
+                // queue again for next pull if the users file source doens't have an import task scheduled already
+                $iExistingImportTasks = Task::where('processor', '=', 'full-dropbox-import')
+                ->where('user_id', '=', $oTask->user_id)
+                ->where('related_file_id', '=', $oTask->related_file_id)
+                ->count();
+
+                // there should be one at least, the one we are about to complete/delete
+                if($iExistingImportTasks < 2) {
+                    Helper::QueueAnItem(
+                        'full-dropbox-import',
+                        $oTask->related_file_id,
+                        $oTask->user_id,
+                        null,
+                        Carbon::now()->addMinutes(1)
+                    );
+                } else {
+                    logger('there was already a dropbox import task for this user and filesource, skipping creating a new import task..');
+                }
             }
 
             $oTask->delete();
@@ -282,7 +292,7 @@ class Helper {
             }
         } else {
             // throw new \Exception('Helper::completeATask - couldn\'t find task: '.$iTaskId);
-            echo "Warning: Helper::completeATask - couldn't find task: ".$iTaskId;
+            logger("Warning: Helper::completeATask - couldn't find task: ".$iTaskId);
             return null;
         }
     }
@@ -383,39 +393,37 @@ class Helper {
     {
         $aReturnColours = [];
 
-        ini_set('gd.jpeg_ignore_warning', true);
-        // calm error reporting, so we can handle corrupt images
-        $sErrorReportingLevel = error_reporting();
-        error_reporting(E_ALL & E_STRICT);
         // read in file, get main colour and pallette
 
         $primaryPalette = Palette::fromFilename($sFullPath);
         $extractor = new ColorExtractor($primaryPalette);
+        $primaryPalette = null;
 
         // it defines an extract method which return the most “representative” colors
         $aExtractedColours = $extractor->extract(5);
-
-
-
+        $extractor = null;
 
         $aPallete = [];
         foreach($aExtractedColours as $oSingleColour)
         {
             // array_push($aPallete, Color::fromIntToHex($oSingleColour));
             array_push($aPallete, Color::fromIntToRgb($oSingleColour));
+            $oSingleColour = null;
         }
         $aReturnColours['pallette'] = $aPallete;
+        $aPallete = null;
 
 
         $aMixedPallete = new \BrianMcdo\ImagePalette\ImagePalette($sFullPath);
         $colors = $aMixedPallete->getColors(1);
+        $aMixedPallete = null;
         // $aMixed = [];
         if(isset($colors[0]))
         {
             // $aReturnColours['best'] = $colors[0]->toHexString();
             $aReturnColours['best'] = (array)$colors[0];
         }
-        error_reporting($sErrorReportingLevel);
+        $colors = null;
 
         return $aReturnColours;
     }
@@ -747,18 +755,15 @@ class Helper {
                         ]
                     );
                 }
-
                 TagHelper::removeTagsOfType($oPiciliFile, 'exif');
                 TagHelper::setTagsToFile($oPiciliFile, $aaExifTags);
 
                 // set gps altiude bools, maybe queue altitude processor
                 self::ConditionalHandleExifdata($oPiciliFile, $aExifData);
-
                 // if the file had geodata, queue it for geocoder
                 if ($oPiciliFile->bHasGPS) {
                     self::QueueAnItem('geocode', $oPiciliFile->id, $oPiciliFile->user_id);
                 }
-
 
                 // get colours
                 $aColours = Helper::aGetColours($sPath);
