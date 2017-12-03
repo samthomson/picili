@@ -1,8 +1,8 @@
 #!/bin/bash
 set -eu -o pipefail
 
-# DB_NAME
-# DB_NAME_TESTING
+# DATABASE_NAME
+# DATABASE_NAME_TESTING
 # DB_HOST
 # DB_PASSWORD
 

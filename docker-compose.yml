@@ -14,8 +14,8 @@ services:
         - NODE_VERSION=${WORKSPACE_NODE_VERSION}
     environment:
       # app stuff
-      - DB_NAME=${DB_NAME}
-      - DB_NAME_TESTING=${DB_NAME_TESTING}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_NAME_TESTING=${DATABASE_NAME_TESTING}
       - DB_HOST=${MYSQL_HOST}
       - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_USER=${MYSQL_USER}
@@ -44,13 +44,13 @@ services:
     build:
       context: ./docker-containers/php-fpm
     environment:
-      - DB_NAME=${DB_NAME}
+      - DATABASE_NAME=${DATABASE_NAME}
       - DB_HOST=${MYSQL_HOST}
       - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - DB_PORT=${MYSQL_PORT}
       - MYSQL_HOST=${MYSQL_HOST}
       - MYSQL_USER=${MYSQL_USER}
-      - DB_NAME_TESTING=${DB_NAME_TESTING}
+      - DATABASE_NAME_TESTING=${DATABASE_NAME_TESTING}
       - APP_KEY=${APP_KEY}
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
       - ELASTICSEARCH_INDEX=${ELASTICSEARCH_INDEX}
@@ -83,7 +83,7 @@ services:
       - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_DATABASE=${DATABASE_NAME}
     volumes:
       - mysqldata:/var/lib/mysql
 

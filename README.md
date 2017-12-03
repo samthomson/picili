@@ -62,12 +62,12 @@ Do everything dev related in the workspace container: `docker-compose run worksp
 
 ### run tests
 
-API tests: `/var/www/user-api-laravel/vendor/bin/phpunit`
-Auto tests: `/var/www/auto/vendor/bin/phpunit`
+API tests: `cd /var/www/user-api-laravel && vendor/bin/phpunit`
+Auto tests: `cd /var/www/auto && vendor/bin/phpunit`
 
 ## run a specific test
 
-`/var/www/user-api-laravel/vendor/bin/phpunit --filter testUpdateDropboxFilesource tests/Feature/BlackboxTest`
+`cd /var/www/user-api-laravel && vendor/bin/phpunit --filter testUpdateDropboxFilesource tests/Feature/BlackboxTest`
 
 ## use site
 
