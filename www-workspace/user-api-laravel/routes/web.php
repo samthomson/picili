@@ -16,7 +16,6 @@ Route::group(['prefix' => 'app', 'middleware' => 'cors'], function () {
     Route::post('/register', 'UserController@register');
     Route::post('/authenticate', 'UserController@authenticate');
 
-
     Route::group(['middleware' => 'jwt.auth'], function () {
         Route::get('/me', 'UserController@getUser');
         Route::get('/settings', 'UserController@getSettings');
@@ -39,4 +38,4 @@ Route::group([/*'middleware' => 'jwt.auth'*/], function () {
 
 Route::any( '{catchall?}', function () {
     return response(\File::get(public_path() . DIRECTORY_SEPARATOR . 'index.html'));
-} )->where('catchall', '(.*)');
+})->where('catchall', '(.*)');

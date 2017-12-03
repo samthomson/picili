@@ -33,7 +33,6 @@ class AppController extends Controller
             $maResponse['success'] = false;
         }else{
             // we have found a real user
-            $maResponse['success'] = true;
 
             // is the requester the user?
             $maResponse['bYourPage'] = false;
@@ -185,21 +184,17 @@ class AppController extends Controller
                     break;
             }
 
-
-            // print_r($aQueryForElastic);die();
-
             // elastic docs are stored with a user id, not username, so we'll use that now while debugging (22-4-2017)
             $sUsername = $oUser->id;
-            // print_r($aQueryForElastic);
-            // print_r($sElasticQuerySearchMode);die();
-            // die("sSearchMode: " . $sSearchMode);
-            // die("ask for mode: " . $sElasticQuerySearchMode);
-            $maElasticResponse = ElasticHelper::aSearch($sUsername, $aQueryForElastic, $sElasticQuerySearchMode, $iPage);
-
-            $maResponse['search'] = $maElasticResponse;
-
-            // print_r($maElasticResponse);
-
+            try{
+                // query elastic through helper utility
+                $maElasticResponse = ElasticHelper::aSearch($sUsername, $aQueryForElastic, $sElasticQuerySearchMode, $iPage);
+                // return them, and success status
+                $maResponse['search'] = $maElasticResponse;
+                $maResponse['success'] = true;
+            } catch(\Elasticsearch\Common\Exceptions\NoNodesAvailableException $ex) {
+                $maResponse['search'] = null;
+            }
         }
 
         return response()->json($maResponse);
