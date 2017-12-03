@@ -204,17 +204,17 @@ class BlackboxTest extends TestCase
     public function testEncryptToken()
     {
         // save dropbox token
+
         $sTokenValue = 'sam';
-        $sTokenFolder = 'sams pics';
+        $sTokenUserId = 87;
 
         $oNewToken = new DropboxToken;
-        $oNewToken->user_id = 1;
+        $oNewToken->user_id = $sTokenUserId;
         $oNewToken->access_token = $sTokenValue;
-        $oNewToken->folder = $sTokenFolder;
         $oNewToken->save();
 
         // assert it was saved
-        $oFoundToken = DropboxToken::where('folder', $sTokenFolder)->first();
+        $oFoundToken = DropboxToken::where('user_id', $sTokenUserId)->first();
         $this->assertTrue(isset($oFoundToken));
 
         // assert token is legible
@@ -381,7 +381,6 @@ class BlackboxTest extends TestCase
 
         // test for db modal, verify it is updated
         $oUser = User::with('dropboxToken')->where('username', 'seeduser')->first();
-        $this->assertEquals($oUser->dropboxToken->folder, $sUpdateFolderTo);
 
         // and check an initial import task is created
         $oNewFolderSource = DropboxFilesource::where('user_id', $oUser->id)->first();

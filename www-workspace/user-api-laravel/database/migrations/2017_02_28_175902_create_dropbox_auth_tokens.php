@@ -17,7 +17,6 @@ class CreateDropboxAuthTokens extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('access_token', 512);
-            $table->string('folder')->default('');
             $table->timestamps();
         });
     }
