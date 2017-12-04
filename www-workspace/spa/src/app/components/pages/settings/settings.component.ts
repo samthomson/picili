@@ -32,7 +32,7 @@ export class SettingsComponent implements OnInit {
 
         if(this.oSettings.dropbox !== null)
         {
-            this.sDropboxFolderPathInput = this.oSettings.dropbox.sFolderPath;
+            this.sDropboxFolderPathInput = this.oSettings.dropbox.folder;
         }
     }
 
