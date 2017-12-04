@@ -80,19 +80,6 @@ export class SideMenuComponent implements OnInit {
 
   }
 
-    // delete 14.3.16 - use from search service now
-    // getQVars() : Object{
-    //     if (typeof this.searchService.mQuery['q'] !== "undefined")
-    //     {
-    //         if (this.searchService.mQuery['q'] !== '')
-    //         {
-    //             return {q: this.searchService.mQuery['q']};
-    //         }
-    //     }else{
-    //         return {};
-    //     }
-    // }
-
     genLink(sPage)
     {
         // build a link to page with query if it's set

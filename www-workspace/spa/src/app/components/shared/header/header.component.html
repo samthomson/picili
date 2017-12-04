@@ -10,7 +10,7 @@
             <!-- on users own page -->
 
             <!-- not on users own page -->
-            <a *ngIf="sUsername !== ''" [routerLink]="['/' + sUsername]" class="ui tiny primary button">your page</a>
+            <a *ngIf="sUsername !== ''" [routerLink]="['/' + sUsername + '/search']" class="ui tiny primary button">your page</a>
 
             
             <a *ngIf="sUsername !== ''" [routerLink]="['/' + sCurrentPageUsername + '/settings']" class="ui tiny button">settings</a>

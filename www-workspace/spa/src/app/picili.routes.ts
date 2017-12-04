@@ -24,9 +24,9 @@ const routes = [
 
     { path: ':username/settings', component: SettingsComponent, resolve: { userSettings: UserSettingsResolve}, canActivate: [AuthGuard] },
     
-    { path: ':username/:searchmode', name: 'user-search-specific', component: UserPageComponent},
+    { path: ':username/:searchmode', name: 'user-search-specific', component: UserPageComponent}/*
 
-    { path: ':username', name: 'user-search-default', component: UserPageComponent}
+    { path: ':username', name: 'user-search-default', component: UserPageComponent}*/
 ];
 
 export const routing = RouterModule.forRoot(routes);

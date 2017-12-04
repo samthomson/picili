@@ -33,7 +33,6 @@ import { RegisterComponent } from './components/pages/register/register.componen
 import { HomeComponent } from './components/pages/home/home.component';
 import { UserPageComponent } from './components/pages/user-page/user-page.component';
 import { SettingsComponent } from './components/pages/settings/settings.component';
-import { UserPageLinkComponent } from './components/shared/header/user-page-link/user-page-link.component';
 import { PeopleComponent } from './components/pages/user-page/people/people.component';
 import { ElevationComponent } from './components/pages/user-page/elevation/elevation.component';
 import { ColourComponent } from './components/pages/user-page/colour/colour.component';
@@ -61,7 +60,6 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
     HomeComponent,
     UserPageComponent,
     SettingsComponent,
-    UserPageLinkComponent,
     PeopleComponent,
     ElevationComponent,
     ColourComponent,
