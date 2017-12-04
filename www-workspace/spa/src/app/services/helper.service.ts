@@ -1,6 +1,7 @@
+import { Injectable } from '@angular/core';
 import { GlobalVars } from './../../env';
 
-
+@Injectable()
 export class HelperService {
 
     constructor(
