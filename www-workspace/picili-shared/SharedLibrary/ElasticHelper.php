@@ -280,7 +280,7 @@ class ElasticHelper {
             } 
             catch(\Elasticsearch\Common\Exceptions\NoNodesAvailableException $ex)
             {
-                logger("elasticsearch was offline, couldn't save file {$$oPiciliFile->id}");
+                logger("elasticsearch was offline, couldn't save file {$oPiciliFile->id}");
                 return false;
             }
         }else{
