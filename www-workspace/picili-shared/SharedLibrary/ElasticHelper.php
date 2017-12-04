@@ -272,13 +272,17 @@ class ElasticHelper {
                 'body' => $oDocumentBody
             ];
 
-            $client = ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOSTS')])->build();
-
-            $response = $client->index($params);
-
-
-            return true;
-
+            try
+            {
+                $client = ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOSTS')])->build();
+                $response = $client->index($params);
+                return true;
+            } 
+            catch(\Elasticsearch\Common\Exceptions\NoNodesAvailableException $ex)
+            {
+                logger("elasticsearch was offline, couldn't save file {$$oPiciliFile->id}");
+                return false;
+            }
         }else{
             // echo "skippping, no thumbs";
             return false;
