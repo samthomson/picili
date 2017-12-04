@@ -28,9 +28,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
+    
     public function dropboxToken()
     {
         return $this->hasOne('App\Models\DropboxToken', 'user_id', 'id');
+    }
+    
+    public function dropboxFileSource()
+    {
+        return $this->hasOne('Share\DropboxFilesource', 'user_id', 'id');
     }
 }

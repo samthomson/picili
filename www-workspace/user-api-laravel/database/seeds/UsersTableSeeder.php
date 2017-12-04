@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 
 use App\Models\User;
 use App\Models\DropboxToken;
+use Share\DropboxFilesource;
 
 class UsersTableSeeder extends Seeder
 {
@@ -26,5 +27,11 @@ class UsersTableSeeder extends Seeder
         $oDropboxToken->user_id = $oUser->id;
         $oDropboxToken->access_token = '';
         $oDropboxToken->save();
+
+        $oDropboxFileSource = new DropboxFilesource;
+        $oDropboxFileSource->user_id = $oUser->id;
+        $oDropboxFileSource->access_token = 'fake token';
+        $oDropboxFileSource->folder = 'test folder';
+        $oDropboxFileSource->save();
     }
 }

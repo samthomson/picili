@@ -142,15 +142,18 @@ class UserController extends Controller
                     'public' => (boolean)$user->public
                 ];
 
+                $user->load('dropboxToken', 'dropboxFileSource');
+
                 if(isset($user->dropboxToken))
                 {
                     $maReturn['dropbox'] = [
-                        'bWorking' => true,
-                        /*'bUserSetToEnabled' => true,
-                        'iFilesSynchronised' => null,
-                        'iFilesAvailable' => null,*/
-                        'sFolderPath' => $user->dropboxToken->folder
+                        'bWorking' => true
                     ];
+
+                    if(isset($user->dropboxFileSource)) {
+                        $maReturn['dropbox']['folder'] = $user->dropboxFileSource->folder;
+                    }
+
                 }else{
                     $maReturn['dropbox'] = null;
                 }
