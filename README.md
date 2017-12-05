@@ -6,7 +6,7 @@ picili is an automated image search engine / browser. It syncronises with a chos
 
 1. [How it works](#10-how-it-works)
 2. [Set up](#20-set-up-picili-locally)
-
+3. [Working on picili](#30-working-on-picili)
 
 ## 1.0 How it works
 
@@ -105,3 +105,15 @@ http://localhost:8080
 http://localhost:5601/
 
 console browser: http://localhost:5601/app/kibana#/dev_tools/console?_g=()
+
+
+### Working on the SPA
+
+The quickest way to work on the SPA is to first install its dependencies with `npm i` or `yarn`, and then run `ng serve`. `ng serve` is and angular-cli command which builds the SPA and serves it to `http://localhost:4200`, it also watches the SPA files and rebuilds/serves the application when it detects changes.
+
+`ng build`
+`ng serve`
+
+If you want to 'publish' the SPA into the root of the main application (API), so you can test end to end via `http://localhost` then you can run a gulp task (`gulp dist`) as defined in gulpfile.js in the SPA root after running `ng build`. These have been combined into one package script, so you can just run `npm run dist`.
+
+You need to use gulp 4, as installed as a dependency. To specifically run the local gulp and not global (which may not be version 4), so the command like this: `./node_modules/.bin/gulp dist`.
