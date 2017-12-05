@@ -31,6 +31,9 @@ class AppController extends Controller
         if(is_null($oUser))
         {
             $maResponse['success'] = false;
+            $maResponse['search'] = [
+                'results' => []
+            ];
         }else{
             // we have found a real user
 
@@ -193,7 +196,9 @@ class AppController extends Controller
                 $maResponse['search'] = $maElasticResponse;
                 $maResponse['success'] = true;
             } catch(\Elasticsearch\Common\Exceptions\NoNodesAvailableException $ex) {
-                $maResponse['search'] = null;
+                $maResponse['search'] = [
+                    'results' => []
+                ];
             }
         }
 
