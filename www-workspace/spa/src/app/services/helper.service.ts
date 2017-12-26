@@ -42,6 +42,6 @@ export class HelperService {
 
     thumbUrl(sSize, id)
     {
-        return 'https://s3-eu-west-1.amazonaws.com/picili-bucket/t/' + this.gbl.sCurrentPageUsername +'/' + sSize + id+'.jpg'
+        return this.gbl.awsBucketUrl + this.gbl.sCurrentPageUsername +'/' + sSize + id+'.jpg'
     }
 }

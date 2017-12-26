@@ -7,4 +7,5 @@ export class GlobalVars {
     sCurrentPageUsername: string = null;
     sAuthTokenName: string = 'picili.auth_token';
     iResizeTimeout: number = 200;
+    awsBucketUrl: string = environment.awsBucketUrl;
 }

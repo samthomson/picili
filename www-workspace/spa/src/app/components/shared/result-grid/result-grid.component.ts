@@ -1,3 +1,4 @@
+import { HelperService } from './../../../services/helper.service';
 import {
     Component,
     Input,
@@ -29,6 +30,7 @@ export class ResultGridComponent implements OnInit {
     constructor(
         private searchService: SearchService,
         private httpService: HttpService,
+        private helperService: HelperService,
         private gbl: GlobalVars,
         private el:ElementRef,
         private ngZone: NgZone

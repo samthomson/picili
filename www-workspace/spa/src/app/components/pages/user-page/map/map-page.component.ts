@@ -1,3 +1,4 @@
+import { HelperService } from './../../../../services/helper.service';
 import {
     Component,
     OnInit,
@@ -51,6 +52,7 @@ export class MapPageComponent implements OnInit {
         private ref: ChangeDetectorRef,
         private searchService: SearchService,
         private httpService: HttpService,
+        private helperService: HelperService,
         private gbl: GlobalVars
     ) {
         this.httpService.bSearchingChanged.subscribe(bSearching => {

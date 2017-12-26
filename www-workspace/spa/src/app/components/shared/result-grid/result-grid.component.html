@@ -13,7 +13,7 @@
             <div *ngFor="let oRow of aJustifiedRows;let iRow = index" [style.height]="aJustifiedRowHeights[iRow] + 'px'" class="justified-row">
                 <img
                     *ngFor="let oResult of oRow;let i = index" 
-                    [src]="'https://s3-eu-west-1.amazonaws.com/picili-bucket/t/'+ gbl.sCurrentPageUsername +'/m'+oResult.id+'.jpg'"
+                    [src]="helperService.thumbUrl('m', oResult.id)"
                     [style.background-color]="oResult.colour"
                     [style.width]="oResult.s_w + 'px'"
                     [style.height]="oResult.s_h + 'px'"
@@ -28,7 +28,7 @@
         <div *ngIf="sDisplayMode === 'map'">            
             <img
                 *ngFor="let oResult of results;let i = index" 
-                [src]="'https://s3-eu-west-1.amazonaws.com/picili-bucket/t/'+ gbl.sCurrentPageUsername +'/s'+oResult.id+'.jpg'"
+                [src]="helperService.thumbUrl('s', oResult.id)"
                 [style.background-color]="oResult.colour"
                 (click)="resultThumbClick(i)"
                 class="result-thumb square"

@@ -21,7 +21,7 @@
 				<sebm-google-map-marker *ngFor="let oResult of aMapIcons; let i = index"
 					[latitude]="oResult.lat"
 					[longitude]="oResult.lon"
-					[iconUrl]="'https://s3-eu-west-1.amazonaws.com/picili-bucket/t/'+ gbl.sCurrentPageUsername +'/i'+oResult.id+'.jpg'"
+					[iconUrl]="helperService.thumbUrl('i', oResult.id)"
 				></sebm-google-map-marker>
 			</div>
 		</sebm-google-map>

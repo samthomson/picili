@@ -1,3 +1,4 @@
+import { HelperService } from './../../../../services/helper.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { SearchService, HttpService } from './../../../../services';
 
@@ -14,7 +15,8 @@ export class FoldersComponent implements OnInit {
     constructor(
         private searchService: SearchService,
         private httpService: HttpService,
-        private gbl: GlobalVars
+        private gbl: GlobalVars,
+        private helperService: HelperService
     ) {
         this.httpService.bSearchingChanged.subscribe(bSearching => {
             if (bSearching) {

@@ -5,7 +5,7 @@
         <div class="ui piled segment folder-overview pointer-link" (click)="addFolder('folder', oFolder['name'])">
             <h4 class="ui header">{{oFolder['parent']}}</h4>
             <div>
-                <img class="folder-thumb" [src]="'https://s3-eu-west-1.amazonaws.com/picili-bucket/t/'+ gbl.sCurrentPageUsername +'/s'+ oFolder['file-id'] +'.jpg'" />
+                <img class="folder-thumb" [src]="helperService.thumbUrl('s', oFolder['file-id'])" />
             </div>
             <div>
                 <span><i class="fa fa-picture-o" aria-hidden="true"></i> {{oFolder['count'] | number}} picture(s)</span>

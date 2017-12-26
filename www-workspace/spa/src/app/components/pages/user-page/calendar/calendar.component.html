@@ -18,7 +18,7 @@
         <a (click)="goToDate(aAvailableDates[d])">
             <div class="day-title" [ngClass]="{'with-files': oDay.count}">{{formatWeekDateHeader(aAvailableDates[d])}}<span class="day-count">&nbsp;({{oDay.count}})</span></div>
 
-            <img *ngFor="let oResult of oDay.files;let i = index" [src]="'https://s3-eu-west-1.amazonaws.com/picili-bucket/t/'+ gbl.sCurrentPageUsername +'/s'+oResult +'.jpg'"
+            <img *ngFor="let oResult of oDay.files;let i = index" [src]="helperService.thumbUrl('s', oResult)"
                 [style.background-color]="white"
             />
         </a>
@@ -30,7 +30,7 @@
     <div *ngFor="let oDay of oDateResults; let d = index" class="day" [ngClass]="{'today': aAvailableDates[d] === oCurrentDate}">
         <a (click)="goToDate(aAvailableDates[d])">
             <span class="calendar-date" [ngClass]="{'with-files': oDay.count}">{{d + 1}}</span> <!--<span *ngIf="oDay.count">({{oDay.count}})</span>--><br/>
-            <img *ngFor="let oResult of oDay.files;let i = index" [src]="'https://s3-eu-west-1.amazonaws.com/picili-bucket/t/'+ gbl.sCurrentPageUsername +'/i'+oResult +'.jpg'"
+            <img *ngFor="let oResult of oDay.files;let i = index" [src]="helperService.thumbUrl('i', oResult)"
                 [style.background-color]="white"
             />
         </a>
