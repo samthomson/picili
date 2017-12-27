@@ -81,6 +81,10 @@ class ElasticHelper {
                             ],
                             "location" => [
                                 "type" => "geo_point"
+                            ],
+                            "altitude" => [
+                                "type" => "scaled_float",
+                                "scaling_factor" => 1000
                             ]
                         ]
                     ]
