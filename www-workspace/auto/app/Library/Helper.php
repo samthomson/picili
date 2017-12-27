@@ -491,7 +491,8 @@ class Helper {
         switch(env('APP_ENV'))
         {
             case 'production':
-                return 'http://static.picili.com/t/'.$iUserId.'/'.$sThumbSize.$iPiciliFileId.'.jpg';
+            // return 'http://static.picili.com/t/'.$iUserId.'/'.$sThumbSize.$iPiciliFileId.'.jpg';
+            return 'https://s3-'.env('AWS_REGION').'.amazonaws.com/'.env('AWS_BUCKET').'/t/'.$iUserId.'/'.$sThumbSize.$iPiciliFileId.'.jpg';
                 break;
             case 'local':
             case 'testing':
@@ -522,6 +523,7 @@ class Helper {
         {
             // mark as deleted and return true
             $oPiciliFile->bHasThumbs = false;
+            $oPiciliFile->save();
             return true;
         }else{
             return false;
@@ -932,7 +934,7 @@ class Helper {
         {
             $oPiciliFile = PiciliFile::find($iPiciliFileId);
             // get aws path
-            $sAWSS3Path = self::sS3Path($oPiciliFile->user_id, $iPiciliFileId, 'l');
+            $sAWSS3Path = self::sS3Path($oPiciliFile->user_id, $iPiciliFileId, 'xl');
 
             $iUserId = $oPiciliFile->user_id;
 
@@ -944,15 +946,10 @@ class Helper {
                 $iPiciliFileId = 'test';
             }
 
-            $sAwsPathLarge = "https://s3-eu-west-1.amazonaws.com/".env('AWS_BUCKET')."/t/".  $iUserId."/xl" . $iPiciliFileId . ".jpg";
-
-            // echo $sAwsPathLarge;
-
-            $sWebThumbPath = $sAwsPathLarge;
+            $sAwsPathLarge = "https://s3-".env('AWS_REGION').".amazonaws.com/".env('AWS_BUCKET')."/t/".  $iUserId."/xl" . $iPiciliFileId . ".jpg";
 
             // make request
-            $service_url = 'http://api.imagga.com/v1/tagging?url='.$sWebThumbPath;
-
+            $service_url = 'http://api.imagga.com/v1/tagging?url='.$sAwsPathLarge;
 
             $sKey = env('IMAGGA_KEY');
             $sSecret = env('IMAGGA_SECRET');
