@@ -741,6 +741,11 @@ class Helper {
                 self::LogSomething('helper::bProcessPhysicalFile error - error generating thumbs', $iPiciliFileId, $iUserId);
                 return false;
             }else{
+                /*
+                reload picili file from db, since it will have been modified when generating thumbnails
+                */
+                unset($oPiciliFile);
+                $oPiciliFile = PiciliFile::find($iPiciliFileId);
                 $oPiciliFile->bHasThumbs = true;
 
                 // get exif
