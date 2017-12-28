@@ -614,11 +614,11 @@ class FileTaggingHelper {
 			$aReturnExifData['cameramodel'] = $maAllData["Model"];
         }
 
-		if(isset($maAllData["DateTime"]))
+		if(isset($maAllData["DateTimeOriginal"]))
         {
-			$aReturnExifData['datetime'] = $maAllData["DateTime"];
-        }elseif(isset($maAllData['DateTimeOriginal'])) {
-			$aReturnExifData['datetime'] = $maAllData["DateTimeOriginal"];            
+			$aReturnExifData['datetime'] = $maAllData["DateTimeOriginal"];
+        }elseif(isset($maAllData['DateTime'])) {
+			$aReturnExifData['datetime'] = $maAllData["DateTime"];            
         }
 		if(isset($maAllData["Orientation"]))
         {

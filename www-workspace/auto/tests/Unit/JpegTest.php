@@ -223,6 +223,11 @@ class JpegTest extends TestCase
 
         $this->assertFalse(isset($aExifData['latitude']));
         $this->assertFalse(isset($aExifData['longitude']));
+
+        // test datetime is read from exif not file
+        $aExifData = FileTaggingHelper::aExifDataFromImagePath(resource_path('test-files/jpegs/multi-date.JPG'));
+
+        $this->assertEquals($aExifData['datetime'], '2017:09:23 17:06:25');
     }
     public function testAltitudeExifStringToNumber()
     {
