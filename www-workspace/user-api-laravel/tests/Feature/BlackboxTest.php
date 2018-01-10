@@ -400,4 +400,36 @@ class BlackboxTest extends TestCase
 
         $this->assertEquals(1, $cCount);
     }
+
+    public function testDisconnectDropbox()
+    {
+        $sTestRoute = '/app/settings/dropbox';
+
+
+        $iUserId = parent::iGetSeedUserId();
+        $cInitialFilesources = DropboxFilesource::where('user_id', $iUserId)->count();
+        $cInitialDropboxTokens = DropboxToken::where('user_id', $iUserId)->count();
+        $this->assertEquals($cInitialFilesources, 1);
+        $this->assertEquals($cInitialDropboxTokens, 1);
+
+        // test auth guard
+        $response = $this->json('DELETE', $sTestRoute);
+        $response
+            ->assertStatus(400);
+
+        // test update with valid data
+        $sHeader = parent::getHeaderForTest();
+        $response = $this->json('DELETE', $sTestRoute, [], $sHeader);
+        $response
+            ->assertStatus(200)
+            ->assertJsonFragment(['success' => true]);
+
+        // test for db modal, verify it is updated
+        $oUser = User::with('dropboxToken')->where('username', 'seeduser')->first();
+        
+        $cEndFilesources = DropboxFilesource::where('user_id', $iUserId)->count();
+        $cEndDropboxTokens = DropboxToken::where('user_id', $iUserId)->count();
+        $this->assertEquals($cEndFilesources, 0);
+        $this->assertEquals($cEndDropboxTokens, 0);
+    }
 }
