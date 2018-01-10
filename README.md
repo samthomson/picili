@@ -115,9 +115,11 @@ The quickest way to work on the SPA is to first install its dependencies with `n
 `ng build`
 `ng serve`
 
+If you plan on editing sass files, also run `npm run gulp-watch`.
+
 If you want to 'publish' the SPA into the root of the main application (API), so you can test end to end via `http://localhost` then you can run a gulp task (`gulp dist`) as defined in gulpfile.js in the SPA root after running `ng build`. These have been combined into one package script, so you can just run `npm run dist`.
 
-You need to use gulp 4, as installed as a dependency. To specifically run the local gulp and not global (which may not be version 4), so the command like this: `./node_modules/.bin/gulp dist`.
+You need to use gulp 4, as installed as a dependency. To specifically run the local gulp and not global (which may not be version 4), so the command like this: `./node_modules/.bin/gulp dist`. 
 
 
 ## 4.0 Deploying
