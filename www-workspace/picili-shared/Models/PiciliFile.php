@@ -39,4 +39,18 @@ class PiciliFile extends Model
         // take array of tag arrays and set them as related tags
         $this->tags()->saveMany($aaTags);
     }
+
+    public function save(array $options = array())
+    {
+        try{
+            return parent::save($options);
+        }catch(\Illuminate\Database\QueryException $er){
+            logger('[caught exception saving file - likely duplicate key constraint (expected)]');
+            return true;
+        }catch(\Exception $e)
+        {
+            logger(['\nunexpected exception saving file\n\n'.$e, get_class($e)]);
+            return false;
+        }
+    }
 }
