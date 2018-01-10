@@ -320,6 +320,7 @@ class UserController extends Controller
     {
         $oUser = Auth::user();
         $oUser->dropboxToken->delete();
+        $oUser->dropboxFileSource->delete();
         return response()->json(['success' => true]);
     }
 
