@@ -1,1 +1,3 @@
 .env
+www-workspace/user-api-laravel/.env.prod
+www-workspace/auto/.env.prod
