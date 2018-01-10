@@ -156,7 +156,7 @@ You need to use gulp 4, as installed as a dependency. To specifically run the lo
 
 - configure swap memory if the vps has low ram: https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04
 
-- on the server go to `/var/www/picili/auto-scaler` and run `npm start` to initiate the auto scaler which runs the auto processers. You can also run `nohup npm start` to keep the process running.
+- on the server go to `/var/www/picili/auto-scaler` and run `npm start` to initiate the auto scaler which runs the auto processers. You can also run `npm forever` to keep the process running via the forever package.
 
 - create dropbox app
 - secure elastic

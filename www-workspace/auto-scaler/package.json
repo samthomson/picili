@@ -5,11 +5,13 @@
   "repository": "part of picili: https://github.com/samthomson/picili",
   "main": "start.js",
   "scripts": {
-    "start": "node start.js"
+    "start": "node start.js",
+    "forever": "forever start start.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "forever": "^0.15.3",
     "node-cmd": "^3.0.0"
   }
 }
