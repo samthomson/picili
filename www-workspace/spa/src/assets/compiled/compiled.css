@@ -31263,7 +31263,7 @@ a:active {
 
 #menu-search-container {
   position: absolute;
-  top: 74px;
+  top: 66px;
   left: 8px;
   right: 8px;
   bottom: 8px;
@@ -31291,7 +31291,7 @@ a:active {
 
 #sort-block {
   height: 60px;
-  padding-top: 12px;
+  padding-top: 0;
 }
 
 #sort-menu {
@@ -31430,6 +31430,7 @@ li#settings-link {
 
 #search-bar-space {
   padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 #search-input {
@@ -31437,7 +31438,7 @@ li#settings-link {
 }
 
 #filters-block.ui.segment {
-  padding: 8px;
+  padding-bottom: 8px;
   padding-left: 0px;
   padding-right: 0px;
   height: 44px;
@@ -31521,7 +31522,7 @@ img.result-thumb.square {
   position: absolute;
   left: 0px;
   right: 0px;
-  top: 170px;
+  top: 124px;
   bottom: 0px;
 }
 
