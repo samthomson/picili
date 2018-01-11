@@ -31592,7 +31592,7 @@ img.folder-thumb {
 }
 
 .month .day {
-  height: 20%;
+  height: 18%;
   overflow: hidden;
 }
 
@@ -31634,6 +31634,23 @@ img.folder-thumb {
 
 .week .day img {
   width: 45%;
+}
+
+.month .day img {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+
+.month .day.day-header {
+  height: 10%;
+  overflow: hidden;
+  color: #e0e0e0;
+}
+
+.day-header.same-as-today {
+  font-weight: bold;
+  color: grey;
 }
 
 #centered-calendar-header {
