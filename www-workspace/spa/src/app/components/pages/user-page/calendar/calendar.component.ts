@@ -18,6 +18,7 @@ export class CalendarComponent implements OnInit {
     private varrr: any = '';
     parentComponent: UserPageComponent;
     private oCurrentDate = moment().format('YYYY-MM-DD')
+    private aLiteralDays: string[] = []
 
     constructor(
         private searchService: SearchService,
@@ -49,13 +50,6 @@ export class CalendarComponent implements OnInit {
         this.httpService.triggerSearch();
         this.searchService.eeDatechange.emit();
     }
-
-    /*
-    ngAfterViewInit()
-    {
-        this.searchService.eeDatechange.emit();
-    }
-    */
 
     formatWeekDateHeader(sDate)
     {
@@ -129,6 +123,7 @@ export class CalendarComponent implements OnInit {
                 typeof this.searchService.mData.search.aggs !== 'undefined'
             )
             {
+                this.aLiteralDays = [];
                 switch(this.searchService.sCalendarSearchMode)
                 {
                     case 'week':
@@ -141,6 +136,11 @@ export class CalendarComponent implements OnInit {
                         for (var iDayOfMonthCount = 0; iDayOfMonthCount < this.searchService.mdDate.daysInMonth(); iDayOfMonthCount++)
                         {
                             this.aAvailableDates.push(this.searchService.mdDate.clone().add(iDayOfMonthCount, 'days').format('YYYY-MM-DD'))
+
+                            // make headers
+                            if (iDayOfMonthCount < 7) {
+                                this.aLiteralDays.push(this.searchService.mdDate.clone().add(iDayOfMonthCount, 'days').format('dddd').substr(0,1))
+                            }
                         }
                         break;
                 }

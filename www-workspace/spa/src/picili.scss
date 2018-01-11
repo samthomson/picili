@@ -392,7 +392,7 @@ img.folder-thumb{
 	height:100%;
 }
 .month .day{
-	height:20%;
+	height: 18%;
 	overflow: hidden;
 }
 .calendar-date{
@@ -434,6 +434,17 @@ img.folder-thumb{
 	height: 32px;
 	display: block;
 }
+
+.month .day.day-header{
+	height: 10%;
+	overflow: hidden;
+	color: $cAvailableGrey;
+}
+.day-header.same-as-today{
+	font-weight: bold;
+	color: $cActiveGrey;
+}
+
 #centered-calendar-header{
 	font-size: larger;
 	margin-left: auto;

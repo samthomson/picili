@@ -26,7 +26,14 @@
 </div>
 <!-- month view -->
 <div *ngIf="searchService.sCalendarSearchMode === 'month' && searchService.mData && searchService.mData.search && searchService.mData.search.aggs" class="month">
+    <!-- week day headers -->
+    <div
+        *ngFor="let sDayLiteralHeader of aLiteralDays; let d = index"
+        class="day day-header"
+        [ngClass]="{'same-as-today': aAvailableDates[d] === oCurrentDate}"
+    >{{sDayLiteralHeader}}</div>
 
+    <!-- results -->
     <div *ngFor="let oDay of oDateResults; let d = index" class="day" [ngClass]="{'today': aAvailableDates[d] === oCurrentDate}">
         <a (click)="goToDate(aAvailableDates[d])">
             <span class="calendar-date" [ngClass]="{'with-files': oDay.count}">{{d + 1}}</span> <!--<span *ngIf="oDay.count">({{oDay.count}})</span>--><br/>
