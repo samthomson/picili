@@ -51,17 +51,11 @@ export class SearchService {
         private httpService: HttpService*/
     ) {
         this.mQuery = {'filters': [], 'q': '', 'sort': ''};
-        // this.mQuery.q = '';
-        // this.mQuery['q'] = '';
-        // console.log("mQuery:");
-        // console.log(this.mQuery);
-
         this.mdDate = moment();
     }
 
     eThumbClick(iIndice)
     {
-        // console.log("eThumbClick(iIndice)")
         this.iActiveThumb = iIndice
         this.eeThumbClick.emit(this.iActiveThumb)
     }
@@ -94,9 +88,7 @@ export class SearchService {
     }
     updateURLToVars()
     {
-        // console.log("qa vars: ");
         let sArgs = this.getQueryString();
-        // console.log(sArgs);
         this.location.go(sArgs);
     }
 
@@ -157,7 +149,6 @@ export class SearchService {
 
     addFilter(sType, sDisplay, sValue)
     {
-        // console.log("in 'addFilter'");
         if(typeof this.mQuery['filters'] === 'undefined')
         {
             this.mQuery['filters'] = [];
@@ -165,8 +156,6 @@ export class SearchService {
         var aF = {'type': sType, 'display': sDisplay, 'value': sValue};
         this.mQuery['filters'].push(aF);
         this.updateURLToVars();
-        // console.log("SearchService.mQuery['filters']");
-        // console.log(this.mQuery['filters']);
     }
 
     removeFilterByType(sType)
@@ -187,14 +176,12 @@ export class SearchService {
 
     addSetMapFilter(iLatMin, iLatMax, iLonMin, iLonMax, iZoom)
     {
-        // console.log("addsetmapfilter");
         // there can only be one map query, so we set it or update it
         var sValue = iLatMin + ',' + iLatMax + ',' + iLonMin + ',' + iLonMax + ',' + iZoom;
 
         this.removeFilterByType('map');
 
         this.addFilter('map', 'map', sValue);
-        // console.log(this.mQuery['filters']);
     }
     addSetCalendarFilter(sMode, sDisplay, sValue)
     {
@@ -215,7 +202,6 @@ export class SearchService {
 
     determineLocalVarsByParsingUrlVars()
     {
-        console.log('\n\nsearchservice: determineLocalVarsByParsingUrlVars')
         let bFoundInUrl = false;
         let bCalVars = false;
         // if there's a calendar query parse out mode and date, or set defaults
@@ -238,31 +224,10 @@ export class SearchService {
                 this.eeDatechange.emit();
 
                 bCalVars = true;
-                console.log('\n\n-- found in url')
             }
         }
-        // console.log(`\n\n\determineLocalVarsByParsingUrlVars: cal component:\nbFoundInUrl: ${bFoundInUrl}\nbCalVars: ${bCalVars}\n`)
         // did we find cal vars in url
         return (bFoundInUrl && bCalVars)
-        /*
-
-        if(!bFoundInUrl)
-        {
-            // set defaults
-            if(!bCalVars)
-            {
-                // calender search vars
-                this.sCalendarSearchMode = 'month';
-                this.mdDate = moment().startOf('month');
-                this.sDate = this.mdDate.format('DD/MM/YYYY');
-                // console.log('\n\n\neeDatechange\n\n\n')
-                this.addSetCalendarFilter(this.sCalendarSearchMode, this.sCurrentDateDisplay, this.sDate)
-
-                this.eeDatechange.emit();
-                console.log('\n\n-- not found in url, use defaults')
-            }
-        }
-        */
     }
 
     resetPage()

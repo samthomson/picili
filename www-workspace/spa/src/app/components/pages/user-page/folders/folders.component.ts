@@ -39,7 +39,6 @@ export class FoldersComponent implements OnInit {
 
     addFolder(sDisplay, sValue)
     {
-        console.log("add folder to search?: " + sValue);
         sDisplay = sValue.split("/").pop(-1);
         this.searchService.addFilter('folder', sDisplay, sValue);
 

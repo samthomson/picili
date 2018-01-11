@@ -50,8 +50,7 @@ export class LightboxComponent implements OnInit {
         // opening the info, load it
         this.bLoadingInfo = true
         // request info for right hand side
-        // console.log(`request info for file index ${this.searchService.iActiveThumb} which has id ${this.searchService.mData.search.results[this.searchService.iActiveThumb].id}`)
-
+        
         this.httpService.getFileInfo(this.searchService.mData.search.results[this.searchService.iActiveThumb].id).subscribe(
             (data) => {
                 this.bLoadingInfo = false

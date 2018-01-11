@@ -47,7 +47,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
         private gbl: GlobalVars,
         private location: PlatformLocation
     ) {
-        // console.log("\nuser-page component constructed\n")
         this.gbl.sCurrentPageUsername = route.snapshot.params['username'];
 
         this.searchService.sSearchMode = (typeof route.snapshot.params['searchmode'] === "undefined") ? 'default' : route.snapshot.params['searchmode'];
@@ -57,9 +56,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
         // get query vars
         //
         this.route.queryParams.subscribe(params => {
-            console.log('query params changed - searchmode/page change?')
             let q = params['q'];
-            // console.log("now got query: " + q);
             this.searchService.setQueryText(q);
 
 
@@ -80,11 +77,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
             //// this.searchService.determineLocalVarsByParsingUrlVars();
 
             // adding this here so that when user presses back and the url changes we trigger this
-            console.log('\n\n\n\nTRIGGER 1: triggerSearch: user-page component constructor defined route query param subscription')
             this.changedSearchPage(this.searchService.sSearchMode);
-            console.log('searchmode: ', this.searchService.sSearchMode)
-
-            // console.log("the search mode is: " + this.searchService.sSearchMode);
 
             // this.searchService.mQuery['filters'] = JSON.parse(params['filters']);
         });
@@ -93,7 +86,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
         location.onPopState(() => {
             // user pressed back, but not just while on this page, possibly also TO this page
-            // console.log("user gone back?");
             // todo?
             // this.httpService.triggerSearch();
             // this.ngOnInit();
@@ -105,11 +97,9 @@ export class UserPageComponent implements OnInit, OnDestroy {
         //
         this.httpService.mDataChanged.subscribe(data => {
             this.mLocalData = data;
-            // console.log("got search data we subscribed too..");
         });
 
         this.subDateFromSearch = this.searchService.eeDatechange.subscribe(() => {
-            console.log('handle date change, parse display date?');
             this.setLocalDisplayDate();
         });
 
@@ -125,14 +115,12 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.searchService.iPage = 1;
-        console.log('\nuserpage component OnInit\n')
         //
         // get url vars
         //
 
         this.route.params.subscribe((param) => {
             let sNewSearchMode = param['searchmode'];
-            console.log(`\n\nroute params changed, searchmode: ${sNewSearchMode}\n`)
 
             if(sNewSearchMode != this.searchService.sSearchMode)
             {
@@ -141,12 +129,9 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
                 if(typeof this.searchService.sSearchMode !== "undefined")
                 {
-                    console.log('\n\n\n\nTRIGGER 2 triggerSearch: user-page component onInit searchmode !== undefined')
                     this.changedSearchPage(this.searchService.sSearchMode);
-                    console.log('searchmode (ngOnInit): ', this.searchService.sSearchMode)
                 }else{
                     // why is it undefined? because we're on home..?
-                    console.log('it was undefined, we\'re on home page')
                     this.searchService.sSearchMode = 'default';
                 }
             }
@@ -156,7 +141,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
         // listen to event
         //
         this.subQueryChanged = this.searchService.queryChanged.subscribe((query) => {
-            // console.log("user page heard query is now: " + query);
             this.mQuery = query;
         });
 
@@ -184,8 +168,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
         this method is called from the contructor and ngOnInit methods of this component.
         */
         // don't trigger search, let each page do something itself
-        console.log('changedSearchPage: ' + sNewPage)
-
+        
         switch(sNewPage)
         {
             case 'search':
@@ -246,7 +229,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
     onSetCalendarSearchMode(sNewSearchMode)
     {
-        console.log('on set calendar search mode')
         this.searchService.sCalendarSearchMode = sNewSearchMode
 
         this.setMDDateToStartOfUnit(this.searchService.sCalendarSearchMode)
@@ -315,7 +297,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
                 break;
         }
         this.setLocalDisplayDate().then(() => {
-            console.log('----2-----display dates updated')
             this.searchService.eeDatechange.emit();
             this.searchService.addSetCalendarFilter(
                 this.searchService.sCalendarSearchMode,
@@ -370,7 +351,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
     setLocalDisplayDate()
     {
-        console.log('setLocalDisplayDate----1-----')
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 let oDisplay = this.helperService.parseDisplayDates(
