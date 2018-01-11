@@ -3,33 +3,27 @@
 
     <div id="lightbox-contained">
         <div id="lightbox-file-content">
-
             <img
                 [src]="helperService.thumbUrl('xl', searchService.mData.search.results[searchService.iActiveThumb].id)"
                 [style.background-color]="searchService.mData.search.results[searchService.iActiveThumb].colour"
             />
         </div>
 
-
         <div id="lightbox-file-info" ng-cloak ng-if="jsonLightFile">
             <div *ngIf="!bLoadingInfo && jFileInfo">
-                
                 <div class="ui disabled header" *ngIf="jFileInfo.address && jFileInfo.altitude">{{jFileInfo.address}} ({{jFileInfo.altitude | number}}m)
-                    
                     <br/>
                 </div>
                 <h5 class="ui header">{{jFileInfo.date}}</h5>
-                
                 <br/>
                 <div class="ui labels">
                     <a class="ui label" *ngFor="let sTag of jFileInfo.tags">{{sTag}}</a>
                 </div>
                 <br/>
 
-                <div *ngIf="jFileInfo.lat && jFileInfo.lon">
-                    <img border="0" src="//maps.googleapis.com/maps/api/staticmap?center={{jFileInfo.lat}},{{jFileInfo.lon}}&amp;zoom=14&amp;size=400x200&key=AIzaSyBETgviS0P570fk29ksPR0PdeBFqHUGHAI" alt="{{jFileInfo.address}}">
+                <div *ngIf="jFileInfo.lat && jFileInfo.lon" id="lightbox-map">
+                    <img border="0" src="//maps.googleapis.com/maps/api/staticmap?center={{jFileInfo.lat}},{{jFileInfo.lon}}&amp;zoom=14&amp;size=240x160&key=AIzaSyBETgviS0P570fk29ksPR0PdeBFqHUGHAI" alt="{{jFileInfo.address}}">
                 </div>
-
             </div>
             <div *ngIf="bLoadingInfo">loading..</div>
         </div>

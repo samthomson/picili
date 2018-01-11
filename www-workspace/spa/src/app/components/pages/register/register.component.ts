@@ -32,18 +32,14 @@ export class RegisterComponent {
       )
           .subscribe(
               result => {
-                  console.log("heard back from register service: ");
-                  console.log(result);
                   this.bAttemptingRegister = false;
                   if (result.successful === true) {
                       // register successful
                       this.router.navigate(['/' + result.user]);
                       this.errors = [];
                   }else{
-                      console.log("soft handle error:?");
                       this.bAttemptingRegister = false;
                       this.errors = result.errors;
-                      console.log(this.errors);
                   }
               }
           );

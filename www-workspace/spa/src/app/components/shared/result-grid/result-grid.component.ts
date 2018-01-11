@@ -36,7 +36,6 @@ export class ResultGridComponent implements OnInit {
         private ngZone: NgZone
     ) {
         this.httpService.bSearchingChanged.subscribe((data) =>{
-            // console.log("b searching changed, searching: " + data);
             this.bSearching = data;
         });
 
@@ -47,9 +46,6 @@ export class ResultGridComponent implements OnInit {
                 
                 clearTimeout(this.resizeId);
                 this.resizeId = setTimeout(() => {
-                    // console.log("Width: " + window.innerWidth);
-                    // console.log("Height: " + window.innerHeight);
-                    // console.log('\n\n\nWINDOW RESIZE: DO JUSTIFY GALLERY\n');
                     this.calculateJustifiedGallery();
                 }, this.gbl.iResizeTimeout);
             });
@@ -57,23 +53,16 @@ export class ResultGridComponent implements OnInit {
     }
 
     ngOnInit() {
-        // console.log('result grid on init', this.results)
         if (typeof this.results !== "undefined") {
-            // console.log('results wasn\'t null, so calculating grid')
             this.calculateJustifiedGallery();
         }else{
             // subscribe to when there are results
-            // console.log('subscribe to when there are results')
             this.httpService.mDataChanged.subscribe((data) =>{
-                // console.log("mDataChanged changed, mDataChanged: " + data);
                 this.results = data.search.results;
 
-                // console.log('\n\n\nSEARCH DATA CHANGED: DO JUSTIFY GALLERY\n');
                 this.calculateJustifiedGallery();
-
             });
 
-            // console.log('result grid on it, undefined results, set from search service if there are results')
             if (this.searchService.bHasSearchResults) {
                 this.results = this.searchService.mData.search.results
                 this.calculateJustifiedGallery()
@@ -83,7 +72,6 @@ export class ResultGridComponent implements OnInit {
 
     resultThumbClick(i)
     {
-        // console.log("thumb: " + i);
         this.searchService.eThumbClick(i);
     }
 
@@ -106,14 +94,11 @@ export class ResultGridComponent implements OnInit {
 
             // get container width
             let iAvailableWidth = this.availableWidth.nativeElement.offsetWidth - iScrollMargin;
-            // console.log('available width: ', iAvailableWidth)
 
             for (let iResult = 0; iResult < this.results.length; iResult++)
             {
-                // console.log('checking image ', iResult);
                 this.results[iResult].index = iResult
                 aTempRow.push(this.results[iResult]);
-                // console.log("added: ", this.results[iResult])
                 iImagesInRow++;
 
                 // calculate prospective width
@@ -127,7 +112,6 @@ export class ResultGridComponent implements OnInit {
                     if (aTempRow[iRowHeightCheck].m_h < iShortest) {
                         iShortest = aTempRow[iRowHeightCheck].m_h;
                     }
-                    // console.log('shortest in row is ' + iShortest);
                 }
                 // scale each to that height
                 iRunningWidth = 0;
@@ -140,29 +124,14 @@ export class ResultGridComponent implements OnInit {
                     aTempRow[iScaleEachInRow].s_w = iScaledWidth;
 
                     iRunningWidth += iScaledWidth;
-
-                    // console.log(`scale ${aTempRow[iScaleEachInRow].m_w} by ${fScale}, which is ${iScaledWidth}, and now img is ${aTempRow[iScaleEachInRow].s_w}, now running width is ${iRunningWidth}`);
                 }
-                // console.log('after scaling each in row, running width is ', iRunningWidth);
-
-                // iRunningWidth += this.results[iResult].s_w;
-                // if the current image is shorter than the current row, lower the current row height
-                // if (this.results[iResult].m_h < iCurrentRowHeight) {
-                //     console.log('adjusting base height to: ' + this.results[iResult].m_h);
-                //     iCurrentRowHeight = this.results[iResult].m_h;
-                // }
 
                 // when over limit, calculate scaling factor, and add to structure of rows
                 let iRunningMarginWidth = (iMargin * (iImagesInRow-1));
                 let iRunningWidthIncludingMargins = iRunningWidth + iRunningMarginWidth;
 
                 if (iRunningWidth > iAvailableWidth - iRunningMarginWidth) {
-                    // console.log('-- overflowing --');
                     let iOversizedRatio = iRunningWidth / (iAvailableWidth - iRunningMarginWidth);
-                    // console.log("iOversizedRatio: ", iOversizedRatio)
-
-                    
-
                     let iRowHeight = iShortest / iOversizedRatio;
 
                     for (let iFinalScaleEachInRow = 0; iFinalScaleEachInRow < aTempRow.length; iFinalScaleEachInRow++) {
@@ -179,11 +148,9 @@ export class ResultGridComponent implements OnInit {
                     iCurrentRowHeight = iBaseRowHeight;
 
                     aiRowHeights.push(iRowHeight);
-                    // console.log("heights now: ", aiRowHeights)
                 }else{ 
-                    // todo: put left over images into a row somehow? or squeeze into previous?
+                    // put left over images into a row somehow? or squeeze into previous?
                     if(iResult === (this.results.length - 1)) {
-                        // console.log('at the end, not overflowing, slot in')
                         // we're at the end
                         aRows.push(aTempRow);
                         // to do, not 300 but it's actual height

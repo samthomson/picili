@@ -79,8 +79,6 @@ export class AuthService {
                         // store username and jwt token in local storage to keep user logged in between page refreshes
                         localStorage.setItem(this.gbl.sAuthTokenName, token);
 
-                        //console.log("set token as: " + localStorage.getItem('currentUser'));
-
                         this.authStatus = authStatus;
                         this.authStatusChanged.emit({'authed': true, 'user' : user});
 
@@ -130,8 +128,6 @@ export class AuthService {
 
                         // store username and jwt token in local storage to keep user logged in between page refreshes
                         localStorage.setItem(this.gbl.sAuthTokenName, token);
-
-                        //console.log("set token as: " + localStorage.getItem('currentUser'));
 
                         this.authStatus = bSuccess;
                         // this.authStatusChanged.emit(this.authStatus);

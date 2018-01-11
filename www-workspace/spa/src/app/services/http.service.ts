@@ -44,8 +44,6 @@ export class HttpService {
         let headers = new Headers();
         let jParams = new URLSearchParams();
 
-        // console.log("do a search: " + this.searchService.sSearchMode);
-
         if (typeof this.searchService.sSearchMode !== 'undefined')
         {
             // send cursor to back end to get items afte
@@ -68,13 +66,8 @@ export class HttpService {
 
         q['sort'] = this.searchService.sCurrentSort;
 
-        // console.log("query now:");
-        // console.log(q);
-
         jParams.set('q', JSON.stringify(q));
         jParams.set('page', this.searchService.iPage.toString());
-        // console.log(q);
-
 
         headers.append('Authorization', `Bearer ${authToken}`);
 
@@ -94,7 +87,6 @@ export class HttpService {
                 return response;
             }
         ).catch((error: any) => {
-            console.log('error getting page state..')
             alert('error talking to server..')
             throw error;
         });
@@ -103,13 +95,11 @@ export class HttpService {
     triggerSearch(bFirstSearch = true)
     {        
         return new Promise((resolve, reject) => {
-            // console.log("\nTRIGGER SEARCH\n");
             if(this.subCurrentSearchRequest !== undefined)
             {
                 // there is a pending search already, cancel it
                 this.subCurrentSearchRequest.unsubscribe();
                 this.searchService.bSearching = false;
-                // console.log("bSearching FALSE - unsubscribe");
             }
 
             if (!bFirstSearch) {
@@ -117,25 +107,18 @@ export class HttpService {
             }
             this.searchService.bSearching = true;
             this.bSearchingChanged.emit(true);
-            // console.log("bSearching TRUE - start search: " + this.searchService.bSearching );
             if (bFirstSearch) {
                 this.searchService.bHasSearchResults = false;
                 this.searchService.resetPage();
             }
             this.subCurrentSearchRequest = this.fetchPageState(this.gbl.sCurrentPageUsername).subscribe(
                 (data) => {
-                    // console.log("Searched via triggerSearch");
-                    // console.log(data);
-
-                    ////? this.mData = data;
-                    // this.searchService.mData = data;
                     if(bFirstSearch)
                     {
                         // set
                         this.searchService.mData = data;
                     }else{
                         // combine
-                        console.log('merge results..')
                         this.searchService.mData.search
                         .data = data.search.data;
 
@@ -152,9 +135,7 @@ export class HttpService {
                     if (!bFirstSearch) {
                         this.searchService.bSearchingForMore = false;
                     }
-                    // console.log("bSearching FALSE - search complete:, ", this.searchService.bSearching);
                     this.bSearchingChanged.emit(false);
-                    console.log("SEARCHING OVER, EMIT DATA CHANGED")
                     this.mDataChanged.emit(this.searchService.mData);
 
                     if
@@ -163,17 +144,13 @@ export class HttpService {
                         typeof this.searchService.mData.search.results !== 'undefined' &&this.searchService.mData.search.results.length > 0
                     ){
                         this.searchService.bHasSearchResults = true;
-                        
-                        // console.log("got results: " + this.searchService.mData.search.results.length);
                     }
                     resolve();
                 },
                 (err) => {
-                    // console.log("ERROR IN SEARCH");
                     this.searchService.bSearching = false;
                     this.bSearchingChanged.emit(false);
                     // todo - set a variable or something that will display state to ui
-                    // console.log("bSearching FALSE - search error");
                     resolve();
                 }
             );
@@ -202,7 +179,6 @@ export class HttpService {
                 return response.json();
             }
         ).catch((error: any) => {
-            console.log('error getting user')
             throw error;
             // return {'success': false, 'errors': error};
         });

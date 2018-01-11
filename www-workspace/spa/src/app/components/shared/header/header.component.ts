@@ -28,7 +28,6 @@ export class HeaderComponent{
     ) {
         this.sCurrentPageUsername = route.snapshot.params['username'];
 
-        // console.log('header name: ' + this.sCurrentPageUsername);
         this.bOnUserPage = (typeof this.sCurrentPageUsername !== "undefined") ? true : false;
 
         this.bAuthenticated = this.authService.isLoggedIn();
@@ -43,7 +42,6 @@ export class HeaderComponent{
         3/6/17 - commented out so as now to make /me request on each page change, is it needed anywhere even?
         */
 
-        // console.log('init header, call get username, currently it is: '+ this.sUsername);
         // only call backend asking for username if we don't have it
         if (this.sUsername === '')
         {
@@ -55,7 +53,6 @@ export class HeaderComponent{
                     this.cProcessingFiles = mData.cFiles;
                 },
                 (err) => {
-                    console.log('expired token?');
                     if (this.bAuthenticated) {
                         this.bAuthenticated = false;
                         this.authService.logOut();
@@ -66,7 +63,6 @@ export class HeaderComponent{
     }
 
     onLogout(){
-        console.log('logout?')
         this.authService.logOut();
     }
 

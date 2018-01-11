@@ -31745,6 +31745,11 @@ img.folder-thumb {
   width: 240px;
 }
 
+#lightbox-map img {
+  max-width: 100%;
+  height: auto;
+}
+
 @font-face {
   font-family: 'icomoon';
   src: url("../../compiled/assets/fonts/icomoon.eot?ggk0um");

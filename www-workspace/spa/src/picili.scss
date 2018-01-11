@@ -1,8 +1,4 @@
 
-
-
-
-
 /*
 //
 // SASS DECLARATIONS
@@ -433,6 +429,11 @@ img.folder-thumb{
 .week .day img{
 	width: 45%;
 }
+.month .day img{
+	width: 32px;
+	height: 32px;
+	display: block;
+}
 #centered-calendar-header{
 	font-size: larger;
 	margin-left: auto;
@@ -532,6 +533,11 @@ img.folder-thumb{
     width: 240px;
 }
 #lightbox.with-info{
+}
+
+#lightbox-map img{
+	max-width: 100%;
+	height: auto;
 }
 
 

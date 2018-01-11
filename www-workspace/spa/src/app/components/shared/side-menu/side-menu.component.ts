@@ -65,11 +65,7 @@ export class SideMenuComponent implements OnInit {
 
       this.authService.authStatusChanged.subscribe(
           (mData) => {
-
               this.sCurrentPageUsername = mData.user;
-
-              console.log("mData");
-              console.log(mData.user);
           }
       );
 

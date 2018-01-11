@@ -65,12 +65,9 @@ export class MapComponent implements OnInit {
         //
         google.maps.event.addListener(this.map, 'bounds_changed', () => {
 
-            console.log("map event: bounds_changed");
-
             clearTimeout(this.mapupdater);
 
             this.mapupdater = setTimeout(() => {
-                console.log("map bounds changed - after delay");
                 let mBounds = this.map.getBounds();
 
                 this.bounds = {
@@ -83,7 +80,6 @@ export class MapComponent implements OnInit {
                         lng: mBounds.getSouthWest().lng()
                     }
                 };
-                // console.log("....bounds changed, map initlaise: " + this.mapInitialised);
 
                 this.boundsChanged.emit({
                     value: this.bounds
@@ -99,8 +95,6 @@ export class MapComponent implements OnInit {
         /*
         16.3.16 why do we have this event?*/
         google.maps.event.addListener(this.map, 'idle', () => {
-
-            console.log("map event: idle");
 
             let mBounds = this.map.getBounds();
 
@@ -125,13 +119,8 @@ export class MapComponent implements OnInit {
     {
         if(typeof google == "undefined" || typeof google.maps == "undefined")
         {
-            console.log("UNDEFINED, doing map for first time");
             //Load the SDK
             window['mapInit'] = () => {
-
-                console.log("");
-                console.log("window['mapInit']");
-                console.log("");
                 this.initMap();
             }
 
@@ -148,14 +137,12 @@ export class MapComponent implements OnInit {
             document.body.appendChild(script);
 
         } else {
-            console.log("DEFINED, doing map again");
             this.initMap();
         }
     }
 
     resultThumbClick()
     {
-        console.log("thumb marker click: ");
         // this.searchService.iActiveThumb = i;
     }
 

@@ -338,6 +338,10 @@ class UserController extends Controller
 
         $oFile = PiciliFile::find($request->input('file'));
 
+        if(!isset($oFile)) {
+            return response()->json(['success' => false, 'errors' => 'file_not_found']);
+        }
+
         $oResponse['lat'] = $oFile->latitude ? $oFile->latitude : null;
         $oResponse['lon'] = $oFile->longitude ? $oFile->longitude : null;
 

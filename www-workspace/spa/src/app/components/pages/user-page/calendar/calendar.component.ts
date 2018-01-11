@@ -26,17 +26,14 @@ export class CalendarComponent implements OnInit {
         private gbl: GlobalVars/*,
         private inj:Injector*/
     ) {
-        console.log('\n\nCALENAR CONSTRUCTOR\n\n')
         //this.parentComponent = this.inj.get(UserPageComponent);
     }
 
     setResults(oResults) {
-        // console.log("setting results: ", oResults)
         this.oDateResults = oResults
     }
 
     goToDate(sDate) {
-        console.log('go to day: ', sDate)
         // EMIT TO PARENT HERE
         //// this.parentComponent.parseDisplayDates()
         // change to day mode
@@ -69,7 +66,6 @@ export class CalendarComponent implements OnInit {
 
     ngOnInit()
     {
-        console.log('\n\nCALENAR ONINIT\n\n')
         let bCalVarsInUrl = this.searchService.determineLocalVarsByParsingUrlVars()
 
         if(!bCalVarsInUrl) {
@@ -78,7 +74,6 @@ export class CalendarComponent implements OnInit {
                 this.searchService.sCalendarSearchMode = 'month';
                 this.searchService.mdDate = moment().startOf('month');
                 this.searchService.sDate = this.searchService.mdDate.format('DD/MM/YYYY');
-                // console.log('\n\n\neeDatechange\n\n\n')
                 // make sure date literal is parsed
                 this.searchService.eeDatechange.emit();
                 this.searchService.sCurrentDateDisplay = this.helperService.parseDisplayDates(
@@ -97,11 +92,9 @@ export class CalendarComponent implements OnInit {
                 }, 1)
 
                 // this.eeDatechange.emit();
-                console.log('\n\n-- not found in url, use defaults')
         }else{
             this.httpService.triggerSearch();
         }
-        console.log('heard back from determine search vars, trigger search next')
         // this.httpService.triggerSearch();
 
         // don't do this, it will overload url cal search  this.goToDate(moment())
@@ -119,13 +112,11 @@ export class CalendarComponent implements OnInit {
         })
 
         this.httpService.mDataChanged.subscribe(() => {
-            // console.log('calendar has noticed a search has been completed');
             // calculate available days, to be used in the UI
 
             // populate an array of dates, for the current period. Where the period is either a week or a month. and use actual dates starting with the set date
             // searchService.sCalendarSearchMode
             // this.searchService.mdDate
-            // console.log(this.searchService.sCalendarSearchMode)
             var mdDateCopy = this.searchService.mdDate.clone()
             this.aAvailableDates = []
             let oLocalDateResults: any = []

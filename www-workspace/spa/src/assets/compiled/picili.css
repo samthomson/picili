@@ -439,6 +439,10 @@ img.folder-thumb {
 #lightbox.with-info #lightbox-file-info {
   width: 240px; }
 
+#lightbox-map img {
+  max-width: 100%;
+  height: auto; }
+
 @font-face {
   font-family: 'icomoon';
   src: url("./assets/fonts/icomoon.eot?ggk0um");
