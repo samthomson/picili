@@ -354,7 +354,7 @@ export class HttpService {
     attemptPreload(iFileIndex) {
         // todo
 
-        let sSize = 'l';
+        let sSize = 'xl';
         var imgPreload = new Image();
     	imgPreload.src = 'https://s3-eu-west-1.amazonaws.com/picili-bucket/t/'+ this.gbl.sCurrentPageUsername +'/' + sSize + this.searchService.mData.search.results[iFileIndex].id+'.jpg'
     }
