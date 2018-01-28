@@ -851,70 +851,99 @@ class ElasticHelper {
     }
 
     public static function aHomeAggs($sUserId) {
-
-
-        $oDate = Carbon::now();
-        $oDate->addYears(-5);
-        $sDate = $oDate->format('d/m/Y');
-        
         // years ago
-
-        // // 5
-
-
 
         $client = \Elasticsearch\ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOSTS')])->build();
 
-        $aFilters = [
-            ["term" => [ "user_id" => $sUserId]]
-        ];
+        $oDateFiveYearsAgo = Carbon::now();
+        $oDateFiveYearsAgo->addYears(-5);
 
-        array_push($aFilters,
-            [
-                "range" => [
-                    "datetime" => [
-                        "gte" => $sDate.' 00:00:00',
-                        "lte" =>  $sDate.' 23:59:59',
-                        "format" => "dd/MM/yyyy HH:mm:ss"
-                    ]
-                ]
-            ]
-        );
+        $oDateThreeYearsAgo = Carbon::now();
+        $oDateThreeYearsAgo->addYears(-3);
 
-        $aSorts = [
-            "datetime" => [
-                "order" => "desc"
-            ]
-        ];
-        
+        $oDateOneYearAgo = Carbon::now();
+        $oDateOneYearAgo->addYears(-1);
+
         $params = [
-		    'index' => env('ELASTIC_INDEX'),
-		    'type' => 'file',
-		    'body' => [
-                'sort' => $aSorts,
-		        'query' => [
+            'body' => [
+                self::aOnThisDayQueryParts($sUserId, $oDateFiveYearsAgo)[0],
+                self::aOnThisDayQueryParts($sUserId, $oDateFiveYearsAgo)[1],
+                self::aOnThisDayQueryParts($sUserId, $oDateThreeYearsAgo)[0],
+                self::aOnThisDayQueryParts($sUserId, $oDateThreeYearsAgo)[1],
+                self::aOnThisDayQueryParts($sUserId, $oDateOneYearAgo)[0],
+                self::aOnThisDayQueryParts($sUserId, $oDateOneYearAgo)[1]
+            ]
+        ];
+
+        $response = $client->msearch($params);
+
+        $aAggResults = [];
+
+        $aFive = self::aResultIds($response['responses'][0]);
+        $aThree = self::aResultIds($response['responses'][1]);
+        $aOne = self::aResultIds($response['responses'][2]);
+
+
+        return [
+            'on_this_day' => [
+                '5_years_ago' => $aFive,
+                '3_years_ago' => $aThree,
+                '1_year_ago' => $aOne
+            ]
+        ];
+
+    }
+
+    private static function aOnThisDayQueryParts($sUserId, $oDate)
+    {
+        return [
+            [
+                'index' => env('ELASTIC_INDEX'),
+                'type' => 'file'
+            ],
+            [
+                'sort' => [
+                    "datetime" => [
+                        "order" => "desc"
+                    ]
+                ],
+                'query' => [
                     "function_score" => [
                         'query' => [
                             "bool" => [
-                              "must" => $aFilters
-                           ]
-                       ],
-                       "functions" => [
-                           [
-                               "random_score" => new \stdClass()
-                           ]
-                       ]
+                                "must" => [
+                                    [
+                                        "term" => [
+                                            "user_id" => $sUserId
+                                        ]
+                                    ],
+                                    [
+                                        "range" => [
+                                            "datetime" => [
+                                                "gte" => $oDate->format('d/m/Y').' 00:00:00',
+                                                "lte" =>  $oDate->format('d/m/Y').' 23:59:59',
+                                                "format" => "dd/MM/yyyy HH:mm:ss"
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ],
+                        "functions" => [
+                            [
+                                "random_score" => new \stdClass()
+                            ]
+                        ]
                     ]
-               ],
-               'size' => 10
-		    ]
+                ],
+                'size' => 10
+            ]
         ];
-        
+    }
 
-        $response = $client->search($params);
+    private static function aResultIds($aResults) {
         $aAggResults = [];
-
-        foreach ($response['hits']['hits'] as $key => $value) {
+        foreach ($aResults['hits']['hits'] as $key => $value) {
             $aResult = [
                 'id' => $value['_id']
             ];
@@ -935,13 +964,7 @@ class ElasticHelper {
 				$aAggResults,
 				$aResult
 			);
-		}
-
-        return [
-            'on_this_day' => [
-                '5_years_ago' => $aAggResults
-            ]
-        ];
-
+        }
+        return $aAggResults;
     }
 }
