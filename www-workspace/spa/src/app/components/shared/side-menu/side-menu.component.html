@@ -1,5 +1,4 @@
 <ul>
-    <!-- temporarily removed until homepage aggregations are done
     <li>
         <a
         [routerLink] = "'/' + this.sCurrentPageUsername"
@@ -11,7 +10,6 @@
             <span>Home</span>
         </a>
     </li>
-    -->
     <li *ngFor="let mMenuItem of maMenuItems">
         <a
         [routerLink] = "[ mMenuItem.link ]"
