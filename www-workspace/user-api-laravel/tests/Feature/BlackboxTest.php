@@ -119,6 +119,29 @@ class BlackboxTest extends TestCase
             )
             ->assertStatus(200);
     }
+
+    public function testGetHomeAggs()
+    {
+        $sTestRoute = '/app/homeaggs';
+        // get settings logged out, get 400
+        $response = $this->json('GET', $sTestRoute);
+
+        $response
+            ->assertStatus(400);
+
+        // get aggregations logged in, get 200 success = true, and expected settings structure
+        $sHeader = parent::getHeaderForTest();
+        $response = $this->json('GET', $sTestRoute, [], $sHeader);
+        $response
+            ->assertStatus(200)
+            ->assertJsonFragment(['success' => true])
+            ->assertJsonStructure(
+                [
+                    'success', 'homeaggs' => ['onthisday' =>['5yearsago']]
+                ]
+            );
+    }
+
     public function testGetAppPageState()
     {
         /*

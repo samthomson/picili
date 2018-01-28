@@ -226,4 +226,14 @@ class AppController extends Controller
             );
         }
     }
+
+    public function homeAggs(Request $request)
+    {
+        // get logged in user from session
+        $oUser = Auth::user();
+
+        // get and make queries
+
+        // return any results
+    }
 }
