@@ -1169,5 +1169,13 @@ class PiciliFileElasticSeeder extends Seeder
         ]);
 
         ElasticHelper::bSaveFileToElastic($oFolderAggThree, $sIndexToUse);
+
+
+        $oHistoricFile = new PiciliFile;
+        $oHistoricFile->user_id = 0;
+        $oHistoricFile->signature = '5-years-old';
+        $oHistoricFile->bHasThumbs = true;
+        $oHistoricFile->datetime = Carbon::now()->addYears(-5);
+        $oHistoricFile->save();
     }
 }

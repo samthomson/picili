@@ -851,6 +851,97 @@ class ElasticHelper {
     }
 
     public static function aHomeAggs($sUserId) {
+
+
+        $oDate = Carbon::now();
+        $oDate->addYears(-5);
+        $sDate = $oDate->format('d/m/Y');
         
+        // years ago
+
+        // // 5
+
+
+
+        $client = \Elasticsearch\ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOSTS')])->build();
+
+        $aFilters = [
+            ["term" => [ "user_id" => $sUserId]]
+        ];
+
+        array_push($aFilters,
+            [
+                "range" => [
+                    "datetime" => [
+                        "gte" => $sDate.' 00:00:00',
+                        "lte" =>  $sDate.' 23:59:59',
+                        "format" => "dd/MM/yyyy HH:mm:ss"
+                    ]
+                ]
+            ]
+        );
+
+        $aSorts = [
+            "datetime" => [
+                "order" => "desc"
+            ]
+        ];
+        
+        $params = [
+		    'index' => env('ELASTIC_INDEX'),
+		    'type' => 'file',
+		    'body' => [
+                'sort' => $aSorts,
+		        'query' => [
+                    "function_score" => [
+                        'query' => [
+                            "bool" => [
+                              "must" => $aFilters
+                           ]
+                       ],
+                       "functions" => [
+                           [
+                               "random_score" => new \stdClass()
+                           ]
+                       ]
+                    ]
+               ],
+               'size' => 10
+		    ]
+        ];
+        
+
+        $response = $client->search($params);
+        $aAggResults = [];
+
+        foreach ($response['hits']['hits'] as $key => $value) {
+            $aResult = [
+                'id' => $value['_id']
+            ];
+            if(
+                isset($value['_source']['r']) &&
+                isset($value['_source']['g']) &&
+                isset($value['_source']['b'])
+            )
+            {
+                $sC = '#';
+                $sC .= str_pad(dechex($value['_source']['r']), 2, "0", STR_PAD_LEFT);
+                $sC .= str_pad(dechex($value['_source']['g']), 2, "0", STR_PAD_LEFT);
+                $sC .= str_pad(dechex($value['_source']['b']), 2, "0", STR_PAD_LEFT);
+
+                $aResult['colour'] = $sC;
+            }
+			array_push(
+				$aAggResults,
+				$aResult
+			);
+		}
+
+        return [
+            'on_this_day' => [
+                '5_years_ago' => $aAggResults
+            ]
+        ];
+
     }
 }

@@ -774,8 +774,8 @@ class ElasticTest extends TestCase
     {
         $aHomeAggs = ElasticHelper::aHomeAggs(0);
 
-        $this->assertEquals(1, count($aGeoBuckets['onthisday']));
-        $this->assertEquals(1, count($aGeoBuckets['on_this_day']['5_years_ago']));
+        $this->assertEquals(1, count($aHomeAggs['on_this_day']));
+        $this->assertEquals(1, count($aHomeAggs['on_this_day']['5_years_ago']));
     }
 
     private function aOrderedIds($aHits, $sId = 'id')

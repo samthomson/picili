@@ -233,7 +233,12 @@ class AppController extends Controller
         $oUser = Auth::user();
 
         // get and make queries
+        $aHomeAggs = ElasticHelper::aHomeAggs($oUser->id);
 
         // return any results
+        return response()->json([
+            'success' => true,
+            'home-aggs' => $aHomeAggs
+        ]);
     }
 }
