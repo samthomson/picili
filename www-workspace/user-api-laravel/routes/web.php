@@ -28,8 +28,9 @@ Route::group(['prefix' => 'app', 'middleware' => 'cors'], function () {
         Route::get('/fileinfo', 'UserController@getFileInfo');
         
         Route::get('/pagestate/{username}', 'AppController@getPageState');
+
+        Route::get('/homeaggs', 'AppController@homeAggs');
     });
-    Route::get('/search', 'SearchController@search');
 });
 
 Route::group([/*'middleware' => 'jwt.auth'*/], function () {

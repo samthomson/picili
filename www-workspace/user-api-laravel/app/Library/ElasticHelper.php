@@ -849,4 +849,122 @@ class ElasticHelper {
 		return $aReturn;
 
     }
+
+    public static function aHomeAggs($sUserId) {
+        // years ago
+
+        $client = \Elasticsearch\ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOSTS')])->build();
+
+        $oDateFiveYearsAgo = Carbon::now();
+        $oDateFiveYearsAgo->addYears(-5);
+
+        $oDateThreeYearsAgo = Carbon::now();
+        $oDateThreeYearsAgo->addYears(-3);
+
+        $oDateOneYearAgo = Carbon::now();
+        $oDateOneYearAgo->addYears(-1);
+
+        $params = [
+            'body' => [
+                self::aOnThisDayQueryParts($sUserId, $oDateFiveYearsAgo)[0],
+                self::aOnThisDayQueryParts($sUserId, $oDateFiveYearsAgo)[1],
+                self::aOnThisDayQueryParts($sUserId, $oDateThreeYearsAgo)[0],
+                self::aOnThisDayQueryParts($sUserId, $oDateThreeYearsAgo)[1],
+                self::aOnThisDayQueryParts($sUserId, $oDateOneYearAgo)[0],
+                self::aOnThisDayQueryParts($sUserId, $oDateOneYearAgo)[1]
+            ]
+        ];
+
+        $response = $client->msearch($params);
+
+        $aAggResults = [];
+
+        $aFive = self::aResultIds($response['responses'][0]);
+        $aThree = self::aResultIds($response['responses'][1]);
+        $aOne = self::aResultIds($response['responses'][2]);
+
+
+        return [
+            'on_this_day' => [
+                '5_years_ago' => $aFive,
+                '3_years_ago' => $aThree,
+                '1_year_ago' => $aOne
+            ]
+        ];
+
+    }
+
+    private static function aOnThisDayQueryParts($sUserId, $oDate)
+    {
+        return [
+            [
+                'index' => env('ELASTIC_INDEX'),
+                'type' => 'file'
+            ],
+            [
+                'sort' => [
+                    "datetime" => [
+                        "order" => "desc"
+                    ]
+                ],
+                'query' => [
+                    "function_score" => [
+                        'query' => [
+                            "bool" => [
+                                "must" => [
+                                    [
+                                        "term" => [
+                                            "user_id" => $sUserId
+                                        ]
+                                    ],
+                                    [
+                                        "range" => [
+                                            "datetime" => [
+                                                "gte" => $oDate->format('d/m/Y').' 00:00:00',
+                                                "lte" =>  $oDate->format('d/m/Y').' 23:59:59',
+                                                "format" => "dd/MM/yyyy HH:mm:ss"
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ],
+                        "functions" => [
+                            [
+                                "random_score" => new \stdClass()
+                            ]
+                        ]
+                    ]
+                ],
+                'size' => 10
+            ]
+        ];
+    }
+
+    private static function aResultIds($aResults) {
+        $aAggResults = [];
+        foreach ($aResults['hits']['hits'] as $key => $value) {
+            $aResult = [
+                'id' => $value['_id']
+            ];
+            if(
+                isset($value['_source']['r']) &&
+                isset($value['_source']['g']) &&
+                isset($value['_source']['b'])
+            )
+            {
+                $sC = '#';
+                $sC .= str_pad(dechex($value['_source']['r']), 2, "0", STR_PAD_LEFT);
+                $sC .= str_pad(dechex($value['_source']['g']), 2, "0", STR_PAD_LEFT);
+                $sC .= str_pad(dechex($value['_source']['b']), 2, "0", STR_PAD_LEFT);
+
+                $aResult['colour'] = $sC;
+            }
+			array_push(
+				$aAggResults,
+				$aResult
+			);
+        }
+        return $aAggResults;
+    }
 }

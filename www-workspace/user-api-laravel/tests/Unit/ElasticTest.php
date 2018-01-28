@@ -770,6 +770,16 @@ class ElasticTest extends TestCase
 
     }
 
+    public function testHomeAggs()
+    {
+        $aHomeAggs = ElasticHelper::aHomeAggs(0);
+
+        $this->assertTrue(isset($aHomeAggs['on_this_day']));
+        $this->assertEquals(1, count($aHomeAggs['on_this_day']['5_years_ago']));
+        $this->assertEquals(3, count($aHomeAggs['on_this_day']['3_years_ago']));
+        $this->assertEquals(2, count($aHomeAggs['on_this_day']['1_year_ago']));
+    }
+
     private function aOrderedIds($aHits, $sId = 'id')
     {
         $saOrderedResults = [];

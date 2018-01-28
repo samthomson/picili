@@ -226,4 +226,19 @@ class AppController extends Controller
             );
         }
     }
+
+    public function homeAggs(Request $request)
+    {
+        // get logged in user from session
+        $oUser = Auth::user();
+
+        // get and make queries
+        $aHomeAggs = ElasticHelper::aHomeAggs($oUser->id);
+
+        // return any results
+        return response()->json([
+            'success' => true,
+            'home-aggs' => $aHomeAggs
+        ]);
+    }
 }
