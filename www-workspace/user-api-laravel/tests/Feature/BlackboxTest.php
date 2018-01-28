@@ -137,7 +137,7 @@ class BlackboxTest extends TestCase
             ->assertJsonFragment(['success' => true])
             ->assertJsonStructure(
                 [
-                    'success', 'home-aggs' => ['on_this_day' =>['5_years_ago']]
+                    'success', 'home-aggs' => ['on_this_day' =>['5_years_ago', '3_years_ago', '1_year_ago']]
                 ]
             );
     }
