@@ -849,4 +849,8 @@ class ElasticHelper {
 		return $aReturn;
 
     }
+
+    public static function aHomeAggs($sUserId) {
+        
+    }
 }
