@@ -135,9 +135,23 @@ class BlackboxTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJsonFragment(['success' => true])
-            ->assertJsonStructure(
+            ->assertJson(
                 [
-                    'success', 'home-aggs' => ['on_this_day' =>['5_years_ago', '3_years_ago', '1_year_ago']]
+                    'success' => true,
+                    'home_aggs' => [
+                        'on_this_day' => [
+                            '5_years_ago' => ['5-years-old'],
+                            '3_years_ago' => [
+                                '3-years-old',
+                                '3-years-old-2',
+                                '3-years-old-3'
+                            ],
+                            '1_year_ago' => [
+                                '1-year-old',
+                                '1-year-old-2'
+                            ]
+                        ]
+                    ]
                 ]
             );
     }
