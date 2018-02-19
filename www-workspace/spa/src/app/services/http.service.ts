@@ -211,6 +211,32 @@ export class HttpService {
         });
     }
 
+    getHomeAggs()
+    {
+        let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
+        let headers = new Headers();
+        let jParams = new URLSearchParams();
+
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+        let options = new RequestOptions(
+            {
+                headers: headers,
+                withCredentials: false
+            }
+        );
+
+        return this.http.get(`${this.gbl.sAPIBaseUrl}/app/homeaggs`, options)
+        .map(
+            (response: Response) => {
+                return response.json().home_aggs;
+            }
+        ).catch((error: any) => {
+            throw error;
+            //return {'success': false, 'errors': error};
+        });
+    }
+
     updateDropboxFolder(sFolder)
     {
         let authToken = localStorage.getItem(this.gbl.sAuthTokenName);

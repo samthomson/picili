@@ -238,7 +238,7 @@ class AppController extends Controller
         // return any results
         return response()->json([
             'success' => true,
-            'home-aggs' => $aHomeAggs
+            'home_aggs' => $aHomeAggs
         ]);
     }
 }

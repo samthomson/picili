@@ -15,13 +15,13 @@ import {
 import { HeaderComponent } from './components/shared/header/header.component';
 import { LightboxComponent } from './components/shared/lightbox/lightbox.component';
 
-
 import { routing } from './picili.routes';
 import { AuthGuard } from './guards/auth.guard';
 import { GuestGuard } from './guards/guest.guard';
 
 import { UserPageResolve } from './resolves/userpage.resolve';
 import { UserSettingsResolve } from './resolves/usersettings.resolve';
+import { HomeResolve } from './resolves/home.resolve';
 
 
 import { AuthService, HttpService, SearchService, HelperService } from './services';
@@ -86,7 +86,8 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
     GuestGuard,
     GlobalVars,
     UserPageResolve,
-    UserSettingsResolve
+    UserSettingsResolve,
+    HomeResolve
     ],
   bootstrap: [PiciliAppComponent]
 })

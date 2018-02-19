@@ -38,6 +38,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
     
     private bSearchServiceSearching: boolean = false;
 
+    private oHomeAggs: any
+
 
     constructor(
         private route: ActivatedRoute,
@@ -48,6 +50,11 @@ export class UserPageComponent implements OnInit, OnDestroy {
         private location: PlatformLocation
     ) {
         this.gbl.sCurrentPageUsername = route.snapshot.params['username'];
+
+        if (typeof route.snapshot.data['homeAggs'] !== 'undefined') {
+            this.oHomeAggs = route.snapshot.data['homeAggs']
+            console.log(this.oHomeAggs)
+        }
 
         this.searchService.sSearchMode = (typeof route.snapshot.params['searchmode'] === "undefined") ? 'default' : route.snapshot.params['searchmode'];
         this.searchService.iPage = 1;

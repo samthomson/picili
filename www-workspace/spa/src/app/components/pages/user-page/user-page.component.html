@@ -45,7 +45,6 @@
 
 
         <div *ngIf="searchService.sSearchMode === 'default'">
-            home page?
         </div>
 
         <div *ngIf="searchService.sSearchMode === 'search' || searchService.sSearchMode === 'map'">
@@ -139,7 +138,9 @@
 
             <div *ngIf="searchService.sSearchMode === 'default'">
                 <h3 class="header">home</h3>
-                <p>display aggregations..</p>
+                
+                home page?<br/>
+                {{this.oHomeAggs | json}}
             </div>
 
             <app-search *ngIf="searchService.sSearchMode === 'search' && searchService.mData"></app-search>

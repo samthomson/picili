@@ -12,7 +12,7 @@ import {
 
 import { UserPageResolve } from './resolves/userpage.resolve';
 import { UserSettingsResolve } from './resolves/usersettings.resolve';
-
+import { HomeResolve } from './resolves/home.resolve';
 
 
 const routes = [
@@ -26,7 +26,7 @@ const routes = [
     
     { path: ':username/:searchmode', name: 'user-search-specific', component: UserPageComponent},
 
-    { path: ':username', name: 'user-search-default', component: UserPageComponent}
+    { path: ':username', name: 'user-search-default', component: UserPageComponent, resolve: { homeAggs: HomeResolve}, canActivate: [AuthGuard] }
 ];
 
 export const routing = RouterModule.forRoot(routes);
