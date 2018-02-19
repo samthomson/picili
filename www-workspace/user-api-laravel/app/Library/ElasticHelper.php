@@ -883,6 +883,7 @@ class ElasticHelper {
         $aThree = self::aResultIds($response['responses'][1]);
         $aOne = self::aResultIds($response['responses'][2]);
 
+        echo "searching on userid: $sUserId \n";
 
         return [
             'on_this_day' => [

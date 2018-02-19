@@ -772,7 +772,7 @@ class ElasticTest extends TestCase
 
     public function testHomeAggs()
     {
-        $aHomeAggs = ElasticHelper::aHomeAggs(0);
+        $aHomeAggs = ElasticHelper::aHomeAggs(666);
 
         $this->assertTrue(isset($aHomeAggs['on_this_day']));
         $this->assertEquals(1, count($aHomeAggs['on_this_day']['5_years_ago']));

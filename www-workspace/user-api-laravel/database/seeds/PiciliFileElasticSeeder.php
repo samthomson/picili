@@ -1172,8 +1172,8 @@ class PiciliFileElasticSeeder extends Seeder
 
 
         $oHistoricFile = new PiciliFile;
-        $oHistoricFile->id = '5-years-old';
-        $oHistoricFile->user_id = 0;
+        $oHistoricFile->id = 1011;
+        $oHistoricFile->user_id = 666;
         $oHistoricFile->signature = '5-years-old';
         $oHistoricFile->bHasThumbs = true;
         $oHistoricFile->datetime = Carbon::now()->addYears(-5);
@@ -1181,8 +1181,8 @@ class PiciliFileElasticSeeder extends Seeder
 
 
         $oHistoricFile2 = new PiciliFile;
-        $oHistoricFile2->user_id = 0;
-        $oHistoricFile2->id = '3-years-old';
+        $oHistoricFile2->user_id = 666;
+        $oHistoricFile2->id = 1012;
         $oHistoricFile2->signature = '3-years-old';
         $oHistoricFile2->bHasThumbs = true;
         $oHistoricFile2->datetime = Carbon::now()->addYears(-3);
@@ -1190,8 +1190,8 @@ class PiciliFileElasticSeeder extends Seeder
 
 
         $oHistoricFile3 = new PiciliFile;
-        $oHistoricFile3->user_id = 0;
-        $oHistoricFile3->id = '3-years-old-2';
+        $oHistoricFile3->user_id = 666;
+        $oHistoricFile3->id = 1013;
         $oHistoricFile3->signature = '3-years-old-2';
         $oHistoricFile3->bHasThumbs = true;
         $oHistoricFile3->datetime = Carbon::now()->addYears(-3);
@@ -1199,8 +1199,8 @@ class PiciliFileElasticSeeder extends Seeder
 
 
         $oHistoricFile4 = new PiciliFile;
-        $oHistoricFile4->user_id = 0;
-        $oHistoricFile4->id = '3-years-old-3';
+        $oHistoricFile4->user_id = 666;
+        $oHistoricFile4->id = 1014;
         $oHistoricFile4->signature = '3-years-old-3';
         $oHistoricFile4->bHasThumbs = true;
         $oHistoricFile4->datetime = Carbon::now()->addYears(-3);
@@ -1208,8 +1208,8 @@ class PiciliFileElasticSeeder extends Seeder
 
 
         $oHistoricFile5 = new PiciliFile;
-        $oHistoricFile5->user_id = 0;
-        $oHistoricFile5->id = '1-year-old';
+        $oHistoricFile5->user_id = 666;
+        $oHistoricFile5->id = 1015;
         $oHistoricFile5->signature = '1-year-old';
         $oHistoricFile5->bHasThumbs = true;
         $oHistoricFile5->datetime = Carbon::now()->addYears(-1);
@@ -1217,8 +1217,8 @@ class PiciliFileElasticSeeder extends Seeder
 
 
         $oHistoricFile6 = new PiciliFile;
-        $oHistoricFile6->user_id = 0;
-        $oHistoricFile6->id = '1-year-old-2';
+        $oHistoricFile6->user_id = 666;
+        $oHistoricFile6->id = 1016;
         $oHistoricFile6->signature = '1-year-old-2';
         $oHistoricFile6->bHasThumbs = true;
         $oHistoricFile6->datetime = Carbon::now()->addYears(-1);

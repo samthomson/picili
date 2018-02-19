@@ -140,15 +140,29 @@ class BlackboxTest extends TestCase
                     'success' => true,
                     'home_aggs' => [
                         'on_this_day' => [
-                            '5_years_ago' => ['5-years-old'],
+                            '5_years_ago' => [
+                                [
+                                    "id" => "1011"
+                                ]
+                            ],
                             '3_years_ago' => [
-                                '3-years-old',
-                                '3-years-old-2',
-                                '3-years-old-3'
+                                [
+                                    "id" => "1012"
+                                ],
+                                [
+                                    "id" => "1013"
+                                ],
+                                [
+                                    "id" => "1014"
+                                ]
                             ],
                             '1_year_ago' => [
-                                '1-year-old',
-                                '1-year-old-2'
+                                [
+                                    "id" => "1015"
+                                ],
+                                [
+                                    "id" => "1016"
+                                ]
                             ]
                         ]
                     ]
