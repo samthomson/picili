@@ -24,7 +24,6 @@ class UsersTableSeeder extends Seeder
         ]);
         $oUser->id = 666;
         $oUser->save();
-        echo "\n\n\nseeded user id: {$oUser->id}\n\n\n";
 
         $oDropboxToken = new DropboxToken;
         $oDropboxToken->user_id = $oUser->id;
