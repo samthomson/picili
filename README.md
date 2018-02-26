@@ -124,6 +124,8 @@ You need to use gulp 4, as installed as a dependency. To specifically run the lo
 
 ## 4.0 Deploying
 
+### 4.1 Setup and first deploy
+
 - set up a vps somewhere (tested on: ubuntu 17.10 x64 2gb ram 40gb ssd)
 - connect to it from the terminal `root@ipaddress` and then enter your root password and accept the machines fingerprint
 - create a new user to replace the root user:  https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04
@@ -166,3 +168,13 @@ You need to use gulp 4, as installed as a dependency. To specifically run the lo
 
 useful:
 (https://stackoverflow.com/questions/28392045/php-fpm-laravel-nginx-ubuntu-permission)
+
+### 4.2 Incremental updates - deploying as you work on picili
+
+The API (PHP) and Auto project (PHP) are straight forward to deploy. Just upload any edited files to the server. Running any migrations if added.
+
+Any changes to the auto-scaler (JS) should also be uploaded. But then you should stop the auto-scaler instance already running and start a new one.
+
+Changes to the front-end SPA (JS) are more complicated as assets must first be built from the spa folder (`www-workspace/spa`) with `yarn dist-prod`.
+
+This will trigger a gulp task to also copy the newly built assets into the public folder of the API (`www-workspace/user-api-laravel/public`). Where they can be copied to the server to/from. Specifically it will build the SPA with a prod config, compared to `yarn dist` which has a local config.
