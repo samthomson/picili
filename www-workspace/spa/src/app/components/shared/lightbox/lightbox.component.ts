@@ -11,6 +11,8 @@ export class LightboxComponent implements OnInit {
         // 37 = left
         // 39 = right
         // 27 = escape
+        // 73 = i (info)
+
         switch (event.keyCode) {
             case 37:
                 this.eLightboxNav(-1)
@@ -20,6 +22,9 @@ export class LightboxComponent implements OnInit {
                 break;
             case 27:
                 this.eCloseLightbox()
+                break;
+            case 73:
+                this.eToggleFileInfo()
                 break;
         }
     }
@@ -37,7 +42,6 @@ export class LightboxComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-
         this.searchService.eeThumbClick.subscribe(iIndex => {
             // lightbox just opened
             // do lightbox openeing stuff
