@@ -545,7 +545,9 @@ img.folder-thumb{
 #lightbox.with-info #lightbox-file-info{
     width: 240px;
 }
-#lightbox.with-info{
+
+a.ui.label.lightbox-fileinfo-tag{
+	cursor: none;
 }
 
 #lightbox-map img{

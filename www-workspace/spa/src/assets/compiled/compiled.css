@@ -31763,6 +31763,10 @@ img.folder-thumb {
   width: 240px;
 }
 
+a.ui.label.lightbox-fileinfo-tag {
+  cursor: none;
+}
+
 #lightbox-map img {
   max-width: 100%;
   height: auto;

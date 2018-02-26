@@ -454,6 +454,9 @@ img.folder-thumb {
 #lightbox.with-info #lightbox-file-info {
   width: 240px; }
 
+a.ui.label.lightbox-fileinfo-tag {
+  cursor: none; }
+
 #lightbox-map img {
   max-width: 100%;
   height: auto; }
