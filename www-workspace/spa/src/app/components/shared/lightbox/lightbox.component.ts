@@ -7,9 +7,7 @@ import { HttpService, SearchService, HelperService } from './../../../services'
     templateUrl: './lightbox.component.html'
 })
 export class LightboxComponent implements OnInit {
-    @HostListener('document:keydown', ['$event'])
-
-    keypress(event) {
+    @HostListener('document:keydown', ['$event']) keypress(event) {
         // 37 = left
         // 39 = right
         // 27 = escape
@@ -50,7 +48,6 @@ export class LightboxComponent implements OnInit {
     eCloseLightbox() {
         this.searchService.eeLightboxClose.emit()
         this.searchService.iActiveThumb = -1
-        ////this.bShowingInfo = false
     }
 
     eToggleFileInfo() {
