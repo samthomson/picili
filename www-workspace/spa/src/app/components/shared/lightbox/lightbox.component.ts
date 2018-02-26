@@ -1,12 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { GlobalVars } from './../../../../env';
-import { HttpService, SearchService, HelperService } from './../../../services';
+import { Component, HostListener, OnInit } from '@angular/core'
+import { GlobalVars } from './../../../../env'
+import { HttpService, SearchService, HelperService } from './../../../services'
 
 @Component({
     selector: 'app-lightbox',
     templateUrl: './lightbox.component.html'
 })
 export class LightboxComponent implements OnInit {
+    @HostListener('document:keydown', ['$event'])
+
+    keypress(event) {
+        // 37 = left
+        // 39 = right
+        // 27 = escape
+        switch (event.keyCode) {
+            case 37:
+                this.eLightboxNav(-1)
+                break;
+            case 39:
+                this.eLightboxNav(1)
+                break;
+            case 27:
+                this.eCloseLightbox()
+                break;
+        }
+    }
 
     private bShowingInfo: boolean = false
     private bLoadingInfo: boolean = false
