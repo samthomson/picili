@@ -31755,12 +31755,22 @@ img.folder-thumb {
   bottom: 8px;
 }
 
+/* while lightbox info is open */
+
 #lightbox.with-info #lightbox-file-content {
   right: 300px;
 }
 
 #lightbox.with-info #lightbox-file-info {
   width: 240px;
+}
+
+#lightbox.with-info #lightbox-info {
+  color: #D32F2F;
+}
+
+a.ui.label.lightbox-fileinfo-tag {
+  cursor: none;
 }
 
 #lightbox-map img {

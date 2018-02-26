@@ -539,13 +539,19 @@ img.folder-thumb{
 #lightbox-left{bottom:($iMargin*7);}
 #lightbox-right{bottom:$iMargin;}
 
+/* while lightbox info is open */
 #lightbox.with-info #lightbox-file-content{
     right: 300px;
 }
 #lightbox.with-info #lightbox-file-info{
     width: 240px;
 }
-#lightbox.with-info{
+#lightbox.with-info #lightbox-info{
+     color: $cPiciliRed;
+}
+
+a.ui.label.lightbox-fileinfo-tag{
+	cursor: none;
 }
 
 #lightbox-map img{
