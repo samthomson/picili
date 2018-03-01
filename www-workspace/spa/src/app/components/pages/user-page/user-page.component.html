@@ -151,11 +151,39 @@
                     />
                 </div>
 
+                <div *ngIf="this.oHomeAggs.on_this_day['2_years_ago'] && this.oHomeAggs.on_this_day['2_years_ago'].length > 0">
+                    <h3 class="header">2 years ago</h3>
+
+                    <img
+                        *ngFor="let oResult of this.oHomeAggs.on_this_day['2_years_ago'];let i = index" 
+                        [src]="helperService.thumbUrl('s', oResult.id)"
+                        [style.background-color]="oResult.colour"
+                        [style.width]="oResult.s_w + 'px'"
+                        [style.height]="oResult.s_h + 'px'"
+                        (click)="resultThumbClick(oResult.index)"
+                        class="result-thumb square"
+                    />
+                </div>
+
                 <div *ngIf="this.oHomeAggs.on_this_day['3_years_ago'] && this.oHomeAggs.on_this_day['3_years_ago'].length > 0">
                     <h3 class="header">3 years ago</h3>
 
                     <img
                         *ngFor="let oResult of this.oHomeAggs.on_this_day['3_years_ago'];let i = index" 
+                        [src]="helperService.thumbUrl('s', oResult.id)"
+                        [style.background-color]="oResult.colour"
+                        [style.width]="oResult.s_w + 'px'"
+                        [style.height]="oResult.s_h + 'px'"
+                        (click)="resultThumbClick(oResult.index)"
+                        class="result-thumb square"
+                    />
+                </div>
+
+                <div *ngIf="this.oHomeAggs.on_this_day['4_years_ago'] && this.oHomeAggs.on_this_day['4_years_ago'].length > 0">
+                    <h3 class="header">4 years ago</h3>
+
+                    <img
+                        *ngFor="let oResult of this.oHomeAggs.on_this_day['4_years_ago'];let i = index" 
                         [src]="helperService.thumbUrl('s', oResult.id)"
                         [style.background-color]="oResult.colour"
                         [style.width]="oResult.s_w + 'px'"

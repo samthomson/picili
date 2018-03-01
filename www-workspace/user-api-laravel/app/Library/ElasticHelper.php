@@ -858,8 +858,14 @@ class ElasticHelper {
         $oDateFiveYearsAgo = Carbon::now();
         $oDateFiveYearsAgo->addYears(-5);
 
+        $oDateFourYearsAgo = Carbon::now();
+        $oDateFourYearsAgo->addYears(-4);
+
         $oDateThreeYearsAgo = Carbon::now();
         $oDateThreeYearsAgo->addYears(-3);
+
+        $oDateTwoYearsAgo = Carbon::now();
+        $oDateTwoYearsAgo->addYears(-2);
 
         $oDateOneYearAgo = Carbon::now();
         $oDateOneYearAgo->addYears(-1);
@@ -868,8 +874,12 @@ class ElasticHelper {
             'body' => [
                 self::aOnThisDayQueryParts($sUserId, $oDateFiveYearsAgo)[0],
                 self::aOnThisDayQueryParts($sUserId, $oDateFiveYearsAgo)[1],
+                self::aOnThisDayQueryParts($sUserId, $oDateFourYearsAgo)[0],
+                self::aOnThisDayQueryParts($sUserId, $oDateFourYearsAgo)[1],
                 self::aOnThisDayQueryParts($sUserId, $oDateThreeYearsAgo)[0],
                 self::aOnThisDayQueryParts($sUserId, $oDateThreeYearsAgo)[1],
+                self::aOnThisDayQueryParts($sUserId, $oDateTwoYearsAgo)[0],
+                self::aOnThisDayQueryParts($sUserId, $oDateTwoYearsAgo)[1],
                 self::aOnThisDayQueryParts($sUserId, $oDateOneYearAgo)[0],
                 self::aOnThisDayQueryParts($sUserId, $oDateOneYearAgo)[1]
             ]
@@ -880,13 +890,17 @@ class ElasticHelper {
         $aAggResults = [];
 
         $aFive = self::aResultIds($response['responses'][0]);
-        $aThree = self::aResultIds($response['responses'][1]);
-        $aOne = self::aResultIds($response['responses'][2]);
+        $aFour = self::aResultIds($response['responses'][1]);
+        $aThree = self::aResultIds($response['responses'][2]);
+        $aTwo = self::aResultIds($response['responses'][3]);
+        $aOne = self::aResultIds($response['responses'][4]);
 
         return [
             'on_this_day' => [
                 '5_years_ago' => $aFive,
+                '4_years_ago' => $aFour,
                 '3_years_ago' => $aThree,
+                '2_years_ago' => $aTwo,
                 '1_year_ago' => $aOne
             ]
         ];

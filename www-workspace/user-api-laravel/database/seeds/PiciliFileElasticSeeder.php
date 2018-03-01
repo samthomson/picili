@@ -1223,5 +1223,23 @@ class PiciliFileElasticSeeder extends Seeder
         $oHistoricFile6->bHasThumbs = true;
         $oHistoricFile6->datetime = Carbon::now()->addYears(-1);
         $oHistoricFile6->save();
+
+
+        $oHistoricFile5 = new PiciliFile;
+        $oHistoricFile5->user_id = 666;
+        $oHistoricFile5->id = 1017;
+        $oHistoricFile5->signature = '4-year-old';
+        $oHistoricFile5->bHasThumbs = true;
+        $oHistoricFile5->datetime = Carbon::now()->addYears(-4);
+        $oHistoricFile5->save();
+
+
+        $oHistoricFile5 = new PiciliFile;
+        $oHistoricFile5->user_id = 666;
+        $oHistoricFile5->id = 1018;
+        $oHistoricFile5->signature = '2-year-old';
+        $oHistoricFile5->bHasThumbs = true;
+        $oHistoricFile5->datetime = Carbon::now()->addYears(-2);
+        $oHistoricFile5->save();
     }
 }
