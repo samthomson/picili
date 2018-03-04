@@ -79,6 +79,17 @@ class ElasticHelper {
                                     ]
                                 ]
                             ],
+                            "phash" => [
+                                "type" => "nested",
+                                "properties" => [
+                                    "indice" => [
+                                        "type" => "text"
+                                    ],
+                                    "value" => [
+                                        "type" => "text"
+                                    ]
+                                ]
+                            ],
                             "location" => [
                                 "type" => "geo_point"
                             ],
