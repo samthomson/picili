@@ -30,7 +30,9 @@ Route::group(['prefix' => 'app', 'middleware' => 'cors'], function () {
         Route::get('/pagestate/{username}', 'AppController@getPageState');
 
         Route::get('/homeaggs', 'AppController@homeAggs');
+
     });
+    Route::get('/test', 'AppController@test');
 });
 
 Route::group([/*'middleware' => 'jwt.auth'*/], function () {

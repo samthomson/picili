@@ -976,8 +976,218 @@ class ElasticHelper {
 			array_push(
 				$aAggResults,
 				$aResult
-			);
+            );
         }
         return $aAggResults;
     }
+    private static function aScoredResultIds($aResults) {
+        $aAggResults = [];
+        foreach ($aResults['hits']['hits'] as $key => $value) {
+            $aResult = [
+                'id' => $value['_id'],
+                'score' => $value['_score'],
+                'bin' => $value['_source']['phashlit']
+            ];
+            if(
+                isset($value['_source']['r']) &&
+                isset($value['_source']['g']) &&
+                isset($value['_source']['b'])
+            )
+            {
+                $sC = '#';
+                $sC .= str_pad(dechex($value['_source']['r']), 2, "0", STR_PAD_LEFT);
+                $sC .= str_pad(dechex($value['_source']['g']), 2, "0", STR_PAD_LEFT);
+                $sC .= str_pad(dechex($value['_source']['b']), 2, "0", STR_PAD_LEFT);
+
+                $aResult['colour'] = $sC;
+            }
+			array_push(
+				$aAggResults,
+				$aResult
+            );
+        }
+        return $aAggResults;
+    }
+
+    public static function aTestPHashSearch($sHex) {
+        // split hex into query
+        $aBoolQueriesFromQuery = [];
+
+        $binaryValue = base_convert($sHex, 16, 2);
+        if(strlen($binaryValue) === 63) {
+            $binaryValue = '0'.$binaryValue;
+        }
+        // echo "search with value: {$binaryValue}<br/>";
+
+        foreach (str_split($binaryValue) as $iIndex => $zeroOrOne) 
+        {
+            // echo "exploded bin value [{$iIndex}]: {$zeroOrOne}<br/>";
+            if ($iIndex < 200) {
+                array_push($aBoolQueriesFromQuery, [
+                    'filter' => ['match' => ['phash.'.$iIndex => $zeroOrOne]],
+                    'weight' => 10
+                ]);
+            }
+        }
+        
+        $aBoolQueriesOriginal = [
+            "must" => [
+                [ "term" => ["phash.indice" => 0] ],
+                [ "term" => ["phash.value" => "1"] ]
+            ],
+            "must" => [
+                [ "term" => ["phash.indice" => 1] ],
+                [ "term" => ["phash.value" => "0"] ]
+            ]
+        ];
+
+        // print_r($aBoolQueriesOriginal);
+        // echo '<hr/>';
+        // print_r($aBoolQueriesFromQuery[0]);
+        // exit();
+
+        /*
+        "query": {
+            "bool": {
+                "minimum_should_match": 2,
+                "should": [
+                    { "term": { "phash.0": "0" } },
+                    { "term": { "phash.1": "1" } },
+                    { "term": { "phash.2": "1" } }
+                    ]
+                }
+            }
+        */
+
+        /*
+        "query": {
+            "bool": {
+                "must": [
+                { 
+                    "term" : {
+                    "phash.0": "0"
+                    }
+                },
+                { 
+                    "term" : {
+                    "phash.1": "0"
+                    }
+                } 
+                ]
+            }
+        }
+        */
+
+        /*
+        "query": {
+            "dis_max" : {
+                "tie_breaker" : 0.1,
+                "boost" : 1.2,
+                "queries" : [
+                    {
+                        "term" : { "phash.0" : "1" }
+                    },
+                    {
+                        "term" : { "phash.1" : "1" }
+                    },
+                    {
+                        "term" : { "phash.2" : "1" }
+                    }
+                ]
+            }
+        }
+        */
+
+        /*
+        "query": {
+            "function_score": {
+              "query": { "match_all": {} },
+              "boost": "10", 
+              "functions": [
+                  {
+                      "filter": { "match": { "phash.0": "0" } },
+                      "weight": 10
+                  },
+                  {
+                      "filter": { "match": { "phash.1": "1" } },
+                      "weight": 10
+                  },
+                  {
+                      "filter": { "match": { "phash.2": "0" } },
+                      "weight": 10
+                  }
+              ],
+              "max_boost":200,
+              "score_mode": "sum",
+              "boost_mode": "replace",
+              "min_score" : 60
+            }
+        }
+        */
+
+
+        $client = \Elasticsearch\ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOSTS')])->build();
+
+        $params = [
+		    'index' => env('ELASTIC_INDEX'),
+            'type' => 'file',
+            "sort" => "_score",
+		    'body' => [
+                'query' => [
+                    "function_score" => [
+                        "query" => [
+                            "match_all" => new \stdClass()
+                        ],
+                        "boost" => 10,
+                        "functions" => $aBoolQueriesFromQuery,
+                        "max_boost" => 640,
+                        "score_mode" => "sum",
+                        "boost_mode" => "replace",
+                        "min_score" => 480
+                   ]
+               ]
+		    ]
+        ];
+
+        // $params = [
+		//     'index' => env('ELASTIC_INDEX'),
+        //     'type' => 'file',
+        //     "sort" => "_score",
+		//     'body' => [
+        //         'query' => [
+        //             "fuzzy" => [ 
+        //                 "phashlit" => [
+        //                     "fuzziness" => 16,
+        //                     "value" => $binaryValue
+        //                 ]
+        //             ]
+        //         ]
+		//     ]
+        // ];
+        
+        // echo json_encode($params);
+        // exit();
+
+        $response = $client->search($params);
+
+        $aResults = $response['hits']['hits'];
+        
+        return self::aScoredResultIds($response);
+    }
 }
+/*
+"query": {
+    "nested" : {
+        "path" : "obj1",
+        "score_mode" : "avg",
+        "query" : {
+            "bool" : {
+                "must" : [
+                { "match" : {"obj1.name" : "blue"} },
+                { "range" : {"obj1.count" : {"gt" : 5}} }
+                ]
+            }
+        }
+    }
+}
+*/

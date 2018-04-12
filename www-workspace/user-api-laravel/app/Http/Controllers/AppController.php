@@ -241,4 +241,57 @@ class AppController extends Controller
             'home_aggs' => $aHomeAggs
         ]);
     }
+
+    public function test(Request $request) {
+        $aResults = ElasticHelper::aTestPHashSearch($request->input('q'));
+
+        $binQ = base_convert($request->input('q'), 16, 2);
+
+        echo strlen($binQ);
+
+        echo "<br/>query length: {$binQ}<br/>";
+
+        $cResuts = count($aResults);
+
+        echo "<br/>{$cResuts} results <br/><hr/>";
+
+        // print_r($aResults);
+
+        foreach ($aResults as $aResult) {
+            $sSource = "https://s3-eu-west-1.amazonaws.com/picili-bucket/t/1/m{$aResult['id']}.jpg";
+            $sSource = "https://s3-ap-southeast-1.amazonaws.com/picili-test-bucket/t/1/m{$aResult['id']}.jpg";
+
+            // https://s3-ap-southeast-1.amazonaws.com/picili-test-bucket/t/1/m23808.jpg
+            echo "<img src=\"{$sSource}\" />";
+
+            $match = self::compare($aResult['bin'], $binQ);
+            
+            echo "<br/>score: {$aResult['score']}<br/>bin :{$aResult['bin']}<br/>binQ:{$binQ}<br/>similarity: {$match}<hr/>";
+        }
+    }
+
+    private static function compare($bin1, $bin2)
+    {
+        $iSame = 0;
+        $iDiff = 0;
+        $iTotal = 0;
+        // return 0;
+
+        if(strlen($bin1) === 63) {
+            $bin1 = '0'.$bin1;
+        }
+        if(strlen($bin2) === 63) {
+            $bin2 = '0'.$bin2;
+        }
+
+        for ($iPos = 0; $iPos < strlen($bin1); $iPos++, $iTotal++)
+        {
+            if ($bin1[$iPos] === $bin2[$iPos]) {
+                $iSame++;
+            }else{
+                $iDiff++;
+            }
+        }
+        return ($iSame / $iTotal) * 100;
+    }
 }

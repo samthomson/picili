@@ -48,6 +48,10 @@ class ElasticHelper {
                                 "type" => "string",
                                 "index" => "not_analyzed"
                             ],
+                            "phashlit" => [
+                                "type" => "string",
+                                "index" => "not_analyzed"
+                            ],
                             "parent-path" => [
                                 "type" => "string",
                                 "index" => "not_analyzed"
@@ -76,17 +80,6 @@ class ElasticHelper {
                                     ],
                                     "confidence" => [
                                         "type" => "integer"
-                                    ]
-                                ]
-                            ],
-                            "phash" => [
-                                "type" => "nested",
-                                "properties" => [
-                                    "indice" => [
-                                        "type" => "text"
-                                    ],
-                                    "value" => [
-                                        "type" => "text"
                                     ]
                                 ]
                             ],
@@ -261,6 +254,30 @@ class ElasticHelper {
             {
                 $oDocumentBody['tags'] = $aTags;
             }
+
+            // phash
+            $aBinaryValues = [];
+
+            $binaryValue = base_convert($oPiciliFile->phash, 16, 2);
+            echo "bin value: ", $binaryValue;
+
+            if(strlen($binaryValue) === 63) {
+                $binaryValue = '0'.$binaryValue;
+            }
+
+            foreach (str_split($binaryValue) as $iIndex => $zeroOrOne) 
+            {
+                echo "exploded bin value [{$iIndex}]: {$zeroOrOne}";
+                array_push($aBinaryValues, [
+                    'indice' => $iIndex,
+                    'value' => $zeroOrOne
+                ]);
+
+                $oDocumentBody['phash.'.$iIndex] = $zeroOrOne;
+            }
+            // $oDocumentBody['phash'] = $aBinaryValues;
+            $oDocumentBody['phashlit'] = $binaryValue;
+            
 
             if($oPiciliFile->bHasGPS)
             {
