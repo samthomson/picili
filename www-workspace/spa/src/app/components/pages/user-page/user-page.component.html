@@ -1,7 +1,6 @@
 
 <app-header></app-header>
 
-
 <div id="menu-search-container">
     <div id="side-menu">
         <app-side-menu></app-side-menu>
@@ -38,11 +37,7 @@
                 <i class="fa fa-times pointer-link"></i>
                 Clear filters
             </button>
-            
         </div>
-
-
-
 
         <div *ngIf="searchService.sSearchMode === 'default'">
         </div>
@@ -131,8 +126,6 @@
                 </button>
             </div> -->
         </div>
-
-
 
         <div id="page-space">
 
@@ -228,7 +221,6 @@
                 return 'https://s3-eu-west-1.amazonaws.com/'.env('AWS_BUCKET').'/t/'.$iUserId.'/'.$sThumbSize.$iPiciliFileId.'.jpg';
             -->
         </div>
-
     </div>
 </div>
 <app-lightbox id="lightbox" *ngIf="bLightboxOpen"></app-lightbox>
