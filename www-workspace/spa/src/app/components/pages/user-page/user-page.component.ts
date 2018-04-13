@@ -32,14 +32,12 @@ export class UserPageComponent implements OnInit, OnDestroy {
     private subDateFromUrl;
     private subDateFromSearch;
 
-
     private sCurrentDateDisplay: string;
     private sCurrentHeaderDisplay: string;
     
     private bSearchServiceSearching: boolean = false;
 
     private oHomeAggs: any
-
 
     constructor(
         private route: ActivatedRoute,
@@ -118,7 +116,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
 
     }
-
 
     ngOnInit() {
         this.searchService.iPage = 1;
@@ -252,7 +249,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
         })
     }
 
-
     //
     // calendar things
     //
@@ -261,7 +257,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
         {
             case 'day':
                 this.searchService.mdDate.startOf(sMode);
-                // sSearchDisplay =
                 break;
             case 'week':
                 this.searchService.mdDate.startOf(sMode);
@@ -282,12 +277,10 @@ export class UserPageComponent implements OnInit, OnDestroy {
     {
         this.setMDDateToStartOfUnit(this.searchService.sCalendarSearchMode)
         // depending on mode add a certain amount of time, then do new search
-        // let sSearchDisplay = '';
         switch(this.searchService.sCalendarSearchMode)
         {
             case 'day':
                 this.searchService.setDate(this.searchService.mdDate.add(iUnit, 'days'))
-                // sSearchDisplay =
                 break;
             case 'week':
                 this.searchService.setDate(this.searchService.mdDate.add(iUnit, 'week'))
