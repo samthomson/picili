@@ -363,28 +363,4 @@ export class UserPageComponent implements OnInit, OnDestroy {
             }, 1)
         });
     }
-
-    /*
-    parseDisplayDates()
-    {
-        this.searchService.sDate = this.searchService.mdDate.format('DD/MM/YYYY');
-
-        switch(this.searchService.sCalendarSearchMode)
-        {
-            case 'day':
-                this.sCurrentDateDisplay = this.searchService.mdDate.format('ddd Do');
-                break;
-            case 'week':
-                this.sCurrentDateDisplay = 'Week ' + this.searchService.mdDate.format('w');
-                break;
-            case 'month':
-                this.sCurrentDateDisplay = this.searchService.mdDate.format('MMM YYYY');
-                break;
-            case 'year':
-                this.sCurrentDateDisplay = this.searchService.mdDate.format('YYYY');
-                break;
-        }
-    }
-    */
-
 }
