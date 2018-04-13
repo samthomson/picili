@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Injectable } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpService, SearchService, HelperService } from './../../../services';
 
 import { PlatformLocation } from '@angular/common';
@@ -41,6 +41,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
     constructor(
         private route: ActivatedRoute,
+        private router: Router,
         private httpService: HttpService,
         private searchService: SearchService,
         private helperService: HelperService,        
@@ -363,4 +364,37 @@ export class UserPageComponent implements OnInit, OnDestroy {
             }, 1)
         });
     }
+
+    //
+    // aggregation stuff
+    //
+    private generateOnThisDayLinkParts(iYearsAgo: number) {
+        let date = moment()
+        date.add(-iYearsAgo, 'year')
+
+        let sDisplay = date.format('dddd Do')
+        let sValue = date.format('DD/MM/YYYY')
+
+        return [sDisplay, sValue]
+    }
+
+    onThisDayClick(iYearsAgo: number) {
+        let [sDisplay, sValue] = this.generateOnThisDayLinkParts(-1 * iYearsAgo)
+
+        console.log('sDisplay: ', sDisplay)
+        console.log('sValue: ', sValue)
+
+        let sDateValue: string = `day:${sValue}`
+        console.log(`Searching date 'day:${sValue}'`)
+        // this.searchService.addFilter('calendar', sDisplay, sDateValue);
+        // this.httpService.triggerSearch();
+
+        this.searchService.addSetCalendarFilter('day', sDisplay, sValue)
+        this.httpService.triggerSearch()
+
+        const iUserName: number = this.route.snapshot.params['username']
+
+        this.router.navigate([`/${iUserName}/calendar`])
+    }
+
 }

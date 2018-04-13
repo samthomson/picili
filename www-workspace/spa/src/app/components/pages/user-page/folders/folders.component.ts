@@ -44,5 +44,4 @@ export class FoldersComponent implements OnInit {
 
         this.httpService.triggerSearch();
     }
-
 }

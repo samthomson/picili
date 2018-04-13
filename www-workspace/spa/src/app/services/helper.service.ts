@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { GlobalVars } from './../../env';
+import { SearchService } from './search.service'
 
 @Injectable()
 export class HelperService {
 
     constructor(
-        private gbl: GlobalVars
+        private gbl: GlobalVars,
+        private searchService: SearchService,
     ) {}
 
     parseDisplayDates(sCalendarSearchMode, mdDate)
@@ -40,8 +42,8 @@ export class HelperService {
         };
     }
 
-    thumbUrl(sSize, id)
-    {
+    thumbUrl(sSize, id) {
         return this.gbl.awsBucketUrl + this.gbl.sCurrentPageUsername +'/' + sSize + id+'.jpg'
     }
+
 }
