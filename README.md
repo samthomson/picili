@@ -156,7 +156,7 @@ You need to use gulp 4, as installed as a dependency. To specifically run the lo
 - setup autoscaler
 - - `sudo apt install npm`
 - - `cd /var/www/picili/auto/scaler && npm i`
-- - start it running `cd /var/www/picili/auto/scaler && npm start`
+- - start it running `cd /var/www/picili/auto-scaler && npm start`
 
 - configure swap memory if the vps has low ram: https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04
 
