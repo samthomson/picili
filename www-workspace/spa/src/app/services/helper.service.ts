@@ -46,4 +46,20 @@ export class HelperService {
         return this.gbl.awsBucketUrl + this.gbl.sCurrentPageUsername +'/' + sSize + id+'.jpg'
     }
 
+    getBaseRouterLink(sPage) {
+        const sUserName = this.gbl.sCurrentPageUsername
+        return `/${sUserName}/${sPage}/`
+    }
+
+    getQVarsWithNewQuery(sType, sDisplay, sValue) {
+        let oQVars = this.searchService.getQVars()
+        if(typeof oQVars['filters'] === 'undefined') {
+            oQVars['filters'] = []
+        }
+        oQVars['filters'].push({'type': sType, 'display': sDisplay, 'value': sValue})
+        oQVars['filters'] = JSON.stringify(oQVars['filters'])
+
+        return oQVars
+    }
+
 }

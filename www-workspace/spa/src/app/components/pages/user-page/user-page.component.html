@@ -185,7 +185,10 @@
                 </div>
 
                 <div *ngIf="this.oHomeAggs.on_this_day['5_years_ago'] && this.oHomeAggs.on_this_day['5_years_ago'].length > 0">
-                    <a (click)="onThisDayClick(-5)">
+                    <a 
+                        [routerLink] = "this.helperService.getBaseRouterLink('calendar')"
+                        [queryParams]="this.helperService.getQVarsWithNewQuery('calendar', this.generateOnThisDayLinkParts(5)[0], this.generateOnThisDayLinkParts(5)[1])"
+                    >
                         <h3 class="header">5 years ago</h3>
 
                         <img

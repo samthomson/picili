@@ -197,6 +197,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
         this.searchService.removeFilter(iIndex);
         this.httpService.triggerSearch();
     }
+
     clearFilters()
     {
         this.searchService.clearFilters();
@@ -377,7 +378,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
         date.add(-iYearsAgo, 'year')
 
         let sDisplay = date.format('dddd Do')
-        let sValue = date.format('DD/MM/YYYY')
+        let sValue = 'day:' + date.format('DD/MM/YYYY')
 
         return [sDisplay, sValue]
     }
