@@ -220,6 +220,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
         }, 150, this.httpService, this.searchService);
 
     }
+    
     directSearch()
     {
         this.searchService.updateURLToVars();
@@ -274,6 +275,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
         }
         this.setLocalDisplayDate();
     }
+
     onCalMove(iUnit)
     {
         this.setMDDateToStartOfUnit(this.searchService.sCalendarSearchMode)
@@ -325,6 +327,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
         this.httpService.triggerSearch();
 
     }
+    
     setPeopleSearchState(sState)
     {
         this.searchService.sPeopleSearchState = sState;
@@ -337,6 +340,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
         }
         this.httpService.triggerSearch();
     }
+
     setPeopleSearchGrouping(sGrouping)
     {
         this.searchService.sPeopleSearchGrouping = sGrouping;
