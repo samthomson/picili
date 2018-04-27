@@ -39,6 +39,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
     private oHomeAggs: any
 
+    private aYearsAgo: any
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -49,6 +51,29 @@ export class UserPageComponent implements OnInit, OnDestroy {
         private location: PlatformLocation
     ) {
         this.gbl.sCurrentPageUsername = route.snapshot.params['username'];
+
+        this.aYearsAgo = [
+            {
+                header: '1 year ago',
+                key: '1_year_ago'
+            },
+            {
+                header: '2 years ago',
+                key: '2_years_ago'
+            },
+            {
+                header: '3 years ago',
+                key: '3_years_ago'
+            },
+            {
+                header: '4 years ago',
+                key: '4_years_ago'
+            },
+            {
+                header: '5 years ago',
+                key: '5_years_ago'
+            }
+        ]
 
         if (typeof route.snapshot.data['homeAggs'] !== 'undefined') {
             this.oHomeAggs = route.snapshot.data['homeAggs']
