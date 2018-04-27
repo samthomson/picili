@@ -53,7 +53,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
         if (typeof route.snapshot.data['homeAggs'] !== 'undefined') {
             this.oHomeAggs = route.snapshot.data['homeAggs']
-            console.log(this.oHomeAggs)
         }
 
         this.searchService.sSearchMode = (typeof route.snapshot.params['searchmode'] === "undefined") ? 'default' : route.snapshot.params['searchmode'];
