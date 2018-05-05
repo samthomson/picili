@@ -1,7 +1,6 @@
 
 <app-header></app-header>
 
-
 <div id="menu-search-container">
     <div id="side-menu">
         <app-side-menu></app-side-menu>
@@ -38,11 +37,7 @@
                 <i class="fa fa-times pointer-link"></i>
                 Clear filters
             </button>
-            
         </div>
-
-
-
 
         <div *ngIf="searchService.sSearchMode === 'default'">
         </div>
@@ -132,79 +127,27 @@
             </div> -->
         </div>
 
-
-
         <div id="page-space">
 
             <div *ngIf="searchService.sSearchMode === 'default'">
-                <div *ngIf="this.oHomeAggs.on_this_day['1_year_ago'] && this.oHomeAggs.on_this_day['1_year_ago'].length > 0">
-                    <h3 class="header">1 year ago</h3>
-
-                    <img
-                        *ngFor="let oResult of this.oHomeAggs.on_this_day['1_year_ago'];let i = index" 
-                        [src]="helperService.thumbUrl('s', oResult.id)"
-                        [style.background-color]="oResult.colour"
-                        [style.width]="oResult.s_w + 'px'"
-                        [style.height]="oResult.s_h + 'px'"
-                        (click)="resultThumbClick(oResult.index)"
-                        class="result-thumb square"
-                    />
-                </div>
-
-                <div *ngIf="this.oHomeAggs.on_this_day['2_years_ago'] && this.oHomeAggs.on_this_day['2_years_ago'].length > 0">
-                    <h3 class="header">2 years ago</h3>
-
-                    <img
-                        *ngFor="let oResult of this.oHomeAggs.on_this_day['2_years_ago'];let i = index" 
-                        [src]="helperService.thumbUrl('s', oResult.id)"
-                        [style.background-color]="oResult.colour"
-                        [style.width]="oResult.s_w + 'px'"
-                        [style.height]="oResult.s_h + 'px'"
-                        (click)="resultThumbClick(oResult.index)"
-                        class="result-thumb square"
-                    />
-                </div>
-
-                <div *ngIf="this.oHomeAggs.on_this_day['3_years_ago'] && this.oHomeAggs.on_this_day['3_years_ago'].length > 0">
-                    <h3 class="header">3 years ago</h3>
-
-                    <img
-                        *ngFor="let oResult of this.oHomeAggs.on_this_day['3_years_ago'];let i = index" 
-                        [src]="helperService.thumbUrl('s', oResult.id)"
-                        [style.background-color]="oResult.colour"
-                        [style.width]="oResult.s_w + 'px'"
-                        [style.height]="oResult.s_h + 'px'"
-                        (click)="resultThumbClick(oResult.index)"
-                        class="result-thumb square"
-                    />
-                </div>
-
-                <div *ngIf="this.oHomeAggs.on_this_day['4_years_ago'] && this.oHomeAggs.on_this_day['4_years_ago'].length > 0">
-                    <h3 class="header">4 years ago</h3>
-
-                    <img
-                        *ngFor="let oResult of this.oHomeAggs.on_this_day['4_years_ago'];let i = index" 
-                        [src]="helperService.thumbUrl('s', oResult.id)"
-                        [style.background-color]="oResult.colour"
-                        [style.width]="oResult.s_w + 'px'"
-                        [style.height]="oResult.s_h + 'px'"
-                        (click)="resultThumbClick(oResult.index)"
-                        class="result-thumb square"
-                    />
-                </div>
-
-                <div *ngIf="this.oHomeAggs.on_this_day['5_years_ago'] && this.oHomeAggs.on_this_day['5_years_ago'].length > 0">
-                    <h3 class="header">5 years ago</h3>
-
-                    <img
-                        *ngFor="let oResult of this.oHomeAggs.on_this_day['5_years_ago'];let i = index" 
-                        [src]="helperService.thumbUrl('s', oResult.id)"
-                        [style.background-color]="oResult.colour"
-                        [style.width]="oResult.s_w + 'px'"
-                        [style.height]="oResult.s_h + 'px'"
-                        (click)="resultThumbClick(oResult.index)"
-                        class="result-thumb square"
-                    />
+                <div *ngFor="let oYearAgo of this.aYearsAgo; let cYearsBack = index">
+                    <div *ngIf="this.oHomeAggs.on_this_day[oYearAgo.key] && this.oHomeAggs.on_this_day[oYearAgo.key].length > 0">
+                        <a 
+                            [routerLink] = "this.helperService.getBaseRouterLink('calendar')"
+                            [queryParams]="this.helperService.getQVarsWithNewQuery('calendar', this.generateOnThisDayLinkParts(cYearsBack)[0], this.generateOnThisDayLinkParts(cYearsBack)[1])"
+                        >
+                            <h3 class="header">{{oYearAgo.header}}</h3>
+    
+                            <img
+                                *ngFor="let oResult of this.oHomeAggs.on_this_day[oYearAgo.key];let i = index" 
+                                [src]="helperService.thumbUrl('s', oResult.id)"
+                                [style.background-color]="oResult.colour"
+                                [style.width]="oResult.s_w + 'px'"
+                                [style.height]="oResult.s_h + 'px'"
+                                class="result-thumb square"
+                            />
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -228,7 +171,6 @@
                 return 'https://s3-eu-west-1.amazonaws.com/'.env('AWS_BUCKET').'/t/'.$iUserId.'/'.$sThumbSize.$iPiciliFileId.'.jpg';
             -->
         </div>
-
     </div>
 </div>
 <app-lightbox id="lightbox" *ngIf="bLightboxOpen"></app-lightbox>

@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { GlobalVars } from './../../env';
+import { SearchService } from './search.service'
 
 @Injectable()
 export class HelperService {
 
     constructor(
-        private gbl: GlobalVars
+        private gbl: GlobalVars,
+        private searchService: SearchService,
     ) {}
 
     parseDisplayDates(sCalendarSearchMode, mdDate)
@@ -40,8 +42,24 @@ export class HelperService {
         };
     }
 
-    thumbUrl(sSize, id)
-    {
+    thumbUrl(sSize, id) {
         return this.gbl.awsBucketUrl + this.gbl.sCurrentPageUsername +'/' + sSize + id+'.jpg'
     }
+
+    getBaseRouterLink(sPage) {
+        const sUserName = this.gbl.sCurrentPageUsername
+        return `/${sUserName}/${sPage}/`
+    }
+
+    getQVarsWithNewQuery(sType, sDisplay, sValue) {
+        let oQVars = this.searchService.getQVars()
+        if(typeof oQVars['filters'] === 'undefined') {
+            oQVars['filters'] = []
+        }
+        oQVars['filters'].push({'type': sType, 'display': sDisplay, 'value': sValue})
+        oQVars['filters'] = JSON.stringify(oQVars['filters'])
+
+        return oQVars
+    }
+
 }

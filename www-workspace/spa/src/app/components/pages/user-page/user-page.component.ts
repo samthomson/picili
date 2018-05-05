@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Injectable } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpService, SearchService, HelperService } from './../../../services';
 
 import { PlatformLocation } from '@angular/common';
@@ -32,7 +32,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
     private subDateFromUrl;
     private subDateFromSearch;
 
-
     private sCurrentDateDisplay: string;
     private sCurrentHeaderDisplay: string;
     
@@ -40,9 +39,11 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
     private oHomeAggs: any
 
+    private aYearsAgo: any
 
     constructor(
         private route: ActivatedRoute,
+        private router: Router,
         private httpService: HttpService,
         private searchService: SearchService,
         private helperService: HelperService,        
@@ -50,6 +51,29 @@ export class UserPageComponent implements OnInit, OnDestroy {
         private location: PlatformLocation
     ) {
         this.gbl.sCurrentPageUsername = route.snapshot.params['username'];
+
+        this.aYearsAgo = [
+            {
+                header: '1 year ago',
+                key: '1_year_ago'
+            },
+            {
+                header: '2 years ago',
+                key: '2_years_ago'
+            },
+            {
+                header: '3 years ago',
+                key: '3_years_ago'
+            },
+            {
+                header: '4 years ago',
+                key: '4_years_ago'
+            },
+            {
+                header: '5 years ago',
+                key: '5_years_ago'
+            }
+        ]
 
         if (typeof route.snapshot.data['homeAggs'] !== 'undefined') {
             this.oHomeAggs = route.snapshot.data['homeAggs']
@@ -117,7 +141,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
 
     }
-
 
     ngOnInit() {
         this.searchService.iPage = 1;
@@ -198,6 +221,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
         this.searchService.removeFilter(iIndex);
         this.httpService.triggerSearch();
     }
+
     clearFilters()
     {
         this.searchService.clearFilters();
@@ -221,6 +245,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
         }, 150, this.httpService, this.searchService);
 
     }
+    
     directSearch()
     {
         this.searchService.updateURLToVars();
@@ -251,7 +276,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
         })
     }
 
-
     //
     // calendar things
     //
@@ -260,7 +284,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
         {
             case 'day':
                 this.searchService.mdDate.startOf(sMode);
-                // sSearchDisplay =
                 break;
             case 'week':
                 this.searchService.mdDate.startOf(sMode);
@@ -277,16 +300,15 @@ export class UserPageComponent implements OnInit, OnDestroy {
         }
         this.setLocalDisplayDate();
     }
+
     onCalMove(iUnit)
     {
         this.setMDDateToStartOfUnit(this.searchService.sCalendarSearchMode)
         // depending on mode add a certain amount of time, then do new search
-        // let sSearchDisplay = '';
         switch(this.searchService.sCalendarSearchMode)
         {
             case 'day':
                 this.searchService.setDate(this.searchService.mdDate.add(iUnit, 'days'))
-                // sSearchDisplay =
                 break;
             case 'week':
                 this.searchService.setDate(this.searchService.mdDate.add(iUnit, 'week'))
@@ -330,6 +352,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
         this.httpService.triggerSearch();
 
     }
+    
     setPeopleSearchState(sState)
     {
         this.searchService.sPeopleSearchState = sState;
@@ -342,6 +365,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
         }
         this.httpService.triggerSearch();
     }
+
     setPeopleSearchGrouping(sGrouping)
     {
         this.searchService.sPeopleSearchGrouping = sGrouping;
@@ -370,27 +394,36 @@ export class UserPageComponent implements OnInit, OnDestroy {
         });
     }
 
-    /*
-    parseDisplayDates()
-    {
-        this.searchService.sDate = this.searchService.mdDate.format('DD/MM/YYYY');
+    //
+    // aggregation stuff
+    //
+    private generateOnThisDayLinkParts(iYearsAgo: number) {
+        let date = moment()
+        date.add(-iYearsAgo, 'year')
 
-        switch(this.searchService.sCalendarSearchMode)
-        {
-            case 'day':
-                this.sCurrentDateDisplay = this.searchService.mdDate.format('ddd Do');
-                break;
-            case 'week':
-                this.sCurrentDateDisplay = 'Week ' + this.searchService.mdDate.format('w');
-                break;
-            case 'month':
-                this.sCurrentDateDisplay = this.searchService.mdDate.format('MMM YYYY');
-                break;
-            case 'year':
-                this.sCurrentDateDisplay = this.searchService.mdDate.format('YYYY');
-                break;
-        }
+        let sDisplay = date.format('dddd Do')
+        let sValue = 'day:' + date.format('DD/MM/YYYY')
+
+        return [sDisplay, sValue]
     }
-    */
+
+    onThisDayClick(iYearsAgo: number) {
+        let [sDisplay, sValue] = this.generateOnThisDayLinkParts(-1 * iYearsAgo)
+
+        console.log('sDisplay: ', sDisplay)
+        console.log('sValue: ', sValue)
+
+        let sDateValue: string = `day:${sValue}`
+        console.log(`Searching date 'day:${sValue}'`)
+        // this.searchService.addFilter('calendar', sDisplay, sDateValue);
+        // this.httpService.triggerSearch();
+
+        this.searchService.addSetCalendarFilter('day', sDisplay, sValue)
+        this.httpService.triggerSearch()
+
+        const iUserName: number = this.route.snapshot.params['username']
+
+        this.router.navigate([`/${iUserName}/calendar`])
+    }
 
 }

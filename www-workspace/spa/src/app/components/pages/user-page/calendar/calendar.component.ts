@@ -35,8 +35,6 @@ export class CalendarComponent implements OnInit {
     }
 
     goToDate(sDate) {
-        // EMIT TO PARENT HERE
-        //// this.parentComponent.parseDisplayDates()
         // change to day mode
         this.searchService.sCalendarSearchMode = 'day'
 
@@ -93,7 +91,6 @@ export class CalendarComponent implements OnInit {
 
         // don't do this, it will overload url cal search  this.goToDate(moment())
         //this.searchService.eeDatechange.emit();
-        //// this.parentComponent.parseDisplayDates()
         // this.searchService.eeDatechange.emit();
         // EMIT TO PARENT HERE
 
