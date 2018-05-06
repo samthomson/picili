@@ -38,6 +38,6 @@ export class FoldersComponent implements OnInit {
     }
 
     folderDisplayName (sFullRelativeFolderPath: string): string {
-        return sFullRelativeFolderPath.split('/').pop(-1)
+        return sFullRelativeFolderPath.split('/').pop()
     }
 }
