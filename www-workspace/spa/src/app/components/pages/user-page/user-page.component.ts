@@ -397,16 +397,17 @@ export class UserPageComponent implements OnInit, OnDestroy {
     //
     // aggregation stuff
     //
-    private generateOnThisDayLinkParts(iYearsAgo: number) {
+    private generateOnThisDayLinkParts(iYearsAgo: number): [string, string] {
         let date = moment()
         date.add(-iYearsAgo, 'year')
 
-        let sDisplay = date.format('dddd Do')
-        let sValue = 'day:' + date.format('DD/MM/YYYY')
+        let sDisplay: string = date.format('dddd Do')
+        let sValue: string = 'day:' + date.format('DD/MM/YYYY')
 
         return [sDisplay, sValue]
     }
 
+    /*
     onThisDayClick(iYearsAgo: number) {
         let [sDisplay, sValue] = this.generateOnThisDayLinkParts(-1 * iYearsAgo)
 
@@ -425,5 +426,5 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
         this.router.navigate([`/${iUserName}/calendar`])
     }
-
+    */
 }

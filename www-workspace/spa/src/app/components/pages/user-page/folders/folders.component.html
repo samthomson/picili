@@ -2,15 +2,20 @@
 <div *ngIf="aFolders.length > 0">
     <div *ngFor="let oFolder of aFolders">
 
-        <div class="ui piled segment folder-overview pointer-link" (click)="addFolder('folder', oFolder['name'])">
-            <h4 class="ui header">{{oFolder['parent']}}</h4>
-            <div>
-                <img class="folder-thumb" [src]="helperService.thumbUrl('s', oFolder['file-id'])" />
+        <a
+            [routerLink] = "this.helperService.getBaseRouterLink('calendar')"
+            [queryParams]="this.helperService.getQVarsWithNewQuery('calendar', this.generateOnThisDayLinkParts(cYearsBack)[0], this.generateOnThisDayLinkParts(cYearsBack)[1])"
+        >
+            <div class="ui piled segment folder-overview pointer-link" (click)="addFolder('folder', oFolder['name'])">
+                <h4 class="ui header">{{oFolder['parent']}}</h4>
+                <div>
+                    <img class="folder-thumb" [src]="helperService.thumbUrl('s', oFolder['file-id'])" />
+                </div>
+                <div>
+                    <span><i class="fa fa-picture-o" aria-hidden="true"></i> {{oFolder['count'] | number}} picture(s)</span>
+                </div>
             </div>
-            <div>
-                <span><i class="fa fa-picture-o" aria-hidden="true"></i> {{oFolder['count'] | number}} picture(s)</span>
-            </div>
-        </div>
+        </a>
 
     </div>
 </div>
