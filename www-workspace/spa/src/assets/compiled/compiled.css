@@ -31769,10 +31769,6 @@ img.folder-thumb {
   color: #D32F2F;
 }
 
-a.ui.label.lightbox-fileinfo-tag {
-  cursor: none;
-}
-
 #lightbox-map img {
   max-width: 100%;
   height: auto;

@@ -15,7 +15,12 @@
                 <h5 class="ui header">{{jFileInfo.date}}</h5>
                 <br/>
                 <div class="ui labels">
-                    <a class="ui label lightbox-fileinfo-tag" *ngFor="let sTag of jFileInfo.tags">{{sTag}}</a>
+                    <a 
+                        class="ui label lightbox-fileinfo-tag" *ngFor="let sTag of jFileInfo.tags"
+                        [routerLink] = "this.helperService.getBaseRouterLink('search')"
+                        [queryParams]="this.helperService.getRawQueryVarsWithNewQuery(sTag)"
+                        (click)="tagClicked()"
+                    >{{sTag}}</a>
                 </div>
                 <br/>
 
