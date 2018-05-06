@@ -37,11 +37,7 @@ export class FoldersComponent implements OnInit {
     ngOnInit() {
     }
 
-    addFolder(sDisplay, sValue)
-    {
-        sDisplay = sValue.split("/").pop(-1);
-        this.searchService.addFilter('folder', sDisplay, sValue);
-
-        this.httpService.triggerSearch();
+    folderDisplayName (sFullRelativeFolderPath: string): string {
+        return sFullRelativeFolderPath.split('/').pop(-1)
     }
 }
