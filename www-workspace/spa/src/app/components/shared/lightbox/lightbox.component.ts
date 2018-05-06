@@ -65,6 +65,7 @@ export class LightboxComponent implements OnInit {
             this.jFileInfo = null
         }
     }
+
     getFileInfo() {
         // opening the info, load it
         this.bLoadingInfo = true
@@ -101,6 +102,7 @@ export class LightboxComponent implements OnInit {
             this.lightBoxFileSet()
 		}
     }
+
     lightBoxFileSet() {
         if(this.bShowingInfo){
             this.getFileInfo()
@@ -108,5 +110,10 @@ export class LightboxComponent implements OnInit {
 
         // preload neighbours, 2 after, 2 before
         this.httpService.preloadNeighboursToLightIndex()
+    }
+
+    tagClicked() {
+        // close the lightbox
+        this.eCloseLightbox()
     }
 }

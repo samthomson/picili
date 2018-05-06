@@ -19,6 +19,7 @@
                         class="ui label lightbox-fileinfo-tag" *ngFor="let sTag of jFileInfo.tags"
                         [routerLink] = "this.helperService.getBaseRouterLink('search')"
                         [queryParams]="this.helperService.getRawQueryVarsWithNewQuery(sTag)"
+                        (click)="tagClicked()"
                     >{{sTag}}</a>
                 </div>
                 <br/>
