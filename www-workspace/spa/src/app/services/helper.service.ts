@@ -62,4 +62,10 @@ export class HelperService {
         return oQVars
     }
 
+    getRawQueryVarsWithNewQuery(sQuery: string) {
+        let oQVars = this.searchService.getQVars()
+        oQVars['q'] = sQuery
+
+        return oQVars
+    }
 }
