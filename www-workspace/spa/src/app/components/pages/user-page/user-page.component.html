@@ -32,7 +32,6 @@
                 <i class="fa fa-times pointer-link" aria-hidden="true" (click)="removeFilter(i)"></i>
             </div>
 
-            <!---->
             <button id="clear-filters" class="ui tiny basic button" *ngIf="searchService.mQuery['filters'].length > 0" (click)="clearFilters()">
                 <i class="fa fa-times pointer-link"></i>
                 Clear filters
@@ -134,7 +133,7 @@
                     <div *ngIf="this.oHomeAggs.on_this_day[oYearAgo.key] && this.oHomeAggs.on_this_day[oYearAgo.key].length > 0">
                         <a 
                             [routerLink] = "this.helperService.getBaseRouterLink('calendar')"
-                            [queryParams]="this.helperService.getQVarsWithNewQuery('calendar', this.generateOnThisDayLinkParts(cYearsBack)[0], this.generateOnThisDayLinkParts(cYearsBack)[1])"
+                            [queryParams]="this.helperService.getQVarsWithNewQuery('calendar', this.generateOnThisDayLinkParts(cYearsBack + 1)[0], this.generateOnThisDayLinkParts(cYearsBack + 1)[1])"
                         >
                             <h3 class="header">{{oYearAgo.header}}</h3>
     
