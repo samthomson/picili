@@ -458,9 +458,6 @@ img.folder-thumb {
 #lightbox.with-info #lightbox-info {
   color: #D32F2F; }
 
-a.ui.label.lightbox-fileinfo-tag {
-  cursor: none; }
-
 #lightbox-map img {
   max-width: 100%;
   height: auto; }
