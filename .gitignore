@@ -2,3 +2,5 @@
 www-workspace/user-api-laravel/.env.prod
 www-workspace/auto/.env.prod
 www-workspace/spa/package-lock.json
+www-workspace/spa/src/assets/compiled/compiled.css
+www-workspace/spa/src/assets/compiled/picili.css
