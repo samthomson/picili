@@ -31457,6 +31457,13 @@ li#settings-link {
   margin-bottom: 16px;
 }
 
+.folder-title {
+  text-overflow: ellipsis;
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .results-block {
   overflow-y: auto;
   position: absolute;
