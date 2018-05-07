@@ -7,7 +7,7 @@
             [queryParams]="this.helperService.getQVarsWithNewQuery('folder', folderDisplayName(oFolder['name']), oFolder['name'])"
         >
             <div class="ui piled segment folder-overview pointer-link">
-                <h4 class="ui header">{{oFolder['parent']}}</h4>
+                <h4 class="ui header folder-title" title="{{oFolder['parent']}}">{{oFolder['parent']}}</h4>
                 <div>
                     <img class="folder-thumb" [src]="helperService.thumbUrl('s', oFolder['file-id'])" />
                 </div>

@@ -255,6 +255,13 @@ li#settings-link{
 	margin-bottom: ($iMargin * 2);
 
 }
+.folder-title {
+	text-overflow: ellipsis;  
+	/* Required for text-overflow to do anything */
+	white-space: nowrap;
+	overflow: hidden;
+}
+
 .results-block{
 	// padding-top: $iMargin;
 	overflow-y: auto;
