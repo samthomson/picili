@@ -273,6 +273,9 @@ img.result-thumb.square{
 	width: $iSmallImageDimension;
 	height: $iSmallImageDimension;
 }
+img.result-thumb:hover {
+	opacity: 0.8;
+}
 
 .show-more{
 	width: 100%;

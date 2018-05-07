@@ -215,6 +215,9 @@ img.result-thumb.square {
   width: 125px;
   height: 125px; }
 
+img.result-thumb:hover {
+  opacity: 0.8; }
+
 .show-more {
   width: 100%;
   border: 1px solid #e0e0e0;
