@@ -1,36 +1,40 @@
 
 var gulp = require('gulp');
+var scss = require('gulp-scss');
+
 var sass = require('gulp-sass');
+var rename = require('gulp-rename');
 var concatCss = require('gulp-concat-css');
 
 var concat = require('gulp-concat');
 
-// gulp.task('copy-sass', function(){
-//     return gulp.src(['node_modules/bootstrap-sass/assets/stylesheets/bootstrap/**/*']).pipe(gulp.dest('src/assets/sass/bootstrap'));
-// });
+gulp.task('copy-fonts', function(){
+    return gulp.src([
+        'src/assets/vendor/fa/fonts/*'
+    ])
+    .pipe(gulp.dest('src/assets/fonts'));
+});
 
 gulp.task('sass', function(){
-    return gulp.src(
-        [
-            'src/picili.scss'
-        ]
-    )
-    .pipe(sass()) // Using gulp-sass
-    .pipe(sass.sync().on('error', sass.logError))
-    .pipe(gulp.dest('src/assets/compiled'))
+
+    return gulp.src('src/picili.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('src/assets/compiled'));
 });
 
 
-gulp.task('concat-css', function () {
+gulp.task('concat-css', ['sass'], function () {
     return gulp.src(
         [
-            'src/assets/vendor/semantic/semantic.min.css',
-            'src/assets/compiled/picili.css',
-            'src/assets/vendor/fa/css/font-awesome.min.css'
+            'node_modules/semantic-ui-css/semantic.min.css',
+            'src/assets/vendor/fa/css/font-awesome.css',
+            'src/assets/compiled/picili.css'
         ]
     )
-       .pipe(concatCss("compiled.css"))
-       .pipe(gulp.dest('src/assets/compiled/'));
+    .pipe(concatCss("compiled.css", {
+        rebaseUrls: false
+    }))
+    .pipe(gulp.dest('src/assets/compiled/'));
 });
 
 gulp.task('concat-js', function() {
@@ -47,11 +51,22 @@ gulp.task('concat-js', function() {
     .pipe(gulp.dest('src/assets/compiled'));
 });
 
-gulp.task('default', gulp.series('sass', 'concat-css', 'concat-js'));
+// gulp.task('default', gulp.series('sass', 'concat-css', 'concat-js'));
+
+  
+gulp.task('default', [
+        'concat-css', /* depends on 'sass' task */
+        'concat-js',
+        'copy-fonts'
+    ], function () {
+        console.log('all done..')
+    }
+);
 
 
-gulp.task('watch', function(){
-	gulp.watch('src/**/*.scss', gulp.series('default'));
+gulp.task('watch', function() {
+    console.log('** watch **')
+	gulp.watch('src/**/*.scss', ['default']);
   // Other watchers
 })
 
