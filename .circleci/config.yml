@@ -47,6 +47,7 @@ jobs:
            npm i
            npm install -g angular-cli --unsafe-perm
            pwd
+           gulp
            ng build
      - run:
          name: Copy spa into API public folder
