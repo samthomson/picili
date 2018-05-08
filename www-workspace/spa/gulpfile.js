@@ -13,6 +13,7 @@ gulp.task('copy-fonts', function(){
         /* icomoon */
         'src/assets/vendor/icomoon/*',
         /* font awesome */
+        'node_modules/font-awesome/fonts/*'
     ])
     .pipe(gulp.dest('src/assets/fonts'));
 });
@@ -44,18 +45,11 @@ gulp.task('concat-js', function() {
   return gulp.src(
         [
             'node_modules/jquery/dist/jquery.min.js'
-			/*'node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js',
-            'src/assets/vendor/semantic-ui/semantic-ui.min.js'*/
-            /*,
-            'src/assets/bootstrap/js/bootstrap.min.js'*/
         ]
     )
     .pipe(concat('compiled.js'))
     .pipe(gulp.dest('src/assets/compiled'));
 });
-
-// gulp.task('default', gulp.series('sass', 'concat-css', 'concat-js'));
-
   
 gulp.task('default', [
         'concat-css', /* depends on 'sass' task */
