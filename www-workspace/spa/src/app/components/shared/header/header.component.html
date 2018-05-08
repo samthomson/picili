@@ -1,5 +1,5 @@
 <div id="header">
-    <span class="header-font"><a [routerLink]="['/']">picili</a></span>
+    <span class="header-font"><a [routerLink]="['/' + sUsername + '/']">picili</a></span>
     <span *ngIf="searchService.bSearching">searching</span>
     
     <div id="top-right-links">
