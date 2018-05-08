@@ -10,7 +10,10 @@ var concat = require('gulp-concat');
 
 gulp.task('copy-fonts', function(){
     return gulp.src([
-        'src/assets/vendor/fa/fonts/*'
+        /* font awesome */
+        'src/assets/vendor/fa/fonts/*',
+        /* icomoon */
+        'src/assets/vendor/icomoon/*'
     ])
     .pipe(gulp.dest('src/assets/fonts'));
 });
