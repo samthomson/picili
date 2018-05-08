@@ -10,13 +10,13 @@ var concat = require('gulp-concat');
 
 gulp.task('copy-fonts', function(){
     return gulp.src([
-        /* font awesome */
-        'src/assets/vendor/fa/fonts/*',
         /* icomoon */
-        'src/assets/vendor/icomoon/*'
+        'src/assets/vendor/icomoon/*',
+        /* font awesome */
     ])
     .pipe(gulp.dest('src/assets/fonts'));
 });
+
 
 gulp.task('sass', function(){
 
@@ -30,7 +30,7 @@ gulp.task('concat-css', ['sass'], function () {
     return gulp.src(
         [
             'node_modules/semantic-ui-css/semantic.min.css',
-            'src/assets/vendor/fa/css/font-awesome.css',
+            'node_modules/font-awesome/css/font-awesome.css',
             'src/assets/compiled/picili.css'
         ]
     )
