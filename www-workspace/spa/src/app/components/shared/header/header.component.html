@@ -9,7 +9,9 @@
             <span *ngIf="bProcessing" class="ui tiny"><i class="fa fa-cogs"></i>{{cProcessingFiles | number}} file(s) to go, across {{cProcessingTasks | number}} tasks</span>
 
             
-            <a *ngIf="sUsername !== ''" [routerLink]="['/' + sCurrentPageUsername + '/settings']" class="ui tiny button">settings</a>
+            <a *ngIf="sUsername !== ''" [routerLink]="['/' + sCurrentPageUsername + '/settings']" class="ui tiny button">
+                <i class="fa fa-cog" aria-hidden="true"></i>&nbsp;settings
+            </a>
 
             <a class="ui tiny button" (click)="onLogout()">logout</a>
         </div>
