@@ -35,8 +35,8 @@ gulp.task('concat-css', ['sass'], function () {
         [
             'node_modules/semantic-ui-css/semantic.min.css',
             'node_modules/font-awesome/css/font-awesome.css',
-            'src/assets/compiled/picili.css',
-            'src/assets/compiled/materialize-sass.css'
+            'src/assets/compiled/materialize-sass.css',
+            'src/assets/compiled/picili.css'
         ]
     )
     .pipe(concatCss("compiled.css", {
@@ -48,8 +48,8 @@ gulp.task('concat-css', ['sass'], function () {
 gulp.task('concat-js', function() {
   return gulp.src(
         [
-            'node_modules/jquery/dist/jquery.min.js'/*,
-            'node_modules/materialize-css/dist/js/materialize.js'*/
+            'node_modules/jquery/dist/jquery.min.js',
+            'node_modules/materialize-css/dist/js/materialize.js'
         ]
     )
     .pipe(concat('compiled.js'))
