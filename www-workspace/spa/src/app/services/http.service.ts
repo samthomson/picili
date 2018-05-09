@@ -29,6 +29,8 @@ export class HttpService {
 
     subCurrentSearchRequest: any;
 
+    bMakingRequestToServer: boolean = false
+
     constructor(
         private http: Http,
         private gbl: GlobalVars,
@@ -39,7 +41,7 @@ export class HttpService {
     }
 
     fetchPageState(sUsername) : any {
-
+        // this is the actual search method
         let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
         let headers = new Headers();
         let jParams = new URLSearchParams();
@@ -226,12 +228,16 @@ export class HttpService {
             }
         );
 
+        this.bMakingRequestToServer = true
+
         return this.http.get(`${this.gbl.sAPIBaseUrl}/app/homeaggs`, options)
         .map(
             (response: Response) => {
+                this.bMakingRequestToServer = false
                 return response.json().home_aggs;
             }
         ).catch((error: any) => {
+            this.bMakingRequestToServer = false
             throw error;
             //return {'success': false, 'errors': error};
         });
