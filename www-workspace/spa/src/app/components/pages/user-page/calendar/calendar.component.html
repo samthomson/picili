@@ -57,5 +57,9 @@
 
 <!-- year view -->
 <div *ngIf="searchService.sCalendarSearchMode === 'year' && searchService.mData && searchService.mData.search.aggs">
+        <calendar-year-month month="jan"></calendar-year-month>
+        <calendar-year-month></calendar-year-month>
+        <calendar-year-month></calendar-year-month>
+        <hr/>
     {{searchService.mData.search.aggs | json}}
 </div>
