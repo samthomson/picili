@@ -186,8 +186,7 @@ export class HttpService {
         });
     }
 
-    getUserSettings()
-    {
+    getUserSettings() {
         let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
         let headers = new Headers();
         let jParams = new URLSearchParams();
@@ -202,12 +201,15 @@ export class HttpService {
             }
         );
 
+        this.bMakingRequestToServer = true
         return this.http.get(`${this.gbl.sAPIBaseUrl}/app/settings`, options)
         .map(
             (response: Response) => {
+                this.bMakingRequestToServer = false
                 return response.json();
             }
         ).catch((error: any) => {
+            this.bMakingRequestToServer = false
             throw error;
             //return {'success': false, 'errors': error};
         });
