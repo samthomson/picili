@@ -1,3 +1,7 @@
+<div class="indeterminate-loading-bar progress" *ngIf="searchService.bSearching || httpService.bMakingRequestToServer">
+    <div class="indeterminate"></div>
+</div>
+
 <div id="header">
 
     <span class="header-font"><a [routerLink]="['/' + sUsername + '/']">picili</a></span>

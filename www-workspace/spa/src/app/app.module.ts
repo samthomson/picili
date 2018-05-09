@@ -45,6 +45,8 @@ import { CalendarPeriodPipe } from './components/pipes/calendar-period';
 
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
+import { MaterializeModule } from 'angular2-materialize';
+
 @NgModule({
   declarations: [
     PiciliAppComponent,
@@ -75,7 +77,8 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
     routing,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDR4kOXozjam-Y3xaMxq9mSABoJxHzsXhM'
-    })
+    }),
+    MaterializeModule
   ],
   providers: [
     AuthService,
