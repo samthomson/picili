@@ -156,6 +156,11 @@ a.picili-link:active{
 .progress.indeterminate-loading-bar {
 	margin: 0;
 	position: absolute;
+	background-color: #fff;
+	z-index: 11000;
+}
+.progress.indeterminate-loading-bar .indeterminate {
+	background-color: $cPiciliRed;
 }
 
 /*
