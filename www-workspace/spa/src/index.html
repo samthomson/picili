@@ -16,7 +16,11 @@
 
     </head>
     <body>
-        <app-root>Loading...</app-root>
+        <app-root>
+            <div class="indeterminate-loading-bar progress" *ngIf="searchService.bSearching || httpService.bMakingRequestToServer">
+                <div class="indeterminate"></div>
+            </div>
+        </app-root>
 
         <script src="/assets/compiled/compiled.js"></script>
     </body>
