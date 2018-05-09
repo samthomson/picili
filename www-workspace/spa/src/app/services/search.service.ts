@@ -160,18 +160,23 @@ export class SearchService {
 
     removeFilterByType(sType)
     {
+        this.mQuery = this.removeFilterByTypeOnQueryObject(this.mQuery, sType)
+    }
+
+    removeFilterByTypeOnQueryObject(oQueryObject, sType) {
         let iPositionAt = -1;
-        for(let i = 0; i < this.mQuery['filters'].length; i++)
+        for(let i = 0; i < oQueryObject['filters'].length; i++)
         {
-            if(this.mQuery['filters'][i].type === sType)
+            if(oQueryObject['filters'][i].type === sType)
             {
                 iPositionAt = i;
             }
         }
         if(iPositionAt !== -1)
         {
-            this.mQuery['filters'].splice(iPositionAt, 1);
+            oQueryObject['filters'].splice(iPositionAt, 1);
         }
+        return oQueryObject
     }
 
     addSetMapFilter(iLatMin, iLatMax, iLonMin, iLonMax, iZoom)

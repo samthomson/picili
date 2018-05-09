@@ -52,14 +52,24 @@ export class HelperService {
     }
 
     getQVarsWithNewQuery(sType, sDisplay, sValue) {
-        let oQVars = this.searchService.getQVars()
-        if(typeof oQVars['filters'] === 'undefined') {
-            oQVars['filters'] = []
-        }
-        oQVars['filters'].push({'type': sType, 'display': sDisplay, 'value': sValue})
-        oQVars['filters'] = JSON.stringify(oQVars['filters'])
 
-        return oQVars
+        // this should not modify the existing query state, it just creates a read only query to be displayed as a link
+
+        let oReadOnlyQVars = this.searchService.getQVars()
+        if(typeof oReadOnlyQVars['filters'] === 'undefined') {
+            oReadOnlyQVars['filters'] = []
+        } else {
+            oReadOnlyQVars['filters'] = JSON.parse(oReadOnlyQVars['filters'])
+        }
+        switch (sType) {
+            case 'calendar':
+                oReadOnlyQVars = this.searchService.removeFilterByTypeOnQueryObject(oReadOnlyQVars, 'calendar')
+                break
+        }
+        oReadOnlyQVars['filters'].push({'type': sType, 'display': sDisplay, 'value': sValue})
+        oReadOnlyQVars['filters'] = JSON.stringify(oReadOnlyQVars['filters'])
+
+        return oReadOnlyQVars
     }
 
     getRawQueryVarsWithNewQuery(sQuery: string) {
