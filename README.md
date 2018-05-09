@@ -2,7 +2,7 @@
 
 ![build status](https://circleci.com/gh/samthomson/picili.svg?&style=shield)
 
-picili is an automated image search engine / browser. It syncronises with a chosen folder on your dropbox, and analyses all pictures there. Staying upto date with any pictures you add or remove. You can then search through all your pictures more easily, and browse them with a map and calendar interface.
+picili is an automated image search engine / browser. It syncronises with a chosen folder on your dropbox and analyses all pictures there. Staying upto date with any pictures you add or remove. You can then search through all your pictures more easily, and browse them with a map and calendar interface.
 
 ![build status](https://picili.com/images/map_screen.jpeg)
 
@@ -13,20 +13,20 @@ picili is an automated image search engine / browser. It syncronises with a chos
 
 ## 1.0 How it works
 
-- user registers and connects their dropbox account through oauth
+- user registers and connects their dropbox account through OAuth
 - user then enters a folder on their dropbox where they store their pictures
-- picili polls dropbox every x minutes, gets a list of files.
+- picili polls dropbox every x minutes, getting a list of files.
 - compares to all files it has identified so far.
 - adds any new ones to a local list and quees them to be imported, and removes any now deleted files.
 - queued files are each downloaded locally, processed, and then deleted locally
 - processing consists of
-    - create thumbnails
-    - extract exif information
-    - determine colours
-    - send to subject recognition API
-    - if geo exif data
-        - geocode - get localtion information (via external API)
-        - get altitude (via external API)
+    - creating thumbnails
+    - extracting exif information
+    - determining colours
+    - sending the picture to a subject recognition API
+    - if the picture contains geo exif data
+        - geocoding: get localtion information (via external API)
+        - altitude encoding (via an external API)
 
 Main parts:
 - SPA: the front end is a Angular 2 single page application
