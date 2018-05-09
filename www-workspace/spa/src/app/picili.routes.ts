@@ -16,17 +16,39 @@ import { HomeResolve } from './resolves/home.resolve';
 
 
 const routes = [
-
-    { path: '', component: HomeComponent},
-
-    { path: 'login', component: LoginComponent},
-    { path: 'register', component: RegisterComponent},
-
-    { path: ':username/settings', component: SettingsComponent, resolve: { userSettings: UserSettingsResolve}, canActivate: [AuthGuard] },
-    
-    { path: ':username/:searchmode', name: 'user-search-specific', component: UserPageComponent},
-
-    { path: ':username', name: 'user-search-default', component: UserPageComponent, resolve: { homeAggs: HomeResolve}, canActivate: [AuthGuard] }
+    {
+        path: '',
+        redirectTo: '/login',
+        pathMatch: 'full'
+    },
+    {
+        path: 'login',
+        component: LoginComponent,
+        canActivate: [GuestGuard]
+    },
+    {
+        path: 'register',
+        component: RegisterComponent
+    },
+    {
+        path: ':username/settings',
+        component: SettingsComponent,
+        resolve: { userSettings: UserSettingsResolve},
+        canActivate: [AuthGuard]
+    },
+    {
+        path: ':username/:searchmode',
+        name: 'user-search-specific',
+        component: UserPageComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: ':username',
+        name: 'user-search-default',
+        component: UserPageComponent,
+        resolve: { homeAggs: HomeResolve},
+        canActivate: [AuthGuard]
+    }
 ];
 
 export const routing = RouterModule.forRoot(routes);
