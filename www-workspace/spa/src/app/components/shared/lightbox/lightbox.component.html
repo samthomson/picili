@@ -28,7 +28,9 @@
                     <img border="0" src="//maps.googleapis.com/maps/api/staticmap?center={{jFileInfo.lat}},{{jFileInfo.lon}}&amp;zoom=14&amp;size=240x160&key=AIzaSyBETgviS0P570fk29ksPR0PdeBFqHUGHAI" alt="{{jFileInfo.address}}">
                 </div>
             </div>
-            <div *ngIf="bLoadingInfo">loading..</div>
+            <div class="ui active inverted dimmer" *ngIf="bLoadingInfo">
+                <div class="ui large text loader">oading&nbsp;information..</div>
+            </div>
         </div>
 
         <a class="lightbox-button" id="lightbox-close" (click)="eCloseLightbox()">
