@@ -2,13 +2,16 @@
 <div *ngIf="!searchService.bSearching && (oDateResults === null || oDateResults.length === 0)">
     no results?
 </div>
-<div *ngIf="searchService.bSearching">
-    searching..
+<!-- day view uses the shared result-grid component which has its own search spinner -->
+<div class="ui active inverted dimmer" *ngIf="searchService.bSearching && searchService.sCalendarSearchMode !== 'day'">
+    <div class="ui large text loader">Searching</div>
 </div>
 
+<!-- day view -->
 <div *ngIf="searchService.sCalendarSearchMode === 'day'">
     <app-result-grid></app-result-grid>
 </div>
+
 <!-- week view -->
 <div *ngIf="searchService.sCalendarSearchMode === 'week' && searchService.mData && searchService.mData.search.aggs" class="week">
     
@@ -24,6 +27,7 @@
         </a>
     </div>
 </div>
+
 <!-- month view -->
 <div *ngIf="searchService.sCalendarSearchMode === 'month' && searchService.mData && searchService.mData.search && searchService.mData.search.aggs" class="month">
     <!-- week day headers -->
