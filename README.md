@@ -4,6 +4,8 @@
 
 picili is an automated image search engine / browser. It syncronises with a chosen folder on your dropbox, and analyses all pictures there. Staying upto date with any pictures you add or remove. You can then search through all your pictures more easily, and browse them with a map and calendar interface.
 
+![build status](https://picili.com/images/map_screen.jpeg)
+
 1. [How it works](#10-how-it-works)
 2. [Set up](#20-set-up-picili-locally)
 3. [Working on picili](#30-working-on-picili)
