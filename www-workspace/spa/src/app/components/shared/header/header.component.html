@@ -1,5 +1,5 @@
 <div id="header">
-    <span class="header-font"><a [routerLink]="['/']">picili</a></span>
+    <span class="header-font"><a [routerLink]="['/' + sUsername + '/']">picili</a></span>
     <span *ngIf="searchService.bSearching">searching</span>
     
     <div id="top-right-links">
@@ -7,21 +7,18 @@
         <!-- logged in -->
         <div *ngIf="bAuthenticated">
             <span *ngIf="bProcessing" class="ui tiny"><i class="fa fa-cogs"></i>{{cProcessingFiles | number}} file(s) to go, across {{cProcessingTasks | number}} tasks</span>
-            <!-- on users own page -->
-
-            <!-- not on users own page -->
-            <a *ngIf="sUsername !== ''" [routerLink]="['/' + sUsername + '/']" class="ui tiny primary button">your page</a>
 
             
-            <a *ngIf="sUsername !== ''" [routerLink]="['/' + sCurrentPageUsername + '/settings']" class="ui tiny button">settings</a>
+            <a *ngIf="sUsername !== ''" [routerLink]="['/' + sCurrentPageUsername + '/settings']" class="ui tiny button">
+                <i class="fa fa-cog" aria-hidden="true"></i>&nbsp;settings
+            </a>
 
-            <!-- logout -->
             <a class="ui tiny button" (click)="onLogout()">logout</a>
         </div>
         <!-- not logged in - guest -->
         <div *ngIf="!bAuthenticated">
             <a class="ui tiny button" [routerLink]="['/login']">login</a>
-            <!--<a class="ui tiny button" [routerLink]="['/register']">register</a>-->
+            <a class="ui tiny button" [routerLink]="['/register']">register</a>
         </div>
     </div>
 </div>

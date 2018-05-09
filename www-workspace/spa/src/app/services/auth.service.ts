@@ -23,8 +23,6 @@ export class AuthService {
     // jUser: any;
     // userChanged = new EventEmitter<any>();
 
-
-
     constructor(
         private http: Http,
         private router: Router,
