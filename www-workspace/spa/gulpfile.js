@@ -21,7 +21,10 @@ gulp.task('copy-fonts', function(){
 
 gulp.task('sass', function(){
 
-    return gulp.src('src/picili.scss')
+    return gulp.src([
+        'src/picili.scss',
+        'src/materialize-sass.scss'
+    ])
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('src/assets/compiled'));
 });
@@ -32,6 +35,7 @@ gulp.task('concat-css', ['sass'], function () {
         [
             'node_modules/semantic-ui-css/semantic.min.css',
             'node_modules/font-awesome/css/font-awesome.css',
+            'src/assets/compiled/materialize-sass.css',
             'src/assets/compiled/picili.css'
         ]
     )
@@ -44,7 +48,8 @@ gulp.task('concat-css', ['sass'], function () {
 gulp.task('concat-js', function() {
   return gulp.src(
         [
-            'node_modules/jquery/dist/jquery.min.js'
+            'node_modules/jquery/dist/jquery.min.js',
+            'node_modules/materialize-css/dist/js/materialize.js'
         ]
     )
     .pipe(concat('compiled.js'))

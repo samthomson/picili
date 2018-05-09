@@ -35,7 +35,15 @@ a,a:hover,a:visited,a:active{
 .ui.vertical.segment{
 	border-bottom: 0px;
 }
-
+h3 {
+	font-size: 1.29rem;
+}
+h4 {
+	font-size: 1.07rem;
+}
+h3, h4 {
+	font-weight: 700;
+}
 /*
 //
 // STRUCTURE
@@ -151,6 +159,16 @@ a.picili-link:active{
 
 .pointer-link{
 	cursor: pointer;
+}
+
+.progress.indeterminate-loading-bar {
+	margin: 0;
+	position: absolute;
+	background-color: #fff;
+	z-index: 11000;
+}
+.progress.indeterminate-loading-bar .indeterminate {
+	background-color: $cPiciliRed;
 }
 
 /*

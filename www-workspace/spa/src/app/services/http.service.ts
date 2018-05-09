@@ -372,14 +372,18 @@ export class HttpService {
             }
         );
 
+        this.bMakingRequestToServer = true
+
         return this.http.get(`${this.gbl.sAPIBaseUrl}/app/fileinfo`, options)
         .map(
             (response: Response) => {
                 response = response.json();
                 // this.mData = response;
+                this.bMakingRequestToServer = false
                 return response;
             }
         ).catch((error: any) => {
+            this.bMakingRequestToServer = false
             throw error;
             //return {'success': false, 'errors': error};
         });
