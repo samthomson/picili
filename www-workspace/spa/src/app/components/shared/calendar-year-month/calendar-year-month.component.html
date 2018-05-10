@@ -1,1 +1,7 @@
-[month] {{month}}
+<div class="year-month">
+    <div class="year-month-day-header">{{sFormattedMonthHeader}}</div>
+
+    <div *ngFor="let oD of aDisplayDates; let i = index" class="year-month-date" [ngClass]="{'has-pics': oD.count > 0}">{{oD.sDate}}
+        <!-- <span *ngIf="oD.count > 0">{{oD.sID}}</span> -->
+    </div>
+</div>
