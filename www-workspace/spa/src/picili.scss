@@ -487,6 +487,27 @@ img.folder-thumb{
     text-align: center;
 }
 
+.year-month {
+	width: 24%;
+	display: inline-block;
+	vertical-align: top;
+}
+.year-month-day-header {
+	text-align: center;
+	font-weight: 600;
+}
+.year-month-date {
+	display: inline-block;
+	width: 13%;
+	text-align: center;
+	font-weight: 100;
+	color: $cAvailableGrey;
+}
+.year-month-date.has-pics {
+	color: $cPiciliRed;
+	font-weight: 600;
+}
+
 //
 // lightbox
 //

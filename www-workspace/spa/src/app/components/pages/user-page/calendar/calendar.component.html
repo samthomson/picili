@@ -1,5 +1,10 @@
 
-<div *ngIf="!searchService.bSearching && (oDateResults === null || oDateResults.length === 0)">
+<div *ngIf="
+    !searchService.bSearching && 
+    (oDateResults === null || oDateResults.length === 0) && 
+    (searchService.sCalendarSearchMode === 'day' ||
+    searchService.sCalendarSearchMode === 'week' ||
+    searchService.sCalendarSearchMode === 'month')">
     no results?
 </div>
 <!-- day view uses the shared result-grid component which has its own search spinner -->
@@ -50,9 +55,13 @@
     </div>
 </div>
 
-<!-- 25.4.17 exclude from MVP
+<!-- year view -->
 <div *ngIf="searchService.sCalendarSearchMode === 'year' && searchService.mData && searchService.mData.search.aggs">
-    [year]<br/>
-    {{searchService.mData.search.aggs | json}}
+    <calendar-year-month
+        *ngFor="let sMonth of aAvailableMonthKeys"
+        [oPictureData]="aAvailableMonths[sMonth]"
+        [month]="sMonth"
+        (dateClicked)="goToDateFromYearView($event)"
+        (monthClicked)="goToMonthFromYearView($event)"
+    ></calendar-year-month>
 </div>
--->

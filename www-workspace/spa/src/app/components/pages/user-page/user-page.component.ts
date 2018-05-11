@@ -298,6 +298,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
                 // add a year
                 break;
         }
+        // and update the search string we use to make filters from
+        this.searchService.sDate = this.searchService.mdDate.format('DD/MM/YYYY')
         this.setLocalDisplayDate();
     }
 

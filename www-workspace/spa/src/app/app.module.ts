@@ -39,6 +39,7 @@ import { ColourComponent } from './components/pages/user-page/colour/colour.comp
 import { ResultGridComponent } from './components/shared/result-grid/result-grid.component';
 import { SortSelectComponent } from './components/shared/sort-select/sort-select.component';
 import { MapComponent } from './components/shared/map/map.component';
+import { CalendarYearMonthComponent } from './components/shared/calendar-year-month/calendar-year-month.component'
 
 
 import { CalendarPeriodPipe } from './components/pipes/calendar-period';
@@ -68,7 +69,8 @@ import { MaterializeModule } from 'angular2-materialize';
     ResultGridComponent,
     SortSelectComponent,
     MapComponent,
-    CalendarPeriodPipe
+    CalendarPeriodPipe,
+    CalendarYearMonthComponent
   ],
   imports: [
     BrowserModule,

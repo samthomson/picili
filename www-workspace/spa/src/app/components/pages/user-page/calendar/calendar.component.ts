@@ -20,6 +20,9 @@ export class CalendarComponent implements OnInit {
     private oCurrentDate = moment().format('YYYY-MM-DD')
     private aLiteralDays: string[] = []
 
+    private aAvailableMonths: any = {}
+    private aAvailableMonthKeys: string[] = []
+
     constructor(
         private searchService: SearchService,
         private httpService: HttpService,
@@ -40,6 +43,34 @@ export class CalendarComponent implements OnInit {
 
         // set date
         this.searchService.setDate(moment(sDate));
+
+        this.searchService.addSetCalendarFilter(this.searchService.sCalendarSearchMode, this.searchService.mdDate.format('ddd Do'), this.searchService.sDate);
+
+
+        // trigger search
+        this.httpService.triggerSearch();
+        this.searchService.eeDatechange.emit();
+    }
+
+    goToMonthFromYearView(event) {
+        this.searchService.sCalendarSearchMode = 'month'
+
+        // set date
+        this.searchService.setDate(event.oDate);
+
+        this.searchService.addSetCalendarFilter(this.searchService.sCalendarSearchMode, this.searchService.mdDate.format('ddd Do'), this.searchService.sDate);
+
+
+        // trigger search
+        this.httpService.triggerSearch();
+        this.searchService.eeDatechange.emit();
+    }
+
+    goToDateFromYearView(event) {
+        this.searchService.sCalendarSearchMode = 'day'
+
+        // set date
+        this.searchService.setDate(event.oDate);
 
         this.searchService.addSetCalendarFilter(this.searchService.sCalendarSearchMode, this.searchService.mdDate.format('ddd Do'), this.searchService.sDate);
 
@@ -84,7 +115,7 @@ export class CalendarComponent implements OnInit {
                 }, 1)
 
                 // this.eeDatechange.emit();
-        }else{
+        } else {
             this.httpService.triggerSearch();
         }
         // this.httpService.triggerSearch();
@@ -96,13 +127,15 @@ export class CalendarComponent implements OnInit {
 
         this.httpService.bSearchingChanged.subscribe((bSearching) => {
             // search started or ended, if started, clear calendar
-            if(bSearching) {
+            if (bSearching) {
                 this.aAvailableDates = []
+                this.aAvailableMonths = {}
+                this.aAvailableMonthKeys = []
                 this.oDateResults = null
             }
         })
 
-        this.httpService.mDataChanged.subscribe(() => {
+        this.httpService.mDataChanged.subscribe((data) => {
             // calculate available days, to be used in the UI
 
             // populate an array of dates, for the current period. Where the period is either a week or a month. and use actual dates starting with the set date
@@ -110,9 +143,10 @@ export class CalendarComponent implements OnInit {
             // this.searchService.mdDate
             var mdDateCopy = this.searchService.mdDate.clone()
             this.aAvailableDates = []
+            this.aAvailableMonths = {}
+            this.aAvailableMonthKeys = []
             let oLocalDateResults: any = []
 
-            
 
             if
             (
@@ -140,9 +174,41 @@ export class CalendarComponent implements OnInit {
                             }
                         }
                         break;
+                    case 'year':
+                        const sYearSearched: string = this.searchService.mdDate.clone().format('YYYY')
+
+                        // create a collection to represent months which results can be split across
+                        for (let cMonthOfYear = 1; cMonthOfYear < 13; cMonthOfYear++) {
+                            let sMonth: string = String(cMonthOfYear)
+                            if (cMonthOfYear < 10) {
+                                sMonth = '0' + sMonth
+                            }
+                            const sKey = `${sYearSearched}-${sMonth}`
+                            this.aAvailableMonths[sKey] = []
+                            this.aAvailableMonthKeys.push(sKey)
+                        }
+
+                        // now go through all results and place them in the correct month
+                        if (this.searchService.mData.search.aggs.length > 0) {
+                            this.searchService.mData.search.aggs.forEach(oDate => {
+                                const sMonthKey: string = oDate.name.substr(0,7)
+
+                                if (this.aAvailableMonths[sMonthKey]) {
+                                    if (oDate.count > 0) {
+                                        this.aAvailableMonths[sMonthKey].push({
+                                            dateKey: oDate.name.substr(8,2),
+                                            count: oDate.count,
+                                            sImageID: oDate.files[0] || null
+                                        })
+                                    }
+                                }
+                            })
+                        }
+                        // now we have all the days in the year sorted into months
+                        break
                 }
 
-                // then parse in actual day results
+                // then parse in actual day results (day/week/month mode)
                 for (var iDays = 0; iDays < this.aAvailableDates.length; iDays++) {
                     // look for day-result, add it, or add empty
                     var bFoundSomething = false;
