@@ -39,7 +39,7 @@ export class HelperService {
         return {
             sCurrentDateDisplay: sCurrentDateDisplay,
             sDisplayHeader: sDisplayHeader
-        };
+        }
     }
 
     thumbUrl(sSize, id) {
