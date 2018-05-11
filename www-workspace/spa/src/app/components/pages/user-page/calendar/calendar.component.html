@@ -57,5 +57,11 @@
 
 <!-- year view -->
 <div *ngIf="searchService.sCalendarSearchMode === 'year' && searchService.mData && searchService.mData.search.aggs">
-    <calendar-year-month *ngFor="let sMonth of aAvailableMonthKeys" [oPictureData]="aAvailableMonths[sMonth]" [month]="sMonth"></calendar-year-month>
+    <calendar-year-month
+        *ngFor="let sMonth of aAvailableMonthKeys"
+        [oPictureData]="aAvailableMonths[sMonth]"
+        [month]="sMonth"
+        (dateClicked)="goToDateFromYearView($event)"
+        (monthClicked)="goToMonthFromYearView($event)"
+    ></calendar-year-month>
 </div>

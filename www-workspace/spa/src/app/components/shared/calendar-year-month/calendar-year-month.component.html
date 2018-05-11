@@ -1,7 +1,7 @@
 <div class="year-month">
-    <div class="year-month-day-header">{{sFormattedMonthHeader}}</div>
+    <div class="year-month-day-header" (click)="eMonthClicked(mdFirstOfThisMonth)">{{sFormattedMonthHeader}}</div>
 
-    <div *ngFor="let oD of aDisplayDates; let i = index" class="year-month-date" [ngClass]="{'has-pics': oD.count > 0}">{{oD.sDate}}
+    <div *ngFor="let oD of aDisplayDates; let i = index" class="year-month-date" [ngClass]="{'has-pics': oD.count > 0}" (click)="eDateClicked(oD.oDate)">{{oD.sDate}}
         <!-- <span *ngIf="oD.count > 0">{{oD.sID}}</span> -->
     </div>
 </div>

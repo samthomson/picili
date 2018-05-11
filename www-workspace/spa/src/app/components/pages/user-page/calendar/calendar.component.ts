@@ -52,6 +52,34 @@ export class CalendarComponent implements OnInit {
         this.searchService.eeDatechange.emit();
     }
 
+    goToMonthFromYearView(event) {
+        this.searchService.sCalendarSearchMode = 'month'
+
+        // set date
+        this.searchService.setDate(event.oDate);
+
+        this.searchService.addSetCalendarFilter(this.searchService.sCalendarSearchMode, this.searchService.mdDate.format('ddd Do'), this.searchService.sDate);
+
+
+        // trigger search
+        this.httpService.triggerSearch();
+        this.searchService.eeDatechange.emit();
+    }
+
+    goToDateFromYearView(event) {
+        this.searchService.sCalendarSearchMode = 'day'
+
+        // set date
+        this.searchService.setDate(event.oDate);
+
+        this.searchService.addSetCalendarFilter(this.searchService.sCalendarSearchMode, this.searchService.mdDate.format('ddd Do'), this.searchService.sDate);
+
+
+        // trigger search
+        this.httpService.triggerSearch();
+        this.searchService.eeDatechange.emit();
+    }
+
     formatWeekDateHeader(sDate)
     {
         // turn '2016-06-21' into 21st June 2016

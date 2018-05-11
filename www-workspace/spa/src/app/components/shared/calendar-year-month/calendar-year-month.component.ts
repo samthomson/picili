@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpService, SearchService } from './../../../services';
 
 import * as moment from 'moment'
@@ -18,6 +18,9 @@ export class CalendarYearMonthComponent implements OnInit {
 
     aParsedDates = []
     aDisplayDates = []
+
+    @Output() dateClicked = new EventEmitter<any>()
+    @Output() monthClicked = new EventEmitter<any>()
 
     constructor(
       private searchService: SearchService,
@@ -59,5 +62,17 @@ export class CalendarYearMonthComponent implements OnInit {
           sID
         })
       }
+    }
+
+    eDateClicked(oDate) {
+      this.dateClicked.emit({
+        oDate
+      })
+    }
+
+    eMonthClicked(oDate) {
+      this.monthClicked.emit({
+        oDate
+      })
     }
 }
