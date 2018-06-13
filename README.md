@@ -48,7 +48,9 @@ Data: MySQL and Elasticsearch
 
 Picili is completely dockerized.
 
-- `cd` into the root folder and run `docker-compose up -d` to build
+- `cd` into the root folder 
+- create and configure an env file from the sample `cp .env.sample .env`
+- run `docker-compose up -d` to build
 - then bash into *workspace* container: `docker-compose run workspace bash`
 - then from within that container run these commands to install dependencies and seed the database with required tables
  - `cd /var/www/user-api-laravel && composer install`
