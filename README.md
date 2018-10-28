@@ -50,6 +50,7 @@ Picili is completely dockerized.
 
 - `cd` into the root folder 
 - create and configure an env file from the sample `cp .env.sample .env`
+- - add suitable APP_KEY (32 characters)
 - run `docker-compose up -d` to build
 - then bash into *workspace* container: `docker-compose run workspace bash`
 - then from within that container run these commands to install dependencies and seed the database with required tables
@@ -58,6 +59,7 @@ Picili is completely dockerized.
  - `cd /var/www && ./migrations.sh`
 - seeder to create folders: `cd /var/www/auto && php artisan db:seed --class=FolderSeeder`
 - create elastic mapping: `cd /var/www/auto && php artisan elastic-create`
+- build the SPA: `cd /var/www/spa && npm i && ng build && gulp dist`
 - picili is now ready to run and should be accesable from `http://localhost`
 
 Note: On Mac append the workspace volume with ':cached'. So `- ./www-workspace:/var/www` becomes `- ./www-workspace:/var/www:cached`
