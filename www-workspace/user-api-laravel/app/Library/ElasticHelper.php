@@ -511,7 +511,7 @@ class ElasticHelper {
         // echo 'index: '.env('ELASTIC_INDEX');
 
         $params = [
-		    'index' => env('ELASTIC_INDEX'),
+		    'index' => env('ELASTICSEARCH_INDEX'),
 		    'type' => 'file',
 		    'body' => [
                 'sort' => $aSorts,
@@ -871,7 +871,8 @@ class ElasticHelper {
         $oDateOneYearAgo->addYears(-1);
 
         $params = [
-            'body' => [
+            'index' => env('ELASTICSEARCH_INDEX'),
+		    'body' => [
                 self::aOnThisDayQueryParts($sUserId, $oDateFiveYearsAgo)[0],
                 self::aOnThisDayQueryParts($sUserId, $oDateFiveYearsAgo)[1],
                 self::aOnThisDayQueryParts($sUserId, $oDateFourYearsAgo)[0],
@@ -911,7 +912,7 @@ class ElasticHelper {
     {
         return [
             [
-                'index' => env('ELASTIC_INDEX'),
+                'index' => env('ELASTICSEARCH_INDEX'),
                 'type' => 'file'
             ],
             [
