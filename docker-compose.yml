@@ -4,7 +4,7 @@ services:
     build: 
       context: ./docker-containers/applications
     volumes:
-      - ./www-workspace:/var/www:cached
+      - ./www-workspace:/var/www
 
   workspace:
     build:

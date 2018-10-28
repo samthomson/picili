@@ -48,7 +48,9 @@ Data: MySQL and Elasticsearch
 
 Picili is completely dockerized.
 
-- `cd` into the root folder and run `docker-compose up -d` to build
+- `cd` into the root folder 
+- create and configure an env file from the sample `cp .env.sample .env`
+- run `docker-compose up -d` to build
 - then bash into *workspace* container: `docker-compose run workspace bash`
 - then from within that container run these commands to install dependencies and seed the database with required tables
  - `cd /var/www/user-api-laravel && composer install`
@@ -57,6 +59,8 @@ Picili is completely dockerized.
 - seeder to create folders: `cd /var/www/auto && php artisan db:seed --class=FolderSeeder`
 - create elastic mapping: `cd /var/www/auto && php artisan elastic-create`
 - picili is now ready to run and should be accesable from `http://localhost`
+
+Note: On Mac append the workspace volume with ':cached'. So `- ./www-workspace:/var/www` becomes `- ./www-workspace:/var/www:cached`
 
 Click 'login' and then register to begin.
 
