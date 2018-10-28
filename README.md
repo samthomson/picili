@@ -3,7 +3,7 @@
 ![build status](https://circleci.com/gh/samthomson/picili.svg?&style=shield)
 
 
-picili is an automated image search engine / browser. It syncronises with a chosen folder on your dropbox and analyses all pictures there. Staying upto date with any pictures you add or remove. You can then search through all your pictures more easily, and browse them with a map and calendar interface.
+picili is an automated image search engine / browser. It syncronises with a chosen folder on your dropbox and analyses all pictures there. Staying up to date with any pictures you add or remove. You can then search through all your pictures more easily, and browse them with a map and calendar interface.
 
 https://picili.com
 
