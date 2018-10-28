@@ -57,7 +57,7 @@ class ElasticHelper {
 		$aData = [];
         $iPerPage = 100;
 
-		$client = \Elasticsearch\ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOSTS')])->build();
+		$client = \Elasticsearch\ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOST')])->build();
         
         //
 		// do search
@@ -853,7 +853,7 @@ class ElasticHelper {
     public static function aHomeAggs($sUserId) {
         // years ago
 
-        $client = \Elasticsearch\ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOSTS')])->build();
+        $client = \Elasticsearch\ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOST')])->build();
 
         $oDateFiveYearsAgo = Carbon::now();
         $oDateFiveYearsAgo->addYears(-5);
