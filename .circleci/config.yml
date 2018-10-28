@@ -39,7 +39,7 @@ jobs:
            echo 'installed nodejs, next npm'
            #apt-get install npm -y
            echo 'npm install'
-           npm v
+           #npm v
            echo 'export PATH=$PATH:/usr/local/bin' >> $HOME/.bashrc
            ln -s /usr/bin/nodejs /usr/bin/node
            node --version
