@@ -60,7 +60,7 @@ jobs:
          - DB_NAME=picili
          - DB_HOST=127.0.0.1
          - DB_NAME_TESTING=picili_testing
-         - DB_USERNAME=root
+         - MYSQL_USER=root
          - DB_PASSWORD=password
          - APP_KEY=base64:uynE8re8ybt2wabaBjqMwQvLczKlDSQJHCepqxmGffE=
          - JWT_SECRET=dQsobNAzIGnF4sx4PDRAaZWFUEMQulAV
@@ -115,7 +115,7 @@ jobs:
          - DB_NAME=picili
          - DB_HOST=127.0.0.1
          - DB_NAME_TESTING=picili_testing
-         - DB_USERNAME=root
+         - MYSQL_USER=root
          - DB_PASSWORD=password
          - APP_KEY=base64:uynE8re8ybt2wabaBjqMwQvLczKlDSQJHCepqxmGffE=
          - JWT_SECRET=dQsobNAzIGnF4sx4PDRAaZWFUEMQulAV
