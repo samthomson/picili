@@ -60,6 +60,8 @@ Picili is completely dockerized.
 - create elastic mapping: `cd /var/www/auto && php artisan elastic-create`
 - picili is now ready to run and should be accesable from `http://localhost`
 
+Note: On Mac append the workspace volume with ':cached'. So `- ./www-workspace:/var/www` becomes `- ./www-workspace:/var/www:cached`
+
 Click 'login' and then register to begin.
 
 To start the auto processor(s): `cd /var/www/auto-scaler && npm start`
