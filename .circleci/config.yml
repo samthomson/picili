@@ -36,6 +36,7 @@ jobs:
            nvm alias stable
            apt-get update
            apt-get install nodejs -y
+           echo 'installed nodejs, next npm'
            apt-get install npm -y
            echo 'export PATH=$PATH:/usr/local/bin' >> $HOME/.bashrc
            ln -s /usr/bin/nodejs /usr/bin/node
