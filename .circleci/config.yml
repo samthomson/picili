@@ -59,7 +59,7 @@ jobs:
        environment:
          - DB_NAME=picili
          - DB_HOST=127.0.0.1
-         - DB_NAME_TESTING=picili_testing
+         - DATABASE_NAME=picili_testing
          - MYSQL_USER=root
          - DB_PASSWORD=password
          - APP_KEY=base64:uynE8re8ybt2wabaBjqMwQvLczKlDSQJHCepqxmGffE=
@@ -112,9 +112,9 @@ jobs:
     docker:
      - image: louisbl/php:7.1-cli
        environment:
-         - DB_NAME=picili
+         - DATABASE_NAME=picili
          - DB_HOST=127.0.0.1
-         - DB_NAME_TESTING=picili_testing
+         - DATABASE_NAME=picili_testing
          - MYSQL_USER=root
          - DB_PASSWORD=password
          - APP_KEY=base64:uynE8re8ybt2wabaBjqMwQvLczKlDSQJHCepqxmGffE=
