@@ -37,7 +37,7 @@ jobs:
            apt-get update
            apt-get install nodejs -y
            echo 'installed nodejs, next npm'
-           apt-get install npm -y
+           #apt-get install npm -y
            echo 'npm install'
            npm v
            echo 'export PATH=$PATH:/usr/local/bin' >> $HOME/.bashrc
