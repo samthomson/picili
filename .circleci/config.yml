@@ -37,6 +37,7 @@ jobs:
            apt-get update
            apt-get install nodejs -y
            apt-get install npm -y
+           npm v
            echo 'export PATH=$PATH:/usr/local/bin' >> $HOME/.bashrc
            ln -s /usr/bin/nodejs /usr/bin/node
            node --version
@@ -57,10 +58,10 @@ jobs:
     docker:
      - image: php:7.1-apache
        environment:
-         - DB_NAME=picili
+         - DATABASE_NAME=picili
          - DB_HOST=127.0.0.1
          - DB_NAME_TESTING=picili_testing
-         - DB_USERNAME=root
+         - MYSQL_USER=root
          - DB_PASSWORD=password
          - APP_KEY=base64:uynE8re8ybt2wabaBjqMwQvLczKlDSQJHCepqxmGffE=
          - JWT_SECRET=dQsobNAzIGnF4sx4PDRAaZWFUEMQulAV
@@ -112,10 +113,10 @@ jobs:
     docker:
      - image: louisbl/php:7.1-cli
        environment:
-         - DB_NAME=picili
+         - DATABASE_NAME=picili
          - DB_HOST=127.0.0.1
          - DB_NAME_TESTING=picili_testing
-         - DB_USERNAME=root
+         - MYSQL_USER=root
          - DB_PASSWORD=password
          - APP_KEY=base64:uynE8re8ybt2wabaBjqMwQvLczKlDSQJHCepqxmGffE=
          - JWT_SECRET=dQsobNAzIGnF4sx4PDRAaZWFUEMQulAV

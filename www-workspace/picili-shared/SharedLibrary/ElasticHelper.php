@@ -17,10 +17,10 @@ class ElasticHelper {
 
     public static function bDeleteIndex()
     {
-        $client = \Elasticsearch\ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOSTS')])->build();
+        $client = \Elasticsearch\ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOST')])->build();
         // delete old index..
         try{
-            $params = ['index' => env('ELASTIC_INDEX')];
+            $params = ['index' => env('ELASTICSEARCH_INDEX')];
             if($client->indices()->exists($params))
             {
                 $client->indices()->delete($params);
@@ -39,7 +39,7 @@ class ElasticHelper {
         self::bDeleteIndex();
 
         $params = [
-            'index' => env('ELASTIC_INDEX'),
+            'index' => env('ELASTICSEARCH_INDEX'),
             'body' => [
                 'mappings' => [
                     "file" => [
@@ -96,7 +96,7 @@ class ElasticHelper {
         ];
 
         // Create the index
-        $client = \Elasticsearch\ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOSTS')])->build();
+        $client = \Elasticsearch\ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOST')])->build();
 
         $response = $client->indices()->create($params);
         // echo json_encode($response);
@@ -109,10 +109,10 @@ class ElasticHelper {
     {
         try
         {
-            $client = \Elasticsearch\ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOSTS')])->build();
+            $client = \Elasticsearch\ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOST')])->build();
 
             $aDeleteParams = [
-                'index' => env('ELASTIC_INDEX'),
+                'index' => env('ELASTICSEARCH_INDEX'),
                 'type' => 'file',
                 'id' => $iPiciliFileId
             ];
@@ -141,12 +141,12 @@ class ElasticHelper {
         try
         {
             $aGetDocParams = [
-                'index' => env('ELASTIC_INDEX'),
+                'index' => env('ELASTICSEARCH_INDEX'),
                 'type' => 'file',
                 'id' => $sPiciliFileId
             ];        
 
-            $client = \Elasticsearch\ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOSTS')])->build();
+            $client = \Elasticsearch\ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOST')])->build();
             return $client->get($aGetDocParams)['_source'];
         }
         catch(\ElasticSearch\Common\Exceptions\Missing404Exception $e)
@@ -159,7 +159,7 @@ class ElasticHelper {
         $iConfidenceThreshold = env('CONFIDENCE_THRESHOLD');
         if(is_null($sIndexToUse))
         {
-            $sIndexToUse = env('ELASTIC_INDEX');
+            $sIndexToUse = env('ELASTICSEARCH_INDEX');
         }
         if(
             $oPiciliFile->aSources() > 0 && 
@@ -278,7 +278,7 @@ class ElasticHelper {
 
             try
             {
-                $client = ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOSTS')])->build();
+                $client = ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOST')])->build();
                 $response = $client->index($params);
                 return true;
             } 
