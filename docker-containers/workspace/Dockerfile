@@ -169,6 +169,8 @@ RUN npm install -g angular-cli
 
 EXPOSE 4200
 
+RUN cd /var/www/spa && npm i node-sass
+
 #
 #--------------------------------------------------------------------------
 # Final Touch
