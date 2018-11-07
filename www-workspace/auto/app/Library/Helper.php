@@ -715,7 +715,7 @@ class Helper {
             $oImage->stream('jpg', $iQuality)->__toString()
         ) : $oImage->save($sNewPath);
     }
-    
+
     public static function bProcessPhysicalFile($iPiciliFileId)
     {
         try
@@ -952,13 +952,13 @@ class Helper {
                 $iPiciliFileId = 'test';
             }
 
-            $sAwsPathLarge = "https://s3-".env('AWS_REGION').".amazonaws.com/".env('AWS_BUCKET')."/t/".  $iUserId."/xl" . $iPiciliFileId . ".jpg";
+            $sAwsPathLarge = "https://s3-".env('AWS_REGION').".amazonaws.com/".env('AWS_BUCKET_NAME')."/t/".  $iUserId."/xl" . $iPiciliFileId . ".jpg";
 
             // make request
             $service_url = 'http://api.imagga.com/v1/tagging?url='.$sAwsPathLarge;
 
-            $sKey = env('IMAGGA_KEY');
-            $sSecret = env('IMAGGA_SECRET');
+            $sKey = env('API_IMAGGA_KEY');
+            $sSecret = env('API_IMAGGA_SECRET');
 
             $context = stream_context_create(array(
                 'http' => array(
@@ -1054,6 +1054,7 @@ class Helper {
 
         return $mReturn;
     }
+
     public static function mElevationFromLatLon($fLat, $fLon)
     {
         $fReturn = ['status' => 'unknown'];
@@ -1150,7 +1151,7 @@ class Helper {
 
         // make request
         $sGeocodeURL  =
-        'http://api.opencagedata.com/geocode/v1/json?no_annotations=1&q='.urlencode($fLat).'+'.urlencode($fLon).'&key='.urlencode(env('OPEN_CAGE_KEY'));
+        'http://api.opencagedata.com/geocode/v1/json?no_annotations=1&q='.urlencode($fLat).'+'.urlencode($fLon).'&key='.urlencode(env('API_OPEN_CAGE_KEY'));
 
         // echo $sGeocodeURL."<br/><br/>";
 
