@@ -715,6 +715,7 @@ class Helper {
             $oImage->stream('jpg', $iQuality)->__toString()
         ) : $oImage->save($sNewPath);
     }
+    
     public static function bProcessPhysicalFile($iPiciliFileId)
     {
         try
