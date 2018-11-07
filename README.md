@@ -55,7 +55,8 @@ Picili is completely dockerized.
 
 - `cd` into the root folder 
 - create and configure an env file from the sample `cp .env.sample .env`
-- - add suitable APP_KEY (32 characters)
+- - add suitable`APP_KEY (32 characters) and APP_URL (eg http://localhost)
+- - add DROPBOX_CLIENT_ID (app key) and DROPBOX_CLIENT_SECRET (app secret)
 - run `docker-compose up -d` to build
 - then bash into *workspace* container: `docker-compose run workspace bash`
 - then from within that container run these commands to install dependencies and seed the database with required tables
