@@ -46,6 +46,11 @@ Data: MySQL and Elasticsearch
 
 ## 2.0 Set up picili locally
 
+### platform specific notes
+
+Mac: append the workspace volume with ':cached'. So `- ./www-workspace:/var/www` becomes `- ./www-workspace:/var/www:cached`
+Linux: you may need to run `sudo sysctl vm.max_map_count=262144` to ensure elasticsearch can run correctly
+
 Picili is completely dockerized.
 
 - `cd` into the root folder 
@@ -62,7 +67,6 @@ Picili is completely dockerized.
 - build the SPA: `cd /var/www/spa && npm i && ng build && gulp dist`
 - picili is now ready to run and should be accesable from `http://localhost`
 
-Note: On Mac append the workspace volume with ':cached'. So `- ./www-workspace:/var/www` becomes `- ./www-workspace:/var/www:cached`
 
 Click 'login' and then register to begin.
 
