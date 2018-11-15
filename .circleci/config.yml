@@ -7,6 +7,7 @@ jobs:
   build-spa:
     docker:
      - image: php:7.1-apache
+     - image: circleci/node:10.4.1
        environment:
          - DB_NAME=picili
          - DB_HOST=127.0.0.1
@@ -19,7 +20,6 @@ jobs:
          - ELASTICSEARCH_INDEX=files
          - ELASTICSEARCH_INDEX_TESTING=files-testing
          - SEARCH_CONFIDENCE_THRESHOLD=30
-     - image: circleci/node:10.4.1
     working_directory: /picili
     steps:
      - checkout
