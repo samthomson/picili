@@ -6,7 +6,6 @@ dependencies:
 jobs:
   build-spa:
     docker:
-     - image: circleci/node:10.4.1
      - image: php:7.1-apache
        environment:
          - DB_NAME=picili
@@ -20,6 +19,7 @@ jobs:
          - ELASTICSEARCH_INDEX=files
          - ELASTICSEARCH_INDEX_TESTING=files-testing
          - SEARCH_CONFIDENCE_THRESHOLD=30
+     - image: circleci/node:10.4.1
     working_directory: /picili
     steps:
      - checkout
