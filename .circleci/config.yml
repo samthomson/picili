@@ -23,9 +23,9 @@ jobs:
     working_directory: ~/picili
     steps:
      - checkout
-     - run: 
-         name: Install server packages
-         command: apt-get -qq update; apt-get -y install git
+    #  - run: 
+    #      name: Install server packages
+    #      command: apt-get -qq update; apt-get -y install git
      - run:
          name: Setup docker containers
          command: docker-compose up -d
