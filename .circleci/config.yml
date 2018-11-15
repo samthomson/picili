@@ -37,12 +37,10 @@ jobs:
            apt-get -y update
            echo 'export PATH=$PATH:/usr/local/bin' >> $HOME/.bashrc
            ln -s /usr/bin/nodejs /usr/bin/node
-           cd www-workspace/spa
            npm set registry http://registry.npmjs.org
-           npm update -g
-           echo 'rebuild node-sass...'
-           npm i node-sass@4.9.4
-           npm rebuild node-sass
+           npm install -g angular-cli
+           cd www-workspace/spa
+           npm i node-sass
            echo 'npm i - install packages'
            npm i
            echo 'main packages installed, next angular etc..'
