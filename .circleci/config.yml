@@ -40,7 +40,9 @@ jobs:
            cd www-workspace/spa
            npm set registry http://registry.npmjs.org
            npm update -g
+           echo '\nrebuild node-sass...\n'
            npm rebuild node-sass --force
+           echo '\nnpm i - install packages\n'
            npm i
            npm install -g angular-cli --unsafe-perm
            pwd
