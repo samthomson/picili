@@ -35,7 +35,7 @@ jobs:
            nvm use stable
            nvm alias stable
            apt-get update
-           apt-get install nodejs -y
+           # apt-get install nodejs -y
            apt-get install npm -y
            echo 'installed npm, version '
            npm -v
