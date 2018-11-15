@@ -40,10 +40,11 @@ jobs:
            cd www-workspace/spa
            npm set registry http://registry.npmjs.org
            npm update -g
-           echo '\nrebuild node-sass...\n'
+           echo 'rebuild node-sass...'
            npm rebuild node-sass
-           echo '\nnpm i - install packages\n'
+           echo 'npm i - install packages'
            npm i
+           echo 'main packages installed, next angular etc..'
            npm install -g angular-cli --unsafe-perm
            pwd
            npm run gulp
