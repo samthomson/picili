@@ -20,6 +20,9 @@ jobs:
       - ELASTICSEARCH_INDEX=files
       - ELASTICSEARCH_INDEX_TESTING=files-testing
       - SEARCH_CONFIDENCE_THRESHOLD=30
+      - PMA_USER=default
+      - PMA_PASSWORD=secret
+      - PMA_ROOT_PASSWORD=secret
     working_directory: ~/picili
     steps:
      - checkout
