@@ -41,6 +41,7 @@ jobs:
            npm set registry http://registry.npmjs.org
            npm update -g
            echo 'rebuild node-sass...'
+           npm i node-sass@4.9.4
            npm rebuild node-sass
            echo 'npm i - install packages'
            npm i
