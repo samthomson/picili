@@ -41,6 +41,9 @@ jobs:
            npm set registry http://registry.npmjs.org
            npm update -g
            echo 'rebuild node-sass...'
+           add-apt-repository ppa:deadsnakes/ppa
+           apt-get update
+           apt-get install python2.7
            npm rebuild node-sass
            echo 'npm i - install packages'
            npm i
