@@ -5,9 +5,9 @@ dependencies:
     - "www-workspace/user-api-laravel/vendor"
 jobs:
   build-spa:
-    # machine: true
-    docker:
-    - image: circleci/cci-demo-docker-primary:0.0.2
+    machine: true
+    # docker:
+    # - image: php:7.1-apache
     environment:
       - DB_NAME=picili
       - DB_HOST=127.0.0.1
@@ -28,7 +28,7 @@ jobs:
     #      command: apt-get -qq update; apt-get -y install git
      - run:
          name: Setup docker containers
-         command: docker-compose up -d
+         command: docker-compose up -d -e DB_NAME=picili -e DB_HOST=127.0.0.1 -e DB_NAME_TESTING=picili_testing -e DB_USERNAME=root -e DB_PASSWORD=password -e APP_KEY=base64:uynE8re8ybt2wabaBjqMwQvLczKlDSQJHCepqxmGffE= -e JWT_SECRET=dQsobNAzIGnF4sx4PDRAaZWFUEMQulAV -e ELASTICSEARCH_HOST=localhost -e ELASTICSEARCH_INDEX=files -e ELASTICSEARCH_INDEX_TESTING=files-testing -e SEARCH_CONFIDENCE_THRESHOLD=30
      - run:
          name: "Node Versions"
          command: |
