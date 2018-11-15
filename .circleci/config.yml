@@ -6,6 +6,7 @@ dependencies:
 jobs:
   build-spa:
     docker:
+     - image: circleci/node:10.4.1
      - image: php:7.1-apache
        environment:
          - DB_NAME=picili
