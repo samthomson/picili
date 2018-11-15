@@ -34,18 +34,10 @@ jobs:
            nvm install 8.12.0
            nvm use 8.12.0
            nvm alias stable
-           echo 'do we already have npm, via node?'
-           npm -v
            apt-get -y update
-           echo 'installed npm, version '
-           npm -v
            echo 'export PATH=$PATH:/usr/local/bin' >> $HOME/.bashrc
            ln -s /usr/bin/nodejs /usr/bin/node
-           node --version
-           npm --version
            cd www-workspace/spa
-           echo 'now in spa, npm version here is: '
-           npm -v
            npm set registry http://registry.npmjs.org
            npm update -g
            npm i
