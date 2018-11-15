@@ -40,9 +40,9 @@ jobs:
            cd www-workspace/spa
            npm set registry http://registry.npmjs.org
            npm update -g
+           npm rebuild node-sass --force
            npm i
            npm install -g angular-cli --unsafe-perm
-           npm i node-sass
            pwd
            npm run gulp
            ng build
