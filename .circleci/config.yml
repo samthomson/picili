@@ -20,7 +20,7 @@ jobs:
       - ELASTICSEARCH_INDEX=files
       - ELASTICSEARCH_INDEX_TESTING=files-testing
       - SEARCH_CONFIDENCE_THRESHOLD=30
-    working_directory: /picili
+    working_directory: ~/picili
     steps:
      - checkout
      - run: 
