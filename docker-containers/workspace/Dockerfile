@@ -169,8 +169,6 @@ RUN npm install -g angular-cli
 
 EXPOSE 4200
 
-RUN cd /var/www/spa && npm i node-sass
-
 #
 #--------------------------------------------------------------------------
 # Final Touch
@@ -184,6 +182,14 @@ RUN apt-get clean && \
 
 # Set default work directory
 WORKDIR /var/www
+
+
+CMD pwd
+CMD cd /var
+CMD pwd
+CMD ls -al
+
+CMD cd /var/www/spa && npm i node-sass -y
 
 # install php project dependencies
 
