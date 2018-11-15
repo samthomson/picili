@@ -28,7 +28,7 @@ jobs:
     #      command: apt-get -qq update; apt-get -y install git
      - run:
          name: Setup docker containers
-         command: docker-compose up -d -e DB_NAME=picili 
+         command: docker-compose up -d -e "DB_NAME=picili" 
      - run:
          name: "Node Versions"
          command: |
