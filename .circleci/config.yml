@@ -37,9 +37,6 @@ jobs:
            echo 'do we already have npm, via node?'
            npm -v
            apt-get -y update
-           # apt-get install nodejs -y
-           echo 'about to try and install npm'
-           apt-get install npm -y
            echo 'installed npm, version '
            npm -v
            echo 'export PATH=$PATH:/usr/local/bin' >> $HOME/.bashrc
