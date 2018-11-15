@@ -34,7 +34,7 @@ jobs:
            nvm install 10.4.1
            nvm use stable
            nvm alias stable
-           apt-get update
+           apt-get -y update
            # apt-get install nodejs -y
            echo 'about to try and install npm'
            apt-get install npm -y
