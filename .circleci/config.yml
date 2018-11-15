@@ -38,12 +38,14 @@ jobs:
            apt-get install nodejs -y
            apt-get install npm -y
            echo 'installed npm, version '
-           npm v
+           npm -v
            echo 'export PATH=$PATH:/usr/local/bin' >> $HOME/.bashrc
            ln -s /usr/bin/nodejs /usr/bin/node
            node --version
            npm --version
            cd www-workspace/spa
+           echo 'now in spa, npm version here is: '
+           npm -v
            npm set registry http://registry.npmjs.org
            npm update -g
            npm i
