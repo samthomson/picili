@@ -5,20 +5,21 @@ dependencies:
     - "www-workspace/user-api-laravel/vendor"
 jobs:
   build-spa:
-    docker:
-     - image: php:7.1-apache
-       environment:
-         - DB_NAME=picili
-         - DB_HOST=127.0.0.1
-         - DB_NAME_TESTING=picili_testing
-         - DB_USERNAME=root
-         - DB_PASSWORD=password
-         - APP_KEY=base64:uynE8re8ybt2wabaBjqMwQvLczKlDSQJHCepqxmGffE=
-         - JWT_SECRET=dQsobNAzIGnF4sx4PDRAaZWFUEMQulAV
-         - ELASTICSEARCH_HOST=localhost
-         - ELASTICSEARCH_INDEX=files
-         - ELASTICSEARCH_INDEX_TESTING=files-testing
-         - SEARCH_CONFIDENCE_THRESHOLD=30
+    machine: true
+    # docker:
+    # - image: php:7.1-apache
+    environment:
+      - DB_NAME=picili
+      - DB_HOST=127.0.0.1
+      - DB_NAME_TESTING=picili_testing
+      - DB_USERNAME=root
+      - DB_PASSWORD=password
+      - APP_KEY=base64:uynE8re8ybt2wabaBjqMwQvLczKlDSQJHCepqxmGffE=
+      - JWT_SECRET=dQsobNAzIGnF4sx4PDRAaZWFUEMQulAV
+      - ELASTICSEARCH_HOST=localhost
+      - ELASTICSEARCH_INDEX=files
+      - ELASTICSEARCH_INDEX_TESTING=files-testing
+      - SEARCH_CONFIDENCE_THRESHOLD=30
     working_directory: /picili
     steps:
      - checkout
