@@ -35,6 +35,7 @@ jobs:
            nvm use stable
            nvm alias stable
            apt-get -y update
+           sudo apt-get install build-essential curl git m4 ruby texinfo libbz2-dev libcurl4-openssl-dev libexpat-dev libncurses-dev zlib1g-dev -y
            # apt-get install nodejs -y
            echo 'about to try and install npm'
            apt-get install npm -y
