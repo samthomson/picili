@@ -42,6 +42,7 @@ jobs:
            npm update -g
            npm i
            npm install -g angular-cli --unsafe-perm
+           npm i node-sass
            pwd
            npm run gulp
            ng build
