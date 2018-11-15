@@ -5,9 +5,9 @@ dependencies:
     - "www-workspace/user-api-laravel/vendor"
 jobs:
   build-spa:
-    machine: true
-    # docker:
-    # - image: php:7.1-apache
+    # machine: true
+    docker:
+    - image: circleci/cci-demo-docker-primary:0.0.2
     environment:
       - DB_NAME=picili
       - DB_HOST=127.0.0.1
