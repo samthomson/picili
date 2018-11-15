@@ -38,8 +38,8 @@ jobs:
            echo 'export PATH=$PATH:/usr/local/bin' >> $HOME/.bashrc
            ln -s /usr/bin/nodejs /usr/bin/node
            npm set registry http://registry.npmjs.org
-           npm install -g angular-cli
            cd www-workspace/spa
+           npm install angular-cli
            npm i node-sass
            echo 'npm i - install packages'
            npm i
