@@ -46,7 +46,9 @@ jobs:
            echo 'main packages installed, next angular etc..'
            #npm install -g angular-cli --unsafe-perm
            pwd
-           npm run gulp && node_modules/.bin/ng build
+           npm run gulp
+           echo 'gulp complete, now try to build angular project...'
+           node_modules/.bin/ng build
            #ng build
      - run:
          name: Copy spa into API public folder
