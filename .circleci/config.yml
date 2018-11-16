@@ -6,7 +6,7 @@ dependencies:
 jobs:
   build-spa:
     docker:
-     - image: php:7.1-apache
+     - image: phusion/baseimage:latest
        environment:
          - DB_NAME=picili
          - DB_HOST=127.0.0.1
@@ -31,25 +31,17 @@ jobs:
            curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
            export NVM_DIR="$HOME/.nvm"
            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-           nvm install stable
-           nvm use stable
+           nvm install 10.0.0
+           nvm use 10.0.0
            nvm alias stable
-           apt-get update
-           apt-get install nodejs -y
-           apt-get install npm -y
-           npm v
+           apt-get -y update
            echo 'export PATH=$PATH:/usr/local/bin' >> $HOME/.bashrc
            ln -s /usr/bin/nodejs /usr/bin/node
-           node --version
-           npm --version
-           cd www-workspace/spa
            npm set registry http://registry.npmjs.org
-           npm update -g
-           npm i
-           npm install -g angular-cli --unsafe-perm
-           pwd
+           cd www-workspace/spa
+           npm install -y
            npm run gulp
-           ng build
+           node_modules/.bin/ng build
      - run:
          name: Copy spa into API public folder
          command: |
