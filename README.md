@@ -59,6 +59,11 @@ Picili is completely dockerized.
 - - add DROPBOX_CLIENT_ID (app key) and DROPBOX_CLIENT_SECRET (app secret)
 - - other keys you must add to the `.env` file: API_GOOGLE_ELEVATION_KEY, API_OPEN_CAGE_KEY, API_IMAGGA_KEY, API_IMAGGA_SECRET, AWS_KEY, AWS_SECRET, AWS_REGION
 - run `docker-compose up -d` to build
+
+
+- `docker-compose run workspace bash && bash ./seed.sh` 
+
+OR
 - then bash into *workspace* container: `docker-compose run workspace bash`
 - then from within that container run these commands to install dependencies and seed the database with required tables
  - `cd /var/www/user-api-laravel && composer install`
@@ -67,6 +72,11 @@ Picili is completely dockerized.
 - seeder to create folders: `cd /var/www/auto && php artisan db:seed --class=FolderSeeder`
 - create elastic mapping: `cd /var/www/auto && php artisan elastic-create`
 - build the SPA: `cd /var/www/spa && npm i && ng build && gulp dist`
+
+
+
+
+
 - picili is now ready to run and should be accesable from `http://localhost`
 
 
