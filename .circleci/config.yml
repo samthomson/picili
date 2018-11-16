@@ -6,7 +6,7 @@ dependencies:
 jobs:
   build-spa:
     docker:
-     - image: php:7.1-apache
+     - image: phusion/baseimage:latest
        environment:
          - DB_NAME=picili
          - DB_HOST=127.0.0.1
