@@ -39,10 +39,10 @@ jobs:
            ln -s /usr/bin/nodejs /usr/bin/node
            npm set registry http://registry.npmjs.org
            cd www-workspace/spa
-           # npm install -g angular-cli
            # npm install node-sass -y
            echo 'npm i - install packages'
            npm install -y
+           npm install -g angular-cli
            echo 'main packages installed, next angular etc..'
            #npm install -g angular-cli --unsafe-perm
            pwd
