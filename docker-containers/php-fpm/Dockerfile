@@ -28,17 +28,9 @@ MAINTAINER Mahmoud Zalt <mahmoud@zalt.me>
 #
 ADD ./laravel.ini /usr/local/etc/php/conf.d
 
-# RUN docker-php-ext-install gd && \
-#     docker-php-ext-configure gd \
-#         --enable-gd-native-ttf \
-#         --with-jpeg-dir=/usr/lib \
-#         --with-freetype-dir=/usr/include/freetype2 && \
-#     docker-php-ext-install gd
-
 RUN apt-get -y update && \
     apt-get install pkg-config libmagickwand-dev -y && \
     pecl install imagick
-
 
 RUN usermod -u 1000 www-data
 
