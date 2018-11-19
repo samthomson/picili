@@ -158,13 +158,10 @@ RUN apt-get update && apt-get install apt-transport-https && \
 # Add NVM binaries to root's .bashrc
 USER root
 
-#RUN apt-get install nodejs -y
 RUN apt-get install npm -y
-#RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 # install angular 2 cli
 RUN npm config set registry http://registry.npmjs.org/
-# RUN npm install -g angular-cli
 
 EXPOSE 4200
 
@@ -182,13 +179,10 @@ RUN apt-get clean && \
 # Set default work directory
 WORKDIR /var/www
 
-
 CMD pwd
 CMD cd /var
 CMD pwd
 CMD ls -al
-
-# CMD cd /var/www/spa && npm i node-sass -y
 
 # install php project dependencies
 
