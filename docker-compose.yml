@@ -128,7 +128,7 @@ services:
     depends_on:
       - elasticsearch
 
-### Volumes Setup ###
+### configure volumes defined above ###
 
 volumes:
   phpmyadmin:
