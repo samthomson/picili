@@ -61,20 +61,7 @@ Picili is completely dockerized.
 - run `docker-compose up -d` to build
 
 
-- `docker-compose run workspace bash && bash ./seed.sh` 
-
-OR
-- then bash into *workspace* container: `docker-compose run workspace bash`
-- then from within that container run these commands to install dependencies and seed the database with required tables
- - `cd /var/www/user-api-laravel && composer install`
- - `cd /var/www/auto && composer install`
- - `cd /var/www && ./migrations.sh`
-- seeder to create folders: `cd /var/www/auto && php artisan db:seed --class=FolderSeeder`
-- create elastic mapping: `cd /var/www/auto && php artisan elastic-create`
-- build the SPA: `cd /var/www/spa && npm i && ng build && gulp dist`
-
-
-
+- `docker-compose run workspace bash ./seed.sh` 
 
 
 - picili is now ready to run and should be accesable from `http://localhost`

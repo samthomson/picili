@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# docker-compose run workspace bash
-
 cd /var/www/user-api-laravel && composer install
 cd /var/www/auto && composer install
 cd /var/www && ./migrations.sh
