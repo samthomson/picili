@@ -130,14 +130,13 @@ USER root
 #####################################
 
 # Check if NVM needs to be installed
-ARG NODE_VERSION=stable
-ENV NODE_VERSION ${NODE_VERSION}
+ARG NODE_VERSION=10.0.0
+ENV NODE_VERSION 10.0.0
 ENV NVM_DIR /home/laradock/.nvm
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash && \
         . $NVM_DIR/nvm.sh && \
         nvm install ${NODE_VERSION} && \
         nvm use ${NODE_VERSION} && \
-        nvm alias ${NODE_VERSION} && \
         npm install -g gulp bower vue-cli \
 ;fi
 
@@ -159,13 +158,10 @@ RUN apt-get update && apt-get install apt-transport-https && \
 # Add NVM binaries to root's .bashrc
 USER root
 
-RUN apt-get install nodejs -y
 RUN apt-get install npm -y
-RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 # install angular 2 cli
 RUN npm config set registry http://registry.npmjs.org/
-RUN npm install -g angular-cli
 
 EXPOSE 4200
 
@@ -183,13 +179,10 @@ RUN apt-get clean && \
 # Set default work directory
 WORKDIR /var/www
 
-
 CMD pwd
 CMD cd /var
 CMD pwd
 CMD ls -al
-
-CMD cd /var/www/spa && npm i node-sass -y
 
 # install php project dependencies
 

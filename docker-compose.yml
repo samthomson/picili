@@ -38,7 +38,7 @@ services:
       - applications
     ports:
       - "4200:4200"
-    depends_on: [mysql, applications]
+    depends_on: [mysql, applications, elasticsearch]
 
   php-fpm:
     build:
