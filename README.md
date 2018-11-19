@@ -51,16 +51,26 @@ Data: MySQL and Elasticsearch
 Mac: append the workspace volume with ':cached'. So `- ./www-workspace:/var/www` becomes `- ./www-workspace:/var/www:cached`
 Linux: you may need to run `sudo sysctl vm.max_map_count=262144` to ensure elasticsearch can run correctly
 
+### setup
+
 Picili is completely dockerized.
 
 - `cd` into the root folder 
-- create and configure an env file from the sample `cp .env.sample .env`
-- - add suitable`APP_KEY (32 characters) and APP_URL (eg http://localhost)
-- - add DROPBOX_CLIENT_ID (app key) and DROPBOX_CLIENT_SECRET (app secret)
-- - other keys you must add to the `.env` file: API_GOOGLE_ELEVATION_KEY, API_OPEN_CAGE_KEY, API_IMAGGA_KEY, API_IMAGGA_SECRET, AWS_KEY, AWS_SECRET, AWS_REGION
+- create and configure an env file from the sample `cp .env.sample .env`, being sure to update the following keys:
+  - APP_KEY (must be 32 characters)
+  - APP_URL (eg http://localhost)
+  - DROPBOX_CLIENT_ID (app key)
+  - DROPBOX_CLIENT_SECRET (app secret)
+  - API_GOOGLE_ELEVATION_KEY
+  - API_OPEN_CAGE_KEY
+  - API_IMAGGA_KEY
+  - API_IMAGGA_SECRET
+  - AWS_KEY
+  - AWS_SECRET
+  - AWS_REGION
 - run `docker-compose up -d` to build
 
-
+The first time you run picili locally, you should generate necessary seed data:
 - `docker-compose run workspace` followed by `bash ./seed.sh` in the container
 
 
@@ -68,6 +78,8 @@ Picili is completely dockerized.
 
 
 Click 'login' and then register to begin.
+
+You will need to start the auto-scallar, for image processing to happen 'in the background'.
 
 To start the auto processor(s): `cd /var/www/auto-scaler && npm start`
 
