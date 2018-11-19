@@ -1,10 +1,5 @@
 FROM nginx:alpine
 
-# COPY ../public/index.html /usr/share/nginx/html
-
-#ADD ./default.conf /etc/nginx/conf.d/
-#WORKDIR /usr/share/nginx/html
-
 ADD nginx.conf /etc/nginx/
 
 ARG PHP_UPSTREAM=php-fpm

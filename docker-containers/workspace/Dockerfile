@@ -73,8 +73,6 @@ RUN curl -s http://getcomposer.org/installer | php && \
 # Source the bash
 RUN . ~/.bashrc
 
-
-
 #
 # other - workspace specific config
 #
@@ -147,20 +145,18 @@ RUN echo "" >> ~/.bashrc && \
     echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc \
 ;fi
 
-
 # install required things
 RUN apt-get update && apt-get install apt-transport-https && \
     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update && apt-get install -y yarn mysql-client
 
-
 # Add NVM binaries to root's .bashrc
 USER root
 
 RUN apt-get install npm -y
 
-# install angular 2 cli
+# set npm registry address
 RUN npm config set registry http://registry.npmjs.org/
 
 EXPOSE 4200
@@ -185,7 +181,6 @@ CMD pwd
 CMD ls -al
 
 # install php project dependencies
-
 CMD cd /var/www/user-api-laravel && composer install
 CMD cd /var/www/auto && composer install
 
