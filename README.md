@@ -61,7 +61,7 @@ Picili is completely dockerized.
 - run `docker-compose up -d` to build
 
 
-- `docker-compose run workspace bash ./seed.sh` 
+- `docker-compose run workspace` followed by `bash ./seed.sh` in the container
 
 
 - picili is now ready to run and should be accesable from `http://localhost`
