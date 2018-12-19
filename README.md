@@ -1,6 +1,6 @@
 # Picili
-![build status](https://circleci.com/gh/samthomson/picili.svg?&style=shield) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
+![build status](https://circleci.com/gh/samthomson/picili.svg?&style=shield) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 picili is an automated image search engine / browser. It syncronises with a chosen folder on your dropbox and analyses all pictures there. Staying up to date with any pictures you add or remove. You can then search through all your pictures more easily, and browse them with a map and calendar interface.
 
@@ -22,21 +22,23 @@ https://picili.com
 - adds any new ones to a local list and quees them to be imported, and removes any now deleted files.
 - queued files are each downloaded locally, processed, and then deleted locally
 - processing consists of
-    - creating thumbnails
-    - extracting exif information
-    - determining colours
-    - sending the picture to a subject recognition API
-    - if the picture contains geo exif data
-        - geocoding: get localtion information (via external API)
-        - altitude encoding (via an external API)
+  - creating thumbnails
+  - extracting exif information
+  - determining colours
+  - sending the picture to a subject recognition API
+  - if the picture contains geo exif data
+    - geocoding: get localtion information (via external API)
+    - altitude encoding (via an external API)
 
 Main parts:
+
 - SPA: the front end is a Angular 2 single page application
 - API: a PHP API wrote in laravel which the SPA calls
 - Auto: A seperate project running in the background which is also a Laravel PHP project, this does all the synchronizing and auto tagging.
 - Auto-Scaler: A small node project which scales up instances of the Auto project based on demand
 
 Techs:
+
 - SPA: JS Typescript / Angular 2 / SASS
 - Auto-Scaler: Nodes JS
 - API / Auto: PHP / Laravel
@@ -54,7 +56,7 @@ Linux: you may need to run `sudo sysctl vm.max_map_count=262144` to ensure elast
 
 Picili is completely dockerized.
 
-- `cd` into the root folder 
+- `cd` into the root folder
 - create and configure an env file from the sample `cp .env.sample .env`, being sure to update the following keys:
   - APP_KEY (must be 32 characters)
   - APP_URL (eg http://localhost)
@@ -70,11 +72,10 @@ Picili is completely dockerized.
 - run `docker-compose up -d` to build
 
 The first time you run picili locally, you should generate necessary seed data:
+
 - `docker-compose run workspace` followed by `bash ./seed.sh` in the container
 
-
-- picili is now ready to run and should be accesable from `http://localhost`
-
+* picili is now ready to run and should be accesable from `http://localhost`
 
 Click 'login' and then register to begin.
 
@@ -98,6 +99,7 @@ Auto tests: `cd /var/www/auto && vendor/bin/phpunit`
 ## use site
 
 Site runs at http://localhost
+
 - it's the SPA backed with the API (the spa is just dumped into the api projects public folder)
 
 ### commands
@@ -116,12 +118,14 @@ Site runs at http://localhost
 #### phpmyadmin container
 
 http://localhost:8080
+
 - host: mysql
 - user: root
 - password: password
-(doesn't follow env values at all..)
+  (doesn't follow env values at all..)
 
 ##### connect to db via a sequel client
+
 - host: 127.0.0.1
 - user: root
 - password: password
@@ -132,20 +136,22 @@ http://localhost:5601/
 
 console browser: http://localhost:5601/app/kibana#/dev_tools/console?_g=()
 
-
 ### Working on the SPA
 
-The quickest way to work on the SPA is to first install its dependencies with `npm i` or `yarn`, and then run `ng serve`. `ng serve` is and angular-cli command which builds the SPA and serves it to `http://localhost:4200`, it also watches the SPA files and rebuilds/serves the application when it detects changes.
+Can't be run from a docker container - yet.
+`cd` locally to the spa folder and run:
+`npm i`
+`npm run gulp`
+`npm run build`
+`npm run serve`
 
-`ng build`
-`ng serve`
+This will serve the app from `localhost:4200`. Presuming you have already run `docker-compose up [-d]` then you'll have the backend running on `localhost:80` for the spa to talk to.
 
 If you plan on editing sass files, also run `npm run gulp-watch`.
 
 If you want to 'publish' the SPA into the root of the main application (API), so you can test end to end via `http://localhost` then you can run a gulp task (`gulp dist`) as defined in gulpfile.js in the SPA root after running `ng build`. These have been combined into one package script, so you can just run `npm run dist`.
 
-You need to use gulp 4, as installed as a dependency. To specifically run the local gulp and not global (which may not be version 4), so the command like this: `./node_modules/.bin/gulp dist`. 
-
+You need to use gulp 4, as installed as a dependency. To specifically run the local gulp and not global (which may not be version 4), so the command like this: `./node_modules/.bin/gulp dist`.
 
 ## 4.0 Deploying
 
@@ -153,7 +159,7 @@ You need to use gulp 4, as installed as a dependency. To specifically run the lo
 
 - set up a vps somewhere (tested on: ubuntu 17.10 x64 2gb ram 40gb ssd)
 - connect to it from the terminal `root@ipaddress` and then enter your root password and accept the machines fingerprint
-- create a new user to replace the root user:  https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04
+- create a new user to replace the root user: https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04
 - install nginx, php, mysql
 - install elasticsearch. follow part of this guide: https://www.vultr.com/docs/how-to-install-and-configure-elastic-stack-elasticsearch-logstash-and-kibana-on-ubuntu-17-04 and then set heapsize to half of ram: /etc/elasticsearch/jvm.options
 - install elastic search and set it to run on startup https://www.elastic.co/guide/en/elasticsearch/reference/5.6/_installation.html and https://www.digitalocean.com/community/tutorials/how-to-set-up-a-production-elasticsearch-cluster-on-ubuntu-14-04

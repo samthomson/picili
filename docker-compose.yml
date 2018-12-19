@@ -1,7 +1,7 @@
-version: '2'
+version: "2"
 services:
   applications:
-    build: 
+    build:
       context: ./docker-containers/applications
     volumes:
       - ./www-workspace:/var/www
@@ -36,8 +36,8 @@ services:
       - API_IMAGGA_SECRET=${API_IMAGGA_SECRET}
     volumes_from:
       - applications
-    ports:
-      - "4200:4200"
+    # ports:
+    #   - "4200:4200"
     depends_on: [mysql, applications, elasticsearch]
 
   php-fpm:
@@ -65,18 +65,18 @@ services:
       - "9000"
 
   nginx:
-      build:
-          context: ./docker-containers/nginx
-          args:
-          - PHP_UPSTREAM=php-fpm
-      volumes_from:
-          - applications
-      volumes:
-          - ./docker-containers/nginx/sites:/etc/nginx/sites-available
-      ports:
-          - "80:80"
-          - "443:443"
-      depends_on: [php-fpm, mysql]
+    build:
+      context: ./docker-containers/nginx
+      args:
+        - PHP_UPSTREAM=php-fpm
+    volumes_from:
+      - applications
+    volumes:
+      - ./docker-containers/nginx/sites:/etc/nginx/sites-available
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on: [php-fpm, mysql]
 
   mysql:
     image: mysql:5.7

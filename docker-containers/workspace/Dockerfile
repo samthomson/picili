@@ -17,7 +17,7 @@ ENV TERM xterm
 
 # Add the "PHP 7" ppa
 RUN apt-get install -y software-properties-common && \
-    add-apt-repository -y ppa:ondrej/php
+        add-apt-repository -y ppa:ondrej/php
 
 #
 #--------------------------------------------------------------------------
@@ -27,7 +27,7 @@ RUN apt-get install -y software-properties-common && \
 
 # Install "PHP Extentions", "libraries", "Software's"
 RUN apt-get update && \
-    apt-get install -y --allow-downgrades --allow-remove-essential \
+        apt-get install -y --allow-downgrades --allow-remove-essential \
         --allow-change-held-packages \
         php7.1-cli \
         php7.1-common \
@@ -59,7 +59,7 @@ RUN apt-get update && \
         vim \
         nano \
         postgresql-client \
-    && apt-get clean
+        && apt-get clean
 
 #####################################
 # Composer:
@@ -67,8 +67,8 @@ RUN apt-get update && \
 
 # Install composer and add its bin to the PATH.
 RUN curl -s http://getcomposer.org/installer | php && \
-    echo "export PATH=${PATH}:/var/www/vendor/bin" >> ~/.bashrc && \
-    mv composer.phar /usr/local/bin/composer
+        echo "export PATH=${PATH}:/var/www/vendor/bin" >> ~/.bashrc && \
+        mv composer.phar /usr/local/bin/composer
 
 # Source the bash
 RUN . ~/.bashrc
@@ -78,8 +78,8 @@ RUN . ~/.bashrc
 #
 
 RUN apt-get -y update && \
-    apt-get install pkg-config libmagickwand-dev -y && \
-    pecl install imagick
+        apt-get install pkg-config libmagickwand-dev -y && \
+        pecl install imagick
 
 #####################################
 # Non-Root User:
@@ -91,8 +91,8 @@ ENV PUID 1000
 ENV PGID 1000
 
 RUN groupadd -g ${PGID} laradock && \
-    useradd -u ${PUID} -g laradock -m laradock && \
-    apt-get update -yqq
+        useradd -u ${PUID} -g laradock -m laradock && \
+        apt-get update -yqq
 
 #####################################
 # Set Timezone
@@ -117,9 +117,9 @@ USER laradock
 ARG COMPOSER_GLOBAL_INSTALL=false
 ENV COMPOSER_GLOBAL_INSTALL ${COMPOSER_GLOBAL_INSTALL}
 RUN if [ ${COMPOSER_GLOBAL_INSTALL} = true ]; then \
-    # run the install
-    composer global install \
-;fi
+        # run the install
+        composer global install \
+        ;fi
 
 USER root
 
@@ -136,20 +136,20 @@ RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh
         nvm install ${NODE_VERSION} && \
         nvm use ${NODE_VERSION} && \
         npm install -g gulp bower vue-cli \
-;fi
+        ;fi
 
 # Wouldn't execute when added to the RUN statement in the above block
 # Source NVM when loading bash since ~/.profile isn't loaded on non-login shell
 RUN echo "" >> ~/.bashrc && \
-    echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc && \
-    echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc \
-;fi
+        echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc && \
+        echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc \
+        ;fi
 
 # install required things
 RUN apt-get update && apt-get install apt-transport-https && \
-    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update && apt-get install -y yarn mysql-client
+        curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+        echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+        apt-get update && apt-get install -y yarn mysql-client
 
 # Add NVM binaries to root's .bashrc
 USER root
@@ -159,7 +159,6 @@ RUN apt-get install npm -y
 # set npm registry address
 RUN npm config set registry http://registry.npmjs.org/
 
-EXPOSE 4200
 
 #
 #--------------------------------------------------------------------------
@@ -170,15 +169,10 @@ EXPOSE 4200
 # Clean up
 USER root
 RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Set default work directory
 WORKDIR /var/www
-
-CMD pwd
-CMD cd /var
-CMD pwd
-CMD ls -al
 
 # install php project dependencies
 CMD cd /var/www/user-api-laravel && composer install
@@ -186,8 +180,15 @@ CMD cd /var/www/auto && composer install
 
 CMD cd /var/www/spa && npm cache clean && npm i && ng serve -H 0.0.0.0
 
+WORKDIR /var/www
+
+USER root
+
 # install auto-scalar deps
 CMD cd /var/www/auto-scaler && npm i
 
 # php.ini for cli
 ADD ./php-cli.ini /etc/php/7.1/cli/php.ini
+
+
+# EXPOSE 4200
