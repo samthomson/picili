@@ -80,9 +80,7 @@
               </div>
 
               <button
-                *ngIf="
-                  sDropboxFolderPathInput !== oSettings.dropbox.sFolderPath
-                "
+                *ngIf="sDropboxFolderPathInput !== oSettings.dropbox.folder"
                 class="ui button green"
                 [ngClass]="{ 'disabled loading': bSavingDropboxFolderPath }"
                 (click)="onSaveDropboxFolderPath()"
