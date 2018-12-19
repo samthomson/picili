@@ -4,88 +4,102 @@
 -->
 
 <div id="main-page">
-
-    <div class="ui grid">
-        <div class="four wide column">
-            <div class="ui vertical fluid tabular menu">
-                <a class="item" [ngClass]="{'active': sTab === 'file-sources'}" (click)="sTab = 'file-sources'">
-                    File sources
-                </a>
-                <a class="item" [ngClass]="{'active': sTab === 'privacy'}" (click)="sTab = 'privacy'">
-                    Privacy
-                </a>
-            </div>
+  <div class="ui grid">
+    <div class="four wide column">
+      <div class="ui vertical fluid tabular menu">
+        <a
+          class="item"
+          [ngClass]="{ active: sTab === 'file-sources' }"
+          (click)="sTab = 'file-sources'"
+        >
+          File sources
+        </a>
+        <a
+          class="item"
+          [ngClass]="{ active: sTab === 'privacy' }"
+          (click)="sTab = 'privacy'"
+        >
+          Privacy
+        </a>
+      </div>
+    </div>
+    <div class="twelve wide stretched column">
+      <div class="" *ngIf="sTab === 'file-sources'">
+        <div class="ui message">
+          <div class="header">Manage file sources</div>
+          <p>
+            Connect your dropbox and choose a folder containing your pictures.
+            Picili will then synchronise with this folder.
+          </p>
         </div>
-        <div class="twelve wide stretched column">
-            <div class="" *ngIf="sTab === 'file-sources'">
 
-                <div class="ui message">
-                    <div class="header">
-                        Manage file sources
-                    </div>
-                    <p>Connect your dropbox and choose a folder containing your pictures. Picili will then synchronise with this folder.</p>
-                </div>
+        <!--<div class="ui segment" [ngClass]="{'green': oSettings.dropbox.bWorking, 'red': !oSettings.dropbox.bWorking, 'disabled': oSettings.dropbox === 'null'}">-->
 
-                <!--<div class="ui segment" [ngClass]="{'green': oSettings.dropbox.bWorking, 'red': !oSettings.dropbox.bWorking, 'disabled': oSettings.dropbox === 'null'}">-->
+        <div
+          class="ui segment"
+          [ngClass]="{
+            disabled: bDisconnectingDropbox,
+            loading: bDisconnectingDropbox
+          }"
+        >
+          <h4>Dropbox</h4>
+          <div *ngIf="oSettings.dropbox !== null">
+            <p>
+              <a
+                class="ui button"
+                (click)="onDisconnectDropbox()"
+                [ngClass]="{ disabled: bDisconnectingDropbox }"
+                >disconnect</a
+              >
+            </p>
 
-                <div class="ui segment" [ngClass]="{'disabled': bDisconnectingDropbox, 'loading': bDisconnectingDropbox}">
-                    <h4>Dropbox</h4>
-                    <div *ngIf="oSettings.dropbox !== null">
+            <div class="ui red message" *ngIf="!oSettings.dropbox.bWorking">
+              Picili is currently not able to communicate with dropbox. You may
+              need to re-authenticate picili to access dropbox on your behalf.
+            </div>
 
-                        <p>
-                            <a
-                            class="ui button"
-                            (click)="onDisconnectDropbox()"
-                            [ngClass]="{'disabled': bDisconnectingDropbox}">disconnect</a>
-                        </p>
-
-                        <div class="ui red message" *ngIf="!oSettings.dropbox.bWorking">
-                            Picili is currently not able to communicate with dropbox. You may need to re-authenticate picili to access dropbox on your behalf.
-                        </div>
-
-                        <!--
+            <!--
                         <p>bUserSetToEnabled: {{oSettings.dropbox.bUserSetToEnabled}}</p>
                         -->
 
-                        <!--
+            <!--
                         <p>{{oSettings.dropbox.iFilesSynchronised}} / {{oSettings.dropbox.iFilesAvailable}}</p>
                         -->
 
-                        <div class="ui form">
-                            <div class="field">
-                                <label>folder path:</label>
-                                <div class="ui left icon input">
-                                    <input
-                                    type="text"
-                                    placeholder="folder on dropbox"
-                                    [(ngModel)]="sDropboxFolderPathInput"
-                                    >
-                                    <i class="icon  fa-folder-open-o"></i>
-                                </div>
-                            </div>
-
-                            <button
-                                *ngIf="sDropboxFolderPathInput !== oSettings.dropbox.sFolderPath"
-                                class="ui button green"
-                                [ngClass]="{'disabled loading': bSavingDropboxFolderPath}"
-                                (click)="onSaveDropboxFolderPath()"
-                            >save</button>
-
-
-                        </div>
-
-                    </div>
-
-                    <div *ngIf="oSettings.dropbox === null">
-                        <a
-                        [href]="[goDropbox()]"
-                        class="ui linkedin button">
-                            <i class="fa fa-dropbox" aria-hidden="true"></i> connect dropbox
-                        </a>
-                    </div>
+            <div class="ui form">
+              <div class="field clear-fix">
+                <label>folder path:</label>
+                <div class="ui left icon input">
+                  <input
+                    type="text"
+                    placeholder="folder on dropbox"
+                    [(ngModel)]="sDropboxFolderPathInput"
+                  />
+                  <i class="icon  fa-folder-open-o"></i>
                 </div>
+              </div>
 
-                <!--
+              <button
+                *ngIf="
+                  sDropboxFolderPathInput !== oSettings.dropbox.sFolderPath
+                "
+                class="ui button green"
+                [ngClass]="{ 'disabled loading': bSavingDropboxFolderPath }"
+                (click)="onSaveDropboxFolderPath()"
+              >
+                save
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="oSettings.dropbox === null">
+            <a [href]="[goDropbox()]" class="ui linkedin button">
+              <i class="fa fa-dropbox" aria-hidden="true"></i> connect dropbox
+            </a>
+          </div>
+        </div>
+
+        <!--
                 <div class="ui segment">
                     <h4>Instagram</h4>
                     <a class="ui instagram button">
@@ -93,43 +107,43 @@
                     </a>
                 </div>
                 -->
-            </div>
+      </div>
 
-            <div class="" *ngIf="sTab === 'privacy'">
-                <h4>Privacy</h4>
+      <div class="" *ngIf="sTab === 'privacy'">
+        <h4>Privacy</h4>
 
-                <div class="ui form">
-                    <div class="grouped fields">
-                        <label>Your page can be public or private</label>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input
-                                    type="radio"
-                                    name="public"
-                                    [attr.checked]="oSettings.public ? true : null"
-                                    (click)="onPrivacyCheckChange(true)"
-                                 >
-                                <label>Public - anyone can view them</label>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input
-                                    type="radio"
-                                    name="private"
-                                    [attr.checked]="!oSettings.public ? true : null"
-                                    (click)="onPrivacyCheckChange(false)"
-                                >
-                                <label>Private - Only I can view them after logging in</label>
-                            </div>
-                        </div>
-                        <div>
-                            <span class="loading-gray-text">{{sStartedSaving}}</span>
-                            <span class="success-green-text">{{sFinishedSaving}}</span>
-                        </div>
-                    </div>
-                </div>
+        <div class="ui form">
+          <div class="grouped fields">
+            <label>Your page can be public or private</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input
+                  type="radio"
+                  name="public"
+                  [attr.checked]="oSettings.public ? true : null"
+                  (click)="onPrivacyCheckChange(true)"
+                />
+                <label>Public - anyone can view them</label>
+              </div>
             </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input
+                  type="radio"
+                  name="private"
+                  [attr.checked]="!oSettings.public ? true : null"
+                  (click)="onPrivacyCheckChange(false)"
+                />
+                <label>Private - Only I can view them after logging in</label>
+              </div>
+            </div>
+            <div>
+              <span class="loading-gray-text">{{ sStartedSaving }}</span>
+              <span class="success-green-text">{{ sFinishedSaving }}</span>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
