@@ -129,7 +129,7 @@ services:
       - elasticsearch
 
   dejavu:
-    image: appbaseio/dejavu
+    image: appbaseio/dejavu:3.0.0-alpha
     ports:
       - 1358:1358
     depends_on:
