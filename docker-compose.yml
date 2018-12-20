@@ -96,7 +96,7 @@ services:
       - MYSQL_PASSWORD=${PMA_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${PMA_ROOT_PASSWORD}
     ports:
-      - "8080:8080"
+      - "8080:80"
     depends_on:
       - "mysql"
 
