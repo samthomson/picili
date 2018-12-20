@@ -81,7 +81,7 @@ Click 'login' and then register to begin.
 
 You will need to start the auto-scallar, for image processing to happen 'in the background'.
 
-To start the auto processor(s): `cd /var/www/auto-scaler && npm start`
+To start the auto processor(s): `cd /var/www/auto-scaler && npm start` (this should be run from within the workspace container)
 
 ## 3.0 Working on picili
 
