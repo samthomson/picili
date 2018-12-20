@@ -136,6 +136,15 @@ http://localhost:5601/
 
 console browser: http://localhost:5601/app/kibana#/dev_tools/console?_g=()
 
+#### dejavu
+
+http://localhost:1358
+
+Careful entering the cluster details, the URI should contain the protocol and port along with host:
+
+uri: `http://localhost:9200`
+index: `files`
+
 ### Working on the SPA
 
 Can't be run from a docker container - yet.
