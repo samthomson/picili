@@ -96,7 +96,7 @@ services:
       - MYSQL_PASSWORD=${PMA_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${PMA_ROOT_PASSWORD}
     ports:
-      - "8080:8080"
+      - "8080:80"
     depends_on:
       - "mysql"
 
@@ -125,6 +125,13 @@ services:
     image: kibana:5.4.1
     ports:
       - 5601:5601
+    depends_on:
+      - elasticsearch
+
+  dejavu:
+    image: appbaseio/dejavu:3.0.0-alpha
+    ports:
+      - 1358:1358
     depends_on:
       - elasticsearch
 
