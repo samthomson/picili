@@ -3,7 +3,7 @@ import { Response, URLSearchParams, RequestOptions } from '@angular/http';
 import { Router, CanActivate } from '@angular/router';
 import { Headers } from '@angular/http';
 
-import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
@@ -46,24 +46,28 @@ export class AuthService {
 
     attemptLogin(sEmail, sPassword): Observable<any>
     {
-        let jAuthParams = new URLSearchParams();
-        jAuthParams.set('email', sEmail);
-        jAuthParams.set('password', sPassword);
+        let jAuthParams = new HttpParams();
+        jAuthParams = jAuthParams.set('email', sEmail);
+        jAuthParams = jAuthParams.set('password', sPassword);
 
         let headers = new HttpHeaders();
-		headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        
+        console.log('email: ', sEmail)
+        console.log('params: ', jAuthParams.toString())
 
         let options = 
             {
                 headers: headers,
-                withCredentials: false
+                withCredentials: false,
+                params: jAuthParams
             }
         
 
         // .pipe(map((response: any) => response.json()));
         return this.http.post(
             this.gbl.sAPIBaseUrl + '/app/authenticate',
-            jAuthParams.toString(),
+            { params: jAuthParams },
             options
         )
             .pipe(
@@ -93,7 +97,8 @@ export class AuthService {
                         // return false to indicate failed login
                         return {'success': false};
                     }
-            }));
+            }))
+            .catch((error:any) => Observable.throw(console.log('error authenticating')));
     }
 
     attemptRegister(sUsername, sEmail, sPassword): Observable<any>
