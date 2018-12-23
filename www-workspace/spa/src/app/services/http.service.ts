@@ -189,17 +189,14 @@ export class HttpService {
 
     getUserSettings() {
         let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
-        let headers = new HttpHeaders();
-        let jParams = new URLSearchParams();
 
+        let headers = new HttpHeaders()
+            .append('Authorization', `Bearer ${authToken}`);
 
-        headers.append('Authorization', `Bearer ${authToken}`);
-
-        let options = 
-            {
-                headers: headers,
-                withCredentials: false
-            }
+        let options = {
+            headers: headers,
+            withCredentials: false
+        }
 
         this.bMakingRequestToServer = true
         return this.http.get(`${this.gbl.sAPIBaseUrl}/app/settings`, options)
