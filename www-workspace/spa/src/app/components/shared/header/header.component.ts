@@ -39,7 +39,7 @@ export class HeaderComponent{
 
     ngOnInit() {
         /*
-        3/6/17 - commented out so as now to make /me request on each page change, is it needed anywhere even?
+        3/6/17 - commented out so as not to make /me request on each page change, is it needed anywhere even?
         */
 
         // only call backend asking for username if we don't have it
@@ -54,6 +54,7 @@ export class HeaderComponent{
                 },
                 (err) => {
                     if (this.bAuthenticated) {
+                        console.log('triggering logout')
                         this.bAuthenticated = false;
                         this.authService.logOut();
                     }
