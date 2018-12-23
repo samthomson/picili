@@ -214,7 +214,7 @@ export class HttpService {
         });
     }
 
-    getHomeAggs()
+    getHomeAggs = async () => 
     {
         let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
         let headers = new HttpHeaders();
@@ -230,17 +230,22 @@ export class HttpService {
 
         this.bMakingRequestToServer = true
 
-        return this.http.get(`${this.gbl.sAPIBaseUrl}/app/homeaggs`, options)
+        try{
+        let resp = await this.http.get(`${this.gbl.sAPIBaseUrl}/app/homeaggs`, options)
         .map(
             (response: Response) => {
                 this.bMakingRequestToServer = false
                 return response.json().home_aggs;
             }
-        ).catch((error: any) => {
+        )/*.catch((error: any) => {
             this.bMakingRequestToServer = false
             throw error;
             //return {'success': false, 'errors': error};
-        });
+        });*/
+    }catch (err) {
+        console.log('error getting home aggs');
+        return {'success': false, 'errors': err}
+    }
     }
 
     updateDropboxFolder(sFolder)
