@@ -46,9 +46,9 @@ export class AuthService {
 
     attemptLogin(sEmail, sPassword): Observable<any>
     {
-        let jAuthParams = new HttpParams();
-        jAuthParams = jAuthParams.set('email', sEmail);
-        jAuthParams = jAuthParams.set('password', sPassword);
+        let jAuthParams = new HttpParams()
+            .set('email', sEmail)
+            .set('password', sPassword);
 
         let headers = new HttpHeaders();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
