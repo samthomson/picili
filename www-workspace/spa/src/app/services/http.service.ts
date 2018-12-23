@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Headers, Response, URLSearchParams, RequestOptions } from '@angular/http';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { GlobalVars } from './../../env';
 
@@ -45,14 +45,9 @@ export class HttpService {
     fetchPageState(sUsername) : any {
         // this is the actual search method
         let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
-        let headers = new HttpHeaders();
-        let jParams = new URLSearchParams();
+        let headers = new HttpHeaders()
+            .append('Authorization', `Bearer ${authToken}`);
 
-        if (typeof this.searchService.sSearchMode !== 'undefined')
-        {
-            // send cursor to back end to get items afte
-            jParams.set('searchmode', this.searchService.sSearchMode);
-        }
 
         let q = {};
         if (typeof this.searchService.mQuery.q !== 'undefined')
@@ -70,15 +65,21 @@ export class HttpService {
 
         q['sort'] = this.searchService.sCurrentSort;
 
-        jParams.set('q', JSON.stringify(q));
-        jParams.set('page', this.searchService.iPage.toString());
+        let jParams = new HttpParams()
+            .set('q', JSON.stringify(q))
+            .set('page', this.searchService.iPage.toString());
 
-        headers.append('Authorization', `Bearer ${authToken}`);
+
+        if (typeof this.searchService.sSearchMode !== 'undefined')
+        {
+            // send cursor to back end to get items afte
+            jParams = jParams.set('searchmode', this.searchService.sSearchMode);
+        }
 
         let options = 
             {
                 headers: headers,
-                search: jParams.toString(),
+                params: jParams,
                 withCredentials: false
             }
 
