@@ -40,7 +40,7 @@
     "semantic-ui-css": "^2.3.1",
     "ts-helpers": "^1.1.2",
     "tslib": "^1.9.0",
-    "webpack": "^2.7.0",
+    "webpack": "^4.4.1",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
