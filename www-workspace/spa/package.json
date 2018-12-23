@@ -54,7 +54,7 @@
     "@types/jasminewd2": "^2.0.6",
     "@types/node": "^10.12.18",
     "codelyzer": "^4.5.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-concat-css": "^2.3.0",
     "gulp-rename": "^1.2.2",
