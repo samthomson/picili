@@ -21,18 +21,18 @@ gulp.task('copy-fonts', function(){
 });
 
 // themes/default/assets/fonts
-gulp.task('sass', function(){
+gulp.task('sass', function() {
 
     return gulp.src([
         'src/picili.scss',
         'src/materialize-sass.scss'
     ])
-        .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('src/assets/compiled'));
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('src/assets/compiled'))
 });
 
 
-gulp.task('concat-css', ['sass'], function () {
+gulp.task('concat-css', (['sass'], () => {
     return gulp.src(
         [
             'node_modules/semantic-ui-css/semantic.min.css',
@@ -44,8 +44,8 @@ gulp.task('concat-css', ['sass'], function () {
     .pipe(concatCss("compiled.css", {
         rebaseUrls: false
     }))
-    .pipe(gulp.dest('src/assets/compiled/'));
-});
+    .pipe(gulp.dest('src/assets/compiled/'))
+}));
 
 gulp.task('concat-js', function() {
   return gulp.src(
@@ -58,14 +58,12 @@ gulp.task('concat-js', function() {
     .pipe(gulp.dest('src/assets/compiled'));
 });
   
-gulp.task('default', [
-        'concat-css', /* depends on 'sass' task */
-        'concat-js',
-        'copy-fonts'
-    ], function () {
-        console.log('all done..')
-    }
-);
+
+gulp.task('default', gulp.series([
+    'concat-css',
+    'concat-js',
+    'copy-fonts'
+]));
 
 
 gulp.task('watch', function() {
