@@ -71,9 +71,9 @@ export class AuthService {
             options
         )
             .pipe(
-                map((response: Response) => {
+                map((response: any) => {
 
-                    let data = response.json();
+                    let data = response;
 
                     let token = data.token;
                     let authStatus = data.success;
@@ -98,7 +98,7 @@ export class AuthService {
                         return {'success': false};
                     }
             }))
-            .catch((error:any) => Observable.throw(console.log('error authenticating')));
+            .catch((error:any) => Observable.throw(console.log('error authenticating: ', error.message)));
     }
 
     attemptRegister(sUsername, sEmail, sPassword): Observable<any>
