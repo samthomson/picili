@@ -163,11 +163,10 @@ export class HttpService {
     getUser() : Observable<any>
     {
         let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
-        let headers = new HttpHeaders();
-        let jParams = new URLSearchParams();
+        const headers = new HttpHeaders()
+            .append('Authorization', `Bearer ${authToken}`);
 
-
-        headers.append('Authorization', `Bearer ${authToken}`);
+        console.log('auth token: ', authToken)
 
         let options = 
             {
@@ -177,10 +176,11 @@ export class HttpService {
 
         return this.http.get(`${this.gbl.sAPIBaseUrl}/app/me`, options)
         .map(
-            (response: Response) => {
-                return response.json();
+            (response: any) => {
+                return response;
             }
         ).catch((error: any) => {
+            console.log('get user error: ', error)
             throw error;
             // return {'success': false, 'errors': error};
         });
@@ -203,9 +203,9 @@ export class HttpService {
         this.bMakingRequestToServer = true
         return this.http.get(`${this.gbl.sAPIBaseUrl}/app/settings`, options)
         .map(
-            (response: Response) => {
+            (response: any) => {
                 this.bMakingRequestToServer = false
-                return response.json();
+                return response;
             }
         ).catch((error: any) => {
             this.bMakingRequestToServer = false
@@ -230,22 +230,18 @@ export class HttpService {
 
         this.bMakingRequestToServer = true
 
-        try{
-        let resp = await this.http.get(`${this.gbl.sAPIBaseUrl}/app/homeaggs`, options)
-        .map(
-            (response: Response) => {
-                this.bMakingRequestToServer = false
-                return response.json().home_aggs;
-            }
-        )/*.catch((error: any) => {
-            this.bMakingRequestToServer = false
-            throw error;
-            //return {'success': false, 'errors': error};
-        });*/
-    }catch (err) {
-        console.log('error getting home aggs');
-        return {'success': false, 'errors': err}
-    }
+        try {
+            let resp = await this.http.get(`${this.gbl.sAPIBaseUrl}/app/homeaggs`, options)
+            .map(
+                (response: any) => {
+                    this.bMakingRequestToServer = false
+                    return response.home_aggs;
+                }
+            )
+        }catch (err) {
+            console.log('error getting home aggs');
+            return {'success': false, 'errors': err}
+        }
     }
 
     updateDropboxFolder(sFolder)
@@ -270,9 +266,9 @@ export class HttpService {
             options
         )
             .map(
-                (response: Response) => {
+                (response: any) => {
 
-                    let data = response.json();
+                    let data = response;
 
                     let bSuccess = data.success;
 
@@ -306,7 +302,7 @@ export class HttpService {
             options
         )
             .map(
-                (response: Response) => {
+                (response: any) => {
 
                     let data = response.json();
 
