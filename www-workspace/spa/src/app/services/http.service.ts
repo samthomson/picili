@@ -356,16 +356,16 @@ export class HttpService {
     getFileInfo(sFileId) {
         let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
 
-        let headers = new HttpHeaders();
-        headers.append('Authorization', `Bearer ${authToken}`);
+        let headers = new HttpHeaders()
+            .append('Authorization', `Bearer ${authToken}`);
 
-        let jParams = new URLSearchParams();
-        jParams.set('file', sFileId);
+        let jParams = new HttpParams()
+            .set('file', sFileId);
 
         let options = 
             {
                 headers: headers,
-                search: jParams.toString(),
+                params: jParams,
                 withCredentials: false
             }
 
