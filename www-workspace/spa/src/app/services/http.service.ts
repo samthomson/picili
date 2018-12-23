@@ -84,8 +84,8 @@ export class HttpService {
 
         return this.http.get(`${this.gbl.sAPIBaseUrl}/app/pagestate/${sUsername}`, options)
         .map(
-            (response: Response) => {
-                response = response.json();
+            (response: any) => {
+                response = response;
                 // this.mData = response;
                 return response;
             }
@@ -304,7 +304,7 @@ export class HttpService {
             .map(
                 (response: any) => {
 
-                    let data = response.json();
+                    let data = response;
 
                     let bSuccess = data.success;
 
@@ -338,8 +338,8 @@ export class HttpService {
 
         return this.http.delete(`${this.gbl.sAPIBaseUrl}/app/settings/dropbox`, options)
         .map(
-            (response: Response) => {
-                return response.json();
+            (response: any) => {
+                return response;
             }
         ).catch((error: any) => {
             throw error;
@@ -372,8 +372,8 @@ export class HttpService {
 
         return this.http.get(`${this.gbl.sAPIBaseUrl}/app/fileinfo`, options)
         .map(
-            (response: Response) => {
-                response = response.json();
+            (response: any) => {
+                response = response;
                 // this.mData = response;
                 this.bMakingRequestToServer = false
                 return response;
