@@ -246,13 +246,12 @@ export class HttpService {
     {
         let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
 
-        let jParams = new URLSearchParams();
-        jParams.set('folder', sFolder);
+        let jParams = new HttpParams()
+            .set('folder', sFolder);
 
-        let headers = new HttpHeaders();
-		headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
-        headers.append('Authorization', `Bearer ${authToken}`);
+        let headers = new HttpHeaders()
+            .append('Content-Type', 'application/x-www-form-urlencoded')
+            .append('Authorization', `Bearer ${authToken}`);
 
 
         let options = { headers: headers, withCredentials: false }
@@ -260,7 +259,7 @@ export class HttpService {
 
         return this.http.put(
             this.gbl.sAPIBaseUrl + '/app/settings/dropboxfolder',
-            jParams.toString(),
+            jParams,
             options
         )
             .map(
