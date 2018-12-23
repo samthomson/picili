@@ -91,6 +91,9 @@ export class AuthService {
 
                         this.sToken = token;
 
+                        console.log('we just storage: ', localStorage.getItem(this.gbl.sAuthTokenName))
+                        console.log('read from key: ', this.gbl.sAuthTokenName)
+
                         // return true to indicate successful login
                         return {'success': true, 'user': user};
                     }else{
@@ -161,6 +164,7 @@ export class AuthService {
 
     logOut()
     {
+        console.log('log out?')
         localStorage.removeItem(this.gbl.sAuthTokenName);
         this.authStatus = false;
         this.authStatusChanged.emit(this.authStatus);
