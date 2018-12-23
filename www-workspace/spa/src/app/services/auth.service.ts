@@ -1,9 +1,14 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Http, Headers, Response, URLSearchParams, RequestOptions } from '@angular/http';
+import { Response, URLSearchParams, RequestOptions } from '@angular/http';
 import { Router, CanActivate } from '@angular/router';
+import { Headers } from '@angular/http';
+
+import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
+import 'rxjs/Rx';
 
 import { GlobalVars } from './../../env';
 
@@ -24,7 +29,7 @@ export class AuthService {
     // userChanged = new EventEmitter<any>();
 
     constructor(
-        private http: Http,
+        private http: HttpClient,
         private router: Router,
         private gbl: GlobalVars
     ) {
@@ -45,24 +50,24 @@ export class AuthService {
         jAuthParams.set('email', sEmail);
         jAuthParams.set('password', sPassword);
 
-        let headers = new Headers();
+        let headers = new HttpHeaders();
 		headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-        let options = new RequestOptions(
+        let options = 
             {
                 headers: headers,
                 withCredentials: false
             }
-        );
+        
 
-
+        // .pipe(map((response: any) => response.json()));
         return this.http.post(
             this.gbl.sAPIBaseUrl + '/app/authenticate',
             jAuthParams.toString(),
             options
         )
-            .map(
-                (response: Response) => {
+            .pipe(
+                map((response: Response) => {
 
                     let data = response.json();
 
@@ -88,7 +93,7 @@ export class AuthService {
                         // return false to indicate failed login
                         return {'success': false};
                     }
-            });
+            }));
     }
 
     attemptRegister(sUsername, sEmail, sPassword): Observable<any>
@@ -98,10 +103,10 @@ export class AuthService {
         jAuthParams.set('email', sEmail);
         jAuthParams.set('password', sPassword);
 
-        let headers = new Headers();
+        let headers = new HttpHeaders();
 		headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-        let options = new RequestOptions({ headers: headers, withCredentials: false });
+        let options = { headers: headers, withCredentials: false };
 
         return this.http.post(
             this.gbl.sAPIBaseUrl + '/app/register',

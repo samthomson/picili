@@ -8,6 +8,7 @@ import { SearchService } from './search.service';
 
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/Rx';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class HttpService {
