@@ -1,6 +1,6 @@
 <div #bothContainersWidth id="map-results-container">
 	<div id="map-container" [style.width]="iMapWidth">
-		<sebm-google-map
+		<agm-map
 			[latitude]="0"
 			[longitude]="0"
 			[(zoom)]="zoom"
@@ -10,22 +10,22 @@
 		>
 			<div *ngIf="aMapDots.length > 0">
 
-				<sebm-google-map-marker *ngFor="let oResult of aMapDots; let i = index"
+				<agm-marker *ngFor="let oResult of aMapDots; let i = index"
 					[latitude]="oResult.lat"
 					[longitude]="oResult.lon"
 					[iconUrl]="'/assets/images/dot1_p.png'"
-					></sebm-google-map-marker>
+					></agm-marker>
 					
 			</div>
 			<div *ngIf="aMapIcons.length > 0">
 
-				<sebm-google-map-marker *ngFor="let oResult of aMapIcons; let i = index"
+				<agm-marker *ngFor="let oResult of aMapIcons; let i = index"
 					[latitude]="oResult.lat"
 					[longitude]="oResult.lon"
 					[iconUrl]="helperService.thumbUrl('i', oResult.id)"
-				></sebm-google-map-marker>
+				></agm-marker>
 			</div>
-		</sebm-google-map>
+		</agm-map>
 
 	</div>
 	<div id="map-results" [style.width]="iResultsWidth">

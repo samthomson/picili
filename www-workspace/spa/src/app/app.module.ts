@@ -44,7 +44,7 @@ import { CalendarYearMonthComponent } from './components/shared/calendar-year-mo
 
 import { CalendarPeriodPipe } from './components/pipes/calendar-period';
 
-import { AgmCoreModule } from 'angular2-google-maps/core';
+import { AgmCoreModule } from '@agm/core';
 
 import { MaterializeModule } from 'angular2-materialize';
 
