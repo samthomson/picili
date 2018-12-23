@@ -13,12 +13,14 @@ gulp.task('copy-fonts', function(){
         /* icomoon */
         'src/assets/vendor/icomoon/*',
         /* font awesome */
-        'node_modules/font-awesome/fonts/*'
+        'node_modules/font-awesome/fonts/*',
+        /* font awesome */
+        'node_modules/semantic-ui-css/themes/default/assets/fonts/*'
     ])
-    .pipe(gulp.dest('src/assets/fonts'));
+    .pipe(gulp.dest('src/assets/compiled/themes/default/assets/fonts'));
 });
 
-
+// themes/default/assets/fonts
 gulp.task('sass', function(){
 
     return gulp.src([

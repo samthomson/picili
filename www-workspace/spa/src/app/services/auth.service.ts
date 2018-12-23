@@ -1,9 +1,14 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Http, Headers, Response, URLSearchParams, RequestOptions } from '@angular/http';
+import { Response, URLSearchParams, RequestOptions } from '@angular/http';
 import { Router, CanActivate } from '@angular/router';
+import { Headers } from '@angular/http';
+
+import { HttpClientModule, HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
+import 'rxjs/Rx';
 
 import { GlobalVars } from './../../env';
 
@@ -24,7 +29,7 @@ export class AuthService {
     // userChanged = new EventEmitter<any>();
 
     constructor(
-        private http: Http,
+        private http: HttpClient,
         private router: Router,
         private gbl: GlobalVars
     ) {
@@ -41,30 +46,34 @@ export class AuthService {
 
     attemptLogin(sEmail, sPassword): Observable<any>
     {
-        let jAuthParams = new URLSearchParams();
-        jAuthParams.set('email', sEmail);
-        jAuthParams.set('password', sPassword);
+        let jAuthParams = new HttpParams()
+            .set('email', sEmail)
+            .set('password', sPassword);
 
-        let headers = new Headers();
-		headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        let headers = new HttpHeaders();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        
+        console.log('email: ', sEmail)
+        console.log('params: ', jAuthParams.toString())
 
-        let options = new RequestOptions(
+        let options = 
             {
                 headers: headers,
-                withCredentials: false
+                withCredentials: false,
+                params: jAuthParams
             }
-        );
+        
 
-
+        // .pipe(map((response: any) => response.json()));
         return this.http.post(
             this.gbl.sAPIBaseUrl + '/app/authenticate',
-            jAuthParams.toString(),
+            { params: jAuthParams },
             options
         )
-            .map(
-                (response: Response) => {
+            .pipe(
+                map((response: any) => {
 
-                    let data = response.json();
+                    let data = response;
 
                     let token = data.token;
                     let authStatus = data.success;
@@ -82,13 +91,17 @@ export class AuthService {
 
                         this.sToken = token;
 
+                        console.log('we just storage: ', localStorage.getItem(this.gbl.sAuthTokenName))
+                        console.log('read from key: ', this.gbl.sAuthTokenName)
+
                         // return true to indicate successful login
                         return {'success': true, 'user': user};
                     }else{
                         // return false to indicate failed login
                         return {'success': false};
                     }
-            });
+            }))
+            .catch((error:any) => Observable.throw(console.log('error authenticating: ', error.message)));
     }
 
     attemptRegister(sUsername, sEmail, sPassword): Observable<any>
@@ -98,10 +111,10 @@ export class AuthService {
         jAuthParams.set('email', sEmail);
         jAuthParams.set('password', sPassword);
 
-        let headers = new Headers();
+        let headers = new HttpHeaders();
 		headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-        let options = new RequestOptions({ headers: headers, withCredentials: false });
+        let options = { headers: headers, withCredentials: false };
 
         return this.http.post(
             this.gbl.sAPIBaseUrl + '/app/register',
@@ -151,6 +164,7 @@ export class AuthService {
 
     logOut()
     {
+        console.log('log out?')
         localStorage.removeItem(this.gbl.sAuthTokenName);
         this.authStatus = false;
         this.authStatusChanged.emit(this.authStatus);

@@ -10,8 +10,6 @@ import {
     HostListener
 } from '@angular/core';
 
-import { SebmGoogleMap, SebmGoogleMapMarker } from 'angular2-google-maps/core';
-
 import { HttpService, SearchService } from './../../../../services';
 
 import { GlobalVars } from './../../../../../env';

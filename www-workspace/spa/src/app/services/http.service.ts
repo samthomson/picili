@@ -1,6 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Headers, Response, URLSearchParams, RequestOptions } from '@angular/http';
 
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { GlobalVars } from './../../env';
 
@@ -8,6 +9,7 @@ import { SearchService } from './search.service';
 
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/Rx';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class HttpService {
@@ -32,7 +34,7 @@ export class HttpService {
     bMakingRequestToServer: boolean = false
 
     constructor(
-        private http: Http,
+        private http: HttpClient,
         private gbl: GlobalVars,
         private searchService: SearchService
     ) {
@@ -43,14 +45,9 @@ export class HttpService {
     fetchPageState(sUsername) : any {
         // this is the actual search method
         let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
-        let headers = new Headers();
-        let jParams = new URLSearchParams();
+        let headers = new HttpHeaders()
+            .append('Authorization', `Bearer ${authToken}`);
 
-        if (typeof this.searchService.sSearchMode !== 'undefined')
-        {
-            // send cursor to back end to get items afte
-            jParams.set('searchmode', this.searchService.sSearchMode);
-        }
 
         let q = {};
         if (typeof this.searchService.mQuery.q !== 'undefined')
@@ -68,23 +65,27 @@ export class HttpService {
 
         q['sort'] = this.searchService.sCurrentSort;
 
-        jParams.set('q', JSON.stringify(q));
-        jParams.set('page', this.searchService.iPage.toString());
+        let jParams = new HttpParams()
+            .set('q', JSON.stringify(q))
+            .set('page', this.searchService.iPage.toString());
 
-        headers.append('Authorization', `Bearer ${authToken}`);
 
-        let options = new RequestOptions(
-            {
-                headers: headers,
-                search: jParams.toString(),
-                withCredentials: false
-            }
-        );
+        if (typeof this.searchService.sSearchMode !== 'undefined')
+        {
+            // send cursor to back end to get items afte
+            jParams = jParams.set('searchmode', this.searchService.sSearchMode);
+        }
+
+        const options = {
+            headers: headers,
+            params: jParams,
+            withCredentials: false
+        }
 
         return this.http.get(`${this.gbl.sAPIBaseUrl}/app/pagestate/${sUsername}`, options)
         .map(
-            (response: Response) => {
-                response = response.json();
+            (response: any) => {
+                response = response;
                 // this.mData = response;
                 return response;
             }
@@ -161,52 +162,44 @@ export class HttpService {
 
     getUser() : Observable<any>
     {
-        let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
-        let headers = new Headers();
-        let jParams = new URLSearchParams();
+        const authToken = localStorage.getItem(this.gbl.sAuthTokenName);
+        const headers = new HttpHeaders()
+            .append('Authorization', `Bearer ${authToken}`);
 
-
-        headers.append('Authorization', `Bearer ${authToken}`);
-
-        let options = new RequestOptions(
-            {
-                headers: headers,
-                withCredentials: false
-            }
-        );
+        const options = {
+            headers: headers,
+            withCredentials: false
+        }
 
         return this.http.get(`${this.gbl.sAPIBaseUrl}/app/me`, options)
         .map(
-            (response: Response) => {
-                return response.json();
+            (response: any) => {
+                return response;
             }
         ).catch((error: any) => {
+            console.log('get user error: ', error)
             throw error;
             // return {'success': false, 'errors': error};
         });
     }
 
     getUserSettings() {
-        let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
-        let headers = new Headers();
-        let jParams = new URLSearchParams();
+        const authToken = localStorage.getItem(this.gbl.sAuthTokenName);
 
+        const headers = new HttpHeaders()
+            .append('Authorization', `Bearer ${authToken}`);
 
-        headers.append('Authorization', `Bearer ${authToken}`);
-
-        let options = new RequestOptions(
-            {
-                headers: headers,
-                withCredentials: false
-            }
-        );
+            const options = {
+            headers: headers,
+            withCredentials: false
+        }
 
         this.bMakingRequestToServer = true
         return this.http.get(`${this.gbl.sAPIBaseUrl}/app/settings`, options)
         .map(
-            (response: Response) => {
+            (response: any) => {
                 this.bMakingRequestToServer = false
-                return response.json();
+                return response;
             }
         ).catch((error: any) => {
             this.bMakingRequestToServer = false
@@ -215,61 +208,55 @@ export class HttpService {
         });
     }
 
-    getHomeAggs()
+    getHomeAggs = async () => 
     {
-        let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
-        let headers = new Headers();
-        let jParams = new URLSearchParams();
+        const authToken = localStorage.getItem(this.gbl.sAuthTokenName);
+        const headers = new HttpHeaders()
+            .append('Authorization', `Bearer ${authToken}`);
 
-        headers.append('Authorization', `Bearer ${authToken}`);
-
-        let options = new RequestOptions(
-            {
-                headers: headers,
-                withCredentials: false
-            }
-        );
+        const options = {
+            headers: headers,
+            withCredentials: false
+        }
 
         this.bMakingRequestToServer = true
 
-        return this.http.get(`${this.gbl.sAPIBaseUrl}/app/homeaggs`, options)
-        .map(
-            (response: Response) => {
-                this.bMakingRequestToServer = false
-                return response.json().home_aggs;
-            }
-        ).catch((error: any) => {
-            this.bMakingRequestToServer = false
-            throw error;
-            //return {'success': false, 'errors': error};
-        });
+        try {
+            let resp = await this.http.get(`${this.gbl.sAPIBaseUrl}/app/homeaggs`, options)
+                .map(
+                    (response: any) => {
+                        this.bMakingRequestToServer = false
+                        return response.home_aggs;
+                    }
+                )
+        }catch (err) {
+            console.log('error getting home aggs');
+            return {'success': false, 'errors': err}
+        }
     }
 
     updateDropboxFolder(sFolder)
     {
-        let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
+        const authToken = localStorage.getItem(this.gbl.sAuthTokenName);
 
-        let jParams = new URLSearchParams();
-        jParams.set('folder', sFolder);
+        const jParams = new HttpParams()
+            .set('folder', sFolder);
 
-        let headers = new Headers();
-		headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        const headers = new HttpHeaders()
+            .append('Content-Type', 'application/x-www-form-urlencoded')
+            .append('Authorization', `Bearer ${authToken}`);
 
-        headers.append('Authorization', `Bearer ${authToken}`);
-
-
-        let options = new RequestOptions({ headers: headers, withCredentials: false });
-
+        const options = { headers: headers, withCredentials: false }
 
         return this.http.put(
             this.gbl.sAPIBaseUrl + '/app/settings/dropboxfolder',
-            jParams.toString(),
+            jParams,
             options
         )
             .map(
-                (response: Response) => {
+                (response: any) => {
 
-                    let data = response.json();
+                    let data = response;
 
                     let bSuccess = data.success;
 
@@ -283,19 +270,16 @@ export class HttpService {
     }
 
     updatePrivacy(bPublic) : Observable<any>{
-        let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
+        const authToken = localStorage.getItem(this.gbl.sAuthTokenName);
 
-        let jParams = new URLSearchParams();
-        jParams.set('public', this.phpBool(bPublic));
+        const jParams = new HttpParams()
+            .set('public', this.phpBool(bPublic));
 
-        let headers = new Headers();
-		headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        const headers = new HttpHeaders()
+            .append('Content-Type', 'application/x-www-form-urlencoded')
+            .append('Authorization', `Bearer ${authToken}`);
 
-        headers.append('Authorization', `Bearer ${authToken}`);
-
-
-        let options = new RequestOptions({ headers: headers, withCredentials: false });
-
+        const options = { headers: headers, withCredentials: false }
 
         return this.http.put(
             this.gbl.sAPIBaseUrl + '/app/settings/privacy',
@@ -303,9 +287,9 @@ export class HttpService {
             options
         )
             .map(
-                (response: Response) => {
+                (response: any) => {
 
-                    let data = response.json();
+                    let data = response;
 
                     let bSuccess = data.success;
 
@@ -325,24 +309,19 @@ export class HttpService {
 
     disconnectDropbox()
     {
-        let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
-        let headers = new Headers();
-        let jParams = new URLSearchParams();
+        const authToken = localStorage.getItem(this.gbl.sAuthTokenName);
+        const headers = new HttpHeaders()
+            .append('Authorization', `Bearer ${authToken}`);
 
-
-        headers.append('Authorization', `Bearer ${authToken}`);
-
-        let options = new RequestOptions(
-            {
-                headers: headers,
-                withCredentials: false
-            }
-        );
+        const options = {
+            headers: headers,
+            withCredentials: false
+        }
 
         return this.http.delete(`${this.gbl.sAPIBaseUrl}/app/settings/dropbox`, options)
         .map(
-            (response: Response) => {
-                return response.json();
+            (response: any) => {
+                return response;
             }
         ).catch((error: any) => {
             throw error;
@@ -356,29 +335,25 @@ export class HttpService {
     }
 
     getFileInfo(sFileId) {
-        let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
+        const authToken = localStorage.getItem(this.gbl.sAuthTokenName);
 
-        let headers = new Headers();
-        headers.append('Authorization', `Bearer ${authToken}`);
+        const headers = new HttpHeaders()
+            .append('Authorization', `Bearer ${authToken}`);
 
-        let jParams = new URLSearchParams();
-        jParams.set('file', sFileId);
+        const jParams = new HttpParams()
+            .set('file', sFileId);
 
-        let options = new RequestOptions(
-            {
-                headers: headers,
-                search: jParams.toString(),
-                withCredentials: false
-            }
-        );
+        const options = {
+            headers: headers,
+            params: jParams,
+            withCredentials: false
+        }
 
         this.bMakingRequestToServer = true
 
         return this.http.get(`${this.gbl.sAPIBaseUrl}/app/fileinfo`, options)
         .map(
-            (response: Response) => {
-                response = response.json();
-                // this.mData = response;
+            (response: any) => {
                 this.bMakingRequestToServer = false
                 return response;
             }
@@ -391,8 +366,7 @@ export class HttpService {
 
     attemptPreload(iFileIndex) {
         // todo
-
-        let sSize = 'xl';
+        const sSize = 'xl';
         var imgPreload = new Image();
     	imgPreload.src = 'https://s3-eu-west-1.amazonaws.com/picili-bucket/t/'+ this.gbl.sCurrentPageUsername +'/' + sSize + this.searchService.mData.search.results[iFileIndex].id+'.jpg'
     }
@@ -401,12 +375,10 @@ export class HttpService {
         // find file in deltas position and load it
         let iTemp = this.searchService.iActiveThumb + iDelta
 
-        if(iTemp >= this.searchService.mData.search.results.length)
-        {
+        if(iTemp >= this.searchService.mData.search.results.length) {
             iTemp = 0
         }
-        if(iTemp < 0)
-        {
+        if(iTemp < 0) {
             iTemp = this.searchService.mData.search.results.length - 1
         }
 

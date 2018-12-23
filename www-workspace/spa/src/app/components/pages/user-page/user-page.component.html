@@ -128,7 +128,7 @@
 
             <div *ngIf="searchService.sSearchMode === 'default'">
                 <div *ngFor="let oYearAgo of this.aYearsAgo; let cYearsBack = index">
-                    <div *ngIf="this.oHomeAggs.on_this_day[oYearAgo.key] && this.oHomeAggs.on_this_day[oYearAgo.key].length > 0">
+                    <div *ngIf="this.oHomeAggs && this.oHomeAggs.on_this_day[oYearAgo.key] && this.oHomeAggs.on_this_day[oYearAgo.key].length > 0">
                         <a 
                             [routerLink] = "this.helperService.getBaseRouterLink('calendar')"
                             [queryParams]="this.helperService.getQVarsWithNewQuery('calendar', this.generateOnThisDayLinkParts(cYearsBack + 1)[0], this.generateOnThisDayLinkParts(cYearsBack + 1)[1])"
