@@ -76,12 +76,11 @@ export class HttpService {
             jParams = jParams.set('searchmode', this.searchService.sSearchMode);
         }
 
-        let options = 
-            {
-                headers: headers,
-                params: jParams,
-                withCredentials: false
-            }
+        const options = {
+            headers: headers,
+            params: jParams,
+            withCredentials: false
+        }
 
         return this.http.get(`${this.gbl.sAPIBaseUrl}/app/pagestate/${sUsername}`, options)
         .map(
@@ -163,17 +162,14 @@ export class HttpService {
 
     getUser() : Observable<any>
     {
-        let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
+        const authToken = localStorage.getItem(this.gbl.sAuthTokenName);
         const headers = new HttpHeaders()
             .append('Authorization', `Bearer ${authToken}`);
 
-        console.log('auth token: ', authToken)
-
-        let options = 
-            {
-                headers: headers,
-                withCredentials: false
-            }
+        const options = {
+            headers: headers,
+            withCredentials: false
+        }
 
         return this.http.get(`${this.gbl.sAPIBaseUrl}/app/me`, options)
         .map(
@@ -188,12 +184,12 @@ export class HttpService {
     }
 
     getUserSettings() {
-        let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
+        const authToken = localStorage.getItem(this.gbl.sAuthTokenName);
 
-        let headers = new HttpHeaders()
+        const headers = new HttpHeaders()
             .append('Authorization', `Bearer ${authToken}`);
 
-        let options = {
+            const options = {
             headers: headers,
             withCredentials: false
         }
@@ -214,28 +210,25 @@ export class HttpService {
 
     getHomeAggs = async () => 
     {
-        let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
-        let headers = new HttpHeaders();
-        let jParams = new URLSearchParams();
+        const authToken = localStorage.getItem(this.gbl.sAuthTokenName);
+        const headers = new HttpHeaders()
+            .append('Authorization', `Bearer ${authToken}`);
 
-        headers.append('Authorization', `Bearer ${authToken}`);
-
-        let options = 
-            {
-                headers: headers,
-                withCredentials: false
-            }
+        const options = {
+            headers: headers,
+            withCredentials: false
+        }
 
         this.bMakingRequestToServer = true
 
         try {
             let resp = await this.http.get(`${this.gbl.sAPIBaseUrl}/app/homeaggs`, options)
-            .map(
-                (response: any) => {
-                    this.bMakingRequestToServer = false
-                    return response.home_aggs;
-                }
-            )
+                .map(
+                    (response: any) => {
+                        this.bMakingRequestToServer = false
+                        return response.home_aggs;
+                    }
+                )
         }catch (err) {
             console.log('error getting home aggs');
             return {'success': false, 'errors': err}
@@ -244,18 +237,16 @@ export class HttpService {
 
     updateDropboxFolder(sFolder)
     {
-        let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
+        const authToken = localStorage.getItem(this.gbl.sAuthTokenName);
 
-        let jParams = new HttpParams()
+        const jParams = new HttpParams()
             .set('folder', sFolder);
 
-        let headers = new HttpHeaders()
+        const headers = new HttpHeaders()
             .append('Content-Type', 'application/x-www-form-urlencoded')
             .append('Authorization', `Bearer ${authToken}`);
 
-
-        let options = { headers: headers, withCredentials: false }
-
+        const options = { headers: headers, withCredentials: false }
 
         return this.http.put(
             this.gbl.sAPIBaseUrl + '/app/settings/dropboxfolder',
@@ -279,19 +270,16 @@ export class HttpService {
     }
 
     updatePrivacy(bPublic) : Observable<any>{
-        let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
+        const authToken = localStorage.getItem(this.gbl.sAuthTokenName);
 
-        let jParams = new URLSearchParams();
-        jParams.set('public', this.phpBool(bPublic));
+        const jParams = new HttpParams()
+            .set('public', this.phpBool(bPublic));
 
-        let headers = new HttpHeaders();
-		headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        const headers = new HttpHeaders()
+            .append('Content-Type', 'application/x-www-form-urlencoded')
+            .append('Authorization', `Bearer ${authToken}`);
 
-        headers.append('Authorization', `Bearer ${authToken}`);
-
-
-        let options = { headers: headers, withCredentials: false }
-
+        const options = { headers: headers, withCredentials: false }
 
         return this.http.put(
             this.gbl.sAPIBaseUrl + '/app/settings/privacy',
@@ -321,17 +309,14 @@ export class HttpService {
 
     disconnectDropbox()
     {
-        let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
-        let headers = new HttpHeaders();
-        let jParams = new URLSearchParams();
+        const authToken = localStorage.getItem(this.gbl.sAuthTokenName);
+        const headers = new HttpHeaders()
+            .append('Authorization', `Bearer ${authToken}`);
 
-
-        headers.append('Authorization', `Bearer ${authToken}`);
-
-        let options = {
-                headers: headers,
-                withCredentials: false
-            }
+        const options = {
+            headers: headers,
+            withCredentials: false
+        }
 
         return this.http.delete(`${this.gbl.sAPIBaseUrl}/app/settings/dropbox`, options)
         .map(
@@ -350,28 +335,25 @@ export class HttpService {
     }
 
     getFileInfo(sFileId) {
-        let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
+        const authToken = localStorage.getItem(this.gbl.sAuthTokenName);
 
-        let headers = new HttpHeaders()
+        const headers = new HttpHeaders()
             .append('Authorization', `Bearer ${authToken}`);
 
-        let jParams = new HttpParams()
+        const jParams = new HttpParams()
             .set('file', sFileId);
 
-        let options = 
-            {
-                headers: headers,
-                params: jParams,
-                withCredentials: false
-            }
+        const options = {
+            headers: headers,
+            params: jParams,
+            withCredentials: false
+        }
 
         this.bMakingRequestToServer = true
 
         return this.http.get(`${this.gbl.sAPIBaseUrl}/app/fileinfo`, options)
         .map(
             (response: any) => {
-                response = response;
-                // this.mData = response;
                 this.bMakingRequestToServer = false
                 return response;
             }
@@ -384,8 +366,7 @@ export class HttpService {
 
     attemptPreload(iFileIndex) {
         // todo
-
-        let sSize = 'xl';
+        const sSize = 'xl';
         var imgPreload = new Image();
     	imgPreload.src = 'https://s3-eu-west-1.amazonaws.com/picili-bucket/t/'+ this.gbl.sCurrentPageUsername +'/' + sSize + this.searchService.mData.search.results[iFileIndex].id+'.jpg'
     }
@@ -394,12 +375,10 @@ export class HttpService {
         // find file in deltas position and load it
         let iTemp = this.searchService.iActiveThumb + iDelta
 
-        if(iTemp >= this.searchService.mData.search.results.length)
-        {
+        if(iTemp >= this.searchService.mData.search.results.length) {
             iTemp = 0
         }
-        if(iTemp < 0)
-        {
+        if(iTemp < 0) {
             iTemp = this.searchService.mData.search.results.length - 1
         }
 
