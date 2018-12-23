@@ -39,10 +39,12 @@
     "rxjs": "^6.3.3",
     "semantic-ui-css": "^2.3.1",
     "ts-helpers": "^1.1.2",
+    "tslib": "^1.9.0",
     "webpack": "^2.7.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "~0.11.0",
     "@angular/cli": "^7.1.4",
     "@angular/compiler-cli": "^7.1.4",
     "@angular/language-service": "^7.1.4",
