@@ -1,6 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Headers, Response, URLSearchParams, RequestOptions } from '@angular/http';
 
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { GlobalVars } from './../../env';
 
@@ -33,7 +34,7 @@ export class HttpService {
     bMakingRequestToServer: boolean = false
 
     constructor(
-        private http: Http,
+        private http: HttpClient,
         private gbl: GlobalVars,
         private searchService: SearchService
     ) {
@@ -44,7 +45,7 @@ export class HttpService {
     fetchPageState(sUsername) : any {
         // this is the actual search method
         let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
-        let headers = new Headers();
+        let headers = new HttpHeaders();
         let jParams = new URLSearchParams();
 
         if (typeof this.searchService.sSearchMode !== 'undefined')
@@ -74,13 +75,12 @@ export class HttpService {
 
         headers.append('Authorization', `Bearer ${authToken}`);
 
-        let options = new RequestOptions(
+        let options = 
             {
                 headers: headers,
                 search: jParams.toString(),
                 withCredentials: false
             }
-        );
 
         return this.http.get(`${this.gbl.sAPIBaseUrl}/app/pagestate/${sUsername}`, options)
         .map(
@@ -163,18 +163,17 @@ export class HttpService {
     getUser() : Observable<any>
     {
         let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
-        let headers = new Headers();
+        let headers = new HttpHeaders();
         let jParams = new URLSearchParams();
 
 
         headers.append('Authorization', `Bearer ${authToken}`);
 
-        let options = new RequestOptions(
+        let options = 
             {
                 headers: headers,
                 withCredentials: false
             }
-        );
 
         return this.http.get(`${this.gbl.sAPIBaseUrl}/app/me`, options)
         .map(
@@ -189,18 +188,17 @@ export class HttpService {
 
     getUserSettings() {
         let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
-        let headers = new Headers();
+        let headers = new HttpHeaders();
         let jParams = new URLSearchParams();
 
 
         headers.append('Authorization', `Bearer ${authToken}`);
 
-        let options = new RequestOptions(
+        let options = 
             {
                 headers: headers,
                 withCredentials: false
             }
-        );
 
         this.bMakingRequestToServer = true
         return this.http.get(`${this.gbl.sAPIBaseUrl}/app/settings`, options)
@@ -219,17 +217,16 @@ export class HttpService {
     getHomeAggs()
     {
         let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
-        let headers = new Headers();
+        let headers = new HttpHeaders();
         let jParams = new URLSearchParams();
 
         headers.append('Authorization', `Bearer ${authToken}`);
 
-        let options = new RequestOptions(
+        let options = 
             {
                 headers: headers,
                 withCredentials: false
             }
-        );
 
         this.bMakingRequestToServer = true
 
@@ -253,13 +250,13 @@ export class HttpService {
         let jParams = new URLSearchParams();
         jParams.set('folder', sFolder);
 
-        let headers = new Headers();
+        let headers = new HttpHeaders();
 		headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
         headers.append('Authorization', `Bearer ${authToken}`);
 
 
-        let options = new RequestOptions({ headers: headers, withCredentials: false });
+        let options = { headers: headers, withCredentials: false }
 
 
         return this.http.put(
@@ -289,13 +286,13 @@ export class HttpService {
         let jParams = new URLSearchParams();
         jParams.set('public', this.phpBool(bPublic));
 
-        let headers = new Headers();
+        let headers = new HttpHeaders();
 		headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
         headers.append('Authorization', `Bearer ${authToken}`);
 
 
-        let options = new RequestOptions({ headers: headers, withCredentials: false });
+        let options = { headers: headers, withCredentials: false }
 
 
         return this.http.put(
@@ -327,18 +324,16 @@ export class HttpService {
     disconnectDropbox()
     {
         let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
-        let headers = new Headers();
+        let headers = new HttpHeaders();
         let jParams = new URLSearchParams();
 
 
         headers.append('Authorization', `Bearer ${authToken}`);
 
-        let options = new RequestOptions(
-            {
+        let options = {
                 headers: headers,
                 withCredentials: false
             }
-        );
 
         return this.http.delete(`${this.gbl.sAPIBaseUrl}/app/settings/dropbox`, options)
         .map(
@@ -359,19 +354,18 @@ export class HttpService {
     getFileInfo(sFileId) {
         let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
 
-        let headers = new Headers();
+        let headers = new HttpHeaders();
         headers.append('Authorization', `Bearer ${authToken}`);
 
         let jParams = new URLSearchParams();
         jParams.set('file', sFileId);
 
-        let options = new RequestOptions(
+        let options = 
             {
                 headers: headers,
                 search: jParams.toString(),
                 withCredentials: false
             }
-        );
 
         this.bMakingRequestToServer = true
 
