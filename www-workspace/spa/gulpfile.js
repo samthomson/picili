@@ -12,8 +12,6 @@ gulp.task('copy-fonts', function(){
     return gulp.src([
         /* icomoon */
         'src/assets/vendor/icomoon/*',
-        /* font awesome */
-        'node_modules/font-awesome/fonts/*',
         /* semantic */
         'node_modules/semantic-ui-css/themes/default/assets/fonts/*'
     ])
@@ -76,6 +74,7 @@ gulp.task('default', gulp.series([
     'concat-css',
     'concat-js',
     'copy-fonts',
+    'more-fonts',
     'copy-semantic-images'
 ]));
 
