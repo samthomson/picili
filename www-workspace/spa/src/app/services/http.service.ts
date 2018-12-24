@@ -177,7 +177,6 @@ export class HttpService {
                 return response;
             }
         ).catch((error: any) => {
-            console.log('get user error: ', error)
             throw error;
             // return {'success': false, 'errors': error};
         });

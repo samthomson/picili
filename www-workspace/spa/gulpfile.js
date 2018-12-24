@@ -12,15 +12,26 @@ gulp.task('copy-fonts', function(){
     return gulp.src([
         /* icomoon */
         'src/assets/vendor/icomoon/*',
-        /* font awesome */
-        'node_modules/font-awesome/fonts/*',
-        /* font awesome */
+        /* semantic */
         'node_modules/semantic-ui-css/themes/default/assets/fonts/*'
     ])
     .pipe(gulp.dest('src/assets/compiled/themes/default/assets/fonts'));
 });
+gulp.task('more-fonts', function(){
+    return gulp.src([
+        /* font awesome */
+        'node_modules/font-awesome/fonts/*',
+    ])
+    .pipe(gulp.dest('src/assets/fonts'));
+});
+gulp.task('copy-semantic-images', function(){
+    return gulp.src([
+        /* semantic */
+        'node_modules/semantic-ui-css/themes/default/assets/images/*'
+    ])
+    .pipe(gulp.dest('src/assets/compiled/themes/default/assets/images'));
+});
 
-// themes/default/assets/fonts
 gulp.task('sass', function() {
 
     return gulp.src([
@@ -44,7 +55,7 @@ gulp.task('concat-css', gulp.series(['sass'], () => {
     .pipe(concatCss("compiled.css", {
         rebaseUrls: false
     }))
-    .pipe(gulp.dest('src/assets/compiled/'))
+    .pipe(gulp.dest('src/assets/compiled'))
 }));
 
 gulp.task('concat-js', function() {
@@ -62,21 +73,14 @@ gulp.task('concat-js', function() {
 gulp.task('default', gulp.series([
     'concat-css',
     'concat-js',
-    'copy-fonts'
+    'copy-fonts',
+    'more-fonts',
+    'copy-semantic-images'
 ]));
 
 
 gulp.task('watch', function() {
     console.log('** watch **')
 	gulp.watch('src/**/*.scss', ['default']);
-  // Other watchers
-})
-
-gulp.task('dist', function(){
-	return gulp.src(['./dist/**/*']).pipe(gulp.dest('./../user-api-laravel/public'));
-})
-
-gulp.task('watch-dist', function(){
-	gulp.watch('dist/**/*.*', gulp.series('dist'));
   // Other watchers
 })
