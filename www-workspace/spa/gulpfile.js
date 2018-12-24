@@ -19,6 +19,13 @@ gulp.task('copy-fonts', function(){
     ])
     .pipe(gulp.dest('src/assets/compiled/themes/default/assets/fonts'));
 });
+gulp.task('more-fonts', function(){
+    return gulp.src([
+        /* font awesome */
+        'node_modules/font-awesome/fonts/*',
+    ])
+    .pipe(gulp.dest('src/assets/fonts'));
+});
 gulp.task('copy-semantic-images', function(){
     return gulp.src([
         /* semantic */
