@@ -12,7 +12,8 @@
                     <img class="folder-thumb" [src]="helperService.thumbUrl('s', oFolder['file-id'])" />
                 </div>
                 <div>
-                    <span><i class="fa fa-picture-o" aria-hidden="true"></i> {{oFolder['count'] | number}} picture(s)</span>
+                    <br/>
+                    <span><i class="fa fa-picture-o" aria-hidden="true"></i> {{oFolder['count'] | number}} picture<span *ngIf="oFolder['count'] > 0">s</span></span>
                 </div>
             </div>
         </a>
