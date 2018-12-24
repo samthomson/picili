@@ -7,10 +7,10 @@ EXPOSE 4200
 
 COPY . /spa
 
-RUN yarn
+RUN npm i -y
 
-RUN yarn rebuild node-sass
+RUN npm rebuild node-sass
 
-RUN yarn gulp
+RUN npm run gulp
 
-CMD yarn serve
+CMD npm run serve
