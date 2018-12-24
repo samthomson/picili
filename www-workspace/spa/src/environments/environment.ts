@@ -6,6 +6,6 @@
 export const environment = {
   production: false,
   baseURL: 'http://localhost',
-  sAPIBaseUrl: 'http://localhost',
+  sAPIBaseUrl: 'http://localhost:81',
   awsBucketUrl: 'https://s3-eu-west-1.amazonaws.com/picili-bucket/t/'
 };

@@ -98,9 +98,7 @@ Auto tests: `cd /var/www/auto && vendor/bin/phpunit`
 
 ## use site
 
-Site runs at http://localhost
-
-- it's the SPA backed with the API (the spa is just dumped into the api projects public folder)
+Site runs at `http://localhost` (SPA) && `http://localhost:81` (API)
 
 ### commands
 
@@ -147,20 +145,13 @@ index: `files`
 
 ### Working on the SPA
 
-Can't be run from a docker container - yet.
-`cd` locally to the spa folder and run:
-`npm i`
-`npm run gulp`
-`npm run build`
-`npm run serve`
+Is run from within a docker container `spa`. The Spa is built and run as standard, so just work on the spa source and it will keep rebuilding automatically.
+If you want to enter the container, run `docker-compose run spa sh`
 
-This will serve the app from `localhost:4200`. Presuming you have already run `docker-compose up [-d]` then you'll have the backend running on `localhost:80` for the spa to talk to.
+The app is served on `localhost:80` and communicates to the API which runs on `localhost:81` (presuming you've already run `docker-compose up [-d]` to start the 'backend'.
 
-If you plan on editing sass files, also run `npm run gulp-watch`.
+If you plan on editing sass files, also run `npm run gulp-watch` (within the container).
 
-If you want to 'publish' the SPA into the root of the main application (API), so you can test end to end via `http://localhost` then you can run a gulp task (`gulp dist`) as defined in gulpfile.js in the SPA root after running `ng build`. These have been combined into one package script, so you can just run `npm run dist`.
-
-You need to use gulp 4, as installed as a dependency. To specifically run the local gulp and not global (which may not be version 4), so the command like this: `./node_modules/.bin/gulp dist`.
 
 ## 4.0 Deploying
 

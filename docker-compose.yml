@@ -2,10 +2,18 @@ version: "2"
 services:
   applications:
     build:
-      context: ./docker-containers/applications
+      context: ./www-workspace/spa
     volumes:
       - ./www-workspace:/var/www
 
+  spa:
+    build:
+      context: ./www-workspace/spa
+    ports:
+        - "80:4200"
+    volumes:
+      - ./www-workspace/spa:/spa
+  
   workspace:
     build:
       context: ./docker-containers/workspace
@@ -36,8 +44,6 @@ services:
       - API_IMAGGA_SECRET=${API_IMAGGA_SECRET}
     volumes_from:
       - applications
-    # ports:
-    #   - "4200:4200"
     depends_on: [mysql, applications, elasticsearch]
 
   php-fpm:
@@ -74,7 +80,7 @@ services:
     volumes:
       - ./docker-containers/nginx/sites:/etc/nginx/sites-available
     ports:
-      - "80:80"
+      - "81:80"
       - "443:443"
     depends_on: [php-fpm, mysql]
 

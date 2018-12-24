@@ -32,7 +32,7 @@ gulp.task('sass', function() {
 });
 
 
-gulp.task('concat-css', (['sass'], () => {
+gulp.task('concat-css', gulp.series(['sass'], () => {
     return gulp.src(
         [
             'node_modules/semantic-ui-css/semantic.min.css',
