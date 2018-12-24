@@ -103,24 +103,24 @@ export class AuthService {
 
     attemptRegister(sUsername, sEmail, sPassword): Observable<any>
     {
-        let jAuthParams = new URLSearchParams();
-        jAuthParams.set('username', sUsername);
-        jAuthParams.set('email', sEmail);
-        jAuthParams.set('password', sPassword);
+        let jAuthParams = new HttpParams()
+            .set('username', sUsername)
+            .set('email', sEmail)
+            .set('password', sPassword);
 
-        let headers = new HttpHeaders();
-		headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        let headers = new HttpHeaders()
+            .append('Content-Type', 'application/x-www-form-urlencoded');
 
-        let options = { headers: headers, withCredentials: false };
+        let options = { headers: headers, withCredentials: false, params: jAuthParams };
 
         return this.http.post(
             this.gbl.sAPIBaseUrl + '/app/register',
-            jAuthParams.toString(),
+            { params: jAuthParams },
             options
         )
             .map(
-                (response: Response) => {
-                    let data = response.json();
+                (response: any) => {
+                    let data = response;
 
                     let token = data.token;
                     let bSuccess = data.success;
