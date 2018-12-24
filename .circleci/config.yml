@@ -7,7 +7,7 @@ jobs:
   build-spa:
     docker:
      - image: mhart/alpine-node
-    working_directory: /picili
+    working_directory: /picili/www-workspace/spa
     steps:
      - checkout
      - run:
