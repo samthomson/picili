@@ -5,7 +5,7 @@ WORKDIR /spa
 
 EXPOSE 4200
 
-COPY . /spa
+ADD . /spa
 
 RUN npm i -y
 

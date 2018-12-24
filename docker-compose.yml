@@ -11,6 +11,8 @@ services:
       context: ./www-workspace/spa
     ports:
         - "80:4200"
+    volumes:
+      - ./www-workspace/spa:/spa
   
   workspace:
     build:
