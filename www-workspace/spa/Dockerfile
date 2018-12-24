@@ -1,4 +1,5 @@
-FROM mhart/alpine-node
+#use node 10 to mitigate gulp issues..
+FROM mhart/alpine-node:10.14.2
 
 WORKDIR /spa
 
@@ -6,8 +7,10 @@ EXPOSE 4200
 
 COPY . /spa
 
-RUN yarn
+RUN npm i -y
 
-RUN yarn run gulp
+RUN npm rebuild node-sass
 
-CMD yarn run serve
+RUN npm run gulp
+
+CMD npm run serve
