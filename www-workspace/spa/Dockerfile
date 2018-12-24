@@ -4,10 +4,10 @@ WORKDIR /spa
 
 EXPOSE 4200
 
-COPY /www-workspace /spa
+COPY . /spa
 
 RUN yarn
 
-CMD yarn run gulp
+RUN yarn run gulp
 
 CMD yarn run serve
