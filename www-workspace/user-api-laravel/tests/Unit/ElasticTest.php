@@ -253,6 +253,28 @@ class ElasticTest extends TestCase
         $this->assertEquals('fail', $aInvalidZeroGeo['status']);
 
 
+        // handle unexpected zoom value
+        $aOutOfBoundsZoom = ElasticHelper::aSearch(
+            0,
+            [
+                'filters' =>
+                [
+                    [
+                        'type' => 'geo',
+                        'value' => [
+                            'lat_min' => -89.99,
+                            'lat_max' => 89.97,
+                            'lon_min' => -180,
+                            'lon_max' => 180,
+                            'zoom' => 0
+                        ]
+                    ]
+                ]
+            ]
+        );
+        $this->assertTrue(count($aOutOfBoundsZoom['results']) > 0);
+
+
         // handle an inverted geo query - top is below bottom
         $aInvalidInverseGeo = ElasticHelper::aSearch(
             0,

@@ -419,6 +419,12 @@ class ElasticHelper {
                     21 => [9, 12],
                     22 => [9, 12]
                 ];
+                if ($iZoom > 22) {
+                    $iZoom = 22;
+                }
+                if ($iZoom < 1) {
+                    $iZoom = 1;
+                }
                 $aAggregationsForQueryBody['map'] = [
                     "geohash_grid" => [
                         "field" => "location",
