@@ -37,7 +37,7 @@ return [
             'driver' => 'mysql',
             'host' => env('DB_HOST'),
             'port' => env('DB_PORT'),
-            'database' => env('DATABASE_NAME'),
+            'database' => env('DB_NAME'),
             'username' => env('MYSQL_USER'),
             'password' => env('DB_PASSWORD'),
             'charset' => 'utf8mb4',
