@@ -1281,36 +1281,4 @@ class Helper {
             return [];
         }
     }
-
-    /*
-    //
-    // tagging
-    //
-    public static function setTagsToFile($oPiciliFile, $aaTags)
-    {
-        if(count($aaTags) > 0)
-        {
-            $aTagsToSet = [];
-
-            foreach($aaTags as $aTag) {
-                array_push(
-                    $aTagsToSet, 
-                    new Tag([
-                        'type' => $aTag['type'],
-                        'subtype' => isset($aTag['subtype']) ? $aTag['subtype'] : null,
-                        'value' => $aTag['value'],
-                        'confidence' => $aTag['confidence'],
-                        'file_id' => $oPiciliFile->id
-                    ])
-                );
-            }
-
-            $oPiciliFile->addTags($aTagsToSet);
-        }
-    }
-    public static function removeTagsOfType($oPiciliFile, $sType)
-    {
-		Tag::where('file_id', $oPiciliFile->id)->where('type', $sType)->delete();
-    }
-    */
 }
