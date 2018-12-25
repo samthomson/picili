@@ -245,7 +245,7 @@ class UserController extends Controller
         $code = request('code');
 
         // get oauth service
-        $dropboxService = \OAuth::consumer('Dropbox', env('APP_URL') . '/oauth/dropbox');
+        $dropboxService = \OAuth::consumer('Dropbox', env('USER_API_URL') . '/oauth/dropbox');
 
         if(isset($dropboxService))
         {
@@ -268,7 +268,7 @@ class UserController extends Controller
 
                     $oUser->dropboxToken()->save($oDropboxToken);
                     $sSPARoute = '/' . $oUser->id . '/settings';
-                    return redirect(env('APP_URL') . $sSPARoute);
+                    return redirect(env('SPA_URL') . $sSPARoute);
                 }else{
                     return response("not authed at this stage");
                 }
