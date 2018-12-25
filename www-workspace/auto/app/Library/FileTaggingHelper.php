@@ -6,7 +6,7 @@ use App\Library\Helper;
 use App\Library\DropboxHelper;
 
 use App\Models\DropboxFilesource;
-use App\Models\DropboxFiles;
+use Share\DropboxFiles;
 use App\Models\PiciliFile;
 
 use Carbon\Carbon;
@@ -156,7 +156,7 @@ class FileTaggingHelper {
 
                 //print_r($oNewDropboxFile);die();
 
-                $oDBXFL = new \App\Models\DropboxFiles;
+                $oDBXFL = new \Share\DropboxFiles;
 
                 $oDBXFL->dropbox_id = $oNewDropboxFile['id'];
                 $oDBXFL->dropbox_path = $oNewDropboxFile['path_lower'];

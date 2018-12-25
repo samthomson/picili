@@ -11,7 +11,7 @@ class PiciliFile extends Model
 	public $timestamps = false;
     protected $connection = 'picili';
     
-    dropboxFile() {
+    public function dropboxFile() {
         return $this->hasOne('Share\DropboxFiles', 'id', 'dropbox_filesource_id');
     }
 
