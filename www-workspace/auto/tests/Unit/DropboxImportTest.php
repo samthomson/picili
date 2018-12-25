@@ -61,7 +61,6 @@ class DropboxImportTest extends TestCase
         $oDropboxSource = new DropboxFilesource;
         $oDropboxSource->folder = '/test pics';
         $oDropboxSource->user_id = $iTestUserId;
-        $oDropboxSource->access_token = 'giraffe';
         $oDropboxSource->save();
 
         $oDropboxFile = new DropboxFiles;
