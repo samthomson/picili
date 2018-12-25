@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 
 use Share\User;
-use App\Models\DropboxToken;
+use Share\DropboxToken;
 use Share\DropboxFilesource;
 
 class UsersTableSeeder extends Seeder

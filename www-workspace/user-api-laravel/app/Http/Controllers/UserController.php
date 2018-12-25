@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Share\User;
-use App\Models\DropboxToken;
+use Share\DropboxToken;
 
 use Share\PiciliFile;
 use Share\Tag;

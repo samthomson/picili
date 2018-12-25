@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 use Share\User;
-use App\Models\DropboxToken;
+use Share\DropboxToken;
 use Share\DropboxFilesource;
 use Share\PiciliFile;
 use Share\Tag;
