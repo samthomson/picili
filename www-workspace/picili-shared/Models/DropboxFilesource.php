@@ -9,14 +9,10 @@ class DropboxFilesource extends Model
 	protected $connection = 'picili';
 	protected $table = 'dropbox_filesources';
 
-	
-	protected $encrypt = ['access_token'];
-
 	public function dropboxFiles()
 	{
 		return $this->hasMany('\App\Models\DropboxFiles', 'dropbox_folder_id', 'id');
 	}
-
 
 	public function getAttribute($key)
     {
