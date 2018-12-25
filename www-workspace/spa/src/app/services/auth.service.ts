@@ -101,10 +101,9 @@ export class AuthService {
             .catch((error:any) => Observable.throw(console.log('error authenticating: ', error.message)));
     }
 
-    attemptRegister(sUsername, sEmail, sPassword): Observable<any>
+    attemptRegister(sEmail, sPassword): Observable<any>
     {
         let jAuthParams = new HttpParams()
-            .set('username', sUsername)
             .set('email', sEmail)
             .set('password', sPassword);
 
