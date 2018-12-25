@@ -104,7 +104,6 @@ export class AuthService {
     attemptRegister(sUsername, sEmail, sPassword): Observable<any>
     {
         let jAuthParams = new HttpParams()
-            .set('username', sUsername)
             .set('email', sEmail)
             .set('password', sPassword);
 
