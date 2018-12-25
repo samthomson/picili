@@ -15,10 +15,9 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $oSeededUser = ['username' => 'seeduser', 'email' => 'seeded@user.com', 'password' => 'pass'];
+        $oSeededUser = ['email' => 'seeded@user.com', 'password' => 'pass'];
 
         $oUser = User::create([
-            'username' => $oSeededUser['username'],
             'email' => $oSeededUser['email'],
             'password' => bcrypt($oSeededUser['password']),
         ]);

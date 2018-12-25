@@ -208,7 +208,7 @@ class AppController extends Controller
     public function search(Request $request)
     {
 		$validator = Validator::make($request->all(), [
-            'username' => 'required|max:255|alpha',
+            'username' => 'required|max:255|alpha', // actually, the user id
 			'mode' => 'required|alpha'
         ]);
         if ($validator->fails()) {
