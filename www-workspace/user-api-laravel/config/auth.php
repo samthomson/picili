@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Share::class,
+            'model' => Share\User::class,
         ],
 
         // 'users' => [
