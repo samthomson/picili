@@ -11,7 +11,7 @@ class DropboxFilesource extends Model
 
 	public function dropboxFiles()
 	{
-		return $this->hasMany('\App\Models\DropboxFiles', 'dropbox_folder_id', 'id');
+		return $this->hasMany('Share\DropboxFiles', 'dropbox_folder_id', 'id');
 	}
 
 	public function getAttribute($key)
