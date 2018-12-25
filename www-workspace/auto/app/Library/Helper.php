@@ -376,13 +376,6 @@ class Helper {
         return '';
     }
 
-    /*
-    6.3.16 delete?
-    public static function sTempFilePath($sTempFilename)
-	{
-		return public_path().DIRECTORY_SEPARATOR.'processing'.DIRECTORY_SEPARATOR.$sTempFilename;
-	}
-    */
     public static function sTempFilePathForDropboxFile($iDropboxDbId)
     {
         return public_path().DIRECTORY_SEPARATOR.'processing'.DIRECTORY_SEPARATOR.$iDropboxDbId.'.jpg';
