@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use \App\Library\DropboxHelper;
 use \App\Library\Helper;
 
-use App\Models\DropboxFiles;
+use Share\DropboxFiles;
 use Share\PiciliFile;
 use Share\Task;
 use App\Models\Log;
@@ -520,7 +520,7 @@ class DropboxSyncTest extends TestCase
          );
 
          // check dropbox file object created
-         $oDBXFL = \App\Models\DropboxFiles
+         $oDBXFL = \Share\DropboxFiles
             ::where('dropbox_id', $sFakeDropboxid)
             ->first();
          $this->assertTrue(isset($oDBXFL));

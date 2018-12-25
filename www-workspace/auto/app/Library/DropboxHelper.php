@@ -7,7 +7,7 @@ use SharedLibrary\TagHelper;
 
 
 use Share\DropboxFilesource;
-use App\Models\DropboxFiles;
+use Share\DropboxFiles;
 use Share\PiciliFile;
 use Share\Task;
 
@@ -388,7 +388,7 @@ class DropboxHelper {
 		   not picili. first we should pull the file locally to find out about it.
 		*/
 
-		$oDBXFL = new \App\Models\DropboxFiles;
+		$oDBXFL = new \Share\DropboxFiles;
 
 		$oDBXFL->dropbox_id = $sDropboxId;
 		$oDBXFL->dropbox_path = $sDropboxLowerPath;

@@ -11,7 +11,7 @@ use App\Library\Helper;
 use App\Library\PiciliProcessor;
 use App\Library\DropboxHelper;
 
-use App\Models\DropboxFiles;
+use Share\DropboxFiles;
 
 use Share\PiciliFile;
 use Share\DropboxFilesource;

@@ -12,7 +12,7 @@ use \App\Library\DropboxHelper;
 
 use Share\PiciliFile;
 use Share\DropboxFilesource;
-use \App\Models\DropboxFiles;
+use Share\DropboxFiles;
 
 class DropboxImportTest extends TestCase
 {
