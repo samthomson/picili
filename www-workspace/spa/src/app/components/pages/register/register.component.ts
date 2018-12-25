@@ -26,7 +26,6 @@ export class RegisterComponent {
       this.bAttemptingRegister = true;
 
       this.authService.attemptRegister(
-          this.registerUsername,
           this.registerEmail,
           this.registerPassword
       )
