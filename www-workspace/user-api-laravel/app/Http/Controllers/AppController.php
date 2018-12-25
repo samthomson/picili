@@ -232,13 +232,28 @@ class AppController extends Controller
         // get logged in user from session
         $oUser = Auth::user();
 
-        // get and make queries
-        $aHomeAggs = ElasticHelper::aHomeAggs($oUser->id);
-
-        // return any results
-        return response()->json([
+        // default response, which we'll override with elastic results
+        $maResponse = [
             'success' => true,
-            'home_aggs' => $aHomeAggs
-        ]);
+            'home_aggs' => [
+                'on_this_day' => [
+                    '5_years_ago' => [],
+                    '4_years_ago' => [],
+                    '3_years_ago' => [],
+                    '2_years_ago' => [],
+                    '1_year_ago' => []
+                ]
+            ]
+        ];
+        try {
+            // get and make queries
+            $aHomeAggs = ElasticHelper::aHomeAggs($oUser->id);
+            $maResponse['home_aggs'] = $aHomeAggs;
+        } catch(\Elasticsearch\Common\Exceptions\NoNodesAvailableException $ex) {
+            $maResponse['success'] = false;
+        }
+
+        // return expected response
+        return response()->json($maResponse);
     }
 }
