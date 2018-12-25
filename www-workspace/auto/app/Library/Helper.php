@@ -1145,8 +1145,6 @@ class Helper {
         $sGeocodeURL  =
         'http://api.opencagedata.com/geocode/v1/json?no_annotations=1&q='.urlencode($fLat).'+'.urlencode($fLon).'&key='.urlencode(env('API_OPEN_CAGE_KEY'));
 
-        // echo $sGeocodeURL."<br/><br/>";
-
         $json = @file_get_contents($sGeocodeURL);
 
         list($version, $status_code, $msg) = explode(' ',$http_response_header[0], 3);
@@ -1163,7 +1161,6 @@ class Helper {
 
                     $res = $oObj->results[0];
                     $sFormattedAddress = $res->formatted;
-                    // printf($sFormattedAddress);
 
                     $aComponents = [];
                     foreach($res->components as $k => $c)
