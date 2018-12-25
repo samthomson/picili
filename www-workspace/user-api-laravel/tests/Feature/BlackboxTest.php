@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-use App\Models\User;
+use Share\User;
 use App\Models\DropboxToken;
 use Share\DropboxFilesource;
 use Share\PiciliFile;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use Share\User;
 use App\Models\DropboxToken;
 
 use Share\PiciliFile;

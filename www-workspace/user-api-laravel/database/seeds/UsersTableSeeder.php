@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Models\User;
+use Share\User;
 use App\Models\DropboxToken;
 use Share\DropboxFilesource;
 
