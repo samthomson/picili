@@ -231,7 +231,6 @@ class Helper {
         // wrap it in a try and catch since there's a unique index on user_id
         try{
             $oFirstDropboxSource = new DropboxFilesource;
-            $oFirstDropboxSource->access_token = $sToken;
             $oFirstDropboxSource->folder = $sFolder;
             $oFirstDropboxSource->user_id = $iUserId;
             $oFirstDropboxSource->save();
