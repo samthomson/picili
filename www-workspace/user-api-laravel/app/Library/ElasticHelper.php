@@ -351,7 +351,7 @@ class ElasticHelper {
                                                 "id"
                                             ]
                                         ],
-                                        "size"  => 9
+                                        "size"  => 1
                                     ]
                                 ]
                             ]
