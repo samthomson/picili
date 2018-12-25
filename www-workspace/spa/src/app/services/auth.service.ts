@@ -50,12 +50,9 @@ export class AuthService {
             .set('email', sEmail)
             .set('password', sPassword);
 
-        let headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        let headers = new HttpHeaders()
+            .append('Content-Type', 'application/x-www-form-urlencoded');
         
-        console.log('email: ', sEmail)
-        console.log('params: ', jAuthParams.toString())
-
         let options = 
             {
                 headers: headers,
@@ -63,8 +60,6 @@ export class AuthService {
                 params: jAuthParams
             }
         
-
-        // .pipe(map((response: any) => response.json()));
         return this.http.post(
             this.gbl.sAPIBaseUrl + '/app/authenticate',
             { params: jAuthParams },
@@ -137,10 +132,8 @@ export class AuthService {
                         localStorage.setItem(this.gbl.sAuthTokenName, token);
 
                         this.authStatus = bSuccess;
-                        // this.authStatusChanged.emit(this.authStatus);
 
                         this.sToken = token;
-                        // this.authTokenChanged.emit(this.sToken);
 
                         // return true to indicate successful register & login
                         return {'successful': true, 'user': user};
@@ -160,12 +153,10 @@ export class AuthService {
 
     logOut()
     {
-        console.log('log out?')
         localStorage.removeItem(this.gbl.sAuthTokenName);
         this.authStatus = false;
         this.authStatusChanged.emit(this.authStatus);
         // 'logout' the user (delete their local token and redirect them)
-
         this.router.navigate(['/']);
     }
 }
