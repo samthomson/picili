@@ -520,7 +520,7 @@ class DropboxSyncTest extends TestCase
          );
 
          // check dropbox file object created
-         $oDBXFL = \App\Models\DropboxFiles
+         $oDBXFL = \Share\DropboxFiles
             ::where('dropbox_id', $sFakeDropboxid)
             ->first();
          $this->assertTrue(isset($oDBXFL));
