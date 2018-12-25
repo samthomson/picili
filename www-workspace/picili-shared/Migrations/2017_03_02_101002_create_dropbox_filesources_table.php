@@ -15,7 +15,6 @@ class CreateDropboxFilesourcesTable extends Migration
     {
         Schema::create('dropbox_filesources', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('access_token', 512);
             $table->string('folder', 512)->default('');
             $table->integer('user_id')->unique();
 
