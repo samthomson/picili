@@ -36,7 +36,3 @@ Route::group(['prefix' => 'app', 'middleware' => 'cors'], function () {
 Route::group([/*'middleware' => 'jwt.auth'*/], function () {
     Route::get('/oauth/dropbox', 'UserController@connectDropbox');
 });
-
-Route::any( '{catchall?}', function () {
-    return response(\File::get(public_path() . DIRECTORY_SEPARATOR . 'index.html'));
-})->where('catchall', '(.*)');

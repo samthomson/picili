@@ -9,7 +9,7 @@ use Artisan;
 use DB;
 
 use Share\PiciliFile;
-use App\Models\User;
+use Share\User;
 
 use SharedLibrary\ElasticHelper;
 

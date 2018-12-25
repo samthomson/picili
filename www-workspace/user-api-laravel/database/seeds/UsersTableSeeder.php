@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Models\User;
-use App\Models\DropboxToken;
+use Share\User;
+use Share\DropboxToken;
 use Share\DropboxFilesource;
 
 class UsersTableSeeder extends Seeder
@@ -15,10 +15,9 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $oSeededUser = ['username' => 'seeduser', 'email' => 'seeded@user.com', 'password' => 'pass'];
+        $oSeededUser = ['email' => 'seeded@user.com', 'password' => 'pass'];
 
         $oUser = User::create([
-            'username' => $oSeededUser['username'],
             'email' => $oSeededUser['email'],
             'password' => bcrypt($oSeededUser['password']),
         ]);
@@ -27,12 +26,11 @@ class UsersTableSeeder extends Seeder
 
         $oDropboxToken = new DropboxToken;
         $oDropboxToken->user_id = $oUser->id;
-        $oDropboxToken->access_token = '';
+        $oDropboxToken->access_token = 'fake token';
         $oDropboxToken->save();
 
         $oDropboxFileSource = new DropboxFilesource;
         $oDropboxFileSource->user_id = $oUser->id;
-        $oDropboxFileSource->access_token = 'fake token';
         $oDropboxFileSource->folder = 'test folder';
         $oDropboxFileSource->save();
     }

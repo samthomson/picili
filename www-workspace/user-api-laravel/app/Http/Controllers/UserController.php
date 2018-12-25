@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\DropboxToken;
+use Share\User;
+use Share\DropboxToken;
 
 use Share\PiciliFile;
 use Share\Tag;
@@ -28,7 +28,6 @@ class UserController extends Controller
     public function register(Request $request)
     {
 		$validator = Validator::make($request->all(), [
-            'username' => 'required|unique:picili.users|max:255|alpha',
 			'email' => 'required|email|unique:picili.users|max:255',
 	        'password' => 'required'
         ]);
@@ -38,10 +37,9 @@ class UserController extends Controller
             return response()->json(['success' => false, 'errors' => $validator->errors()->all()]);
         }
 
-		$data = $request->only(['email', 'password', 'username']);
+		$data = $request->only(['email', 'password']);
 
 		$oUser = User::create([
-            'username' => $data['username'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
@@ -138,7 +136,7 @@ class UserController extends Controller
 
                 $maReturn = [
                     'success' => true,
-                    'username' => $user->username,
+                    'username' => $user->id,
                     'public' => (boolean)$user->public
                 ];
 

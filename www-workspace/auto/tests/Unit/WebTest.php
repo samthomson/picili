@@ -46,7 +46,6 @@ class WebTest extends TestCase
 
          // seed a dropbox folder;
          $oDropboxFolderSource = new DropboxFilesource;
-         $oDropboxFolderSource->access_token = 'SS7HiGIa1ZoAAAAAAAD41dowgqujvLpa8l5Qx6Y9XKiQePm5yz1MZIMuYBapMQ2D';
          $oDropboxFolderSource->user_id = 1;
          $oDropboxFolderSource->save();
 
