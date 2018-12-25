@@ -20,6 +20,8 @@ export class HeaderComponent{
     private sCurrentPageUsername: string = 'giraffe';
     private bShowingUserDropdownMenu: boolean = false;
 
+    private intervalFetchTaskBurnDown;
+
     constructor(
         private httpService: HttpService,
         private authService: AuthService,
@@ -38,29 +40,32 @@ export class HeaderComponent{
     }
 
     ngOnInit() {
-        /*
-        3/6/17 - commented out so as not to make /me request on each page change, is it needed anywhere even?
-        */
+        // get initial state data
+        this.updateLocalState();
+        // schedule that we'll ask for it again each minute
+        this.intervalFetchTaskBurnDown = window.setInterval(() => {
+            // only call backend asking for username if we don't have it
+            this.updateLocalState()            
+        }, 60000);
+    }
 
-        // only call backend asking for username if we don't have it
-        if (this.sUsername === '')
-        {
-            this.httpService.getUser().subscribe(
-                (mData) => {
-                    this.sUsername = mData.username;
-                    this.bProcessing = mData.bProcessing;
-                    this.cProcessingTasks = mData.cProcessing;
-                    this.cProcessingFiles = mData.cFiles;
-                },
-                (err) => {
-                    if (this.bAuthenticated) {
-                        console.log('triggering logout')
-                        this.bAuthenticated = false;
-                        this.authService.logOut();
-                    }
+    updateLocalState = () => {
+        this.httpService.getUser().subscribe(
+            (mData) => {
+                this.sUsername = mData.username;
+                this.bProcessing = mData.bProcessing;
+                this.cProcessingTasks = mData.cProcessing;
+                this.cProcessingFiles = mData.cFiles;
+            },
+            (err) => {
+                if (this.bAuthenticated) {
+                    console.log('triggering logout')
+                    clearInterval(this.intervalFetchTaskBurnDown) 
+                    this.bAuthenticated = false;
+                    this.authService.logOut();
                 }
-            );
-        }
+            }
+        )
     }
 
     onLogout(){
