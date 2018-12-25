@@ -364,6 +364,8 @@ class UserController extends Controller
         }
         $oResponse['tags'] = $aTags;
 
+        $oResponse['dropboxPath'] = $oFile->dropboxFile->dropbox_path;
+
         return response()->json(['success' => true, 'file' => $oResponse]);
     }
 }
