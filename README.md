@@ -79,7 +79,7 @@ The first time you run picili locally, you should generate necessary seed data:
 
 Click 'login' and then register to begin.
 
-You will need to start the auto-scallar, for image processing to happen 'in the background'.
+You will need to start the auto-scalar, for image processing to happen 'in the background'.
 
 To start the auto processor(s): `cd /var/www/auto-scaler && npm start` (this should be run from within the workspace container)
 
