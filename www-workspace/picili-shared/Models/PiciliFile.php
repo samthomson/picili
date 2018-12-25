@@ -9,7 +9,11 @@ class PiciliFile extends Model
 	protected $table = 'picili_files';
 	protected $dates = ['updated_at', 'created_at', 'updated_at'];
 	public $timestamps = false;
-	protected $connection = 'picili';
+    protected $connection = 'picili';
+    
+    dropboxFile() {
+        return $this->hasOne('Share\DropboxFiles', 'id', 'dropbox_filesource_id');
+    }
 
 	public function tags()
     {
