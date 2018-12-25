@@ -321,7 +321,7 @@ class BlackboxTest extends TestCase
             ->assertJsonFragment(['success' => true])
             ->assertJsonStructure(
                 [
-                    'success', 'file' => ['tags', 'address', 'altitude', 'lat', 'lon', 'date']
+                    'success', 'file' => ['tags', 'address', 'altitude', 'lat', 'lon', 'date', 'dropboxPath']
                 ]
             );
 
