@@ -19,9 +19,6 @@ class CreateDropboxFilesourcesTable extends Migration
             $table->integer('user_id')->unique();
 
             $table->timestamps();
-
-            // not necessary, only one folder per user
-            //// $table->unique(array('user_id'));
         });
     }
 
