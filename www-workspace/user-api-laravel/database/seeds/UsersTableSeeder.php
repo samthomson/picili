@@ -26,12 +26,11 @@ class UsersTableSeeder extends Seeder
 
         $oDropboxToken = new DropboxToken;
         $oDropboxToken->user_id = $oUser->id;
-        $oDropboxToken->access_token = '';
+        $oDropboxToken->access_token = 'fake token';
         $oDropboxToken->save();
 
         $oDropboxFileSource = new DropboxFilesource;
         $oDropboxFileSource->user_id = $oUser->id;
-        $oDropboxFileSource->access_token = 'fake token';
         $oDropboxFileSource->folder = 'test folder';
         $oDropboxFileSource->save();
     }
