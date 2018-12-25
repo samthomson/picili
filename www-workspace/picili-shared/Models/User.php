@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Share;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -31,7 +31,7 @@ class User extends Authenticatable
     
     public function dropboxToken()
     {
-        return $this->hasOne('App\Models\DropboxToken', 'user_id', 'id');
+        return $this->hasOne('Share\DropboxToken', 'user_id', 'id');
     }
     
     public function dropboxFileSource()
