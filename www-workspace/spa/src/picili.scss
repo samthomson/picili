@@ -471,9 +471,10 @@ img.folder-thumb {
   width: 45%;
 }
 .month .day img {
-  width: 32px;
-  height: 32px;
-  display: inline-block;
+    height: 80%;
+    width: auto;
+    max-width: 80%;
+    display: inline-block;
 }
 
 .month .day.day-header {

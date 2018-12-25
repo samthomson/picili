@@ -48,7 +48,7 @@
             <span class="calendar-date" [ngClass]="{'with-files': oDay.count}">{{d + 1}}</span> <!--<span *ngIf="oDay.count">({{oDay.count}})</span>--><br/>
             <img
                 *ngFor="let oResult of oDay.files;let i = index"
-                [src]="helperService.thumbUrl('i', oResult)"
+                [src]="helperService.thumbUrl('s', oResult)"
                 [style.background-color]="oResult.colour"
             />
         </a>
