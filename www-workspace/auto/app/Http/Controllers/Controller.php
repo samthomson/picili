@@ -14,7 +14,7 @@ use Carbon\Carbon;
 use App\Models\PiciliFile;
 use App\Models\DropboxFiles;
 use App\Models\Task;
-use App\Models\PiciliUser;
+use Share\User;
 use App\Models\ProcessorLog;
 
 class Controller extends BaseController
@@ -25,7 +25,7 @@ class Controller extends BaseController
     {
         $aStats = [];
 
-        $aStats['iUsers'] = PiciliUser::count();
+        $aStats['iUsers'] = User::count();
         $aStats['iFiles'] = PiciliFile::count();
         $aStats['iDropboxFiles'] = DropboxFiles::count();
         $aStats['iQueued'] = Task::count();
