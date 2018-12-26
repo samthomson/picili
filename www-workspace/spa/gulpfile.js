@@ -81,6 +81,10 @@ gulp.task('default', gulp.series([
 
 gulp.task('watch', function() {
     console.log('** watch **')
-	gulp.watch('src/**/*.scss', ['default']);
-  // Other watchers
+    gulp.watch('src/**/*.scss')
+        .on('change', () => {
+            console.log('SASS changed - running default gulp task')
+            const gtDefault = gulp.series(['default'])
+            gtDefault()
+    });
 })
