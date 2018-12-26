@@ -135,17 +135,17 @@ class WebTest extends TestCase
           }
       }
 
-      public function testImagga()
-      {
-          $oPiciliFile = new PiciliFile;
-          $oPiciliFile->user_id = 1;
-          $oPiciliFile->signature = 'sig';
-          $oPiciliFile->save();
+    public function testImagga()
+    {
+        $oPiciliFile = new PiciliFile;
+        $oPiciliFile->user_id = 1;
+        $oPiciliFile->signature = 'sig';
+        $oPiciliFile->save();
 
-          $mResp = Helper::mImagga($oPiciliFile->id, true);
+        $mResp = Helper::mImagga($oPiciliFile->id, true);
 
-          $this->assertTrue(isset($mResp));
-      }
+        $this->assertTrue(isset($mResp));
+    }
 
     //
     // queue processing

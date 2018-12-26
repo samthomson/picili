@@ -924,7 +924,7 @@ class Helper {
     //
     // external apis
     //
-    public static function mImagga($iPiciliFileId, $bDebug = false)
+    public static function mImaggaOLD($iPiciliFileId, $bDebug = false)
     {
         $mReturn = ['status' => 'unknown'];
 
@@ -1029,6 +1029,131 @@ class Helper {
             }
         }catch(Exception $e)
         {
+            // handle it
+            $mReturn = ['status' => 'fail'];
+
+            // log it
+            Helper::logError(
+                "ImaggaProcessor",
+                "exception",
+                [
+                    "function" => "process",
+                    "exception_message" => $ex
+                ]
+            );
+        }
+
+
+        return $mReturn;
+    }
+
+    public static function mImagga($iPiciliFileId, $bDebug = false)
+    {
+        $mReturn = ['status' => 'unknown'];
+
+        try
+        {
+            $oPiciliFile = PiciliFile::find($iPiciliFileId);
+            // get aws path
+            $sAWSS3Path = self::sS3Path($oPiciliFile->user_id, $iPiciliFileId, 'xl');
+
+            $iUserId = $oPiciliFile->user_id;
+
+            // echo $sAWSS3Path;
+
+            if($bDebug)
+            {
+                $iUserId = 'test';
+                $iPiciliFileId = 'test';
+            }
+
+            $sAwsPathLarge = "https://s3-".env('AWS_REGION').".amazonaws.com/".env('AWS_BUCKET_NAME')."/t/".  $iUserId."/xl" . $iPiciliFileId . ".jpg";
+
+            // make request
+            $service_url = 'http://api.imagga.com/v2/tags?image_url='.$sAwsPathLarge;
+
+            $sKey = env('API_IMAGGA_KEY');
+            $sSecret = env('API_IMAGGA_SECRET');
+
+            $context = stream_context_create(array(
+                'http' => array(
+                    'header'  => "Authorization: Basic " . base64_encode($sKey.":".$sSecret)
+                )
+            ));
+
+            $jsonurl = $service_url;
+            $json = file_get_contents($jsonurl, false, $context);
+
+            if($json === FALSE)
+            {
+                // network connectivity issue
+                $mReturn['status'] = "fail - network error";
+            }else{
+                // got a response, do stuff with it
+
+                list($version,$status_code,$msg) = explode(' ',$http_response_header[0], 3);
+
+                $oObj = json_decode($json);
+
+                echo "json response:";
+                // print_r($oObj);
+
+                switch($status_code)
+                {
+                    case 200:
+
+                        $aaTags = [];
+                        $mReturn = ['status' => 'success'];
+
+                        if(isset($oObj->result) && isset($oObj->result->tags))
+                        {
+                            if(count($oObj->result->tags) > 0)
+                            {
+                                foreach($oObj->result->tags as $oTag)
+                                {
+
+                                    if (
+                                        isset($oTag->confidence) && 
+                                        isset($oTag->tag) && 
+                                        isset($oTag->tag->en)
+                                    ) {
+
+                                        $iConfidence = $oTag->confidence;
+                                        $sLiteral = $oTag->tag->en;
+
+                                        $aTag = [
+                                            'tag' => $sLiteral,
+                                            'confidence' => $iConfidence
+                                        ];
+
+                                        array_push($aaTags, $aTag);
+                                    }
+                                }
+                                $mReturn['tags'] = $aaTags;
+
+                            }else{
+                                // returned okay, but no results, strange..
+                                //return "empty";
+                            }
+                        }else{
+                            $oStat = new StatModel();
+                            $oStat->name = "no imagga results";
+                            $oStat->group = "auto";
+                            $oStat->value = 1;
+                            $oStat->save();
+                        }
+
+                        $sReturn = "true";
+                        break;
+                    default:
+                        $error_status="Undocumented error: " . $status_code;
+                        $mReturn['status'] = "throttle";
+                        break;
+                }
+            }
+        }catch(Exception $e)
+        {
+            echo $e;
             // handle it
             $mReturn = ['status' => 'fail'];
 
