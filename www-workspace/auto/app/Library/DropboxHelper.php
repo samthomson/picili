@@ -258,15 +258,7 @@ class DropboxHelper {
                     // bring back from dead, with new source
                     Helper::bringFileBackFromTheDead($sSignature, 'dropbox', $oDropboxFile->id);
 
-                    // we should also add/update sParentPath, baseName, extension
-                    $aPathParts = Helper::aGetFolderComponentsFromDropboxFile(
-                        $oDropboxFolder,
-                        $oDropboxFile
-                    );
-                    $oPiciliFile->sParentPath = $aPathParts['parent-path'];
-                    $oPiciliFile->baseName = $aPathParts['basename'];
-                    $oPiciliFile->extension = $aPathParts['extension'];
-                    $oPiciliFile->save();
+                    // we shouldn't also add/update sParentPath, baseName, extension - since the dropbox file is deleted and so we can't get these
                     break;
                 case 'active':
                     // add dropbox to existing sources
@@ -296,9 +288,8 @@ class DropboxHelper {
     {
         // copy file locally to storage/processing folder
 		$oDropboxFile = DropboxFiles::with('dropboxFolder')->find($iDropboxDbId);
-		$oDropboxFolder = $oDropboxFile->dropboxFolder;
-
-
+        $oDropboxFolder = $oDropboxFile->dropboxFolder;
+        
 		if(!isset($oDropboxFolder))
 		{
 			if (isset($oDropboxFile)){
@@ -312,11 +303,11 @@ class DropboxHelper {
             if(
                 isset($oDropboxFile->dropbox_id) && 
                 isset($oDropboxFile->dropboxFolder) && 
-                isset($oDropboxFile->dropboxFolder->access_token)
+                isset($oDropboxFile->dropboxFolder->user->dropboxToken->access_token)
             )
             {
                 $iDropboxFileId = $oDropboxFile->dropbox_id;
-                $sUserAccessToken = $oDropboxFile->dropboxFolder->access_token;
+                $sUserAccessToken = $oDropboxFile->dropboxFolder->user->dropboxToken->access_token;
 
                 $data = array("path" => $iDropboxFileId);
                 $data_string = json_encode($data);
@@ -383,7 +374,7 @@ class DropboxHelper {
 				return true;
 
             }else{
-                logger(["things not set"]);
+                logger(["dropbox helper: things not set"]);
 				return false;
             }
         } catch(Exception $e)
