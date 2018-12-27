@@ -33,7 +33,6 @@ class DropboxHelper {
             $sToken = $oFileSource->user->dropboxToken->access_token;
 
             // get all files from dropbox folder
-
             $aRequestDropboxFiles = self::getCompleteDropboxFolderContents($sFolder, $sToken);
 
             $oDropboxFilesByKey = [];
@@ -561,8 +560,8 @@ class DropboxHelper {
 
         $time_pre = microtime(true);
 
-		$oaEntriesResponse = self::recursivelyBuildDropboxEntries($sFolderPath, $sOAuthToken);
-
+        $oaEntriesResponse = self::recursivelyBuildDropboxEntries($sFolderPath, $sOAuthToken);
+        
         $oaDropboxFilesByKey = [];
         $bSuccess = false;
         $aError = null;
@@ -698,6 +697,13 @@ class DropboxHelper {
                         // todo - report this to user
                         $bSuccess = true;
                         return ['status' => 'success', 'entries' => [], 'cursor' => null, 'has_more' => false];
+                        break;
+                    case 401:
+                        // invalid access token
+                        $bSuccess = false;
+                        $aError = [
+                            ['type' => 'invalid token']
+                        ];
                         break;
                     case 400:
                         // bad request
