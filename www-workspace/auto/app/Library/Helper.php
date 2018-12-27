@@ -96,11 +96,6 @@ class Helper {
         $oLog->related_id = $iRelatedId;
         $oLog->dTimeOccured = Carbon::now();
 
-        // if($iUserId !== null)
-        // {
-        //     $oLog->user_id = $iUserId;
-        // }
-
         $oLog->save();
     }
     public static function LogProcessorRun($sProcessor, $sTaskId, $sRelatedPiciliFileId, $mResult, $mtStarted, $mExtra = null)
