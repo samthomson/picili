@@ -21,10 +21,16 @@ class DropboxHelper {
         $bSuccess = false;
         $aError = null;
 
-        if(isset($oFileSource) && isset($oFileSource->user_id) && isset($oFileSource->access_token))
+        $oFileSource->user->dropboxToken->access_token;
+
+        if(
+            isset($oFileSource) && 
+            isset($oFileSource->folder) && 
+            isset($oFileSource->user->dropboxToken->access_token)
+        )
         {
             $sFolder = $oFileSource->folder;
-            $sToken = $oFileSource->access_token;
+            $sToken = $oFileSource->user->dropboxToken->access_token;
 
             // get all files from dropbox folder
 
