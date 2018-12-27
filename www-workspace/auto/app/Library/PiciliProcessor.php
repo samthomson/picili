@@ -99,6 +99,7 @@ class PiciliProcessor {
                     if($mResult['success']){
                         Helper::completeATask($oNextTask->id);
                     }else{
+                        // todo: log this properly - and think about how to handle.
                         logger('physical file processor was not succesful');
                     }
                     break;

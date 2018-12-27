@@ -35,8 +35,11 @@ class Dropbox {
 
             $oConnectedFileSource->delete();
         }
+
         // todo later - email the user that their dropbox is now disconnected
         //// TODO
+
+        // log an event - that would require porting event model to shared section..
         
         return response()->json(['success' => true]);
     }
