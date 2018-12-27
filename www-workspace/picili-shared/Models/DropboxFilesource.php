@@ -12,7 +12,12 @@ class DropboxFilesource extends Model
 	public function dropboxFiles()
 	{
 		return $this->hasMany('Share\DropboxFiles', 'dropbox_folder_id', 'id');
-	}
+    }
+    
+    public function user()
+    {
+        return $this->belongsTo('Share\User', 'user_id', 'id');
+    }
 
 	public function getAttribute($key)
     {
