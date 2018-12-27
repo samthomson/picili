@@ -11,7 +11,23 @@ class DropboxFilesource extends Model
 
 	public function dropboxFiles()
 	{
-		return $this->hasMany('Share\DropboxFiles', 'dropbox_folder_id', 'id');
+        return $this->hasMany('Share\DropboxFiles', 'dropbox_folder_id', 'id');
+    }
+    public function getDropboxFilesFromOwnerOfThisFileSource()
+    {
+        /*
+        quite hacky.
+        returns all dropbox files of the user (that owns this file source),
+         and not just ones belonging to that file-source/folder. Changed 
+         as updating the file source stopped the change detect algorithm
+          from comparing differences across all files, just those within
+           a folder. This way if a user updates their folder source - 
+           after a dropbox disconnect and reconnect for example - then 
+           it will be stored as a new file source and any files belonging 
+           to it would not be included in files changed/import comparison.
+        */
+
+        return $this->hasMany('Share\DropboxFiles', 'user_id', 'user_id');
     }
     
     public function user()
