@@ -137,7 +137,7 @@ class DropboxHelper {
         }
 
         $aReturn = ['success' => $bSuccess];
-        if($bSuccess) {
+        if(!$bSuccess) {
             $aReturn['error'] = $aError;
         }
 
@@ -689,7 +689,7 @@ class DropboxHelper {
                         if ($iSecs === null) $iSecs = 300;
                         
                         $aError = [
-                            ['type' => 'throttled', 'retry_after' => $iSecs]
+                            'type' => 'throttled', 'retry_after' => $iSecs
                         ];
                         break;
                     case 409:
@@ -702,7 +702,7 @@ class DropboxHelper {
                         // invalid access token
                         $bSuccess = false;
                         $aError = [
-                            ['type' => 'invalid token']
+                            'type' => 'invalid-token'
                         ];
                         break;
                     case 400:

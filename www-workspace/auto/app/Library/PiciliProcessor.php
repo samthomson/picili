@@ -68,7 +68,7 @@ class PiciliProcessor {
                                 case 'invalid-token':
                                     // delete/finish this task, and call diconnect dropbox function
                                     Helper::completeATask($oNextTask->id);
-                                    Dropbox::disconnectedDropbox($oNextTask->user_id);
+                                    Dropbox::disconnectedDropbox($oNextTask->user_id, false);
                                     break;
                             }
                         }
