@@ -288,7 +288,7 @@ class DropboxHelper {
 		$oDropboxFile = DropboxFiles::with('dropboxFolder')->find($iDropboxDbId);
         $oDropboxFolder = $oDropboxFile->dropboxFolder;
 
-        $maReturn = ['success' => false]
+        $maReturn = ['success' => false];
         
 		if(!isset($oDropboxFolder))
 		{
