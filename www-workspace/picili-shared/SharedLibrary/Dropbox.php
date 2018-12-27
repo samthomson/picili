@@ -41,12 +41,15 @@ class Dropbox {
         //// TODO
 
         // log an event - that would require porting event model to shared section..
-        $sDisconnectMessage = $bUserInitiated ? 'disconnected dropbox - user initiated' : 'disconnected dropbox - dropbox initiated';
+        $sDisconnectMessage = $bUserInitiated ? 'user' : 'dropbox';
         $iRelatedId = $oConnectedFileSource ? $oConnectedFileSource->id : null;
         
         $oLog = new \Share\Event;
-        $oLog->event = $sDisconnectMessage;
-        $oLog->related_id = $iRelatedId;
+        $oLog->event = 'disconnected dropbox';
+        $oLog->addChangeDelete = '';
+        $oLog->source = $sDisconnectMessage;
+        $oLog->cFiles = -1;
+        $oLog->user_id = $iUserId;
         $oLog->dTimeOccured = \Carbon\Carbon::now();
         $oLog->save();
         
