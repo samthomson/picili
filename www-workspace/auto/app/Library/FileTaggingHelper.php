@@ -75,7 +75,7 @@ class FileTaggingHelper {
                 }
                 $bReturn = true;
             }else{
-                echo "things not set";
+                echo "file tagging helper - things not set";
                 $bReturn = false;
             }
         } catch(Exception $e)
