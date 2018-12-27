@@ -45,7 +45,7 @@ class DropboxHelper {
                 // get files from db - for a dropbox folder
                 # change to get all files in db for user
                 # and then change back but limit user to one file source
-                $aoDatabaseFiles = ($oFileSource->dropboxFiles !== null ? $oFileSource->dropboxFiles : []);
+                $aoDatabaseFiles = ($oFileSource->getDropboxFilesFromOwnerOfThisFileSource !== null ? $oFileSource->getDropboxFilesFromOwnerOfThisFileSource : []);
                 $aDatabaseFiles = [];
 
                 // turn relation object into array of objects with path as key
