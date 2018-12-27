@@ -17,7 +17,7 @@ use Share\Task;
 Use Share\DropboxFilesource;
 use App\Models\Log;
 use App\Models\ProcessorLog;
-use App\Models\Event;
+use Share\Event;
 
 use SharedLibrary\TagHelper;
 

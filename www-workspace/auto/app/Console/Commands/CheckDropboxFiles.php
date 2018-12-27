@@ -51,7 +51,7 @@ class CheckDropboxFiles extends Command
         //
 
         $diff = microtime(true) - $timeStart;
-        $oLog = new \App\Models\Event;
+        $oLog = new \Share\Event;
         $oLog->event = "check files from dropbox";
         $oLog->timetaken = $diff;
         $oLog->iFilesProcessed = $iFilesProcessed;
