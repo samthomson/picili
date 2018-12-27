@@ -364,7 +364,9 @@ class UserController extends Controller
         }
         $oResponse['tags'] = $aTags;
 
-        $oResponse['dropboxPath'] = $oFile->dropboxFile->dropbox_path;
+        if (isset($oFile->dropboxFile) && isset($oFile->dropboxFile->dropbox_path)) {
+            $oResponse['dropboxPath'] = $oFile->dropboxFile->dropbox_path;
+        }
 
         return response()->json(['success' => true, 'file' => $oResponse]);
     }
