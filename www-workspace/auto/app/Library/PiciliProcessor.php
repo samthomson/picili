@@ -13,6 +13,7 @@ use Share\PiciliFile;
 use App\Library\DropboxHelper;
 use SharedLibrary\TagHelper;
 use SharedLibrary\ElasticHelper;
+use SharedLibrary\Dropbox;
 
 
 class PiciliProcessor {
@@ -64,7 +65,11 @@ class PiciliProcessor {
                                         $oTask->save();
                                     }
                                     break;
-                                
+                                case 'invalid-token':
+                                    // delete/finish this task, and call diconnect dropbox function
+                                    Helper::completeATask($oNextTask->id);
+                                    Dropbox::disconnectedDropbox($oNextTask->user_id);
+                                    break;
                             }
                         }
                     }
