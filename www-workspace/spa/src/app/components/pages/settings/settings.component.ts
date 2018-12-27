@@ -46,8 +46,7 @@ export class SettingsComponent implements OnInit {
       .updateDropboxFolder(this.sDropboxFolderPathInput)
       .subscribe(
         data => {
-          this.oSettings.dropbox.sFolderPath = this.sDropboxFolderPathInput;
-
+          this.oSettings.dropbox.folder = this.sDropboxFolderPathInput;
           this.bSavingDropboxFolderPath = false;
         },
         err => {

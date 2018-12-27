@@ -195,7 +195,6 @@ class UserController extends Controller
                 $oFolder = new DropboxFilesource;
                 $oFolder->user_id = $oUser->id;
             }
-            $oFolder->access_token = $oUser->dropboxToken->access_token;
             $oFolder->folder = $request->input('folder');
             $oFolder->save();
 
