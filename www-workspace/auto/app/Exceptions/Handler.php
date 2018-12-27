@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
+use App\Library\Helper;
+
 class Handler extends ExceptionHandler
 {
     /**
@@ -44,6 +46,16 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        try {
+            // try and log this error
+            Helper::LogSomething(
+                "FATAL ERROR: ".$exception,
+                -666, // related id
+                null // user id
+            );
+        }catch (Exception $ex) {
+            // wasn't even able to log the error.. c'est la vie
+        }
         return parent::render($request, $exception);
     }
 
