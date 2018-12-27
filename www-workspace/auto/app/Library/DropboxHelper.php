@@ -148,8 +148,7 @@ class DropboxHelper {
 		$iDropboxFileId
 		/*$oDropboxFile,
 		$sTempFilename*/
-	)
-	{
+	){
 		/*
 		reads the local file and make a signature,
 		then compares it to existing picili files to
@@ -288,6 +287,8 @@ class DropboxHelper {
         // copy file locally to storage/processing folder
 		$oDropboxFile = DropboxFiles::with('dropboxFolder')->find($iDropboxDbId);
         $oDropboxFolder = $oDropboxFile->dropboxFolder;
+
+        $maReturn = ['success' => false]
         
 		if(!isset($oDropboxFolder))
 		{
@@ -335,55 +336,100 @@ class DropboxHelper {
                 ));
 
                 $result = curl_exec($curl);
+                $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
 
                 if(curl_errno($curl))
                 {
                     logger('download dropbox file, curl error:' . curl_error($curl));
-                    return false;
+                    $maReturn['success'] = false;
+                    $maReturn['error'] = [
+                        'type' => 'curl error'
+                    ];
+                } else {
+                    curl_close($curl);
+                    $oObj = json_decode($result);
+
+                    switch($httpcode)
+                    {
+                        case 401:
+                            // invalid access token
+                            $maReturn['success'] = false;
+                            $maReturn['error'] = [
+                                'type' => 'invalid-token'
+                            ];
+                            break;
+                        default:
+                            logger("unknown error from dropbox, httpcode: ".$httpcode);
+                            logger("had called url: $sUrl");
+                            if(isset($oObj->error_summary))
+                            {
+                                logger("error_summary: ".$oObj->error_summary);
+                            }
+
+                            $maReturn['success'] = false;
+                            $maReturn['error'] = [
+                                'type' => 'unknown-error'
+                            ];
+                            break;
+                    }
                 }
-				curl_close($curl);
 
-                // still here? - we got a file back?
-                $my_file = Helper::sTempFilePathForDropboxFile($iDropboxDbId);
+                if ($maReturn['success']) {
 
-                $handle = fopen($my_file, 'w');
-                fwrite($handle, $result);
+                    // still here? - we got a file back?
+                    $my_file = Helper::sTempFilePathForDropboxFile($iDropboxDbId);
+
+                    $handle = fopen($my_file, 'w');
+                    fwrite($handle, $result);
 
 
 
-                $oObj = json_decode($result);
+                    $oObj = json_decode($result);
 
-                if(isset($oObj->error_summary))
-                {
-                    logger('download dropbox file - error_summary: '.$oObj->error_summary);
-					return false;
+                    if(isset($oObj->error_summary))
+                    {
+                        logger('download dropbox file - error_summary: '.$oObj->error_summary);
+                        $maReturn['success'] = false;
+                        $maReturn['error'] = [
+                            'type' => 'unspecified-curl-error'
+                        ];
+                    }
+
+
+                    // check file size (integrity)
+                    if($oDropboxFile->size !== filesize($my_file))
+                    {
+                        // todo - log failure
+                        logger('download dropbox file - filesize problem, sizes not equal: ');
+                        logger($oDropboxFile->size);
+                        logger(filesize($my_file));
+                        return false;
+                    }
+
+                    // downloaded, and filesize matches...
+                    // continue to end of function where we'll return a success
                 }
-
-				// check file size (integrity)
-				if($oDropboxFile->size !== filesize($my_file))
-				{
-					// todo - log failure
-                    logger('download dropbox file - filesize problem, sizes not equal: ');
-                    logger($oDropboxFile->size);
-                    logger(filesize($my_file));
-					return false;
-				}
-
-				// downloaded, and filesize matches...
-				return true;
 
             }else{
                 logger(["dropbox helper: things not set"]);
-				return false;
+				$maReturn['success'] = false;
+                $maReturn['error'] = [
+                    'type' => 'things-not-set'
+                ];
             }
+
         } catch(Exception $e)
         {
 			// todo - log properly
             // echo $e;
             logger("exception trying to download file from dropbox: ".$e);
-            return false;
+            $maReturn['success'] = false;
+            $maReturn['error'] = [
+                'type' => 'exception'
+            ];
         }
-        return false;
+        return $maReturn;
     }
 
 

@@ -75,10 +75,21 @@ class PiciliProcessor {
                     }
                     break;
                 case 'download-dropbox-file':
-                    $mResult = self::bDownloadDropboxFile($oNextTask->related_file_id);
+                    $mResult = DropboxHelper::bDownloadDropboxFile($iDropboxFileId);
                     if($mResult['success']){
                         // queue next step - phys
                         Helper::completeATask($oNextTask->id);
+                    } else {
+                        if(isset($mResult['error']) && isset($mResult['error']['type'])) {
+                            switch($mResult['error']['type'])
+                            {
+                                case 'invalid-token':
+                                    // delete/finish this task, and call diconnect dropbox function
+                                    Helper::completeATask($oNextTask->id);
+                                    Dropbox::disconnectedDropbox($oNextTask->user_id, false);
+                                    break;
+                            }
+                        }
                     }
                     break;
 
@@ -238,13 +249,6 @@ class PiciliProcessor {
         return (isset($oTask)) ? $oTask : null;
     }
 
-    public static function bDownloadDropboxFile($iDropboxFileId)
-    {
-        $bResult = DropboxHelper::bDownloadDropboxFile($iDropboxFileId);
-        return [
-            'success' => ($bResult ? true : false)
-        ];
-    }
     public static function bImportDownloadedDropboxFile($iDropboxFileId)
     {
         $bResult = DropboxHelper::checkDownloadedDropboxFile($iDropboxFileId);
