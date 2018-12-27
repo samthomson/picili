@@ -53,7 +53,7 @@ class Handler extends ExceptionHandler
                 -666, // related id
                 null // user id
             );
-        }catch ($ex) {
+        }catch (Exception $ex) {
             // wasn't even able to log the error.. c'est la vie
         }
         return parent::render($request, $exception);
