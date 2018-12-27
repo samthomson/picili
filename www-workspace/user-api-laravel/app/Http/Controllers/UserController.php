@@ -315,7 +315,7 @@ class UserController extends Controller
         return null;
     }
 
-    public function disconnectedDropbox()
+    public function disconnectDropbox()
     {
         Dropbox::disconnectedDropbox(Auth::id());
         return response()->json(['success' => true]);

@@ -523,7 +523,7 @@ class DropboxHelper {
             $iReqs++;
 
             // only do the comparison logic if our request succeeded in getting a list of files
-            if ($aNewEntries['success']) {
+            if (isset($aNewEntries['success']) && $aNewEntries['success']){
 
                 $aEntries = $aNewEntries['entries'];
 

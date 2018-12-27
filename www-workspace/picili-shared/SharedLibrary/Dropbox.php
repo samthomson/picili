@@ -3,6 +3,7 @@
 namespace SharedLibrary;
 
 use Share\User;
+use Share\Task;
 
 class Dropbox {
 
@@ -13,7 +14,7 @@ class Dropbox {
         // delete the associated dropbox token used to authenticate with dropbox
         $oUser->dropboxToken->delete();
         // delete the stored file source if there is one (user may not yet have added one)
-        $oConnectedFileSource = $oUser->dropboxFileSource();
+        $oConnectedFileSource = $oUser->dropboxFileSource;
         if ($oConnectedFileSource) {
 
             // remove all upcoming import tasks including download tasks
