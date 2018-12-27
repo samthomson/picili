@@ -251,11 +251,30 @@ class DropboxHelper {
                 case 'deleted':
                     // bring back from dead, with new source
                     Helper::bringFileBackFromTheDead($sSignature, 'dropbox', $oDropboxFile->id);
+
+                    // we should also add/update sParentPath, baseName, extension
+                    $aPathParts = Helper::aGetFolderComponentsFromDropboxFile(
+                        $oDropboxFolder,
+                        $oDropboxFile
+                    );
+                    $oPiciliFile->sParentPath = $aPathParts['parent-path'];
+                    $oPiciliFile->baseName = $aPathParts['basename'];
+                    $oPiciliFile->extension = $aPathParts['extension'];
+                    $oPiciliFile->save();
                     break;
                 case 'active':
                     // add dropbox to existing sources
                     $oPiciliFile = PiciliFile::where('signature', $sSignature)->first();
                     Helper::addSourceToPiciliFile($oPiciliFile->id, 'dropbox', $oDropboxFile->id);
+                    // we should also add/update sParentPath, baseName, extension
+                    $aPathParts = Helper::aGetFolderComponentsFromDropboxFile(
+                        $oDropboxFolder,
+                        $oDropboxFile
+                    );
+                    $oPiciliFile->sParentPath = $aPathParts['parent-path'];
+                    $oPiciliFile->baseName = $aPathParts['basename'];
+                    $oPiciliFile->extension = $aPathParts['extension'];
+                    $oPiciliFile->save();
                     break;
             }
             return true;
