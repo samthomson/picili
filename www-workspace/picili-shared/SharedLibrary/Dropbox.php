@@ -4,10 +4,11 @@ namespace SharedLibrary;
 
 use Share\User;
 use Share\Task;
+use Share\Event;
 
 class Dropbox {
 
-    public static function disconnectedDropbox($iUserId)
+    public static function disconnectedDropbox($iUserId, $bUserInitiated = true)
     {
         $oUser = User::find($iUserId);
         
@@ -40,6 +41,14 @@ class Dropbox {
         //// TODO
 
         // log an event - that would require porting event model to shared section..
+        $sDisconnectMessage = $bUserInitiated ? 'disconnected dropbox - user initiated' : 'disconnected dropbox - dropbox initiated';
+        $iRelatedId = $oConnectedFileSource ? $oConnectedFileSource->id : null;
+        
+        $oLog = new \Share\Event;
+        $oLog->event = $sDisconnectMessage;
+        $oLog->related_id = $iRelatedId;
+        $oLog->dTimeOccured = \Carbon\Carbon::now();
+        $oLog->save();
         
         return response()->json(['success' => true]);
     }
