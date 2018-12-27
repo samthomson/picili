@@ -2,11 +2,13 @@
 
 namespace SharedLibrary;
 
+use Share\User;
+
 class Dropbox {
 
-    public static function disconnectedDropbox()
+    public static function disconnectedDropbox($iUserId)
     {
-        $oUser = Auth::user();
+        $oUser = User::find($iUserId);
         
         // delete the associated dropbox token used to authenticate with dropbox
         $oUser->dropboxToken->delete();
@@ -19,10 +21,14 @@ class Dropbox {
             Task::where('related_file_id', $oConnectedFileSource->id)
                 ->where('processor', 'full-dropbox-import')
                 ->delete();
+
             // delete scheduled tasks that would have downloaded a file.
-            Task::where('related_file_id', $oPiciliFile->id)
-                ->where('bImporting', true)
-                ->where('processor', '<>', 'full-dropbox-import')
+            Task::where('user_id', $oUser->id)
+                ->where('processor', 'download-dropbox-file')
+                ->delete();
+            // also delete tasks that would process now imported file - this would leave orphaned processsing files?
+            Task::where('user_id', $oUser->id)
+                ->where('processor', 'import-new-dropbox-file')
                 ->delete();
 
 
