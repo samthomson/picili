@@ -175,17 +175,17 @@ RUN apt-get clean && \
 WORKDIR /var/www
 
 # install php project dependencies
-CMD cd /var/www/user-api-laravel && composer install
-CMD cd /var/www/auto && composer install
+RUN cd /var/www/user-api-laravel && composer install
+RUN cd /var/www/auto && composer install
 
-CMD cd /var/www/spa && npm cache clean && npm i && ng serve -H 0.0.0.0
+RUN cd /var/www/spa && npm cache clean && npm i && ng serve -H 0.0.0.0
 
 WORKDIR /var/www
 
 USER root
 
 # install auto-scalar deps
-CMD cd /var/www/auto-scaler && npm i
+RUN cd /var/www/auto-scaler && npm i
 
 # php.ini for cli
 ADD ./php-cli.ini /etc/php/7.1/cli/php.ini

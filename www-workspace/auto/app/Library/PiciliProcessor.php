@@ -13,6 +13,7 @@ use Share\PiciliFile;
 use App\Library\DropboxHelper;
 use SharedLibrary\TagHelper;
 use SharedLibrary\ElasticHelper;
+use SharedLibrary\Dropbox;
 
 
 class PiciliProcessor {
@@ -64,16 +65,31 @@ class PiciliProcessor {
                                         $oTask->save();
                                     }
                                     break;
-                                
+                                case 'invalid-token':
+                                    // delete/finish this task, and call diconnect dropbox function
+                                    Helper::completeATask($oNextTask->id);
+                                    Dropbox::disconnectedDropbox($oNextTask->user_id, false);
+                                    break;
                             }
                         }
                     }
                     break;
                 case 'download-dropbox-file':
-                    $mResult = self::bDownloadDropboxFile($oNextTask->related_file_id);
+                    $mResult = DropboxHelper::bDownloadDropboxFile($iDropboxFileId);
                     if($mResult['success']){
                         // queue next step - phys
                         Helper::completeATask($oNextTask->id);
+                    } else {
+                        if(isset($mResult['error']) && isset($mResult['error']['type'])) {
+                            switch($mResult['error']['type'])
+                            {
+                                case 'invalid-token':
+                                    // delete/finish this task, and call diconnect dropbox function
+                                    Helper::completeATask($oNextTask->id);
+                                    Dropbox::disconnectedDropbox($oNextTask->user_id, false);
+                                    break;
+                            }
+                        }
                     }
                     break;
 
@@ -99,6 +115,7 @@ class PiciliProcessor {
                     if($mResult['success']){
                         Helper::completeATask($oNextTask->id);
                     }else{
+                        // todo: log this properly - and think about how to handle.
                         logger('physical file processor was not succesful');
                     }
                     break;
@@ -232,13 +249,6 @@ class PiciliProcessor {
         return (isset($oTask)) ? $oTask : null;
     }
 
-    public static function bDownloadDropboxFile($iDropboxFileId)
-    {
-        $bResult = DropboxHelper::bDownloadDropboxFile($iDropboxFileId);
-        return [
-            'success' => ($bResult ? true : false)
-        ];
-    }
     public static function bImportDownloadedDropboxFile($iDropboxFileId)
     {
         $bResult = DropboxHelper::checkDownloadedDropboxFile($iDropboxFileId);

@@ -51,7 +51,7 @@ class FileTagger extends Command
 
 
         $diff = microtime(true) - $timeStart;
-        $oLog = new \App\Models\Event;
+        $oLog = new \Share\Event;
         $oLog->event = "tag files";
         $oLog->timetaken = $diff;
         $oLog->iFilesProcessed = $iFilesProcessed;

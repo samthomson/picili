@@ -10,6 +10,8 @@ use Share\Tag;
 use Share\DropboxFilesource;
 use Share\Task;
 
+use SharedLibrary\Dropbox;
+
 use App\Http\Controllers\Controller;
 
 use Auth;
@@ -251,7 +253,7 @@ class UserController extends Controller
             // if code is provided get user data and sign in
             if ( ! is_null($code))
             {
-                // This was a callback request from google, get the token
+                // This was a callback request from dropbox, get the token
                 $token = $dropboxService->requestAccessToken($code);
 
                 $sAccessToken = $token->getAccessToken();
@@ -315,12 +317,7 @@ class UserController extends Controller
 
     public function disconnectDropbox()
     {
-        $oUser = Auth::user();
-        $oUser->dropboxToken->delete();
-        $oConnectedFileSource = $oUser->dropboxFileSource();
-        if ($oConnectedFileSource) {
-            $oConnectedFileSource->delete();
-        }
+        Dropbox::disconnectedDropbox(Auth::id());
         return response()->json(['success' => true]);
     }
 

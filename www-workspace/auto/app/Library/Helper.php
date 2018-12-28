@@ -17,7 +17,7 @@ use Share\Task;
 Use Share\DropboxFilesource;
 use App\Models\Log;
 use App\Models\ProcessorLog;
-use App\Models\Event;
+use Share\Event;
 
 use SharedLibrary\TagHelper;
 
@@ -140,6 +140,8 @@ class Helper {
     //
     // queue stuff
     //
+    /*
+    27.12.18 - obsolete, nothing calls this
     public static function startedAnItem($oTask)
     {
         // processor just started a task, so lock it for x mins
@@ -152,6 +154,7 @@ class Helper {
         }
         $oTask->save();
     }
+    */
     public static function QueueAnItem(
         $sProcessorName,
         $iRelatedId,
@@ -1089,9 +1092,6 @@ class Helper {
                 list($version,$status_code,$msg) = explode(' ',$http_response_header[0], 3);
 
                 $oObj = json_decode($json);
-
-                echo "json response:";
-                // print_r($oObj);
 
                 switch($status_code)
                 {

@@ -63,7 +63,7 @@ class PullDropbox extends Command
         //
 
         $diff = microtime(true) - $timeStart;
-        $oLog = new \App\Models\Event;
+        $oLog = new \Share\Event;
         $oLog->event = "pulled dropbox file list";
         $oLog->timetaken = $diff;
         $oLog->when = \Carbon\Carbon::now();
