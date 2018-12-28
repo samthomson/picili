@@ -1,4 +1,3 @@
-#use node 10 to mitigate gulp issues..
 FROM mhart/alpine-node
 
 WORKDIR /spa
