@@ -75,7 +75,7 @@ class PiciliProcessor {
                     }
                     break;
                 case 'download-dropbox-file':
-                    $mResult = DropboxHelper::bDownloadDropboxFile($iDropboxFileId);
+                    $mResult = DropboxHelper::bDownloadDropboxFile($oNextTask->related_file_id);
                     if($mResult['success']){
                         // queue next step - phys
                         Helper::completeATask($oNextTask->id);
@@ -88,6 +88,8 @@ class PiciliProcessor {
                                     Helper::completeATask($oNextTask->id);
                                     Dropbox::disconnectedDropbox($oNextTask->user_id, false);
                                     break;
+                                default:
+                                    logger(['unknown error processing dropbox file download']);
                             }
                         }
                     }

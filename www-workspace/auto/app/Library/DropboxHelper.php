@@ -290,14 +290,6 @@ class DropboxHelper {
 
         $maReturn = ['success' => false];
         
-		if(!isset($oDropboxFolder))
-		{
-			if (isset($oDropboxFile)){
-				logger("dropbox file exists");
-			}
-			return false;
-		}
-
         try
 		{
             if(
@@ -358,6 +350,9 @@ class DropboxHelper {
                             $maReturn['error'] = [
                                 'type' => 'invalid-token'
                             ];
+                            break;
+                        case 200:
+                            $maReturn['success'] = true;
                             break;
                         default:
                             logger("unknown error from dropbox, httpcode: ".$httpcode);
@@ -423,7 +418,7 @@ class DropboxHelper {
         {
 			// todo - log properly
             // echo $e;
-            logger("exception trying to download file from dropbox: ".$e);
+            logger(["exception trying to download file from dropbox: ".$e]);
             $maReturn['success'] = false;
             $maReturn['error'] = [
                 'type' => 'exception'
