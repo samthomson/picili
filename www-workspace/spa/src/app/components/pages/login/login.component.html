@@ -40,7 +40,8 @@
                     </div>
                 </div>
 
-                <button [disabled]="bAttemptingLogin" type="submit" class="ui fluid large button primary submit">Login</button>
+                <!-- disabled if we are awaiting login request response OR unless they are both filled in -->
+                <button [disabled]="bAttemptingLogin || !(loginEmail !== '' && loginPassword !== '')" type="submit" class="ui fluid large button primary submit">Login</button>
             </div>
 
         </form>

@@ -34,7 +34,7 @@ class UserController extends Controller
 
 
         if ($validator->fails()) {
-            return response()->json(['success' => false, 'errors' => $validator->errors()->all()]);
+            return response()->json(['success' => false, 'errors' => ['Please enter a valid email, and password to register.']]);
         }
 
 		$data = $request->only(['email', 'password']);

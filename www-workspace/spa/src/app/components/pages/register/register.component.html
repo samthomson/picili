@@ -11,6 +11,10 @@
             (ngSubmit)="onRegisterSubmit(frmRegister)"
             #frmRegister="ngForm"
         >
+            <div *ngIf="bRegisterFailed" class="ui red segment">
+                <strong>{{errors.join(', ')}}</strong>
+            </div>
+
             <div class="ui stacked segment" [ngClass]="{'loading': bAttemptingRegister}">
 
                 <div class="field">
@@ -37,7 +41,9 @@
                     </div>
                 </div>
 
-                <button [disabled]="bAttemptingRegister" type="submit" class="ui fluid large button primary submit">Register</button>
+
+                <!-- disabled if we are awaiting registration request response OR unless they are both filled in -->
+                <button [disabled]="bAttemptingRegister || !(registerEmail !== '' && registerPassword !== '')" type="submit" class="ui fluid large button primary submit">Register</button>
             </div>
 
             <div *ngIf="errors.length > 0" class="ui error message">
