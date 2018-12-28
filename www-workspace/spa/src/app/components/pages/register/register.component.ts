@@ -19,11 +19,14 @@ export class RegisterComponent {
 
     private bAttemptingRegister: boolean = false;
 
-    private errors = [];
+    private errors: string[] = [];
+    private bRegisterFailed: boolean = false;
 
     onRegisterSubmit(frmRegister) {
 
       this.bAttemptingRegister = true;
+      this.bRegisterFailed = false;
+      this.errors = [];
 
       this.authService.attemptRegister(
           this.registerEmail,
@@ -34,10 +37,11 @@ export class RegisterComponent {
                   this.bAttemptingRegister = false;
                   if (result.successful === true) {
                       // register successful
-                      this.router.navigate(['/' + result.user]);
+                      this.bRegisterFailed = false;
                       this.errors = [];
+                      this.router.navigate(['/' + result.user]);
                   }else{
-                      this.bAttemptingRegister = false;
+                      this.bRegisterFailed = true;
                       this.errors = result.errors;
                   }
               }

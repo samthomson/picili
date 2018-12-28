@@ -11,6 +11,10 @@
             (ngSubmit)="onRegisterSubmit(frmRegister)"
             #frmRegister="ngForm"
         >
+            <div *ngIf="bRegisterFailed" class="ui red segment">
+                <strong>{{errors.join(', ')}}</strong>
+            </div>
+
             <div class="ui stacked segment" [ngClass]="{'loading': bAttemptingRegister}">
 
                 <div class="field">
