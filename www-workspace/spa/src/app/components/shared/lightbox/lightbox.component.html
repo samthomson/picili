@@ -13,6 +13,17 @@
                     <br/>
                 </div>
                 <h5 class="ui header">{{jFileInfo.date}}</h5>
+
+
+                <div *ngIf="jFileInfo.lat && jFileInfo.lon" id="lightbox-map">
+                    <br />
+                    <img border="0" src="//maps.googleapis.com/maps/api/staticmap?center={{jFileInfo.lat}},{{jFileInfo.lon}}&amp;zoom=14&amp;size=240x160&key=AIzaSyBETgviS0P570fk29ksPR0PdeBFqHUGHAI" alt="{{jFileInfo.address}}">
+                </div>
+                <div *ngIf="jFileInfo.dropboxPath">
+                    <br />
+                    <i class="icon simple dropbox"></i>&nbsp;On disk: {{jFileInfo.dropboxPath}}
+                </div>
+
                 <br/>
                 <div class="ui labels">
                     <a 
@@ -21,15 +32,6 @@
                         [queryParams]="this.helperService.getRawQueryVarsWithNewQuery(sTag)"
                         (click)="tagClicked()"
                     >{{sTag}}</a>
-                </div>
-                <br/>
-
-                <div *ngIf="jFileInfo.lat && jFileInfo.lon" id="lightbox-map">
-                    <img border="0" src="//maps.googleapis.com/maps/api/staticmap?center={{jFileInfo.lat}},{{jFileInfo.lon}}&amp;zoom=14&amp;size=240x160&key=AIzaSyBETgviS0P570fk29ksPR0PdeBFqHUGHAI" alt="{{jFileInfo.address}}">
-                </div>
-                <div *ngIf="jFileInfo.dropboxPath">
-                    <br/>
-                    <i class="icon simple dropbox"></i>&nbsp;On disk: {{jFileInfo.dropboxPath}}
                 </div>
             </div>
             <div class="ui active inverted dimmer" *ngIf="bLoadingInfo">
