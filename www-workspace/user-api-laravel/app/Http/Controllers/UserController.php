@@ -353,8 +353,8 @@ class UserController extends Controller
         if (null !== $aoPossibleTags)
         {
             foreach($aoPossibleTags as $aTag) {
-                if ($aTag['confidence'] > env('CONFIDENCE_THRESHOLD')) {
-                    array_push($aTags, $aTag['value']);
+                if ($aTag['confidence'] > env('SEARCH_CONFIDENCE_THRESHOLD')) {
+                    array_push($aTags, [ 'literal' => $aTag['value'], 'confidence' => $aTag['confidence']]);
                 }
             }
         }
