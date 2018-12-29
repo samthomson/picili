@@ -29,9 +29,10 @@
                     <a 
                         class="ui label lightbox-fileinfo-tag" *ngFor="let sTag of jFileInfo.tags"
                         [routerLink] = "this.helperService.getBaseRouterLink('search')"
-                        [queryParams]="this.helperService.getRawQueryVarsWithNewQuery(sTag)"
+                        [queryParams]="this.helperService.getRawQueryVarsWithNewQuery(sTag.literal)"
                         (click)="tagClicked()"
-                    >{{sTag}}</a>
+                        [title]="sTag.confidence + '%'"
+                    >{{sTag.literal}}</a>
                 </div>
             </div>
             <div class="ui active inverted dimmer" *ngIf="bLoadingInfo">
