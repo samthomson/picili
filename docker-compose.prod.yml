@@ -34,6 +34,8 @@ services:
       - AWS_BUCKET_NAME_TESTING=${AWS_BUCKET_NAME_TESTING}
       - API_IMAGGA_KEY=${API_IMAGGA_KEY}
       - API_IMAGGA_SECRET=${API_IMAGGA_SECRET}
+    volumes:
+      - /var/www
     depends_on: [mysql, elasticsearch]
 
   php-fpm:
@@ -67,11 +69,11 @@ services:
       args:
         - PHP_UPSTREAM=php-fpm
     volumes_from:
-      - workspace
+      - workspace:rw
     ports:
       - "81:80"
       - "443:443"
-    depends_on: [php-fpm, mysql]
+    depends_on: [php-fpm, mysql, workspace]
 
   mysql:
     image: mysql:5.7
