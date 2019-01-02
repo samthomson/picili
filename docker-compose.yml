@@ -2,7 +2,7 @@ version: "2"
 services:
   applications:
     build:
-      context: ./www-workspace/spa
+      context: ./docker-containers/applications
     volumes:
       - ./www-workspace:/var/www
 
@@ -58,6 +58,7 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - DATABASE_NAME_TESTING=${DATABASE_NAME_TESTING}
       - APP_KEY=${APP_KEY}
+      - APP_DEBUG=${APP_DEBUG}
       - USER_API_URL=${USER_API_URL}
       - SPA_URL=${SPA_URL}
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
