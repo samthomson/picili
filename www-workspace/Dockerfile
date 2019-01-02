@@ -183,8 +183,6 @@ COPY . /var/www
 RUN cd /var/www/user-api-laravel && composer install
 RUN cd /var/www/auto && composer install
 
-# RUN cd /var/www/spa && npm cache clean && npm i && ng serve -H 0.0.0.0
-
 WORKDIR /var/www
 
 USER root
