@@ -174,11 +174,16 @@ RUN apt-get clean && \
 # Set default work directory
 WORKDIR /var/www
 
+# # copy in our code, so as not to rely on a volume in prod
+COPY . /var/www
+
 # install php project dependencies
+# RUN apt install composer
+
 RUN cd /var/www/user-api-laravel && composer install
 RUN cd /var/www/auto && composer install
 
-RUN cd /var/www/spa && npm cache clean && npm i && ng serve -H 0.0.0.0
+# RUN cd /var/www/spa && npm cache clean && npm i && ng serve -H 0.0.0.0
 
 WORKDIR /var/www
 

@@ -16,7 +16,7 @@ services:
   
   workspace:
     build:
-      context: ./docker-containers/workspace
+      context: ./www-workspace
       args:
         - TZ=${WORKSPACE_TIMEZONE}
         - NODE_VERSION=${WORKSPACE_NODE_VERSION}
