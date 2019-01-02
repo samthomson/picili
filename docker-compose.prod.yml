@@ -59,6 +59,8 @@ services:
       - SEARCH_CONFIDENCE_THRESHOLD=${SEARCH_CONFIDENCE_THRESHOLD}
       - DROPBOX_CLIENT_ID=${DROPBOX_CLIENT_ID}
       - DROPBOX_CLIENT_SECRET=${DROPBOX_CLIENT_SECRET}
+    env_file:
+      - .prod-overrides.env
     volumes_from:
       - workspace
     expose:
