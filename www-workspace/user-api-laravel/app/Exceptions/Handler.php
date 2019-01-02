@@ -50,8 +50,7 @@ class Handler extends ExceptionHandler
             switch ($statusCode) {
 
                 case '404':
-                    print_r($request['request']);die();
-                    return response(\File::get(public_path() . '/spa-dist/index.html'));
+                    return response('404');
             }
         }
         return parent::render($request, $exception);
