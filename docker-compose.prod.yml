@@ -68,8 +68,6 @@ services:
         - PHP_UPSTREAM=php-fpm
     volumes_from:
       - workspace
-    volumes:
-      - ./docker-containers/nginx/sites:/etc/nginx/sites-available
     ports:
       - "81:80"
       - "443:443"
