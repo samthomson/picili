@@ -149,7 +149,7 @@ RUN echo "" >> ~/.bashrc && \
 RUN apt-get update && apt-get install apt-transport-https && \
         curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
         echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-        apt-get update && apt-get install -y yarn mysql-client
+        apt-get update && apt-get install -y --allow-unauthenticated yarn mysql-client
 
 # Add NVM binaries to root's .bashrc
 USER root
