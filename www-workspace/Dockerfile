@@ -128,8 +128,8 @@ USER root
 #####################################
 
 # Check if NVM needs to be installed
-ARG NODE_VERSION=10.0.0
-ENV NODE_VERSION 10.0.0
+ARG NODE_VERSION=10.5.0
+ENV NODE_VERSION 10.5.0
 ENV NVM_DIR /home/laradock/.nvm
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash && \
         . $NVM_DIR/nvm.sh && \
@@ -149,7 +149,7 @@ RUN echo "" >> ~/.bashrc && \
 RUN apt-get update && apt-get install apt-transport-https && \
         curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
         echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-        apt-get update && apt-get install -y yarn mysql-client
+        apt-get update && apt-get install -y --allow-unauthenticated yarn mysql-client
 
 # Add NVM binaries to root's .bashrc
 USER root
@@ -174,11 +174,19 @@ RUN apt-get clean && \
 # Set default work directory
 WORKDIR /var/www
 
+# # copy in our code, so as not to rely on a volume in prod
+COPY . /var/www
+
+# ensure directories we need are writable
+RUN chmod -R o+w /var/www/user-api-laravel/storage
+RUN chmod -R o+w /var/www/user-api-laravel/bootstrap/cache
+RUN chmod -R o+w /var/www/auto/storage
+RUN chmod -R o+w /var/www/auto/bootstrap/cache
+
 # install php project dependencies
+
 RUN cd /var/www/user-api-laravel && composer install
 RUN cd /var/www/auto && composer install
-
-RUN cd /var/www/spa && npm cache clean && npm i && ng serve -H 0.0.0.0
 
 WORKDIR /var/www
 
@@ -189,6 +197,3 @@ RUN cd /var/www/auto-scaler && npm i
 
 # php.ini for cli
 ADD ./php-cli.ini /etc/php/7.1/cli/php.ini
-
-
-# EXPOSE 4200

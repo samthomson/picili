@@ -2,6 +2,9 @@ FROM nginx:alpine
 
 ADD nginx.conf /etc/nginx/
 
+# instead of local volumes
+ADD ./sites /etc/nginx/sites-available
+
 ARG PHP_UPSTREAM=php-fpm
 
 RUN apk update \

@@ -1,19 +1,12 @@
 version: "2"
 services:
-  applications:
-    build:
-      context: ./docker-containers/applications
-    volumes:
-      - ./www-workspace:/var/www
-
   spa:
     build:
       context: ./www-workspace/spa
-    ports:
-        - "80:4200"
-    command: npm run serve
-    volumes:
-      - ./www-workspace/spa:/spa
+    command: npm run dist
+    volumes_from:
+      - workspace:rw
+    depends_on: [workspace]
   
   workspace:
     build:
@@ -43,9 +36,9 @@ services:
       - AWS_BUCKET_NAME_TESTING=${AWS_BUCKET_NAME_TESTING}
       - API_IMAGGA_KEY=${API_IMAGGA_KEY}
       - API_IMAGGA_SECRET=${API_IMAGGA_SECRET}
-    volumes_from:
-      - applications
-    depends_on: [mysql, applications, elasticsearch]
+    volumes:
+      - /var/www
+    depends_on: [mysql, elasticsearch]
 
   php-fpm:
     build:
@@ -60,8 +53,8 @@ services:
       - DATABASE_NAME_TESTING=${DATABASE_NAME_TESTING}
       - APP_KEY=${APP_KEY}
       - APP_DEBUG=${APP_DEBUG}
-      - USER_API_URL=${USER_API_URL}
-      - SPA_URL=${SPA_URL}
+      - USER_API_URL=${PROD_USER_API_URL}
+      - SPA_URL=${PROD_SPA_URL}
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
       - ELASTICSEARCH_INDEX=${ELASTICSEARCH_INDEX}
       - ELASTICSEARCH_INDEX_TESTING=${ELASTICSEARCH_INDEX_TESTING}
@@ -69,7 +62,7 @@ services:
       - DROPBOX_CLIENT_ID=${DROPBOX_CLIENT_ID}
       - DROPBOX_CLIENT_SECRET=${DROPBOX_CLIENT_SECRET}
     volumes_from:
-      - applications
+      - workspace
     expose:
       - "9000"
 
@@ -79,12 +72,10 @@ services:
       args:
         - PHP_UPSTREAM=php-fpm
     volumes_from:
-      - applications
-    volumes:
-      - ./docker-containers/nginx/sites:/etc/nginx/sites-available
+      - workspace:rw
     ports:
-      - "80:80"
-    depends_on: [php-fpm, mysql]
+      - "80:80" # http
+    depends_on: [php-fpm, mysql, workspace]
 
   mysql:
     image: mysql:5.7
@@ -126,22 +117,20 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
-    depends_on:
-      - php-fpm
 
-  kibana:
-    image: kibana:5.4.1
-    ports:
-      - 5601:5601
-    depends_on:
-      - elasticsearch
+  # kibana:
+  #   image: kibana:5.4.1
+  #   ports:
+  #     - 5601:5601
+  #   depends_on:
+  #     - elasticsearch
 
-  dejavu:
-    image: appbaseio/dejavu:3.0.0-alpha
-    ports:
-      - 1358:1358
-    depends_on:
-      - elasticsearch
+  # dejavu:
+  #   image: appbaseio/dejavu:3.0.0-alpha
+  #   ports:
+  #     - 1358:1358
+  #   depends_on:
+  #     - elasticsearch
 
 ### configure volumes defined above ###
 
