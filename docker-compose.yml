@@ -11,6 +11,7 @@ services:
       context: ./www-workspace/spa
     ports:
         - "80:4200"
+    command: npm run serve
     volumes:
       - ./www-workspace/spa:/spa
   
@@ -82,8 +83,7 @@ services:
     volumes:
       - ./docker-containers/nginx/sites:/etc/nginx/sites-available
     ports:
-      - "2053:80"
-      - "443:443"
+      - "80:80"
     depends_on: [php-fpm, mysql]
 
   mysql:
