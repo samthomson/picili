@@ -53,8 +53,8 @@ services:
       - DATABASE_NAME_TESTING=${DATABASE_NAME_TESTING}
       - APP_KEY=${APP_KEY}
       - APP_DEBUG=${APP_DEBUG}
-      - USER_API_URL=https://206.189.82.50
-      - SPA_URL=https://206.189.82.50
+      - USER_API_URL=${PROD_USER_API_URL}
+      - SPA_URL=${PROD_SPA_URL}
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
       - ELASTICSEARCH_INDEX=${ELASTICSEARCH_INDEX}
       - ELASTICSEARCH_INDEX_TESTING=${ELASTICSEARCH_INDEX_TESTING}
@@ -75,7 +75,6 @@ services:
       - workspace:rw
     ports:
       - "80:80" # http
-      - "443:80" # https
     depends_on: [php-fpm, mysql, workspace]
 
   mysql:
