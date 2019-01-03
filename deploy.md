@@ -1,5 +1,7 @@
 # deploy
 
+locally the SPA and API run on localhost port 80 and 81 respectively. In production they both run on port 80, and are served as the same website. The API serves the SPA which has been copied into its public folder as part of the build process.
+
 ## initial remote machine creation
 
 - get and set digital ocean token into env `export DO_TOKEN="INSERT_TOKEN_HERE"`
