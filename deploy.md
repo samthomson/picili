@@ -10,6 +10,8 @@ locally the SPA and API run on localhost port 80 and 81 respectively. In product
 - switch 'into' it: `eval $(docker-machine env picili)`
 - build: `docker-compose build -f docker-compose.prod.yml`
 - seed: `docker-compose run workspace bash` and then `bash seed.sh`
+- update `USER_API_URL` and `SPA_URL` to the IP/URI of your server/site
+- update your dropbox app to have an allowed redirect URI: `https://[YOUR IP/SITE]/oauth/dropbox`
 - run `docker-compose up -f docker-compose.prod.yml`
 
 ## udpating
