@@ -155,57 +155,32 @@ If you plan on editing sass files, also run `npm run gulp-watch` (within the con
 
 ## 4.0 Deploying
 
+locally the SPA and API run on localhost port 80 and 81 respectively. In production they both run on port 80, and are served as the same website. The API serves the SPA which has been copied into its public folder as part of the build process.
+
 ### 4.1 Setup and first deploy
 
-- set up a vps somewhere (tested on: ubuntu 17.10 x64 2gb ram 40gb ssd)
-- connect to it from the terminal `root@ipaddress` and then enter your root password and accept the machines fingerprint
-- create a new user to replace the root user: https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04
-- install nginx, php, mysql
-- install elasticsearch. follow part of this guide: https://www.vultr.com/docs/how-to-install-and-configure-elastic-stack-elasticsearch-logstash-and-kibana-on-ubuntu-17-04 and then set heapsize to half of ram: /etc/elasticsearch/jvm.options
-- install elastic search and set it to run on startup https://www.elastic.co/guide/en/elasticsearch/reference/5.6/_installation.html and https://www.digitalocean.com/community/tutorials/how-to-set-up-a-production-elasticsearch-cluster-on-ubuntu-14-04
-- update memory for elasticsearch jvm.options file to half of all ram available (tested at 1gb)
-- before uploading files, change ownership of /var/www dir to new user `sudo chown newuser:newuser /var/www/`
-- change ownership of nginx sites available folder: `sudo chown -R newuser:newuser /etc/nginx/sites-available`
-- upload nging conf file (default) to /etc/nginx/sites-available
-- restart nginx `sudo service nginx restart`
-- change owning group `sudo chgrp -R www-data /var/www/picili/user-api-laravel && sudo chgrp -R www-data /var/www/picili/auto`
-- give write permission to storage folder: `sudo chmod -R 775 /var/www/picili/user-api-laravel/storage && sudo chmod -R 775 /var/www/picili/auto/storage`
-- create elastic indexes: `cd /var/www/picili/auto && php artisan elastic-create`
+- get and set digital ocean token into env `export DO_TOKEN="INSERT_TOKEN_HERE"`
 
-- create and upload env files to api and auto projects
-- set up db
-- - connect to mysql: https://www.digitalocean.com/community/tutorials/how-to-connect-to-a-mysql-server-remotely-with-mysql-workbench
-- - create a db, 'picili' with 'utf8' encoding and 'utf8_general_ci' encoding
-- - run migrations on server: `cd /var/www/picili/user-api-laravel && php artisan migrate --force` and `cd /var/www/picili/auto && php artisan migrate --force && php artisan migrate --path="../picili-shared/Migrations"`
-- build spa for prod
-- - edit `/picili/www-workspace/spa/src/environments/environment.prod.ts` and then run, from the spa folder: `ng build --env=prod` and then upload the dist folder to /var/www/picili/user-api-laravel/public
-
-- install curl on server `apt-get install php7.1-curl`
-- install gd lib: `sudo apt-get install php7.0-gd`
-- install xml lib: `sudo apt-get install php7.1-xml`
-
-- setup autoscaler
-- - `sudo apt install npm`
-- - `cd /var/www/picili/auto/scaler && npm i`
-- - start it running `cd /var/www/picili/auto-scaler && npm start`
-
-- configure swap memory if the vps has low ram: https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04
-
-- on the server go to `/var/www/picili/auto-scaler` and run `npm start` to initiate the auto scaler which runs the auto processers. You can also run `npm forever` to keep the process running via the forever package.
-
-- create dropbox app
-- secure elastic
-- create aws s3 bucket
-
-useful:
-(https://stackoverflow.com/questions/28392045/php-fpm-laravel-nginx-ubuntu-permission)
+- create remote machine: `docker-machine create --driver=digitalocean --digitalocean-access-token=$DO_TOKEN --digitalocean-size=2gb --digitalocean-region=sgp1 picili`
+- set elastic property on it: `docker-machine ssh picili` and then `sysctl vm.max_map_count=262144` once 'in'
+- switch 'into' it: `eval $(docker-machine env picili)`
+- build: `docker-compose build -f docker-compose.prod.yml`
+- seed: `docker-compose run workspace bash` and then `bash seed.sh`
+- update `USER_API_URL` and `SPA_URL` to the IP/URI of your server/site
+- update your dropbox app to have an allowed redirect URI: `https://[YOUR IP/SITE]/oauth/dropbox`
+- run `docker-compose up -f docker-compose.prod.yml`
 
 ### 4.2 Incremental updates - deploying as you work on picili
 
-The API (PHP) and Auto project (PHP) are straight forward to deploy. Just upload any edited files to the server. Running any migrations if added.
+Rebuild and deploy SPA container
 
-Any changes to the auto-scaler (JS) should also be uploaded. But then you should stop the auto-scaler instance already running and start a new one.
+- `eval $(docker-machine env picili)`
+- `docker-compose -f docker-compose.prod.yml build --no-cache spa`
+- `docker-compose -f docker-compose.prod.yml up spa`
 
-Changes to the front-end SPA (JS) are more complicated as assets must first be built from the spa folder (`www-workspace/spa`) with `yarn dist-prod`.
 
-This will trigger a gulp task to also copy the newly built assets into the public folder of the API (`www-workspace/user-api-laravel/public`). Where they can be copied to the server to/from. Specifically it will build the SPA with a prod config, compared to `yarn dist` which has a local config.
+### 4.3 other
+
+Bash into a container to see what's going on:
+- spa: `docker-compose -f docker-compose.prod.yml run spa sh`
+- php-fpm: `docker-compose -f docker-compose.prod.yml run php-fpm bash`
