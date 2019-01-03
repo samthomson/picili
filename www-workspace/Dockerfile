@@ -128,8 +128,8 @@ USER root
 #####################################
 
 # Check if NVM needs to be installed
-ARG NODE_VERSION=10.0.0
-ENV NODE_VERSION 10.0.0
+ARG NODE_VERSION=10.5.0
+ENV NODE_VERSION 10.5.0
 ENV NVM_DIR /home/laradock/.nvm
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash && \
         . $NVM_DIR/nvm.sh && \
