@@ -7,6 +7,7 @@ locally the SPA and API run on localhost port 80 and 81 respectively. In product
 - get and set digital ocean token into env `export DO_TOKEN="INSERT_TOKEN_HERE"`
 
 - create remote machine: `docker-machine create --driver=digitalocean --digitalocean-access-token=$DO_TOKEN --digitalocean-size=2gb --digitalocean-region=sgp1 picili`
+- set elastic property on it: `docker-machine ssh picili` and then `sysctl vm.max_map_count=262144` once 'in'
 - switch 'into' it: `eval $(docker-machine env picili)`
 - build: `docker-compose build -f docker-compose.prod.yml`
 - seed: `docker-compose run workspace bash` and then `bash seed.sh`
