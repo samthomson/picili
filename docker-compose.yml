@@ -82,7 +82,7 @@ services:
     volumes:
       - ./docker-containers/nginx/sites:/etc/nginx/sites-available
     ports:
-      - "81:80"
+      - "2053:80"
       - "443:443"
     depends_on: [php-fpm, mysql]
 

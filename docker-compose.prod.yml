@@ -51,16 +51,14 @@ services:
       - DATABASE_NAME_TESTING=${DATABASE_NAME_TESTING}
       - APP_KEY=${APP_KEY}
       - APP_DEBUG=${APP_DEBUG}
-      - USER_API_URL=${USER_API_URL}
-      - SPA_URL=${SPA_URL}
+      - USER_API_URL=https://206.189.82.50:2053
+      - SPA_URL=http://206.189.82.50
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
       - ELASTICSEARCH_INDEX=${ELASTICSEARCH_INDEX}
       - ELASTICSEARCH_INDEX_TESTING=${ELASTICSEARCH_INDEX_TESTING}
       - SEARCH_CONFIDENCE_THRESHOLD=${SEARCH_CONFIDENCE_THRESHOLD}
       - DROPBOX_CLIENT_ID=${DROPBOX_CLIENT_ID}
       - DROPBOX_CLIENT_SECRET=${DROPBOX_CLIENT_SECRET}
-    env_file:
-      - .prod-overrides.env
     volumes_from:
       - workspace
     expose:
@@ -74,8 +72,8 @@ services:
     volumes_from:
       - workspace:rw
     ports:
-      - "81:80"
-      - "443:443"
+      - "81:80" # http
+      - "2053:443" # https
     depends_on: [php-fpm, mysql, workspace]
 
   mysql:
