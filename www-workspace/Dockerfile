@@ -184,7 +184,6 @@ RUN chmod -R o+w /var/www/auto/storage
 RUN chmod -R o+w /var/www/auto/bootstrap/cache
 
 # install php project dependencies
-# RUN apt install composer
 
 RUN cd /var/www/user-api-laravel && composer install
 RUN cd /var/www/auto && composer install
@@ -198,6 +197,3 @@ RUN cd /var/www/auto-scaler && npm i
 
 # php.ini for cli
 ADD ./php-cli.ini /etc/php/7.1/cli/php.ini
-
-
-# EXPOSE 4200
