@@ -88,3 +88,13 @@ gulp.task('watch', function() {
             gtDefault()
     });
 })
+
+gulp.task('dist', function() {
+    // copy dist assets (built project) into api public folder
+	return gulp.src(
+        [
+            './dist/**/*'
+        ]
+    )
+    .pipe(gulp.dest('./../user-api-laravel/public'));
+})
