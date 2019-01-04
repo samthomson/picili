@@ -415,7 +415,6 @@ class BlackboxTest extends TestCase
         $this->assertEquals($aResult->search->data->range_max, null);
     }
 
-    // to do reinstate this test somehow, removing as it requires a different database to be created. which is not.    
     public function testUpdateDropboxFilesource()
     {
         $sTestRoute = '/app/settings/dropboxfolder';
@@ -441,10 +440,10 @@ class BlackboxTest extends TestCase
             ->assertJsonFragment(['success' => true]);
 
         // test for db modal, verify it is updated
-        $oUser = User::with('dropboxToken')->where('username', 'seeduser')->first();
+        $iSeedUserId = parent::iGetSeedUserId();
 
         // and check an initial import task is created
-        $oNewFolderSource = DropboxFilesource::where('user_id', $oUser->id)->first();
+        $oNewFolderSource = DropboxFilesource::where('user_id', $iSeedUserId)->first();
         $this->assertTrue(isset($oNewFolderSource));
         $this->assertEquals($oNewFolderSource->folder, $sUpdateFolderTo);
 
@@ -457,7 +456,7 @@ class BlackboxTest extends TestCase
             ->assertStatus(200)
             ->assertJsonFragment(['success' => true]);
 
-        $cCount = DropboxFilesource::where('user_id', $oUser->id)->count();
+        $cCount = DropboxFilesource::where('user_id', $iSeedUserId)->count();
 
         $this->assertEquals(1, $cCount);
     }
