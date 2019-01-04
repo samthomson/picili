@@ -16,3 +16,4 @@ public/*.js
 public/*.map
 
 !public/spa.html
+!public/index.html
