@@ -170,6 +170,9 @@ locally the SPA and API run on localhost port 80 and 81 respectively. In product
 - update your dropbox app to have an allowed redirect URI: `https://[YOUR IP/SITE]/oauth/dropbox`
 - run `docker-compose up -f docker-compose.prod.yml`
 
+optional
+- configure swap memory if the vps has low ram: https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04
+
 ### 4.2 Incremental updates - deploying as you work on picili
 
 Rebuild and deploy SPA container

@@ -10,6 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Share\User;
 use Share\DropboxToken;
 use Share\DropboxFilesource;
+use Share\DropboxFiles;
 use Share\PiciliFile;
 use Share\Tag;
 use Share\Task;
@@ -284,9 +285,24 @@ class BlackboxTest extends TestCase
 
     public function testGetFileInfo()
     {
+
+        $oDBXFL = new DropboxFiles;
+
+        $oDBXFL->dropbox_id = 54354;
+		$oDBXFL->dropbox_path = 'gfdgfdgfd';
+		$oDBXFL->dropbox_name = 'gfdgfd';
+		$oDBXFL->server_modified = '344543';
+        $oDBXFL->size = 89345;
+        $oDBXFL->user_id = 0;
+        $oDBXFL->dropbox_folder_id = 23;
+        $oDBXFL->sTempFileName = 'gfdgfdg';        
+        $oDBXFL->dropbox_path = 'test path';     
+        $oDBXFL->save();
+
         $oFile = new PiciliFile;
         $oFile->signature = 'sig';
         $oFile->user_id = 0;
+        $oFile->dropbox_filesource_id = $oDBXFL->id;
         $oFile->save();
 
         $iFileId = $oFile->id;
@@ -415,7 +431,6 @@ class BlackboxTest extends TestCase
         $this->assertEquals($aResult->search->data->range_max, null);
     }
 
-    // to do reinstate this test somehow, removing as it requires a different database to be created. which is not.    
     public function testUpdateDropboxFilesource()
     {
         $sTestRoute = '/app/settings/dropboxfolder';
@@ -441,10 +456,10 @@ class BlackboxTest extends TestCase
             ->assertJsonFragment(['success' => true]);
 
         // test for db modal, verify it is updated
-        $oUser = User::with('dropboxToken')->where('username', 'seeduser')->first();
+        $iSeedUserId = parent::iGetSeedUserId();
 
         // and check an initial import task is created
-        $oNewFolderSource = DropboxFilesource::where('user_id', $oUser->id)->first();
+        $oNewFolderSource = DropboxFilesource::where('user_id', $iSeedUserId)->first();
         $this->assertTrue(isset($oNewFolderSource));
         $this->assertEquals($oNewFolderSource->folder, $sUpdateFolderTo);
 
@@ -457,7 +472,7 @@ class BlackboxTest extends TestCase
             ->assertStatus(200)
             ->assertJsonFragment(['success' => true]);
 
-        $cCount = DropboxFilesource::where('user_id', $oUser->id)->count();
+        $cCount = DropboxFilesource::where('user_id', $iSeedUserId)->count();
 
         $this->assertEquals(1, $cCount);
     }
@@ -486,7 +501,7 @@ class BlackboxTest extends TestCase
             ->assertJsonFragment(['success' => true]);
 
         // test for db modal, verify it is updated
-        $oUser = User::with('dropboxToken')->where('username', 'seeduser')->first();
+        $iUserId = parent::iGetSeedUserId();
         
         $cEndFilesources = DropboxFilesource::where('user_id', $iUserId)->count();
         $cEndDropboxTokens = DropboxToken::where('user_id', $iUserId)->count();

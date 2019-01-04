@@ -4,4 +4,3 @@ www-workspace/auto/.env.prod
 www-workspace/spa/src/assets/compiled
 www-workspace/spa/src/assets/fonts
 www-workspace/spa/src/assets/compiled/**/*.*
-www-workspace/user-api-laravel/public
