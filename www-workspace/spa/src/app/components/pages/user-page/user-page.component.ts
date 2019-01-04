@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Injectable } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService, SearchService, HelperService } from './../../../services';
 
 import { PlatformLocation } from '@angular/common';

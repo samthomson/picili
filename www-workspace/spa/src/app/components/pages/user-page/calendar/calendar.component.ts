@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Injector  } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 
 import { HttpService, SearchService, HelperService } from './../../../../services';
 import { GlobalVars } from './../../../../../env';
@@ -27,10 +27,8 @@ export class CalendarComponent implements OnInit {
         private searchService: SearchService,
         private httpService: HttpService,
         private helperService: HelperService,
-        private gbl: GlobalVars/*,
-        private inj:Injector*/
+        private gbl: GlobalVars
     ) {
-        // this.parentComponent = this.inj.get(UserPageComponent);
     }
 
     setResults(oResults) {

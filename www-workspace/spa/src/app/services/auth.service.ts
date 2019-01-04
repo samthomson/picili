@@ -1,9 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Response, URLSearchParams, RequestOptions } from '@angular/http';
-import { Router, CanActivate } from '@angular/router';
-import { Headers } from '@angular/http';
+import { Router } from '@angular/router';
 
-import { HttpClientModule, HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';

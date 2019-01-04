@@ -6,7 +6,6 @@ import {
     ChangeDetectorRef,
     ElementRef,
     ViewChild,
-    NgZone,
     HostListener
 } from '@angular/core';
 

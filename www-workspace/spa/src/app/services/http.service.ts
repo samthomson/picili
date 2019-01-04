@@ -1,5 +1,4 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Http, Headers, Response, URLSearchParams, RequestOptions } from '@angular/http';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
@@ -9,7 +8,6 @@ import { SearchService } from './search.service';
 
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/Rx';
-import { map } from 'rxjs/operators';
 
 @Injectable()
 export class HttpService {

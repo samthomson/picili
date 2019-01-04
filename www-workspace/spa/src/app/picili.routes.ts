@@ -3,14 +3,12 @@ import { AuthGuard } from './guards/auth.guard';
 import { GuestGuard } from './guards/guest.guard';
 
 import {
-    HomeComponent,
     UserPageComponent,
     LoginComponent,
     RegisterComponent,
     SettingsComponent
 } from './components/pages';
 
-import { UserPageResolve } from './resolves/userpage.resolve';
 import { UserSettingsResolve } from './resolves/usersettings.resolve';
 import { HomeResolve } from './resolves/home.resolve';
 

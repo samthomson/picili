@@ -1,9 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { Http, Headers, Response, URLSearchParams, RequestOptions } from '@angular/http';
 
-import { HttpService } from './http.service';
 
 import { GlobalVars } from './../../env';
 
