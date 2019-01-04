@@ -298,6 +298,10 @@ li#settings-link {
   bottom: 0px;
   height: 100%;
 }
+.justified-gallery {
+    margin-right: 24px;
+}
+
 img.result-thumb {
   margin-right: $iMargin;
   margin-bottom: $iMargin;
@@ -332,6 +336,7 @@ img.result-thumb:hover {
 
 .justified-row {
   margin-bottom: 8px;
+  white-space: nowrap;
 }
 
 .justified-row img {
