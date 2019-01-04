@@ -325,9 +325,17 @@ class PiciliProcessorTest extends TestCase
         $this->assertTrue(null === ElasticHelper::mGetDocument($iTestFileId));
 
 
-        // delete non existent file returns false
-        $bResponse = ElasticHelper::bDeleteFromElastic(666);
-        $this->assertFalse($bResponse);
+        // delete non existent file returns true
+        /*
+        'remove file from elasticsearch' task never gets completed if the file has already been removed.
+        Check if file exists before trying to remove it. If it isn't there, then the task should return successfully.
+
+        A bug occurs when because the dropbox folder was changed, causing the dropbox files in db to be deleted, and so delete from elastic tasks created, but then the elastic instance goes down, and so afterwards re-indexing only adds back files from db.
+        
+        The delete elastic file task processor should not assume the file/record exists in elastic, and fail if it was not able to delete it. It may not be able to delete it as a result of it not being there, in which case the task can return a success, as the result is the same.
+        */
+        $bResponse = ElasticHelper::bDeleteFromElastic(54738693);
+        $this->assertTrue($bResponse);
 
         // and for previous - now - delete documetn
         $bResponse = ElasticHelper::bDeleteFromElastic($iTestFileId);
