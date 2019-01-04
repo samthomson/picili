@@ -180,6 +180,13 @@ Rebuild and deploy SPA container
 - `docker-compose -f docker-compose.prod.yml build --no-cache spa`
 - `docker-compose -f docker-compose.prod.yml up spa`
 
+#### knowing what container to update / restart
+
+Let's say you fixed a bug in the auto processor and want to restart it. You would rebuid and deploy the workspace container, as that's where the file change would be, and then restart php-fpm container with `-V` flag, so it remounts to the volume with new code.
+
+`docker-compose -f docker-compose.prod.yml down`
+`docker-compose -f docker-compose.prod.yml build workspace`
+`docker-compose -f docker-compose.prod.yml up -V`
 
 ### 4.3 other
 
