@@ -8,19 +8,19 @@ import { SearchService } from './../../../../services';
 })
 export class SearchComponent implements OnInit {
 
-    private oAppPageState: any;
+	private oAppPageState: any;
 
-    @Input() results;
+	@Input() results;
 
 
-    constructor(
-        private searchService: SearchService,
-        private route: ActivatedRoute
-    ) {
-        this.oAppPageState = this.route.snapshot.data['userPageState'];
-    }
+	constructor(
+		private searchService: SearchService,
+		private route: ActivatedRoute
+	) {
+		this.oAppPageState = this.route.snapshot.data['userPageState'];
+	}
 
-    ngOnInit() {
-    }
+	ngOnInit() {
+	}
 
 }

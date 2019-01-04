@@ -3,10 +3,10 @@ import { AuthGuard } from './guards/auth.guard';
 import { GuestGuard } from './guards/guest.guard';
 
 import {
-    UserPageComponent,
-    LoginComponent,
-    RegisterComponent,
-    SettingsComponent
+	UserPageComponent,
+	LoginComponent,
+	RegisterComponent,
+	SettingsComponent
 } from './components/pages';
 
 import { UserSettingsResolve } from './resolves/usersettings.resolve';
@@ -14,39 +14,39 @@ import { HomeResolve } from './resolves/home.resolve';
 
 
 const routes = [
-    {
-        path: '',
-        redirectTo: '/login',
-        pathMatch: 'full'
-    },
-    {
-        path: 'login',
-        component: LoginComponent,
-        canActivate: [GuestGuard]
-    },
-    {
-        path: 'register',
-        component: RegisterComponent
-    },
-    {
-        path: ':username/settings',
-        component: SettingsComponent,
-        resolve: { userSettings: UserSettingsResolve},
-        canActivate: [AuthGuard]
-    },
-    {
-        path: ':username/:searchmode',
-        name: 'user-search-specific',
-        component: UserPageComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: ':username',
-        name: 'user-search-default',
-        component: UserPageComponent,
-        resolve: { homeAggs: HomeResolve},
-        canActivate: [AuthGuard]
-    }
+	{
+		path: '',
+		redirectTo: '/login',
+		pathMatch: 'full'
+	},
+	{
+		path: 'login',
+		component: LoginComponent,
+		canActivate: [GuestGuard]
+	},
+	{
+		path: 'register',
+		component: RegisterComponent
+	},
+	{
+		path: ':username/settings',
+		component: SettingsComponent,
+		resolve: { userSettings: UserSettingsResolve},
+		canActivate: [AuthGuard]
+	},
+	{
+		path: ':username/:searchmode',
+		name: 'user-search-specific',
+		component: UserPageComponent,
+		canActivate: [AuthGuard]
+	},
+	{
+		path: ':username',
+		name: 'user-search-default',
+		component: UserPageComponent,
+		resolve: { homeAggs: HomeResolve},
+		canActivate: [AuthGuard]
+	}
 ];
 
 export const routing = RouterModule.forRoot(routes);

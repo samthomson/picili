@@ -6,10 +6,10 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { PiciliAppComponent } from './picili-app.component';
 import {
-    SearchComponent,
-    FoldersComponent,
-    MapPageComponent,
-    CalendarComponent
+	SearchComponent,
+	FoldersComponent,
+	MapPageComponent,
+	CalendarComponent
 } from './components/pages/user-page';
 
 import { HeaderComponent } from './components/shared/header/header.component';
@@ -50,51 +50,51 @@ import { MaterializeModule } from 'angular2-materialize';
 
 @NgModule({
   declarations: [
-    PiciliAppComponent,
-    SearchComponent,
-    FoldersComponent,
-    MapPageComponent,
-    CalendarComponent,
-    HeaderComponent,
-    LightboxComponent,
-    SideMenuComponent,
-    LoginComponent,
-    RegisterComponent,
-    HomeComponent,
-    UserPageComponent,
-    SettingsComponent,
-    PeopleComponent,
-    ElevationComponent,
-    ColourComponent,
-    ResultGridComponent,
-    SortSelectComponent,
-    MapComponent,
-    CalendarPeriodPipe,
-    CalendarYearMonthComponent
+	PiciliAppComponent,
+	SearchComponent,
+	FoldersComponent,
+	MapPageComponent,
+	CalendarComponent,
+	HeaderComponent,
+	LightboxComponent,
+	SideMenuComponent,
+	LoginComponent,
+	RegisterComponent,
+	HomeComponent,
+	UserPageComponent,
+	SettingsComponent,
+	PeopleComponent,
+	ElevationComponent,
+	ColourComponent,
+	ResultGridComponent,
+	SortSelectComponent,
+	MapComponent,
+	CalendarPeriodPipe,
+	CalendarYearMonthComponent
   ],
   imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule, /* redundant now? */
-    HttpClientModule,
-    routing,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDR4kOXozjam-Y3xaMxq9mSABoJxHzsXhM'
-    }),
-    MaterializeModule
+	BrowserModule,
+	FormsModule,
+	HttpModule, /* redundant now? */
+	HttpClientModule,
+	routing,
+	AgmCoreModule.forRoot({
+		apiKey: 'AIzaSyDR4kOXozjam-Y3xaMxq9mSABoJxHzsXhM'
+	}),
+	MaterializeModule
   ],
   providers: [
-    AuthService,
-    HttpService,
-    SearchService,
-    HelperService,
-    AuthGuard,
-    GuestGuard,
-    GlobalVars,
-    UserPageResolve,
-    UserSettingsResolve,
-    HomeResolve
-    ],
+	AuthService,
+	HttpService,
+	SearchService,
+	HelperService,
+	AuthGuard,
+	GuestGuard,
+	GlobalVars,
+	UserPageResolve,
+	UserSettingsResolve,
+	HomeResolve
+	],
   bootstrap: [PiciliAppComponent]
 })
 export class AppModule { }

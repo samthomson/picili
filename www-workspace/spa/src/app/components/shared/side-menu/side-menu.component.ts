@@ -8,41 +8,41 @@ import { AuthService, SearchService } from './../../../services';
 })
 export class SideMenuComponent implements OnInit {
 
-    private sCurrentPageUsername: string;
+	private sCurrentPageUsername: string;
 
-    private sQuery: string;
+	private sQuery: string;
 
-    private maMenuItems;
+	private maMenuItems;
 
 
-    constructor(
-        private authService: AuthService,
-        private searchService: SearchService,
-        route: ActivatedRoute
-    ) {
-        this.sCurrentPageUsername = route.snapshot.params['username'];
+	constructor(
+		private authService: AuthService,
+		private searchService: SearchService,
+		route: ActivatedRoute
+	) {
+		this.sCurrentPageUsername = route.snapshot.params['username'];
 
-        this.maMenuItems = [
-            {
-                name: 'search',
-                link: '/' + this.sCurrentPageUsername + '/search',
-                icon: 'fa fa-th'
-            },
-            {
-                name: 'folders',
-                link: '/' + this.sCurrentPageUsername + '/folders',
-                icon: 'fa fa-folder'
-            },
-            {
-                name: 'map',
-                link: '/' + this.sCurrentPageUsername + '/map',
-                icon: 'fa fa-globe'
-            },
-            {
-                name: 'calendar',
-                link: '/' + this.sCurrentPageUsername + '/calendar',
-                icon: 'fa fa-calendar'
-            }/*,
+		this.maMenuItems = [
+			{
+				name: 'search',
+				link: '/' + this.sCurrentPageUsername + '/search',
+				icon: 'fa fa-th'
+			},
+			{
+				name: 'folders',
+				link: '/' + this.sCurrentPageUsername + '/folders',
+				icon: 'fa fa-folder'
+			},
+			{
+				name: 'map',
+				link: '/' + this.sCurrentPageUsername + '/map',
+				icon: 'fa fa-globe'
+			},
+			{
+				name: 'calendar',
+				link: '/' + this.sCurrentPageUsername + '/calendar',
+				icon: 'fa fa-calendar'
+			}/*,
             {
                 name: 'altitude',
                 link: '/' + this.sCurrentPageUsername + '/altitude',
@@ -58,35 +58,35 @@ export class SideMenuComponent implements OnInit {
                 link: '/' + this.sCurrentPageUsername + '/people',
                 icon: 'fa fa-users'
             }*/
-        ];
-    }
+		];
+	}
 
   ngOnInit() {
 
-      this.authService.authStatusChanged.subscribe(
-          (mData) => {
-              this.sCurrentPageUsername = mData.user;
-          }
-      );
+		this.authService.authStatusChanged.subscribe(
+			(mData) => {
+				this.sCurrentPageUsername = mData.user;
+			}
+		);
 
-      this.searchService.queryChanged
-      .subscribe((query) => {
-          this.sQuery = query;
-      });
+		this.searchService.queryChanged
+		.subscribe((query) => {
+			this.sQuery = query;
+		});
 
   }
 
-    genLink(sPage) {
-        // build a link to page with query if it's set
-        let sRoute = sPage;
+	genLink(sPage) {
+		// build a link to page with query if it's set
+		let sRoute = sPage;
 
-        if (typeof this.searchService.mQuery['q'] !== 'undefined') {
-            if (this.searchService.mQuery['q'] !== '') {
-                sRoute += ';q=' + this.searchService.mQuery['q'];
-            }
-        }
+		if (typeof this.searchService.mQuery['q'] !== 'undefined') {
+			if (this.searchService.mQuery['q'] !== '') {
+				sRoute += ';q=' + this.searchService.mQuery['q'];
+			}
+		}
 
-        return sRoute;
-    }
+		return sRoute;
+	}
 
 }

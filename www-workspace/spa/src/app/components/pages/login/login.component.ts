@@ -8,42 +8,42 @@ import { AuthService } from '../../../services';
 })
 export class LoginComponent {
 
-    private loginEmail: string = '';
-    private loginPassword: string = '';
+	private loginEmail: string = '';
+	private loginPassword: string = '';
 
-    private bAttemptingLogin: boolean = false;
-    private bLoginFailed: boolean = false;
+	private bAttemptingLogin: boolean = false;
+	private bLoginFailed: boolean = false;
 
-    private error = '';
+	private error = '';
 
-    constructor(
-        private router: Router,
-        private authService: AuthService
-    ) { }
+	constructor(
+		private router: Router,
+		private authService: AuthService
+	) { }
 
-    onSubmit(f) {
+	onSubmit(f) {
 
-        this.bAttemptingLogin = true;
-        this.bLoginFailed = false;
-        this.error = '';
+		this.bAttemptingLogin = true;
+		this.bLoginFailed = false;
+		this.error = '';
 
-        this.authService.attemptLogin(this.loginEmail, this.loginPassword)
-            .subscribe(
-                result => {
-                    this.bAttemptingLogin = false;
-                    if (result.success === true) {
-                        // login successful
-                        this.router.navigate(['/' + result.user]);
-                    } else {
-                        this.bLoginFailed = true;
+		this.authService.attemptLogin(this.loginEmail, this.loginPassword)
+			.subscribe(
+				result => {
+					this.bAttemptingLogin = false;
+					if (result.success === true) {
+						// login successful
+						this.router.navigate(['/' + result.user]);
+					} else {
+						this.bLoginFailed = true;
 
-                        this.error = 'Email or password is incorrect';
-                    }
-                },
-                err => {
-                    this.bAttemptingLogin = false;
-                }
-            );
-      }
+						this.error = 'Email or password is incorrect';
+					}
+				},
+				err => {
+					this.bAttemptingLogin = false;
+				}
+			);
+		}
 
 }
