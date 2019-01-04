@@ -13,7 +13,8 @@
     "dist": "ng build && ./node_modules/.bin/gulp dist",
     "dist-prod": "ng build --env=prod && ./node_modules/.bin/gulp dist",
     "gulp-watch": "gulp watch",
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "prettier": "prettier --config=\".prettierrc\" src/**/*.ts"
   },
   "private": true,
   "dependencies": {
