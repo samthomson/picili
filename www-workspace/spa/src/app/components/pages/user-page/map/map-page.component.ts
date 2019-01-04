@@ -30,18 +30,31 @@ export class MapPageComponent implements OnInit {
 	private iMapWidth: string;
 	private iResultsWidth: string;
 
+	private bCurrentlyResizing: boolean = false;
+
 	@ViewChild('bothContainersWidth') bothContainersWidth: ElementRef;
 
 	resizeId;
+	resizeSearchBlockId;
 
 	@HostListener('window:resize')
 	onWindowResize() {
+		this.bCurrentlyResizing = true;
 		// debounce resize, wait for resize to finish before doing stuff
 		if (this.resizeId) {
 			clearTimeout(this.resizeId);
 		}
+		if (this.resizeSearchBlockId) {
+			clearTimeout(this.resizeSearchBlockId);
+		}
+
 		this.resizeId = setTimeout((() => {
+			// wait 200 milliseconds (gbl.iResizeTimeout) before we resize containers, to be confident the resize has finished
 			this.calculateContainerSizes()
+			// then re-enable map searching
+			this.resizeSearchBlockId = setTimeout((() => {
+				this.bCurrentlyResizing = false
+			}).bind(this), this.gbl.iResizeTimeout);
 		}).bind(this), this.gbl.iResizeTimeout);
 	}
 
@@ -91,9 +104,13 @@ export class MapPageComponent implements OnInit {
 	onBoundsChanged(oNewBounds) {
 		this.bounds = oNewBounds;
 	}
+
 	onMapIdle() {
 		this.ref.detectChanges();
-		this.doSearchFromBounds();
+		// only trigger search if the resize didn't occur during window resize
+		if (!this.bCurrentlyResizing) {
+			this.doSearchFromBounds();
+		}
 	}
 
 	onMarkerClick(sIgnore, iClickedIndex) {
