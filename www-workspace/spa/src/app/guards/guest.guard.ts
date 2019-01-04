@@ -7,21 +7,21 @@ import { AuthService } from './../services';
 export class GuestGuard implements CanActivate {
 
   constructor(
-    private router: Router,
-    private authService: AuthService,
-    private route: ActivatedRoute
+	private router: Router,
+	private authService: AuthService,
+	private route: ActivatedRoute
   ) {}
 
   canActivate() {
 
-    if (!this.authService.isLoggedIn()) {
-      // not logged in so return true
-      return true;
-    }
+	if (!this.authService.isLoggedIn()) {
+		// not logged in so return true
+		return true;
+	}
 
-    // logged in so redirect to their page
-    const sRelativeRoute: string = '/' + this.route.snapshot.params['username']
-    this.router.navigate([sRelativeRoute]);
-    return false;
+	// logged in so redirect to their page
+	const sRelativeRoute: string = '/' + this.route.snapshot.params['username']
+	this.router.navigate([sRelativeRoute]);
+	return false;
   }
 }

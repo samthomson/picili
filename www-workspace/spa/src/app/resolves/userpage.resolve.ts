@@ -12,7 +12,7 @@ export class UserPageResolve implements Resolve<any> {
 
 	resolve(route: ActivatedRouteSnapshot) {
 		// if there's a search query send that along too..
-		//return this.httpService.fetchPageState(route.params['username']);
+		// return this.httpService.fetchPageState(route.params['username']);
 		return null;
 	}
 }

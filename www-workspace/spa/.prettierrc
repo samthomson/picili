@@ -1,0 +1,13 @@
+{
+    "trailingComma": "es5",
+    "semi": false,
+    "singleQuote": true,
+    "overrides": [
+        {
+            "files": "*.ts *.spec.ts *.tsx",
+            "options": {
+                "semi": true
+            }
+        }
+    ]
+}

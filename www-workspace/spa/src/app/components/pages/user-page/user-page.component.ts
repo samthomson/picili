@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Injectable } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService, SearchService, HelperService } from './../../../services';
 
 import { PlatformLocation } from '@angular/common';
@@ -16,179 +16,175 @@ import * as moment from 'moment';
 @Injectable()
 export class UserPageComponent implements OnInit, OnDestroy {
 
-    private sSearchMode: string;
-    // private sCurrentPageUsername: string;
-    private mData: any;
-    private mQuery: any;
-    private tSearchEventTimeout: any;
+	private sSearchMode: string;
+	// private sCurrentPageUsername: string;
+	private mData: any;
+	private mQuery: any;
+	private tSearchEventTimeout: any;
 
-    private mLocalData: any;
-    private bLightboxOpen:boolean = false;
+	private mLocalData: any;
+	private bLightboxOpen: boolean = false;
 
-    // subscriptions
-    private subQueryChanged;
-    private subLightboxOpen;
-    private subLightboxClose;
-    private subDateFromUrl;
-    private subDateFromSearch;
+	// subscriptions
+	private subQueryChanged;
+	private subLightboxOpen;
+	private subLightboxClose;
+	private subDateFromUrl;
+	private subDateFromSearch;
 
-    private sCurrentDateDisplay: string;
-    private sCurrentHeaderDisplay: string;
-    
-    private bSearchServiceSearching: boolean = false;
+	private sCurrentDateDisplay: string;
+	private sCurrentHeaderDisplay: string;
 
-    private oHomeAggs: any
+	private bSearchServiceSearching: boolean = false;
 
-    private aYearsAgo: any
+	private oHomeAggs: any
 
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private httpService: HttpService,
-        private searchService: SearchService,
-        private helperService: HelperService,        
-        private gbl: GlobalVars,
-        private location: PlatformLocation
-    ) {
-        this.gbl.sCurrentPageUsername = route.snapshot.params['username'];
+	private aYearsAgo: any
 
-        this.aYearsAgo = [
-            {
-                header: '1 year ago',
-                key: '1_year_ago'
-            },
-            {
-                header: '2 years ago',
-                key: '2_years_ago'
-            },
-            {
-                header: '3 years ago',
-                key: '3_years_ago'
-            },
-            {
-                header: '4 years ago',
-                key: '4_years_ago'
-            },
-            {
-                header: '5 years ago',
-                key: '5_years_ago'
-            }
-        ]
+	constructor(
+		private route: ActivatedRoute,
+		private router: Router,
+		private httpService: HttpService,
+		private searchService: SearchService,
+		private helperService: HelperService,
+		private gbl: GlobalVars,
+		private location: PlatformLocation
+	) {
+		this.gbl.sCurrentPageUsername = route.snapshot.params['username'];
 
-        if (typeof route.snapshot.data['homeAggs'] !== 'undefined') {
-            this.oHomeAggs = route.snapshot.data['homeAggs']
-        }
+		this.aYearsAgo = [
+			{
+				header: '1 year ago',
+				key: '1_year_ago'
+			},
+			{
+				header: '2 years ago',
+				key: '2_years_ago'
+			},
+			{
+				header: '3 years ago',
+				key: '3_years_ago'
+			},
+			{
+				header: '4 years ago',
+				key: '4_years_ago'
+			},
+			{
+				header: '5 years ago',
+				key: '5_years_ago'
+			}
+		]
 
-        this.searchService.sSearchMode = (typeof route.snapshot.params['searchmode'] === "undefined") ? 'default' : route.snapshot.params['searchmode'];
-        this.searchService.iPage = 1;
+		if (typeof route.snapshot.data['homeAggs'] !== 'undefined') {
+			this.oHomeAggs = route.snapshot.data['homeAggs']
+		}
 
-        //
-        // get query vars
-        //
-        this.route.queryParams.subscribe(params => {
-            let q = params['q'];
-            this.searchService.setQueryText(q);
+		this.searchService.sSearchMode = (typeof route.snapshot.params['searchmode'] === 'undefined') ? 'default' : route.snapshot.params['searchmode'];
+		this.searchService.iPage = 1;
 
-
-            if(typeof params['sort'] !== "undefined")
-            {
-                this.searchService.sCurrentSort = params['sort'];
-                this.searchService.bSortChanged = true;
-            }else{
-                this.searchService.sCurrentSort = 'date_desc';
-            }
-
-            this.searchService.mQuery['filters'] = (typeof params['filters'] === "undefined") ? [] : JSON.parse(params['filters']);
-
-            this.subDateFromUrl = this.searchService.eeDateFromUrl.subscribe(() => {
-                this.setLocalDisplayDate();
-            });
-
-            //// this.searchService.determineLocalVarsByParsingUrlVars();
-
-            // adding this here so that when user presses back and the url changes we trigger this
-            this.changedSearchPage(this.searchService.sSearchMode);
-
-            // this.searchService.mQuery['filters'] = JSON.parse(params['filters']);
-        });
-
-        // this.httpService.triggerSearch();
-
-        location.onPopState(() => {
-            // user pressed back, but not just while on this page, possibly also TO this page
-            // todo?
-            // this.httpService.triggerSearch();
-            // this.ngOnInit();
-
-        });
-
-        //
-        // subscribe to search data changing
-        //
-        this.httpService.mDataChanged.subscribe(data => {
-            this.mLocalData = data;
-        });
-
-        this.subDateFromSearch = this.searchService.eeDatechange.subscribe(() => {
-            this.setLocalDisplayDate();
-        });
-
-        this.httpService.bSearchingChanged.subscribe((bSearching) => {
-            setTimeout(() => {
-                this.bSearchServiceSearching = bSearching
-            }, 1)
-        })
+		//
+		// get query vars
+		//
+		this.route.queryParams.subscribe(params => {
+			let q = params['q'];
+			this.searchService.setQueryText(q);
 
 
-    }
+			if (typeof params['sort'] !== 'undefined') {
+				this.searchService.sCurrentSort = params['sort'];
+				this.searchService.bSortChanged = true;
+			} else {
+				this.searchService.sCurrentSort = 'date_desc';
+			}
 
-    ngOnInit() {
-        this.searchService.iPage = 1;
-        //
-        // get url vars
-        //
+			this.searchService.mQuery['filters'] = (typeof params['filters'] === 'undefined') ? [] : JSON.parse(params['filters']);
 
-        this.route.params.subscribe((param) => {
-            let sNewSearchMode = param['searchmode'];
+			this.subDateFromUrl = this.searchService.eeDateFromUrl.subscribe(() => {
+				this.setLocalDisplayDate();
+			});
 
-            if(sNewSearchMode != this.searchService.sSearchMode)
-            {
-                // changed search mode, from one search mode to another
-                this.searchService.sSearchMode = sNewSearchMode;
+			//// this.searchService.determineLocalVarsByParsingUrlVars();
 
-                if(typeof this.searchService.sSearchMode !== "undefined")
-                {
-                    this.changedSearchPage(this.searchService.sSearchMode);
-                }else{
-                    // why is it undefined? because we're on home..?
-                    this.searchService.sSearchMode = 'default';
-                }
-            }
-        });
+			// adding this here so that when user presses back and the url changes we trigger this
+			this.changedSearchPage(this.searchService.sSearchMode);
 
-        //
-        // listen to event
-        //
-        this.subQueryChanged = this.searchService.queryChanged.subscribe((query) => {
-            this.mQuery = query;
-        });
+			// this.searchService.mQuery['filters'] = JSON.parse(params['filters']);
+		});
 
-        this.subLightboxOpen = this.searchService.eeThumbClick.subscribe(data => {
-            this.bLightboxOpen = true;
-        });
+		// this.httpService.triggerSearch();
 
-        this.subLightboxClose = this.searchService.eeLightboxClose.subscribe(data => {
-            this.bLightboxOpen = false;
-        });
+		location.onPopState(() => {
+			// user pressed back, but not just while on this page, possibly also TO this page
+			// todo?
+			// this.httpService.triggerSearch();
+			// this.ngOnInit();
+
+		});
+
+		//
+		// subscribe to search data changing
+		//
+		this.httpService.mDataChanged.subscribe(data => {
+			this.mLocalData = data;
+		});
+
+		this.subDateFromSearch = this.searchService.eeDatechange.subscribe(() => {
+			this.setLocalDisplayDate();
+		});
+
+		this.httpService.bSearchingChanged.subscribe((bSearching) => {
+			setTimeout(() => {
+				this.bSearchServiceSearching = bSearching
+			}, 1)
+		})
 
 
-        
-    }
+	}
 
-    changedSearchPage(sNewPage)
-    {
-        /*
-        This method is called when the user changes to a search page, this can be from the user-page constructor (from another component route), or on param change (one user-page to another). 
+	ngOnInit() {
+		this.searchService.iPage = 1;
+		//
+		// get url vars
+		//
+
+		this.route.params.subscribe((param) => {
+			let sNewSearchMode = param['searchmode'];
+
+			if (sNewSearchMode !== this.searchService.sSearchMode) {
+				// changed search mode, from one search mode to another
+				this.searchService.sSearchMode = sNewSearchMode;
+
+				if (typeof this.searchService.sSearchMode !== 'undefined') {
+					this.changedSearchPage(this.searchService.sSearchMode);
+				} else {
+					// why is it undefined? because we're on home..?
+					this.searchService.sSearchMode = 'default';
+				}
+			}
+		});
+
+		//
+		// listen to event
+		//
+		this.subQueryChanged = this.searchService.queryChanged.subscribe((query) => {
+			this.mQuery = query;
+		});
+
+		this.subLightboxOpen = this.searchService.eeThumbClick.subscribe(data => {
+			this.bLightboxOpen = true;
+		});
+
+		this.subLightboxClose = this.searchService.eeLightboxClose.subscribe(data => {
+			this.bLightboxOpen = false;
+		});
+
+
+
+	}
+
+	changedSearchPage(sNewPage) {
+		/*
+        This method is called when the user changes to a search page, this can be from the user-page constructor (from another component route), or on param change (one user-page to another).
         /{userId}/search
         /{userId}/folders
         /{userId}/map
@@ -196,220 +192,201 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
         this method is called from the contructor and ngOnInit methods of this component.
         */
-        // don't trigger search, let each page do something itself
-        
-        switch(sNewPage)
-        {
-            case 'search':
-            case 'folders':
-                this.httpService.triggerSearch();
-                break;
-        }
-        // this.httpService.triggerSearch();
-    }
+		// don't trigger search, let each page do something itself
 
-    ngOnDestroy()
-    {
-        this.subQueryChanged.unsubscribe();
-        this.subLightboxOpen.unsubscribe();
-        this.subLightboxClose.unsubscribe();
-        this.subDateFromUrl.unsubscribe();
-    }
+		switch (sNewPage) {
+			case 'search':
+			case 'folders':
+				this.httpService.triggerSearch();
+				break;
+		}
+		// this.httpService.triggerSearch();
+	}
 
-    removeFilter(iIndex)
-    {
-        this.searchService.removeFilter(iIndex);
-        this.httpService.triggerSearch();
-    }
+	ngOnDestroy() {
+		this.subQueryChanged.unsubscribe();
+		this.subLightboxOpen.unsubscribe();
+		this.subLightboxClose.unsubscribe();
+		this.subDateFromUrl.unsubscribe();
+	}
 
-    clearFilters()
-    {
-        this.searchService.clearFilters();
-        this.httpService.triggerSearch();
-    }
+	removeFilter(iIndex) {
+		this.searchService.removeFilter(iIndex);
+		this.httpService.triggerSearch();
+	}
 
-    keydown(event)
-    {
-        if(event.keyCode === 13 && !this.searchService.bEmptyQuery())
-        {
-            this.directSearch();
-        }
-    }
+	clearFilters() {
+		this.searchService.clearFilters();
+		this.httpService.triggerSearch();
+	}
 
-    eTextQueryChange(newValue) {
-        clearTimeout(this.tSearchEventTimeout);
+	keydown(event) {
+		if (event.keyCode === 13 && !this.searchService.bEmptyQuery()) {
+			this.directSearch();
+		}
+	}
 
-        this.tSearchEventTimeout = setTimeout(function(httpService, searchService){
-            searchService.updateURLToVars();
-            httpService.triggerSearch();
-        }, 150, this.httpService, this.searchService);
+	eTextQueryChange(newValue) {
+		clearTimeout(this.tSearchEventTimeout);
 
-    }
-    
-    directSearch()
-    {
-        this.searchService.updateURLToVars();
-        this.httpService.triggerSearch();
-    }
+		this.tSearchEventTimeout = setTimeout(function(httpService, searchService) {
+			searchService.updateURLToVars();
+			httpService.triggerSearch();
+		}, 150, this.httpService, this.searchService);
 
-    clearTextInput()
-    {
-        this.searchService.mQuery.q = '';
-        this.directSearch();
-    }
+	}
 
-    onSetCalendarSearchMode(sNewSearchMode)
-    {
-        this.searchService.sCalendarSearchMode = sNewSearchMode
+	directSearch() {
+		this.searchService.updateURLToVars();
+		this.httpService.triggerSearch();
+	}
 
-        this.setMDDateToStartOfUnit(this.searchService.sCalendarSearchMode)
+	clearTextInput() {
+		this.searchService.mQuery.q = '';
+		this.directSearch();
+	}
 
-        // do search?
-        this.setLocalDisplayDate().then(() => {
-            this.searchService.addSetCalendarFilter(
-                this.searchService.sCalendarSearchMode,
-                this.sCurrentDateDisplay,
-                this.searchService.sDate
-            )
+	onSetCalendarSearchMode(sNewSearchMode) {
+		this.searchService.sCalendarSearchMode = sNewSearchMode
 
-            this.httpService.triggerSearch()
-        })
-    }
+		this.setMDDateToStartOfUnit(this.searchService.sCalendarSearchMode)
 
-    //
-    // calendar things
-    //
-    setMDDateToStartOfUnit(sMode) {
-        switch(this.searchService.sCalendarSearchMode)
-        {
-            case 'day':
-                this.searchService.mdDate.startOf(sMode);
-                break;
-            case 'week':
-                this.searchService.mdDate.startOf(sMode);
-                // add a week
-                break;
-            case 'month':
-                this.searchService.mdDate.startOf(sMode);
-                // add a month
-                break;
-            case 'year':
-                this.searchService.mdDate.startOf(sMode);
-                // add a year
-                break;
-        }
-        // and update the search string we use to make filters from
-        this.searchService.sDate = this.searchService.mdDate.format('DD/MM/YYYY')
-        this.setLocalDisplayDate();
-    }
+		// do search?
+		this.setLocalDisplayDate().then(() => {
+			this.searchService.addSetCalendarFilter(
+				this.searchService.sCalendarSearchMode,
+				this.sCurrentDateDisplay,
+				this.searchService.sDate
+			)
 
-    onCalMove(iUnit)
-    {
-        this.setMDDateToStartOfUnit(this.searchService.sCalendarSearchMode)
-        // depending on mode add a certain amount of time, then do new search
-        switch(this.searchService.sCalendarSearchMode)
-        {
-            case 'day':
-                this.searchService.setDate(this.searchService.mdDate.add(iUnit, 'days'))
-                break;
-            case 'week':
-                this.searchService.setDate(this.searchService.mdDate.add(iUnit, 'week'))
-                // add a week
-                break;
-            case 'month':
-                this.searchService.mdDate.add(iUnit, 'months')
-                this.searchService.setDate(this.searchService.mdDate)
-                // add a month
-                break;
-            case 'year':
-                this.searchService.setDate(this.searchService.mdDate.add(iUnit, 'year'))
-                // add a year
-                break;
-        }
-        this.setLocalDisplayDate().then(() => {
-            this.searchService.eeDatechange.emit();
-            this.searchService.addSetCalendarFilter(
-                this.searchService.sCalendarSearchMode,
-                this.sCurrentDateDisplay,
-                this.searchService.sDate
-            );
-            
-            this.httpService.triggerSearch();
-        });
-    }
+			this.httpService.triggerSearch()
+		})
+	}
 
-    //
-    // people search
-    //
-    setPeopleSearchGender(sGender)
-    {
-        this.searchService.sPeopleSearchGender = sGender;
-        this.searchService.removeFilterByType('people.gender');
+	//
+	// calendar things
+	//
+	setMDDateToStartOfUnit(sMode) {
+		switch (this.searchService.sCalendarSearchMode) {
+			case 'day':
+				this.searchService.mdDate.startOf(sMode);
+				break;
+			case 'week':
+				this.searchService.mdDate.startOf(sMode);
+				// add a week
+				break;
+			case 'month':
+				this.searchService.mdDate.startOf(sMode);
+				// add a month
+				break;
+			case 'year':
+				this.searchService.mdDate.startOf(sMode);
+				// add a year
+				break;
+		}
+		// and update the search string we use to make filters from
+		this.searchService.sDate = this.searchService.mdDate.format('DD/MM/YYYY')
+		this.setLocalDisplayDate();
+	}
 
-        if(sGender !== 'both')
-        {
-            // add as filter
-            this.searchService.addFilter('people.gender', this.searchService.sPeopleSearchGender + 'people', this.searchService.sPeopleSearchGender);
-        }
-        this.httpService.triggerSearch();
+	onCalMove(iUnit) {
+		this.setMDDateToStartOfUnit(this.searchService.sCalendarSearchMode)
+		// depending on mode add a certain amount of time, then do new search
+		switch (this.searchService.sCalendarSearchMode) {
+			case 'day':
+				this.searchService.setDate(this.searchService.mdDate.add(iUnit, 'days'))
+				break;
+			case 'week':
+				this.searchService.setDate(this.searchService.mdDate.add(iUnit, 'week'))
+				// add a week
+				break;
+			case 'month':
+				this.searchService.mdDate.add(iUnit, 'months')
+				this.searchService.setDate(this.searchService.mdDate)
+				// add a month
+				break;
+			case 'year':
+				this.searchService.setDate(this.searchService.mdDate.add(iUnit, 'year'))
+				// add a year
+				break;
+		}
+		this.setLocalDisplayDate().then(() => {
+			this.searchService.eeDatechange.emit();
+			this.searchService.addSetCalendarFilter(
+				this.searchService.sCalendarSearchMode,
+				this.sCurrentDateDisplay,
+				this.searchService.sDate
+			);
 
-    }
-    
-    setPeopleSearchState(sState)
-    {
-        this.searchService.sPeopleSearchState = sState;
-        this.searchService.removeFilterByType('people.state');
+			this.httpService.triggerSearch();
+		});
+	}
 
-        if(sState !== 'all')
-        {
-            // add as filter
-            this.searchService.addFilter('people.state', this.searchService.sPeopleSearchState + 'people', this.searchService.sPeopleSearchState);
-        }
-        this.httpService.triggerSearch();
-    }
+	//
+	// people search
+	//
+	setPeopleSearchGender(sGender) {
+		this.searchService.sPeopleSearchGender = sGender;
+		this.searchService.removeFilterByType('people.gender');
 
-    setPeopleSearchGrouping(sGrouping)
-    {
-        this.searchService.sPeopleSearchGrouping = sGrouping;
-        this.searchService.removeFilterByType('people.grouping');
+		if (sGender !== 'both') {
+			// add as filter
+			this.searchService.addFilter('people.gender', this.searchService.sPeopleSearchGender + 'people', this.searchService.sPeopleSearchGender);
+		}
+		this.httpService.triggerSearch();
 
-        if(sGrouping !== 'any')
-        {
-            // add as filter
-            this.searchService.addFilter('people.grouping', this.searchService.sPeopleSearchGrouping + 'people', this.searchService.sPeopleSearchGrouping);
-        }
-        this.httpService.triggerSearch();
-    }
+	}
 
-    setLocalDisplayDate()
-    {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                let oDisplay = this.helperService.parseDisplayDates(
-                    this.searchService.sCalendarSearchMode,
-                    this.searchService.mdDate
-                )
-                this.sCurrentDateDisplay = oDisplay.sCurrentDateDisplay
-                this.sCurrentHeaderDisplay = oDisplay.sDisplayHeader
-                resolve()
-            }, 1)
-        });
-    }
+	setPeopleSearchState(sState) {
+		this.searchService.sPeopleSearchState = sState;
+		this.searchService.removeFilterByType('people.state');
 
-    //
-    // aggregation stuff
-    //
-    private generateOnThisDayLinkParts(iYearsAgo: number): [string, string] {
-        let date = moment()
-        date.add(-iYearsAgo, 'year')
+		if (sState !== 'all') {
+			// add as filter
+			this.searchService.addFilter('people.state', this.searchService.sPeopleSearchState + 'people', this.searchService.sPeopleSearchState);
+		}
+		this.httpService.triggerSearch();
+	}
 
-        let sDisplay: string = date.format('dddd Do')
-        let sValue: string = 'day:' + date.format('DD/MM/YYYY')
+	setPeopleSearchGrouping(sGrouping) {
+		this.searchService.sPeopleSearchGrouping = sGrouping;
+		this.searchService.removeFilterByType('people.grouping');
 
-        return [sDisplay, sValue]
-    }
+		if (sGrouping !== 'any') {
+			// add as filter
+			this.searchService.addFilter('people.grouping', this.searchService.sPeopleSearchGrouping + 'people', this.searchService.sPeopleSearchGrouping);
+		}
+		this.httpService.triggerSearch();
+	}
 
-    /*
+	setLocalDisplayDate() {
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {
+				let oDisplay = this.helperService.parseDisplayDates(
+					this.searchService.sCalendarSearchMode,
+					this.searchService.mdDate
+				)
+				this.sCurrentDateDisplay = oDisplay.sCurrentDateDisplay
+				this.sCurrentHeaderDisplay = oDisplay.sDisplayHeader
+				resolve()
+			}, 1)
+		});
+	}
+
+	//
+	// aggregation stuff
+	//
+	private generateOnThisDayLinkParts(iYearsAgo: number): [string, string] {
+		let date = moment()
+		date.add(-iYearsAgo, 'year')
+
+		let sDisplay: string = date.format('dddd Do')
+		let sValue: string = 'day:' + date.format('DD/MM/YYYY')
+
+		return [sDisplay, sValue]
+	}
+
+	/*
     onThisDayClick(iYearsAgo: number) {
         let [sDisplay, sValue] = this.generateOnThisDayLinkParts(-1 * iYearsAgo)
 

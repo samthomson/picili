@@ -18,6 +18,18 @@ jobs:
            npm rebuild node-sass
            npm run gulp
            npm run build
+  lint-spa:
+    docker:
+     - image: mhart/alpine-node
+    working_directory: /picili
+    steps:
+     - checkout
+     - run:
+         name: "Valid Typescript?"
+         command: |
+           cd www-workspace/spa
+           npm install -y
+           npm run lint
   test-api:
     docker:
      - image: php:7.1-apache
@@ -133,6 +145,7 @@ workflows:
   version: 2
   all:
     jobs:
+      - lint-spa
       - build-spa
       - test-api
       - test-auto

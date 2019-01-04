@@ -10,19 +10,19 @@ describe('PeopleComponent', () => {
   let fixture: ComponentFixture<PeopleComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ PeopleComponent ]
-    })
-    .compileComponents();
+	TestBed.configureTestingModule({
+		declarations: [ PeopleComponent ]
+	})
+	.compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PeopleComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+	fixture = TestBed.createComponent(PeopleComponent);
+	component = fixture.componentInstance;
+	fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+	expect(component).toBeTruthy();
   });
 });
