@@ -19,7 +19,7 @@ https://picili.com
 - user then enters a folder on their dropbox where they store their pictures
 - picili polls dropbox every x minutes, getting a list of files.
 - compares to all files it has identified so far.
-- adds any new ones to a local list and quees them to be imported, and removes any now deleted files.
+- adds any new ones to a local list and queues them to be imported, and removes any now deleted files.
 - queued files are each downloaded locally, processed, and then deleted locally
 - processing consists of
   - creating thumbnails
