@@ -134,7 +134,7 @@ class ElasticHelper {
         {
             // check if file even exists. if it doesn't, then 'deleting' is redundant and we can return a success - the result is the same, file does not exist
             $mFileExists = self::mGetDocument($iPiciliFileId);
-            if ($mFileExists == NULL) { // two not three equals is intentional
+            if ($mFileExists === NULL) {
                 // null response
                 return true;
             }
