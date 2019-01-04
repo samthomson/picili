@@ -339,6 +339,6 @@ class PiciliProcessorTest extends TestCase
 
         // and for previous - now - delete documetn
         $bResponse = ElasticHelper::bDeleteFromElastic($iTestFileId);
-        $this->assertFalse($bResponse);
+        $this->assertTrue($bResponse);
     }
 }
