@@ -27,8 +27,8 @@ https://picili.com
   - determining colours
   - sending the picture to a subject recognition API
   - if the picture contains geo exif data
-    - geocoding: get localtion information (via external API)
-    - altitude encoding (via an external API)
+    - geocoding: get location information (via external API)
+    - altitude encoding: derive elevation in metres from latitude/longitude (via an external API)
 
 Main parts:
 
