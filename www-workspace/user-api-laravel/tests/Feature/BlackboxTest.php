@@ -485,7 +485,7 @@ class BlackboxTest extends TestCase
             ->assertJsonFragment(['success' => true]);
 
         // test for db modal, verify it is updated
-        $oUser = User::with('dropboxToken')->where('username', 'seeduser')->first();
+        $iUserId = parent::iGetSeedUserId();
         
         $cEndFilesources = DropboxFilesource::where('user_id', $iUserId)->count();
         $cEndDropboxTokens = DropboxToken::where('user_id', $iUserId)->count();
