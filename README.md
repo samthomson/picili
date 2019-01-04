@@ -32,24 +32,23 @@ https://picili.com
 
 Main parts:
 
-- SPA: the front end is a Angular 2 single page application
-- API: a PHP API wrote in laravel which the SPA calls
-- Auto: A seperate project running in the background which is also a Laravel PHP project, this does all the synchronizing and auto tagging.
-- Auto-Scaler: A small node project which scales up instances of the Auto project based on demand
+- SPA: the front end is an Angular single page application (SPA)
+- API: a PHP API made using laravel which the SPA calls
+- Auto: A seperate project running in the background which is also a Laravel PHP project, this does all the dropbox synchronizing and file tagging/processing.
+- Auto-Scaler: A small node js project which scales up instances of the Auto project based on demand
 
 Techs:
 
-- SPA: JS Typescript / Angular 2 / SASS
-- Auto-Scaler: Nodes JS
-- API / Auto: PHP / Laravel
-
-Data: MySQL and Elasticsearch
+- SPA: JS / Typescript / Angular 7 / SASS / Gulp
+- Auto-Scaler: Node JS
+- API / Auto: PHP / Laravel / Elasticsearch / MySQL
+- *: Docker
 
 ## 2.0 Set up picili locally
 
 ### platform specific notes
 
-Mac: append the workspace volume with ':cached'. So `- ./www-workspace:/var/www` becomes `- ./www-workspace:/var/www:cached`
+Mac: append the workspace volume with `:cached`. So `- ./www-workspace:/var/www` becomes `- ./www-workspace:/var/www:cached`
 Linux: you may need to run `sudo sysctl vm.max_map_count=262144` to ensure elasticsearch can run correctly
 
 ### setup
