@@ -76,15 +76,12 @@ export class SideMenuComponent implements OnInit {
 
   }
 
-    genLink(sPage)
-    {
+    genLink(sPage) {
         // build a link to page with query if it's set
         let sRoute = sPage;
 
-        if (typeof this.searchService.mQuery['q'] !== "undefined")
-        {
-            if(this.searchService.mQuery['q'] !== '')
-            {
+        if (typeof this.searchService.mQuery['q'] !== 'undefined') {
+            if (this.searchService.mQuery['q'] !== '') {
                 sRoute += ';q=' + this.searchService.mQuery['q'];
             }
         }

@@ -14,8 +14,7 @@ export class SortSelectComponent implements OnInit {
 
     ngOnInit() {
     }
-    setSort(sNewSortMode)
-    {
+    setSort(sNewSortMode) {
       this.searchService.sCurrentSort = sNewSortMode;
       this.searchService.bSortChanged = true;
       this.httpService.triggerSearch();

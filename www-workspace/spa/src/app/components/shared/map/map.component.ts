@@ -115,19 +115,17 @@ export class MapComponent implements OnInit {
 
     }
 
-    loadGoogleMaps()
-    {
-        if(typeof google == "undefined" || typeof google.maps == "undefined")
-        {
-            //Load the SDK
+    loadGoogleMaps() {
+        if (typeof google == 'undefined' || typeof google.maps == 'undefined') {
+            // Load the SDK
             window['mapInit'] = () => {
                 this.initMap();
             }
 
-            let script = document.createElement("script");
-            script.id = "googleMaps";
+            let script = document.createElement('script');
+            script.id = 'googleMaps';
 
-            if(this.apiKey){
+            if (this.apiKey) {
 
                 script.src = 'https://maps.googleapis.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit';
             } else {
@@ -141,8 +139,7 @@ export class MapComponent implements OnInit {
         }
     }
 
-    resultThumbClick()
-    {
+    resultThumbClick() {
         // this.searchService.iActiveThumb = i;
     }
 

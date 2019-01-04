@@ -54,67 +54,54 @@ export class SearchService {
         this.mdDate = moment();
     }
 
-    eThumbClick(iIndice)
-    {
+    eThumbClick(iIndice) {
         this.iActiveThumb = iIndice
         this.eeThumbClick.emit(this.iActiveThumb)
     }
 
-    getQVars() : Object{
+    getQVars(): Object {
         let rParams = {};
-        if (typeof this.mQuery['q'] !== "undefined")
-        {
-            if (this.mQuery['q'] !== '')
-            {
+        if (typeof this.mQuery['q'] !== 'undefined') {
+            if (this.mQuery['q'] !== '') {
                 rParams['q'] = this.mQuery['q'];
             }
         }
 
-        if (this.mQuery['filters'] !== "undefined")
-        {
-            if (this.mQuery['filters'].length > 0)
-            {
+        if (this.mQuery['filters'] !== 'undefined') {
+            if (this.mQuery['filters'].length > 0) {
                 rParams['filters'] = JSON.stringify(this.mQuery['filters']);
             }
         }
 
         // sort?
-        if (this.bSortChanged)
-        {
+        if (this.bSortChanged) {
             rParams['sort'] = this.sCurrentSort;
         }
 
         return rParams;
     }
-    updateURLToVars()
-    {
+    updateURLToVars() {
         let sArgs = this.getQueryString();
         this.location.go(sArgs);
     }
 
-    getQueryString() : string
-    {
+    getQueryString(): string {
         // who calls this? - used when we 'change state' and want the url to match
         let sReturn = this.gbl.sCurrentPageUsername;
 
-        if(this.sSearchMode !== 'default')
-        {
+        if (this.sSearchMode !== 'default') {
             sReturn += '/' + this.sSearchMode;
         }
 
-        if(!this.bEmptyQuery() || this.mQuery['filters'].length > 0)
-        {
-            if(!this.bEmptyQuery())
-            {
+        if (!this.bEmptyQuery() || this.mQuery['filters'].length > 0) {
+            if (!this.bEmptyQuery()) {
                 sReturn += '?q=' + this.mQuery['q'];
             }
 
-            if(this.mQuery['filters'].length > 0)
-            {
-                if(this.bEmptyQuery())
-                {
+            if (this.mQuery['filters'].length > 0) {
+                if (this.bEmptyQuery()) {
                     sReturn += '?';
-                }else{
+                } else {
                     sReturn += '&';
                 }
 
@@ -122,24 +109,21 @@ export class SearchService {
             }
         }
 
-        if(this.bSortChanged)
-        {
+        if (this.bSortChanged) {
             sReturn += '&sort=' + this.sCurrentSort;
         }
 
         return sReturn;
     }
 
-    setQueryText(setQueryString)
-    {
+    setQueryText(setQueryString) {
         this.mQuery.q = setQueryString;
     }
 
-    setDate(mDate)
-    {        
+    setDate(mDate) {
         this.mdDate = mDate;
         // parse the moment date into a literal date which we'll use in search value of cal search
-        this.sDate = this.mdDate.format('DD/MM/YYYY'); 
+        this.sDate = this.mdDate.format('DD/MM/YYYY');
     }
 
     bEmptyQuery() {
@@ -147,79 +131,66 @@ export class SearchService {
         return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
     }
 
-    addFilter(sType, sDisplay, sValue)
-    {
-        if(typeof this.mQuery['filters'] === 'undefined')
-        {
+    addFilter(sType, sDisplay, sValue) {
+        if (typeof this.mQuery['filters'] === 'undefined') {
             this.mQuery['filters'] = [];
         }
-        var aF = {'type': sType, 'display': sDisplay, 'value': sValue};
+        let aF = {'type': sType, 'display': sDisplay, 'value': sValue};
         this.mQuery['filters'].push(aF);
         this.updateURLToVars();
     }
 
-    removeFilterByType(sType)
-    {
+    removeFilterByType(sType) {
         this.mQuery = this.removeFilterByTypeOnQueryObject(this.mQuery, sType)
     }
 
     removeFilterByTypeOnQueryObject(oQueryObject, sType) {
         let iPositionAt = -1;
-        for(let i = 0; i < oQueryObject['filters'].length; i++)
-        {
-            if(oQueryObject['filters'][i].type === sType)
-            {
+        for (let i = 0; i < oQueryObject['filters'].length; i++) {
+            if (oQueryObject['filters'][i].type === sType) {
                 iPositionAt = i;
             }
         }
-        if(iPositionAt !== -1)
-        {
+        if (iPositionAt !== -1) {
             oQueryObject['filters'].splice(iPositionAt, 1);
         }
         return oQueryObject
     }
 
-    addSetMapFilter(iLatMin, iLatMax, iLonMin, iLonMax, iZoom)
-    {
+    addSetMapFilter(iLatMin, iLatMax, iLonMin, iLonMax, iZoom) {
         // there can only be one map query, so we set it or update it
-        var sValue = iLatMin + ',' + iLatMax + ',' + iLonMin + ',' + iLonMax + ',' + iZoom;
+        let sValue = iLatMin + ',' + iLatMax + ',' + iLonMin + ',' + iLonMax + ',' + iZoom;
 
         this.removeFilterByType('map');
 
         this.addFilter('map', 'map', sValue);
     }
-    addSetCalendarFilter(sMode, sDisplay, sValue)
-    {
+    addSetCalendarFilter(sMode, sDisplay, sValue) {
         this.removeFilterByType('calendar');
 
         this.addFilter('calendar', sDisplay, sMode + ':' + sValue);
     }
-    removeFilter(iIndex)
-    {
+    removeFilter(iIndex) {
         this.mQuery['filters'].splice(iIndex, 1);
         this.updateURLToVars();
     }
-    clearFilters()
-    {
+    clearFilters() {
         this.mQuery['filters'] = [];
         this.updateURLToVars();
     }
 
-    determineLocalVarsByParsingUrlVars()
-    {
+    determineLocalVarsByParsingUrlVars() {
         let bFoundInUrl = false;
         let bCalVars = false;
         // if there's a calendar query parse out mode and date, or set defaults
-        for(let i = 0; i < this.mQuery['filters'].length; i++)
-        {
-            if(this.mQuery['filters'][i].type === 'calendar')
-            {
+        for (let i = 0; i < this.mQuery['filters'].length; i++) {
+            if (this.mQuery['filters'][i].type === 'calendar') {
                 bFoundInUrl = true;
                 // get value as mode:date
-                var saModeValue = this.mQuery['filters'][i].value.split(':');
+                let saModeValue = this.mQuery['filters'][i].value.split(':');
 
-                var sMode = saModeValue[0];
-                var sDate = saModeValue[1];
+                let sMode = saModeValue[0];
+                let sDate = saModeValue[1];
 
                 this.sCalendarSearchMode = sMode;
                 this.sDate = sDate;
@@ -235,8 +206,7 @@ export class SearchService {
         return (bFoundInUrl && bCalVars)
     }
 
-    resetPage()
-    {
+    resetPage() {
         this.iPage = 1
     }
 }

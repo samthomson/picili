@@ -22,7 +22,7 @@ export class AuthService {
 
     sToken: string;
 
-    
+
     // authTokenChanged = new EventEmitter<string>();
     //
     // jUser: any;
@@ -35,7 +35,7 @@ export class AuthService {
     ) {
         this.authStatus = !!localStorage.getItem(this.gbl.sAuthTokenName);
 
-        if(this.authStatus) {
+        if (this.authStatus) {
 			this.sToken = localStorage.getItem(this.gbl.sAuthTokenName);
 		}
     }
@@ -44,22 +44,20 @@ export class AuthService {
         return this.authStatus;
     }
 
-    attemptLogin(sEmail, sPassword): Observable<any>
-    {
+    attemptLogin(sEmail, sPassword): Observable<any> {
         let jAuthParams = new HttpParams()
             .set('email', sEmail)
             .set('password', sPassword);
 
         let headers = new HttpHeaders()
             .append('Content-Type', 'application/x-www-form-urlencoded');
-        
-        let options = 
-            {
+
+        let options = {
                 headers: headers,
                 withCredentials: false,
                 params: jAuthParams
             }
-        
+
         return this.http.post(
             this.gbl.sAPIBaseUrl + '/app/authenticate',
             { params: jAuthParams },
@@ -85,19 +83,18 @@ export class AuthService {
                         this.authStatusChanged.emit({'authed': true, 'user' : user});
 
                         this.sToken = token;
-                        
+
                         // return true to indicate successful login
                         return {'success': true, 'user': user};
-                    }else{
+                    } else {
                         // return false to indicate failed login
                         return {'success': false};
                     }
             }))
-            .catch((error:any) => Observable.throw(console.log('error authenticating: ', error.message)));
+            .catch((error: any) => Observable.throw(console.log('error authenticating: ', error.message)));
     }
 
-    attemptRegister(sEmail, sPassword): Observable<any>
-    {
+    attemptRegister(sEmail, sPassword): Observable<any> {
         let jAuthParams = new HttpParams()
             .set('email', sEmail)
             .set('password', sPassword);
@@ -120,7 +117,7 @@ export class AuthService {
                     let bSuccess = data.success;
                     let user = data.username;
 
-                    if(!bSuccess) {
+                    if (!bSuccess) {
                         return {'successful': false, 'errors': data.errors};
                     }
 
@@ -137,7 +134,7 @@ export class AuthService {
 
                         // return true to indicate successful register & login
                         return {'successful': true, 'user': user};
-                    }else{
+                    } else {
                         // return false to indicate failed register
                         return {'successful': false, 'errors': [{'unknown': 'unknown error'}]};
                     }
@@ -146,13 +143,11 @@ export class AuthService {
 
     }
 
-    getToken()
-    {
+    getToken() {
         return localStorage.getItem(this.gbl.sAuthTokenName);
     }
 
-    logOut()
-    {
+    logOut() {
         localStorage.removeItem(this.gbl.sAuthTokenName);
         this.authStatus = false;
         this.authStatusChanged.emit(this.authStatus);

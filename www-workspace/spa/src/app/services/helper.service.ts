@@ -10,14 +10,12 @@ export class HelperService {
         private searchService: SearchService,
     ) {}
 
-    parseDisplayDates(sCalendarSearchMode, mdDate)
-    {
+    parseDisplayDates(sCalendarSearchMode, mdDate) {
         let sDate = mdDate.format('DD/MM/YYYY')
         let sCurrentDateDisplay = 'giraffe'
         let sDisplayHeader = 'tomato'
 
-        switch(sCalendarSearchMode)
-        {
+        switch (sCalendarSearchMode) {
             case 'day':
                 sCurrentDateDisplay = mdDate.format('ddd Do');
                 sDisplayHeader = mdDate.format('ddd Do MMM YYYY');
@@ -43,7 +41,7 @@ export class HelperService {
     }
 
     thumbUrl(sSize, id) {
-        return this.gbl.awsBucketUrl + this.gbl.sCurrentPageUsername +'/' + sSize + id+'.jpg'
+        return this.gbl.awsBucketUrl + this.gbl.sCurrentPageUsername + '/' + sSize + id + '.jpg'
     }
 
     getBaseRouterLink(sPage) {
@@ -56,7 +54,7 @@ export class HelperService {
         // this should not modify the existing query state, it just creates a read only query to be displayed as a link
 
         let oReadOnlyQVars = this.searchService.getQVars()
-        if(typeof oReadOnlyQVars['filters'] === 'undefined') {
+        if (typeof oReadOnlyQVars['filters'] === 'undefined') {
             oReadOnlyQVars['filters'] = []
         } else {
             oReadOnlyQVars['filters'] = JSON.parse(oReadOnlyQVars['filters'])

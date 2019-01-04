@@ -42,7 +42,7 @@ export class HttpService {
         this.sToken = localStorage.getItem(this.gbl.sAuthTokenName);
     }
 
-    fetchPageState(sUsername) : any {
+    fetchPageState(sUsername): any {
         // this is the actual search method
         let authToken = localStorage.getItem(this.gbl.sAuthTokenName);
         let headers = new HttpHeaders()
@@ -50,14 +50,12 @@ export class HttpService {
 
 
         let q = {};
-        if (typeof this.searchService.mQuery.q !== 'undefined')
-        {
+        if (typeof this.searchService.mQuery.q !== 'undefined') {
             // send cursor to back end to get items afte
             q['q'] = this.searchService.mQuery.q;
         }
 
-        if (typeof this.searchService.mQuery['filters'] !== 'undefined')
-        {
+        if (typeof this.searchService.mQuery['filters'] !== 'undefined') {
             // send cursor to back end to get items afte
             q['filters'] = this.searchService.mQuery['filters'];
             // jParams.set('q', this.searchService.mQuery['filters']);
@@ -70,8 +68,7 @@ export class HttpService {
             .set('page', this.searchService.iPage.toString());
 
 
-        if (typeof this.searchService.sSearchMode !== 'undefined')
-        {
+        if (typeof this.searchService.sSearchMode !== 'undefined') {
             // send cursor to back end to get items afte
             jParams = jParams.set('searchmode', this.searchService.sSearchMode);
         }
@@ -95,11 +92,9 @@ export class HttpService {
         });
     }
 
-    triggerSearch(bFirstSearch = true)
-    {        
+    triggerSearch(bFirstSearch = true) {
         return new Promise((resolve, reject) => {
-            if(this.subCurrentSearchRequest !== undefined)
-            {
+            if (this.subCurrentSearchRequest !== undefined) {
                 // there is a pending search already, cancel it
                 this.subCurrentSearchRequest.unsubscribe();
                 this.searchService.bSearching = false;
@@ -116,21 +111,20 @@ export class HttpService {
             }
             this.subCurrentSearchRequest = this.fetchPageState(this.gbl.sCurrentPageUsername).subscribe(
                 (data) => {
-                    if(bFirstSearch)
-                    {
+                    if (bFirstSearch) {
                         // set
                         this.searchService.mData = data;
-                    }else{
+                    } else {
                         // combine
                         this.searchService.mData.search
                         .data = data.search.data;
 
-                        var oldResults = this.searchService.mData.search
+                        let oldResults = this.searchService.mData.search
                         .results;
-                        var newResults = data.search.results;
+                        let newResults = data.search.results;
 
                         oldResults = oldResults.concat(newResults);
-                        
+
                         this.searchService.mData.search
                         .results = oldResults;
                     }
@@ -144,8 +138,8 @@ export class HttpService {
                     if
                     (
                         typeof this.searchService.mData.search !== 'undefined' &&
-                        typeof this.searchService.mData.search.results !== 'undefined' &&this.searchService.mData.search.results.length > 0
-                    ){
+                        typeof this.searchService.mData.search.results !== 'undefined' && this.searchService.mData.search.results.length > 0
+                    ) {
                         this.searchService.bHasSearchResults = true;
                     }
                     resolve();
@@ -160,8 +154,7 @@ export class HttpService {
         });
     }
 
-    getUser() : Observable<any>
-    {
+    getUser(): Observable<any> {
         const authToken = localStorage.getItem(this.gbl.sAuthTokenName);
         const headers = new HttpHeaders()
             .append('Authorization', `Bearer ${authToken}`);
@@ -203,7 +196,7 @@ export class HttpService {
         ).catch((error: any) => {
             this.bMakingRequestToServer = false
             throw error;
-            //return {'success': false, 'errors': error};
+            // return {'success': false, 'errors': error};
         });
     }
 
@@ -232,8 +225,7 @@ export class HttpService {
             })
     }
 
-    updateDropboxFolder(sFolder)
-    {
+    updateDropboxFolder(sFolder) {
         const authToken = localStorage.getItem(this.gbl.sAuthTokenName);
 
         const jParams = new HttpParams()
@@ -259,14 +251,14 @@ export class HttpService {
 
                     if (bSuccess) {
                         return {'success': true};
-                    }else{
+                    } else {
                         // return false to indicate failed login
                         return {'success': false, 'errors': data.errors};
                     }
             });
     }
 
-    updatePrivacy(bPublic) : Observable<any>{
+    updatePrivacy(bPublic): Observable<any> {
         const authToken = localStorage.getItem(this.gbl.sAuthTokenName);
 
         const jParams = new HttpParams()
@@ -292,20 +284,18 @@ export class HttpService {
 
                     if (bSuccess) {
                         return {'success': true};
-                    }else{
+                    } else {
                         // return false to indicate failed login
                         return {'success': false, 'errors': data.errors};
                     }
             });
     }
 
-    dropboxOAuth()
-    {
+    dropboxOAuth() {
         return this.gbl.sOAUTHAPIBaseUrl + '/oauth/dropbox' + '?token=' + this.sToken;
     }
 
-    disconnectDropbox()
-    {
+    disconnectDropbox() {
         const authToken = localStorage.getItem(this.gbl.sAuthTokenName);
         const headers = new HttpHeaders()
             .append('Authorization', `Bearer ${authToken}`);
@@ -322,12 +312,11 @@ export class HttpService {
             }
         ).catch((error: any) => {
             throw error;
-            //return {'success': false, 'errors': error};
+            // return {'success': false, 'errors': error};
         });
     }
 
-    phpBool(bBool)
-    {
+    phpBool(bBool) {
         return bBool ? '1' : '0';
     }
 
@@ -357,25 +346,25 @@ export class HttpService {
         ).catch((error: any) => {
             this.bMakingRequestToServer = false
             throw error;
-            //return {'success': false, 'errors': error};
+            // return {'success': false, 'errors': error};
         });
     }
 
     attemptPreload(iFileIndex) {
         // todo
         const sSize = 'xl';
-        var imgPreload = new Image();
-    	imgPreload.src = 'https://s3-eu-west-1.amazonaws.com/picili-bucket/t/'+ this.gbl.sCurrentPageUsername +'/' + sSize + this.searchService.mData.search.results[iFileIndex].id+'.jpg'
+        let imgPreload = new Image();
+    	imgPreload.src = 'https://s3-eu-west-1.amazonaws.com/picili-bucket/t/' + this.gbl.sCurrentPageUsername + '/' + sSize + this.searchService.mData.search.results[iFileIndex].id + '.jpg'
     }
 
     preloadActiveDelta(iDelta) {
         // find file in deltas position and load it
         let iTemp = this.searchService.iActiveThumb + iDelta
 
-        if(iTemp >= this.searchService.mData.search.results.length) {
+        if (iTemp >= this.searchService.mData.search.results.length) {
             iTemp = 0
         }
-        if(iTemp < 0) {
+        if (iTemp < 0) {
             iTemp = this.searchService.mData.search.results.length - 1
         }
 

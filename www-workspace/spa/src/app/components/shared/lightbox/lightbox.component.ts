@@ -7,6 +7,11 @@ import { HttpService, SearchService, HelperService } from './../../../services'
     templateUrl: './lightbox.component.html'
 })
 export class LightboxComponent implements OnInit {
+
+    private bShowingInfo: boolean = false
+    private bLoadingInfo: boolean = false
+
+    private jFileInfo: any = null
     @HostListener('document:keydown', ['$event']) keypress(event) {
         // 37 = left
         // 39 = right
@@ -28,11 +33,6 @@ export class LightboxComponent implements OnInit {
                 break;
         }
     }
-
-    private bShowingInfo: boolean = false
-    private bLoadingInfo: boolean = false
-
-    private jFileInfo: any = null
 
     constructor(
         private searchService: SearchService,
@@ -70,7 +70,7 @@ export class LightboxComponent implements OnInit {
         // opening the info, load it
         this.bLoadingInfo = true
         // request info for right hand side
-        
+
         this.httpService.getFileInfo(this.searchService.mData.search.results[this.searchService.iActiveThumb].id).subscribe(
             (data) => {
                 this.bLoadingInfo = false
@@ -84,17 +84,14 @@ export class LightboxComponent implements OnInit {
     }
 
     eLightboxNav(iDelta) {
-        if(this.searchService.iActiveThumb !== -1)
-		{
+        if (this.searchService.iActiveThumb !== -1) {
             let iNewIndex = this.searchService.iActiveThumb + iDelta
 
 			// wrap?
-            if(iNewIndex >= this.searchService.mData.search.results.length)
-			{
+            if (iNewIndex >= this.searchService.mData.search.results.length) {
 				iNewIndex = 0
 			}
-			if(iNewIndex < 0)
-			{
+			if (iNewIndex < 0) {
 				iNewIndex = this.searchService.mData.search.results.length - 1
 			}
             this.searchService.iActiveThumb = iNewIndex
@@ -104,7 +101,7 @@ export class LightboxComponent implements OnInit {
     }
 
     lightBoxFileSet() {
-        if(this.bShowingInfo){
+        if (this.bShowingInfo) {
             this.getFileInfo()
         }
 

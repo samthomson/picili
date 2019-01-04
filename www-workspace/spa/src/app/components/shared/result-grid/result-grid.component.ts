@@ -22,7 +22,7 @@ export class ResultGridComponent implements OnInit {
 
     aJustifiedRows = [];
     aJustifiedRowHeights = [];
-   
+
     @ViewChild('availableWidth') availableWidth: ElementRef;
 
     resizeId;
@@ -32,18 +32,17 @@ export class ResultGridComponent implements OnInit {
         private httpService: HttpService,
         private helperService: HelperService,
         private gbl: GlobalVars,
-        private el:ElementRef,
+        private el: ElementRef,
         private ngZone: NgZone
     ) {
-        this.httpService.bSearchingChanged.subscribe((data) =>{
+        this.httpService.bSearchingChanged.subscribe((data) => {
             this.bSearching = data;
         });
 
-        window.onresize = (e) =>
-        {
-            //ngZone.run will help to run change detection
+        window.onresize = (e) => {
+            // ngZone.run will help to run change detection
             this.ngZone.run(() => {
-                
+
                 clearTimeout(this.resizeId);
                 this.resizeId = setTimeout(() => {
                     this.calculateJustifiedGallery();
@@ -53,11 +52,11 @@ export class ResultGridComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (typeof this.results !== "undefined") {
+        if (typeof this.results !== 'undefined') {
             this.calculateJustifiedGallery();
-        }else{
+        } else {
             // subscribe to when there are results
-            this.httpService.mDataChanged.subscribe((data) =>{
+            this.httpService.mDataChanged.subscribe((data) => {
                 this.results = data.search.results;
 
                 this.calculateJustifiedGallery();
@@ -70,15 +69,12 @@ export class ResultGridComponent implements OnInit {
         }
     }
 
-    resultThumbClick(i)
-    {
+    resultThumbClick(i) {
         this.searchService.eThumbClick(i);
     }
 
-    calculateJustifiedGallery()
-    {
-        if (this.sDisplayMode === 'justified')
-        {
+    calculateJustifiedGallery() {
+        if (this.sDisplayMode === 'justified') {
             // go through each image, adding to temp line collection, adding widths until passed contained width
             let aRows = [];
             let aTempRow = [];
@@ -95,8 +91,7 @@ export class ResultGridComponent implements OnInit {
             // get container width
             let iAvailableWidth = this.availableWidth.nativeElement.offsetWidth - iScrollMargin;
 
-            for (let iResult = 0; iResult < this.results.length; iResult++)
-            {
+            for (let iResult = 0; iResult < this.results.length; iResult++) {
                 this.results[iResult].index = iResult
                 aTempRow.push(this.results[iResult]);
                 iImagesInRow++;
@@ -127,7 +122,7 @@ export class ResultGridComponent implements OnInit {
                 }
 
                 // when over limit, calculate scaling factor, and add to structure of rows
-                let iRunningMarginWidth = (iMargin * (iImagesInRow-1));
+                let iRunningMarginWidth = (iMargin * (iImagesInRow - 1));
                 let iRunningWidthIncludingMargins = iRunningWidth + iRunningMarginWidth;
 
                 if (iRunningWidth > iAvailableWidth - iRunningMarginWidth) {
@@ -148,13 +143,13 @@ export class ResultGridComponent implements OnInit {
                     iCurrentRowHeight = iBaseRowHeight;
 
                     aiRowHeights.push(iRowHeight);
-                }else{ 
+                } else {
                     // put left over images into a row somehow? or squeeze into previous?
-                    if(iResult === (this.results.length - 1)) {
+                    if (iResult === (this.results.length - 1)) {
                         // we're at the end
                         aRows.push(aTempRow);
                         // to do, not 300 but it's actual height
-                        aiRowHeights.push(aTempRow[0].s_h); // default                    
+                        aiRowHeights.push(aTempRow[0].s_h); // default
                     }
                 }
             }
@@ -165,8 +160,7 @@ export class ResultGridComponent implements OnInit {
     }
 
 
-    showMore()
-    {
+    showMore() {
         this.searchService.iPage++;
         this.httpService.triggerSearch(false).then(() => {
         })
