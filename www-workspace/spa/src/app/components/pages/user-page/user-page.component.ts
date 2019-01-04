@@ -23,7 +23,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
     private tSearchEventTimeout: any;
 
     private mLocalData: any;
-    private bLightboxOpen:boolean = false;
+    private bLightboxOpen: boolean = false;
 
     // subscriptions
     private subQueryChanged;
@@ -34,7 +34,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
     private sCurrentDateDisplay: string;
     private sCurrentHeaderDisplay: string;
-    
+
     private bSearchServiceSearching: boolean = false;
 
     private oHomeAggs: any
@@ -46,7 +46,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
         private router: Router,
         private httpService: HttpService,
         private searchService: SearchService,
-        private helperService: HelperService,        
+        private helperService: HelperService,
         private gbl: GlobalVars,
         private location: PlatformLocation
     ) {
@@ -79,7 +79,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
             this.oHomeAggs = route.snapshot.data['homeAggs']
         }
 
-        this.searchService.sSearchMode = (typeof route.snapshot.params['searchmode'] === "undefined") ? 'default' : route.snapshot.params['searchmode'];
+        this.searchService.sSearchMode = (typeof route.snapshot.params['searchmode'] === 'undefined') ? 'default' : route.snapshot.params['searchmode'];
         this.searchService.iPage = 1;
 
         //
@@ -90,15 +90,14 @@ export class UserPageComponent implements OnInit, OnDestroy {
             this.searchService.setQueryText(q);
 
 
-            if(typeof params['sort'] !== "undefined")
-            {
+            if (typeof params['sort'] !== 'undefined') {
                 this.searchService.sCurrentSort = params['sort'];
                 this.searchService.bSortChanged = true;
-            }else{
+            } else {
                 this.searchService.sCurrentSort = 'date_desc';
             }
 
-            this.searchService.mQuery['filters'] = (typeof params['filters'] === "undefined") ? [] : JSON.parse(params['filters']);
+            this.searchService.mQuery['filters'] = (typeof params['filters'] === 'undefined') ? [] : JSON.parse(params['filters']);
 
             this.subDateFromUrl = this.searchService.eeDateFromUrl.subscribe(() => {
                 this.setLocalDisplayDate();
@@ -151,15 +150,13 @@ export class UserPageComponent implements OnInit, OnDestroy {
         this.route.params.subscribe((param) => {
             let sNewSearchMode = param['searchmode'];
 
-            if(sNewSearchMode != this.searchService.sSearchMode)
-            {
+            if (sNewSearchMode != this.searchService.sSearchMode) {
                 // changed search mode, from one search mode to another
                 this.searchService.sSearchMode = sNewSearchMode;
 
-                if(typeof this.searchService.sSearchMode !== "undefined")
-                {
+                if (typeof this.searchService.sSearchMode !== 'undefined') {
                     this.changedSearchPage(this.searchService.sSearchMode);
-                }else{
+                } else {
                     // why is it undefined? because we're on home..?
                     this.searchService.sSearchMode = 'default';
                 }
@@ -182,13 +179,12 @@ export class UserPageComponent implements OnInit, OnDestroy {
         });
 
 
-        
+
     }
 
-    changedSearchPage(sNewPage)
-    {
+    changedSearchPage(sNewPage) {
         /*
-        This method is called when the user changes to a search page, this can be from the user-page constructor (from another component route), or on param change (one user-page to another). 
+        This method is called when the user changes to a search page, this can be from the user-page constructor (from another component route), or on param change (one user-page to another).
         /{userId}/search
         /{userId}/folders
         /{userId}/map
@@ -197,9 +193,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
         this method is called from the contructor and ngOnInit methods of this component.
         */
         // don't trigger search, let each page do something itself
-        
-        switch(sNewPage)
-        {
+
+        switch (sNewPage) {
             case 'search':
             case 'folders':
                 this.httpService.triggerSearch();
@@ -208,30 +203,25 @@ export class UserPageComponent implements OnInit, OnDestroy {
         // this.httpService.triggerSearch();
     }
 
-    ngOnDestroy()
-    {
+    ngOnDestroy() {
         this.subQueryChanged.unsubscribe();
         this.subLightboxOpen.unsubscribe();
         this.subLightboxClose.unsubscribe();
         this.subDateFromUrl.unsubscribe();
     }
 
-    removeFilter(iIndex)
-    {
+    removeFilter(iIndex) {
         this.searchService.removeFilter(iIndex);
         this.httpService.triggerSearch();
     }
 
-    clearFilters()
-    {
+    clearFilters() {
         this.searchService.clearFilters();
         this.httpService.triggerSearch();
     }
 
-    keydown(event)
-    {
-        if(event.keyCode === 13 && !this.searchService.bEmptyQuery())
-        {
+    keydown(event) {
+        if (event.keyCode === 13 && !this.searchService.bEmptyQuery()) {
             this.directSearch();
         }
     }
@@ -239,27 +229,24 @@ export class UserPageComponent implements OnInit, OnDestroy {
     eTextQueryChange(newValue) {
         clearTimeout(this.tSearchEventTimeout);
 
-        this.tSearchEventTimeout = setTimeout(function(httpService, searchService){
+        this.tSearchEventTimeout = setTimeout(function(httpService, searchService) {
             searchService.updateURLToVars();
             httpService.triggerSearch();
         }, 150, this.httpService, this.searchService);
 
     }
-    
-    directSearch()
-    {
+
+    directSearch() {
         this.searchService.updateURLToVars();
         this.httpService.triggerSearch();
     }
 
-    clearTextInput()
-    {
+    clearTextInput() {
         this.searchService.mQuery.q = '';
         this.directSearch();
     }
 
-    onSetCalendarSearchMode(sNewSearchMode)
-    {
+    onSetCalendarSearchMode(sNewSearchMode) {
         this.searchService.sCalendarSearchMode = sNewSearchMode
 
         this.setMDDateToStartOfUnit(this.searchService.sCalendarSearchMode)
@@ -280,8 +267,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
     // calendar things
     //
     setMDDateToStartOfUnit(sMode) {
-        switch(this.searchService.sCalendarSearchMode)
-        {
+        switch (this.searchService.sCalendarSearchMode) {
             case 'day':
                 this.searchService.mdDate.startOf(sMode);
                 break;
@@ -303,12 +289,10 @@ export class UserPageComponent implements OnInit, OnDestroy {
         this.setLocalDisplayDate();
     }
 
-    onCalMove(iUnit)
-    {
+    onCalMove(iUnit) {
         this.setMDDateToStartOfUnit(this.searchService.sCalendarSearchMode)
         // depending on mode add a certain amount of time, then do new search
-        switch(this.searchService.sCalendarSearchMode)
-        {
+        switch (this.searchService.sCalendarSearchMode) {
             case 'day':
                 this.searchService.setDate(this.searchService.mdDate.add(iUnit, 'days'))
                 break;
@@ -333,7 +317,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
                 this.sCurrentDateDisplay,
                 this.searchService.sDate
             );
-            
+
             this.httpService.triggerSearch();
         });
     }
@@ -341,48 +325,41 @@ export class UserPageComponent implements OnInit, OnDestroy {
     //
     // people search
     //
-    setPeopleSearchGender(sGender)
-    {
+    setPeopleSearchGender(sGender) {
         this.searchService.sPeopleSearchGender = sGender;
         this.searchService.removeFilterByType('people.gender');
 
-        if(sGender !== 'both')
-        {
+        if (sGender !== 'both') {
             // add as filter
             this.searchService.addFilter('people.gender', this.searchService.sPeopleSearchGender + 'people', this.searchService.sPeopleSearchGender);
         }
         this.httpService.triggerSearch();
 
     }
-    
-    setPeopleSearchState(sState)
-    {
+
+    setPeopleSearchState(sState) {
         this.searchService.sPeopleSearchState = sState;
         this.searchService.removeFilterByType('people.state');
 
-        if(sState !== 'all')
-        {
+        if (sState !== 'all') {
             // add as filter
             this.searchService.addFilter('people.state', this.searchService.sPeopleSearchState + 'people', this.searchService.sPeopleSearchState);
         }
         this.httpService.triggerSearch();
     }
 
-    setPeopleSearchGrouping(sGrouping)
-    {
+    setPeopleSearchGrouping(sGrouping) {
         this.searchService.sPeopleSearchGrouping = sGrouping;
         this.searchService.removeFilterByType('people.grouping');
 
-        if(sGrouping !== 'any')
-        {
+        if (sGrouping !== 'any') {
             // add as filter
             this.searchService.addFilter('people.grouping', this.searchService.sPeopleSearchGrouping + 'people', this.searchService.sPeopleSearchGrouping);
         }
         this.httpService.triggerSearch();
     }
 
-    setLocalDisplayDate()
-    {
+    setLocalDisplayDate() {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 let oDisplay = this.helperService.parseDisplayDates(

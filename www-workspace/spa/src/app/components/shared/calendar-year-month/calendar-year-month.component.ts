@@ -25,7 +25,7 @@ export class CalendarYearMonthComponent implements OnInit {
     constructor(
       private searchService: SearchService,
       private httpService: HttpService
-    ) { 
+    ) {
     }
 
     ngOnInit() {
@@ -43,14 +43,14 @@ export class CalendarYearMonthComponent implements OnInit {
         let iCount = 0
         let sID = null
 
-        let sKey:any = cDay + 1
+        let sKey: any = cDay + 1
         if (sKey < 10) {
           sKey = '0' + String(sKey)
         } else {
           sKey = String(sKey)
         }
 
-        if (typeof this.aParsedDates[sKey] !== "undefined") {
+        if (typeof this.aParsedDates[sKey] !== 'undefined') {
           iCount = this.aParsedDates[sKey].count
           sID = this.aParsedDates[sKey].sImageID
         }

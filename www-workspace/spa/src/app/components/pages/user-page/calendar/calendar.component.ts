@@ -30,7 +30,7 @@ export class CalendarComponent implements OnInit {
         private gbl: GlobalVars/*,
         private inj:Injector*/
     ) {
-        //this.parentComponent = this.inj.get(UserPageComponent);
+        // this.parentComponent = this.inj.get(UserPageComponent);
     }
 
     setResults(oResults) {
@@ -80,18 +80,16 @@ export class CalendarComponent implements OnInit {
         this.searchService.eeDatechange.emit();
     }
 
-    formatWeekDateHeader(sDate)
-    {
+    formatWeekDateHeader(sDate) {
         // turn '2016-06-21' into 21st June 2016
         return moment(sDate).format('dddd Do');
     }
 
 
-    ngOnInit()
-    {
+    ngOnInit() {
         let bCalVarsInUrl = this.searchService.determineLocalVarsByParsingUrlVars()
 
-        if(!bCalVarsInUrl) {
+        if (!bCalVarsInUrl) {
             // no cal vars in url, lets set defaults and update ui before searching
             // calender search vars
                 this.searchService.sCalendarSearchMode = 'month';
@@ -121,7 +119,7 @@ export class CalendarComponent implements OnInit {
         // this.httpService.triggerSearch();
 
         // don't do this, it will overload url cal search  this.goToDate(moment())
-        //this.searchService.eeDatechange.emit();
+        // this.searchService.eeDatechange.emit();
         // this.searchService.eeDatechange.emit();
         // EMIT TO PARENT HERE
 
@@ -141,7 +139,7 @@ export class CalendarComponent implements OnInit {
             // populate an array of dates, for the current period. Where the period is either a week or a month. and use actual dates starting with the set date
             // searchService.sCalendarSearchMode
             // this.searchService.mdDate
-            var mdDateCopy = this.searchService.mdDate.clone()
+            let mdDateCopy = this.searchService.mdDate.clone()
             this.aAvailableDates = []
             this.aAvailableMonths = {}
             this.aAvailableMonthKeys = []
@@ -152,25 +150,21 @@ export class CalendarComponent implements OnInit {
             (
                 typeof this.searchService.mData.search !== 'undefined' &&
                 typeof this.searchService.mData.search.aggs !== 'undefined'
-            )
-            {
+            ) {
                 this.aLiteralDays = [];
-                switch(this.searchService.sCalendarSearchMode)
-                {
+                switch (this.searchService.sCalendarSearchMode) {
                     case 'week':
-                        for (var iDayOfWeekCount = 0; iDayOfWeekCount < 7; iDayOfWeekCount++)
-                        {
+                        for (let iDayOfWeekCount = 0; iDayOfWeekCount < 7; iDayOfWeekCount++) {
                             this.aAvailableDates.push(this.searchService.mdDate.clone().add(iDayOfWeekCount, 'days').format('YYYY-MM-DD'))
                         }
                         break;
                     case 'month':
-                        for (var iDayOfMonthCount = 0; iDayOfMonthCount < this.searchService.mdDate.daysInMonth(); iDayOfMonthCount++)
-                        {
+                        for (let iDayOfMonthCount = 0; iDayOfMonthCount < this.searchService.mdDate.daysInMonth(); iDayOfMonthCount++) {
                             this.aAvailableDates.push(this.searchService.mdDate.clone().add(iDayOfMonthCount, 'days').format('YYYY-MM-DD'))
 
                             // make headers
                             if (iDayOfMonthCount < 7) {
-                                this.aLiteralDays.push(this.searchService.mdDate.clone().add(iDayOfMonthCount, 'days').format('dddd').substr(0,1))
+                                this.aLiteralDays.push(this.searchService.mdDate.clone().add(iDayOfMonthCount, 'days').format('dddd').substr(0, 1))
                             }
                         }
                         break;
@@ -191,12 +185,12 @@ export class CalendarComponent implements OnInit {
                         // now go through all results and place them in the correct month
                         if (this.searchService.mData.search.aggs.length > 0) {
                             this.searchService.mData.search.aggs.forEach(oDate => {
-                                const sMonthKey: string = oDate.name.substr(0,7)
+                                const sMonthKey: string = oDate.name.substr(0, 7)
 
                                 if (this.aAvailableMonths[sMonthKey]) {
                                     if (oDate.count > 0) {
                                         this.aAvailableMonths[sMonthKey].push({
-                                            dateKey: oDate.name.substr(8,2),
+                                            dateKey: oDate.name.substr(8, 2),
                                             count: oDate.count,
                                             sImageID: oDate.files[0] || null
                                         })
@@ -209,13 +203,13 @@ export class CalendarComponent implements OnInit {
                 }
 
                 // then parse in actual day results (day/week/month mode)
-                for (var iDays = 0; iDays < this.aAvailableDates.length; iDays++) {
+                for (let iDays = 0; iDays < this.aAvailableDates.length; iDays++) {
                     // look for day-result, add it, or add empty
-                    var bFoundSomething = false;
+                    let bFoundSomething = false;
 
                     // search for an aggregation of files for this date
-                    var sKey = '"' + this.aAvailableDates[iDays] + '"'
-                    for (var iDayResults = 0; iDayResults < this.searchService.mData.search.aggs.length && !bFoundSomething; iDayResults++) {
+                    let sKey = '"' + this.aAvailableDates[iDays] + '"'
+                    for (let iDayResults = 0; iDayResults < this.searchService.mData.search.aggs.length && !bFoundSomething; iDayResults++) {
 
                         if (this.searchService.mData.search.aggs[iDayResults].name.startsWith(this.aAvailableDates[iDays])) {
                             bFoundSomething = true
@@ -225,7 +219,7 @@ export class CalendarComponent implements OnInit {
                         }
                     }
 
-                    if(!bFoundSomething) {
+                    if (!bFoundSomething) {
                         oLocalDateResults.push({})
                     }
                 }

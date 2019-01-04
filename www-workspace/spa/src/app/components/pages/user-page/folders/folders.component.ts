@@ -9,8 +9,11 @@ import { GlobalVars } from './../../../../../env';
   templateUrl: './folders.component.html'
 })
 export class FoldersComponent implements OnInit {
-    
+
     private aFolders: any[] = [];
+
+    @Input() aggs;
+    @Input() results;
 
     constructor(
         private searchService: SearchService,
@@ -30,9 +33,6 @@ export class FoldersComponent implements OnInit {
             }
         });
     }
-
-    @Input() aggs;
-    @Input() results;
 
     ngOnInit() {
     }

@@ -37,7 +37,7 @@ export class MapPageComponent implements OnInit {
 
     @HostListener('window:resize')
     onWindowResize() {
-        //debounce resize, wait for resize to finish before doing stuff
+        // debounce resize, wait for resize to finish before doing stuff
         if (this.resizeId) {
             clearTimeout(this.resizeId);
         }
@@ -56,12 +56,11 @@ export class MapPageComponent implements OnInit {
         this.httpService.bSearchingChanged.subscribe(bSearching => {
 
             // only do this on map pan searches, not when loading more, as it will make the map icons flash off then on
-            if(!this.searchService.bSearchingForMore)
-            {
-                
+            if (!this.searchService.bSearchingForMore) {
+
                 this.aMapDots = [];
                 this.aMapIcons = [];
-                
+
                 // if (bSearching) {
                 //     // a search has begun.
                 //     this.aMapDots = [];
@@ -69,14 +68,12 @@ export class MapPageComponent implements OnInit {
                 // } else {
                 if (!bSearching) {
                     // a search has ended
-                    if(typeof this.searchService.mData !== 'undefined' && this.searchService.mData.search !== 'undefined')
-                    {
-                        if (this.searchService.mData.search.aggs)
-                        {
+                    if (typeof this.searchService.mData !== 'undefined' && this.searchService.mData.search !== 'undefined') {
+                        if (this.searchService.mData.search.aggs) {
                             if (this.searchService.mData.search.aggs.map_dots) {
                                 this.aMapDots = this.searchService.mData.search.aggs.map_dots;
                             }
-                            
+
                             if (this.searchService.mData.search.aggs.map_icons) {
                                 this.aMapIcons = this.searchService.mData.search.aggs.map_icons;
                             }
@@ -92,23 +89,19 @@ export class MapPageComponent implements OnInit {
     }
 
 
-    onBoundsChanged(oNewBounds)
-    {
+    onBoundsChanged(oNewBounds) {
         this.bounds = oNewBounds;
     }
-    onMapIdle()
-    {
+    onMapIdle() {
         this.ref.detectChanges();
         this.doSearchFromBounds();
     }
 
-    onMarkerClick(sIgnore, iClickedIndex)
-    {
+    onMarkerClick(sIgnore, iClickedIndex) {
         this.searchService.eThumbClick(iClickedIndex);
     }
 
-    doSearchFromBounds()
-    {
+    doSearchFromBounds() {
         this.searchService.addSetMapFilter(
             this.bounds.getSouthWest().lat(),
             this.bounds.getNorthEast().lat(),
@@ -119,13 +112,12 @@ export class MapPageComponent implements OnInit {
         this.httpService.triggerSearch();
     }
 
-    calculateContainerSizes()
-    {
+    calculateContainerSizes() {
         const iScrollMargin = 24
         const iMapResultsGap = 8
-        // get full width        
+        // get full width
         let iFullWidth = this.bothContainersWidth.nativeElement.offsetWidth
-        
+
         // divide by two
         let iHalfWidth = iFullWidth / 2
 

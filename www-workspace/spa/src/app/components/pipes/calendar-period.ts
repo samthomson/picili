@@ -6,15 +6,13 @@ import { SearchService } from './../../services';
 export class CalendarPeriodPipe implements PipeTransform {
 
     constructor(public searchService: SearchService) { }
-    
+
     transform(value: any): any {
 
         let sReturn = '';
 
-        if(typeof value !== 'undefined')
-        {
-            switch(this.searchService.sCalendarSearchMode)
-            {
+        if (typeof value !== 'undefined') {
+            switch (this.searchService.sCalendarSearchMode) {
                 case 'day':
                     sReturn = value.format('ddd Do');
                     break;
