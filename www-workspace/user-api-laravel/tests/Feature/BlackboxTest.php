@@ -10,6 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Share\User;
 use Share\DropboxToken;
 use Share\DropboxFilesource;
+use Share\DropboxFiles;
 use Share\PiciliFile;
 use Share\Tag;
 use Share\Task;
@@ -284,9 +285,24 @@ class BlackboxTest extends TestCase
 
     public function testGetFileInfo()
     {
+
+        $oDBXFL = new DropboxFiles;
+
+        $oDBXFL->dropbox_id = 54354;
+		$oDBXFL->dropbox_path = 'gfdgfdgfd';
+		$oDBXFL->dropbox_name = 'gfdgfd';
+		$oDBXFL->server_modified = '344543';
+        $oDBXFL->size = 89345;
+        $oDBXFL->user_id = 0;
+        $oDBXFL->dropbox_folder_id = 23;
+        $oDBXFL->sTempFileName = 'gfdgfdg';        
+        $oDBXFL->dropbox_path = 'test path';     
+        $oDBXFL->save();
+
         $oFile = new PiciliFile;
         $oFile->signature = 'sig';
         $oFile->user_id = 0;
+        $oFile->dropbox_filesource_id = $oDBXFL->id;
         $oFile->save();
 
         $iFileId = $oFile->id;
