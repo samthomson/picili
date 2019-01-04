@@ -1,4 +1,4 @@
-import { RouterModule } from "@angular/router";
+import { RouterModule } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { GuestGuard } from './guards/guest.guard';
 

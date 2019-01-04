@@ -6,12 +6,7 @@ import { AuthService } from '../../../services';
   selector: 'app-login',
   templateUrl: './login.component.html'
 })
-export class LoginComponent{
-
-    constructor(
-        private router: Router,
-        private authService: AuthService
-    ) { }
+export class LoginComponent {
 
     private loginEmail: string = '';
     private loginPassword: string = '';
@@ -20,6 +15,11 @@ export class LoginComponent{
     private bLoginFailed: boolean = false;
 
     private error = '';
+
+    constructor(
+        private router: Router,
+        private authService: AuthService
+    ) { }
 
     onSubmit(f) {
 
@@ -36,7 +36,7 @@ export class LoginComponent{
                         this.router.navigate(['/' + result.user]);
                     } else {
                         this.bLoginFailed = true;
-                        
+
                         this.error = 'Email or password is incorrect';
                     }
                 },

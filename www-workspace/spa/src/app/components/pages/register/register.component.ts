@@ -8,11 +8,6 @@ import { AuthService } from '../../../services';
 })
 export class RegisterComponent {
 
-    constructor(
-        private router: Router,
-        private authService: AuthService
-    ) { }
-
     private registerUsername: string = '';
     private registerEmail: string = '';
     private registerPassword: string = '';
@@ -21,6 +16,11 @@ export class RegisterComponent {
 
     private errors: string[] = [];
     private bRegisterFailed: boolean = false;
+
+    constructor(
+        private router: Router,
+        private authService: AuthService
+    ) { }
 
     onRegisterSubmit(frmRegister) {
 
@@ -40,7 +40,7 @@ export class RegisterComponent {
                       this.bRegisterFailed = false;
                       this.errors = [];
                       this.router.navigate(['/' + result.user]);
-                  }else{
+                  } else {
                       this.bRegisterFailed = true;
                       this.errors = result.errors;
                   }
