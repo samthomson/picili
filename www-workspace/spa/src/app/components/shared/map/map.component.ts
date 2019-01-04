@@ -16,7 +16,7 @@ declare var google;
   templateUrl: './map.component.html'
 })
 
-export class MapComponent implements OnInit {
+export class MapComponent implements AfterViewInit, OnInit {
 
 
 	lat: number = 36.2048;

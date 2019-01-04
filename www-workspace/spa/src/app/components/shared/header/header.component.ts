@@ -6,7 +6,7 @@ import { AuthService, HttpService, SearchService } from './../../../services';
   selector: 'app-header',
   templateUrl: './header.component.html'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
 
 	@Input() bEmpty: boolean = false;
 
