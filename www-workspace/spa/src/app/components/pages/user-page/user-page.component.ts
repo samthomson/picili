@@ -150,7 +150,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
 		this.route.params.subscribe((param) => {
 			let sNewSearchMode = param['searchmode'];
 
-			if (sNewSearchMode != this.searchService.sSearchMode) {
+			if (sNewSearchMode !== this.searchService.sSearchMode) {
 				// changed search mode, from one search mode to another
 				this.searchService.sSearchMode = sNewSearchMode;
 

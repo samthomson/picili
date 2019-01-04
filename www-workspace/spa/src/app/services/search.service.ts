@@ -126,7 +126,7 @@ export class SearchService {
 
 	bEmptyQuery() {
 		let value = this.mQuery.q;
-		return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
+		return typeof value === 'string' && !value.trim() || typeof value === 'undefined' || value === null;
 	}
 
 	addFilter(sType, sDisplay, sValue) {

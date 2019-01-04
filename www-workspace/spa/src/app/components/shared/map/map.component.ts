@@ -1,4 +1,5 @@
 import {
+	AfterViewInit,
 	Component,
 	ViewChild,
 	ElementRef,
@@ -115,7 +116,7 @@ export class MapComponent implements OnInit {
 	}
 
 	loadGoogleMaps() {
-		if (typeof google == 'undefined' || typeof google.maps == 'undefined') {
+		if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
 			// Load the SDK
 			window['mapInit'] = () => {
 				this.initMap();
