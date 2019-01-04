@@ -132,6 +132,12 @@ class ElasticHelper {
             return $bResponse;
         }catch(\Elasticsearch\Common\Exceptions\Missing404Exception $e)
         {
+            // check if file even exists. if it doesn't, then 'deleting' is redundant and we can return a success - the result is the same, file does not exist
+            $mFileExists = self::mGetDocument($iPiciliFileId);
+            if ($mFileExists === NULL) {
+                // null response
+                return true;
+            }
             return false;
         }
     }
