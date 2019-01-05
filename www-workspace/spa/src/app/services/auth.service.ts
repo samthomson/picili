@@ -78,8 +78,8 @@ export class AuthService {
 
 					if (authStatus && token && user) {
 						// set token property
-                        this.sToken = token;
-                        
+						this.sToken = token;
+
 						// store username and jwt token in local storage to keep user logged in between page refreshes
 						localStorage.setItem(this.gbl.sAuthTokenName, token);
 						localStorage.setItem(this.gbl.sAuthId, user);
@@ -87,8 +87,8 @@ export class AuthService {
 						this.authStatus = authStatus;
 						this.authStatusChanged.emit({'authed': true, 'user' : user});
 
-                        this.sToken = token;
-                        this.sUserId = user;
+						this.sToken = token;
+						this.sUserId = user;
 
 						// return true to indicate successful login
 						return {'success': true, 'user': user};
