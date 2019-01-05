@@ -39,7 +39,9 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
 	private oHomeAggs: any
 
-	private aYearsAgo: any
+    private aYearsAgo: any
+    
+    private bHasHomeContent: boolean = false;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -76,7 +78,17 @@ export class UserPageComponent implements OnInit, OnDestroy {
 		]
 
 		if (typeof route.snapshot.data['homeAggs'] !== 'undefined') {
-			this.oHomeAggs = route.snapshot.data['homeAggs']
+            this.oHomeAggs = route.snapshot.data['homeAggs']
+
+            let cAggs: number = 0
+            
+            for (let oYearAgo in this.aYearsAgo) {
+                if (this.oHomeAggs && (this.oHomeAggs as any).on_this_day[oYearAgo.key]) {
+                    cAggs += (this.oHomeAggs as any).on_this_day[oYearAgo.key].length
+                }
+            }
+
+            this.bHasHomeContent = (cAggs > 0)
 		}
 
 		this.searchService.sSearchMode = (typeof route.snapshot.params['searchmode'] === 'undefined') ? 'default' : route.snapshot.params['searchmode'];
