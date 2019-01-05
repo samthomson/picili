@@ -4,7 +4,7 @@
 
 <div id="header">
 
-    <span class="header-font"><a [routerLink]="['/private/']">picili</a></span>
+    <span class="header-font"><a [routerLink]="['/' + sUserId + '/']">picili</a></span>
     
     <div id="top-right-links">
 
@@ -13,7 +13,7 @@
             <span *ngIf="bProcessing" class="ui tiny"><i class="fa fa-cogs"></i>&nbsp;{{cProcessingFiles | number}} file<span *ngIf="cProcessingFiles > 1">s</span> to go, across {{cProcessingTasks | number}} task<span *ngIf="cProcessingTasks > 1">s</span>&nbsp;&nbsp;</span>
 
             
-            <a *ngIf="sUsername !== ''" [routerLink]="['/' + sCurrentPageUsername + '/settings']" class="ui tiny button">
+            <a *ngIf="sUsername !== ''" [routerLink]="['/' + sUserId + '/settings']" class="ui tiny button">
                 <i class="fa fa-cog" aria-hidden="true"></i>&nbsp;settings
             </a>
 
