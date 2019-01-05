@@ -1,10 +1,10 @@
 
 <div *ngIf="
     !searchService.bSearching && 
-    (oDateResults === null || oDateResults.length === 0) && 
-    (searchService.sCalendarSearchMode === 'day' ||
-    searchService.sCalendarSearchMode === 'week' ||
-    searchService.sCalendarSearchMode === 'month')">
+    !searchService.mData.search.aggs && 
+    (searchService.sCalendarSearchMode === 'week' ||
+    searchService.sCalendarSearchMode === 'month' ||
+    searchService.sCalendarSearchMode === 'year') ||  (searchService.sCalendarSearchMode === 'day' && !searchService.bHasSearchResults)">
     no results?
 </div>
 <!-- day view uses the shared result-grid component which has its own search spinner -->
