@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div *ngIf="searchService.sSearchMode === 'calendar'">
+        <div *ngIf="searchService.sSearchMode === 'calendar'" class="calendar-filters">
 			<div class="ui basic mini buttons">
                 <div class="ui mini button" (click)="onSetCalendarSearchMode('day')" [ngClass]="{'active': searchService.sCalendarSearchMode === 'day'}">Day</div>
                 <div class="ui mini button" (click)="onSetCalendarSearchMode('week')" [ngClass]="{'active': searchService.sCalendarSearchMode === 'week'}">Week</div>

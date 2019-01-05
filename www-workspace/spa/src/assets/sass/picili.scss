@@ -281,16 +281,16 @@ li#settings-link {
 //
 // filters
 //
-#filters-block.ui.segment {
-  padding-bottom: 8px;
+#filters-block.ui.segment {	
   padding-left: 0px;
   padding-right: 0px;
-  height: 56px;
+  padding-top: 8px;
+  height: 46px;
 }
 #clear-filters {
   float: right;
-  margin-top: -$iMargin;
   margin-right: 0px;
+  padding-bottom: 7px;
 }
 
 // folders page
@@ -456,6 +456,9 @@ img.folder-thumb {
 //
 // calendar
 //
+.calendar-filters{
+	height: 46px;
+}
 .month {
   height: 100%;
 }
