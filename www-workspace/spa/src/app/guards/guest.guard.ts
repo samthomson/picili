@@ -19,7 +19,7 @@ export class GuestGuard implements CanActivate {
 		return true;
 	}
 
-    // logged in so redirect user
+	// logged in so redirect user
 	this.router.navigate(['/private']);
 	return false;
   }
