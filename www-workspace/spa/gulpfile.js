@@ -70,6 +70,7 @@ gulp.task('concat-css', gulp.series(['sass'], () => {
             'node_modules/semantic-ui-css/components/button.css',
             'node_modules/semantic-ui-css/components/container.css',
             'node_modules/semantic-ui-css/components/dimmer.css',
+            'node_modules/semantic-ui-css/components/dropdown.css',
             'node_modules/semantic-ui-css/components/form.css',
             'node_modules/semantic-ui-css/components/grid.css',
             'node_modules/semantic-ui-css/components/header.css',
@@ -79,6 +80,7 @@ gulp.task('concat-css', gulp.series(['sass'], () => {
             'node_modules/semantic-ui-css/components/loader.css',
             'node_modules/semantic-ui-css/components/menu.css',
             'node_modules/semantic-ui-css/components/segment.css',
+            'node_modules/semantic-ui-css/components/transition.css',
 
             'src/assets/compiled/css/picili.css'
         ]
@@ -93,7 +95,8 @@ gulp.task('concat-js', function() {
   return gulp.src(
         [
             'node_modules/jquery/dist/jquery.min.js',
-            'node_modules/materialize-css/dist/js/materialize.js'
+            'node_modules/materialize-css/dist/js/materialize.js',
+            'node_modules/semantic-ui-css/components/dropdown.js'
         ]
     )
     .pipe(concat('compiled.js'))

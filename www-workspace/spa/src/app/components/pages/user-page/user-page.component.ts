@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Injectable } from '@angular/core';
+import { Component, OnInit, OnDestroy, Injectable, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService, SearchService, HelperService } from './../../../services';
 
@@ -189,9 +189,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
 		this.subLightboxClose = this.searchService.eeLightboxClose.subscribe(data => {
 			this.bLightboxOpen = false;
 		});
-
-
-
 	}
 
 	changedSearchPage(sNewPage) {
