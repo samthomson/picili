@@ -9,7 +9,7 @@ declare var $: any;
 })
 export class SortSelectComponent implements OnInit {
 
-    @ViewChild('dropdown', { read: ElementRef }) dropdown: ElementRef<any>;
+	@ViewChild('dropdown', { read: ElementRef }) dropdown: ElementRef<any>;
 
 	constructor(
 		private searchService: SearchService,
@@ -17,7 +17,7 @@ export class SortSelectComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-        $(this.dropdown.nativeElement).dropdown()
+		$(this.dropdown.nativeElement).dropdown()
 	}
 	setSort(sNewSortMode) {
 		this.searchService.sCurrentSort = sNewSortMode;
