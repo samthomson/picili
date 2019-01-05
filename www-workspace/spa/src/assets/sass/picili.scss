@@ -365,11 +365,17 @@ img.result-thumb:hover {
     bottom: 40px;
     right: 60px;
     background: white;
-    padding: 16px;
+    padding: 8px;
     border-radius: 12px;
+    padding-left: 4px;
+    padding-right: 4px;
 }
 .scroll-to-top-button:hover {
     cursor: pointer
+}
+.scroll-to-top-button i {
+    font-size: 2.4em;
+    line-height: 32px;
 }
 
 //
