@@ -64,9 +64,20 @@ gulp.task('sass', function() {
 gulp.task('concat-css', gulp.series(['sass'], () => {
     return gulp.src(
         [
-            'node_modules/semantic-ui-css/semantic.min.css',
             'node_modules/font-awesome/css/font-awesome.css',
             'src/assets/compiled/css/materialize-sass.css',
+
+            'node_modules/semantic-ui-css/components/button.css',
+            'node_modules/semantic-ui-css/components/container.css',
+            'node_modules/semantic-ui-css/components/dimmer.css',
+            'node_modules/semantic-ui-css/components/form.css',
+            'node_modules/semantic-ui-css/components/grid.css',
+            'node_modules/semantic-ui-css/components/icon.css',
+            'node_modules/semantic-ui-css/components/input.css',
+            'node_modules/semantic-ui-css/components/label.css',
+            'node_modules/semantic-ui-css/components/loader.css',
+            'node_modules/semantic-ui-css/components/segment.css',
+
             'src/assets/compiled/css/picili.css'
         ]
     )
