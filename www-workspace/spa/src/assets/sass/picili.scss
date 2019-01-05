@@ -124,6 +124,7 @@ h4 {
 #sort-menu {
   margin-top: 0px;
   float: right;
+  margin-right: 32px;
 }
 
 #cal-sort-menu {
@@ -193,6 +194,9 @@ a.picili-link:active {
   content: "";
   display: table;
   clear: both;
+}
+.hidden{
+	display: none !important;
 }
 
 /*
