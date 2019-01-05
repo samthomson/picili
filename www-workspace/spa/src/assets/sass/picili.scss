@@ -153,6 +153,7 @@ h4 {
 .ui.button.primary:link,
 .ui.button.primary:visited,
 .ui.button.primary:hover,
+.ui.button.primary:focus,
 .ui.button.primary:active {
   background: $cPiciliRed;
 }
@@ -160,6 +161,7 @@ h4 {
 a.picili-link,
 a.picili-link:link,
 a.picili-link:visited,
+a.picili-link:focus,
 a.picili-link:hover,
 a.picili-link:active {
   color: $cPiciliRed;
