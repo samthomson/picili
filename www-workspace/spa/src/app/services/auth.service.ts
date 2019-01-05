@@ -19,6 +19,7 @@ export class AuthService {
 	authStatusChanged = new EventEmitter<any>();
 
 	sToken: string;
+	sUserId: string;
 
 
 	// authTokenChanged = new EventEmitter<string>();
@@ -31,15 +32,20 @@ export class AuthService {
 		private router: Router,
 		private gbl: GlobalVars
 	) {
-		this.authStatus = !!localStorage.getItem(this.gbl.sAuthTokenName);
+		this.authStatus = !!localStorage.getItem(this.gbl.sAuthTokenName) && !!localStorage.getItem(this.gbl.sAuthId);
 
 		if (this.authStatus) {
 			this.sToken = localStorage.getItem(this.gbl.sAuthTokenName);
+			this.sUserId = localStorage.getItem(this.gbl.sAuthId);
 		}
 	}
 
 	isLoggedIn() {
 		return this.authStatus;
+	}
+
+	getUserId() {
+		return this.authStatus ? this.sUserId : null
 	}
 
 	attemptLogin(sEmail, sPassword): Observable<any> {
@@ -72,15 +78,17 @@ export class AuthService {
 
 					if (authStatus && token && user) {
 						// set token property
-						this.sToken = token;
-
+                        this.sToken = token;
+                        
 						// store username and jwt token in local storage to keep user logged in between page refreshes
 						localStorage.setItem(this.gbl.sAuthTokenName, token);
+						localStorage.setItem(this.gbl.sAuthId, user);
 
 						this.authStatus = authStatus;
 						this.authStatusChanged.emit({'authed': true, 'user' : user});
 
-						this.sToken = token;
+                        this.sToken = token;
+                        this.sUserId = user;
 
 						// return true to indicate successful login
 						return {'success': true, 'user': user};
