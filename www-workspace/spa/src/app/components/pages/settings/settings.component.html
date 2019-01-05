@@ -67,7 +67,7 @@
                     placeholder="folder on dropbox"
                     [(ngModel)]="sDropboxFolderPathInput"
                   />
-                  <i class="icon  fa-folder-open-o"></i>
+                  <i class="icon dropbox"></i>
                 </div>
               </div>
 
@@ -84,7 +84,7 @@
 
           <div *ngIf="oSettings.dropbox === null">
             <a [href]="[goDropbox()]" class="ui linkedin button">
-              <i class="fa fa-dropbox" aria-hidden="true"></i> connect dropbox
+              <i class="dropbox icon" aria-hidden="true"></i> connect dropbox
             </a>
           </div>
         </div>
