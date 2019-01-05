@@ -222,7 +222,6 @@ export class CalendarComponent implements OnInit {
 					}
 				}
 				// we have built an object of dates, some containing a result agg object
-
 				this.oDateResults = oLocalDateResults
 			}
 		});
