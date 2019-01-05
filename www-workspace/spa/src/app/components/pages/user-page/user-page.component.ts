@@ -39,7 +39,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
 	private oHomeAggs: any
 
-    private aYearsAgo: any
+    private aYearsAgo
     
     private bHasHomeContent: boolean = false;
 
@@ -83,8 +83,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
             let cAggs: number = 0
             
             for (let oYearAgo in this.aYearsAgo) {
-                if (this.oHomeAggs && (this.oHomeAggs as any).on_this_day[oYearAgo.key]) {
-                    cAggs += (this.oHomeAggs as any).on_this_day[oYearAgo.key].length
+                if (this.oHomeAggs && (this.oHomeAggs as any).on_this_day[(oYearAgo as any).key]) {
+                    cAggs += ((this.oHomeAggs as any).on_this_day[(oYearAgo as any).key]).length
                 }
             }
 
