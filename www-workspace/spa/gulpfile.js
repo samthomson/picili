@@ -33,7 +33,7 @@ gulp.task('copy-semantic-fonts', function(){
         /* semantic */
         'node_modules/semantic-ui-css/themes/default/assets/fonts/*'
     ])
-    .pipe(gulp.dest('src/assets/compiled/css/themes/default/assets/fonts'));
+    .pipe(gulp.dest('src/assets/compiled/themes/default/assets/fonts'));
 });
 gulp.task('copy-fa-fonts', function(){
     return gulp.src([
