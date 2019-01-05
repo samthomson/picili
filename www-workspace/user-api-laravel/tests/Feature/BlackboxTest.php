@@ -31,8 +31,6 @@ class BlackboxTest extends TestCase
         $response->assertStatus(200);
     }
 
-    // skip now that registration is disabled
-    /*
     public function testRegister()
     {
         $response = $this->json('POST', '/app/register', ['username' => 'user', 'email' => 'test@email.com', 'password' => 'pass']);
@@ -56,7 +54,6 @@ class BlackboxTest extends TestCase
             ->assertStatus(200)
             ->assertJson(['success' => false]);
     }
-    */
 
     public function testLogin()
     {
