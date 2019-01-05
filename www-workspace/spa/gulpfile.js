@@ -36,7 +36,7 @@ gulp.task('sass', function() {
 
     return gulp.src([
         'src/picili.scss',
-        'src/materialize-sass.scss'
+        'src/assets/vendor/materialize/materialize-sass.scss'
     ])
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('src/assets/compiled'))
@@ -80,7 +80,7 @@ gulp.task('default', gulp.series([
 
 
 gulp.task('watch', function() {
-    console.log('** watch **')
+    console.log('** watching sass **')
     gulp.watch('src/**/*.scss')
         .on('change', () => {
             console.log('SASS changed - running default gulp task')
