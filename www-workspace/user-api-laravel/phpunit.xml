@@ -27,5 +27,7 @@
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
+        <!-- overrides -->
+        <env name="ELASTICSEARCH_INDEX" value="files-testing" force="true"/>
     </php>
 </phpunit>
