@@ -10,14 +10,14 @@ export class HeaderComponent implements OnInit {
 
 	@Input() bEmpty: boolean = false;
 
-	private sUsername: string = '';
+	private sUserId: string = '';
 	private bProcessing: boolean = false;
 	private cProcessingTasks: number = 0;
 	private cProcessingFiles: number = 0;
 
 	private bAuthenticated: boolean = false;
-	private bOnUserPage: boolean = false;
-	private sCurrentPageUsername: string = 'giraffe';
+	// private bOnUserPage: boolean = false;
+	// private sCurrentPageUsername: string = '';
 	private bShowingUserDropdownMenu: boolean = false;
 
 	private intervalFetchTaskBurnDown;
@@ -28,9 +28,9 @@ export class HeaderComponent implements OnInit {
 		private searchService: SearchService,
 		route: ActivatedRoute
 	) {
-		this.sCurrentPageUsername = route.snapshot.params['username'];
+		// this.sCurrentPageUsername = route.snapshot.params['username'];
 
-		this.bOnUserPage = (typeof this.sCurrentPageUsername !== 'undefined') ? true : false;
+		// this.bOnUserPage = (typeof this.sCurrentPageUsername !== 'undefined') ? true : false;
 
 		this.bAuthenticated = this.authService.isLoggedIn();
 
@@ -52,7 +52,7 @@ export class HeaderComponent implements OnInit {
 	updateLocalState = () => {
 		this.httpService.getUser().subscribe(
 			(mData) => {
-				this.sUsername = mData.username;
+				this.sUserId = mData.username;
 				this.bProcessing = mData.bProcessing;
 				this.cProcessingTasks = mData.cProcessing;
 				this.cProcessingFiles = mData.cFiles;
