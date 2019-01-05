@@ -360,6 +360,18 @@ img.result-thumb:hover {
   margin-right: 0px;
 }
 
+.scroll-to-top-button {
+    position: fixed;
+    bottom: 40px;
+    right: 60px;
+    background: white;
+    padding: 16px;
+    border-radius: 12px;
+}
+.scroll-to-top-button:hover {
+    cursor: pointer
+}
+
 //
 // sort block
 //
