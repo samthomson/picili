@@ -360,6 +360,24 @@ img.result-thumb:hover {
   margin-right: 0px;
 }
 
+.scroll-to-top-button {
+    position: fixed;
+    bottom: 40px;
+    right: 60px;
+    background: white;
+    padding: 8px;
+    border-radius: 12px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+.scroll-to-top-button:hover {
+    cursor: pointer
+}
+.scroll-to-top-button i {
+    font-size: 2.4em;
+    line-height: 32px;
+}
+
 //
 // sort block
 //
@@ -540,17 +558,6 @@ img.folder-thumb {
 //
 // lightbox
 //
-/*
-#lightbox{
-	z-index: 200;
-	position: absolute;
-	background: white;
-	left: 0px;
-	right: 0px;
-	bottom: 0px;
-	top: 0px;
-}
-*/
 
 #lightbox {
   position: fixed;

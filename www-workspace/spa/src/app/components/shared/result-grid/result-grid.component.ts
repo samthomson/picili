@@ -5,7 +5,8 @@ import {
 	ElementRef,
 	ViewChild,
 	NgZone,
-	OnInit
+	OnInit,
+	HostListener
 } from '@angular/core';
 import { SearchService, HttpService } from './../../../services';
 import { GlobalVars } from './../../../../env';
@@ -18,6 +19,7 @@ export class ResultGridComponent implements OnInit {
 
 	results;
 	bSearching: boolean = false;
+	bShowScrollToTop: boolean = false
 	@Input() sDisplayMode: string = 'justified'
 
 	aJustifiedRows = [];
@@ -26,6 +28,7 @@ export class ResultGridComponent implements OnInit {
 	@ViewChild('availableWidth') availableWidth: ElementRef;
 
 	resizeId;
+	@ViewChild('resultsBlock', { read: ElementRef }) public resultsBlock: ElementRef<any>;
 
 	constructor(
 		private searchService: SearchService,
@@ -159,10 +162,18 @@ export class ResultGridComponent implements OnInit {
 		}
 	}
 
-
 	showMore() {
 		this.searchService.iPage++;
 		this.httpService.triggerSearch(false).then(() => {
 		})
+	}
+
+	@HostListener('scroll', ['$event'])
+	scrollHandler(event) {
+		this.bShowScrollToTop = this.resultsBlock.nativeElement.scrollTop > 0
+	}
+
+	scrollToTop() {
+		this.resultsBlock.nativeElement.scrollTop = 0
 	}
 }
