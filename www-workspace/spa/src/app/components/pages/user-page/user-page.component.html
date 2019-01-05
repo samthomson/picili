@@ -127,6 +127,9 @@
         <div id="page-space">
 
             <div *ngIf="searchService.sSearchMode === 'default'">
+                <div *ngIf="!this.bHasHomeContent">
+                    picili couldn't find any historic content in your pictures, maybe you need to add some more :)
+                </div>
                 <div *ngFor="let oYearAgo of this.aYearsAgo; let cYearsBack = index">
                     <div *ngIf="this.oHomeAggs && this.oHomeAggs.on_this_day[oYearAgo.key] && this.oHomeAggs.on_this_day[oYearAgo.key].length > 0">
                         <a 
