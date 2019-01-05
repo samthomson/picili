@@ -6,7 +6,7 @@
 <div *ngIf="(!searchService.bSearching || searchService.bSearchingForMore) && searchService.bHasSearchResults">
 
 
-    <div class="results-block">
+    <div #resultsBlock class="results-block" (scroll)="scrollHandler($event)">
 
         <!-- justified gallery -->
         <div class="justified-gallery" *ngIf="sDisplayMode === 'justified'">
@@ -37,7 +37,7 @@
 
         <a *ngIf="searchService.mData.search.data.more" (click)="showMore()" class="pointer-link show-more">show more..</a>
 
-        <a class="scroll-to-top-button">
+        <a class="scroll-to-top-button" *ngIf="bShowScrollToTop">
             <i class="angle up icon"></i>
         </a>
     </div>
