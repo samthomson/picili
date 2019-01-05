@@ -72,6 +72,7 @@ gulp.task('concat-css', gulp.series(['sass'], () => {
             'node_modules/semantic-ui-css/components/dimmer.css',
             'node_modules/semantic-ui-css/components/form.css',
             'node_modules/semantic-ui-css/components/grid.css',
+            'node_modules/semantic-ui-css/components/header.css',
             'node_modules/semantic-ui-css/components/icon.css',
             'node_modules/semantic-ui-css/components/input.css',
             'node_modules/semantic-ui-css/components/label.css',
