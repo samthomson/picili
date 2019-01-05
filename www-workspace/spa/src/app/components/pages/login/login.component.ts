@@ -33,7 +33,7 @@ export class LoginComponent {
 					this.bAttemptingLogin = false;
 					if (result.success === true) {
 						// login successful
-						this.router.navigate(['/' + result.user]);
+						this.router.navigate(['/private']);
 					} else {
 						this.bLoginFailed = true;
 

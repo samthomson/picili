@@ -40,7 +40,7 @@ export class AuthService {
 
 	isLoggedIn() {
 		return this.authStatus;
-	}
+    }
 
 	attemptLogin(sEmail, sPassword): Observable<any> {
 		let jAuthParams = new HttpParams()

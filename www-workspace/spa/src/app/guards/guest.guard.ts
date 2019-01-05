@@ -19,9 +19,8 @@ export class GuestGuard implements CanActivate {
 		return true;
 	}
 
-	// logged in so redirect to their page
-	const sRelativeRoute: string = '/' + this.route.snapshot.params['username']
-	this.router.navigate([sRelativeRoute]);
+    // logged in so redirect user
+	this.router.navigate(['/private']);
 	return false;
   }
 }

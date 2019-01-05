@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
 
 	private bAuthenticated: boolean = false;
 	private bOnUserPage: boolean = false;
-	private sCurrentPageUsername: string = 'giraffe';
+	private sCurrentPageUsername: string = '';
 	private bShowingUserDropdownMenu: boolean = false;
 
 	private intervalFetchTaskBurnDown;
