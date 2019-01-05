@@ -47,6 +47,13 @@ h3,
 h4 {
   font-weight: 700;
 }
+
+.ui.label {
+    background: white;
+    border: 1px solid $cAvailableGrey;
+    font-weight: 500;
+}
+
 /*
 //
 // STRUCTURE
@@ -130,7 +137,7 @@ h4 {
   position: relative;
   font-family: "PT Sans Caption", sans-serif;
   font-size: xx-large;
-  top: 6px;
+  line-height: 28px;
 }
 
 .middle-form-column {

@@ -20,7 +20,7 @@
               "src/favicon.ico"
             ],
             "styles": [
-              "src/styles.css"
+              "src/assets/compiled/css/compiled.css"
             ],
             "scripts": []
           },
@@ -90,7 +90,7 @@
             "karmaConfig": "./karma.conf.js",
             "scripts": [],
             "styles": [
-              "src/styles.css"
+              "src/assets/compiled/css/compiled.css"
             ],
             "assets": [
               "src/assets",
