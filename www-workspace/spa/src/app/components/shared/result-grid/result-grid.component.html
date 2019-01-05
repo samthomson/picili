@@ -37,7 +37,11 @@
 
         <a *ngIf="searchService.mData.search.data.more" (click)="showMore()" class="pointer-link show-more">show more..</a>
 
-        <a class="scroll-to-top-button" *ngIf="bShowScrollToTop">
+        <a
+            class="scroll-to-top-button"
+            *ngIf="bShowScrollToTop"
+            (click)="scrollToTop()"
+        >
             <i class="angle up icon"></i>
         </a>
     </div>

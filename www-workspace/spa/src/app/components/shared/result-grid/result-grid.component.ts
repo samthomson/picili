@@ -172,4 +172,8 @@ export class ResultGridComponent implements OnInit {
     scrollHandler(event) {
         this.bShowScrollToTop = this.resultsBlock.nativeElement.scrollTop > 0
     }
+
+    scrollToTop() {
+        this.resultsBlock.nativeElement.scrollTop = 0
+    }
 }
