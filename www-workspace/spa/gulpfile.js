@@ -35,7 +35,7 @@ gulp.task('copy-semantic-images', function(){
 gulp.task('sass', function() {
 
     return gulp.src([
-        'src/picili.scss',
+        'src/assets/sass/picili.scss',
         'src/assets/vendor/materialize/materialize-sass.scss'
     ])
     .pipe(sass().on('error', sass.logError))
