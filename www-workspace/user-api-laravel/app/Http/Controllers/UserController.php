@@ -14,6 +14,8 @@ use SharedLibrary\Dropbox;
 
 use App\Http\Controllers\Controller;
 
+use App\Library\Helper;
+
 use Auth;
 use Validator;
 
@@ -156,7 +158,10 @@ class UserController extends Controller
 
                 }else{
                     $maReturn['dropbox'] = null;
-                }
+				}
+				
+				// get mitigating task count
+				$maReturn['mitigating-tasks'] = Helper::cMitigatingTasksForUser($user->id);
 
                 return response()->json($maReturn);
             }

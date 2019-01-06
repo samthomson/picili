@@ -6,7 +6,7 @@ use Share\Task;
 
 class Helper {
 
-    private static function cMitigatingTasksForUser($iUserId) {
+    public static function cMitigatingTasksForUser($iUserId) {
 
 		/*
 		return count of tasks that would get in the way of changing
