@@ -452,9 +452,9 @@ class BlackboxTest extends TestCase
 		$oBlockingTask->processor = 'irrelevant';
 		$oBlockingTask->user_id = $iSeedUserId;
 		$oBlockingTask->related_file_id = -1;
-		$oBlockingTask->iAfter = -1
+		$oBlockingTask->iAfter = -1;
 		$oBlockingTask->dDateAfter = date("Y-m-d H:i:s");
-		$oBlockingTask->save()
+		$oBlockingTask->save();
 
         $sHeader = parent::getHeaderForTest();
         $response = $this->json('PUT', $sTestRoute, ['folder' => $sUpdateFolderTo], $sHeader);
