@@ -129,7 +129,7 @@ export class MapPageComponent implements OnInit {
 	}
 
 	calculateContainerSizes() {
-		const iScrollMargin = 24
+		const iScrollMargin = 16
 		const iMapResultsGap = 8
 		// get full width
 		let iFullWidth = this.bothContainersWidth.nativeElement.offsetWidth
