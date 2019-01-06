@@ -10,8 +10,15 @@
 
         <!-- logged in -->
         <div *ngIf="bAuthenticated">
-            <span *ngIf="bProcessing" class="ui tiny"><i class="fa fa-cogs"></i>&nbsp;{{cProcessingFiles | number}} file<span *ngIf="cProcessingFiles > 1">s</span> to go, across {{cProcessingTasks | number}} task<span *ngIf="cProcessingTasks > 1">s</span>&nbsp;&nbsp;</span>
-
+			<span
+				id="processing-header-output"
+				*ngIf="bProcessing"
+				class="ui basic tiny label"
+				title="{{cProcessingFiles | number}} file(s) to go, across {{cProcessingTasks | number}} task(s)"
+			>
+				<i class="fa fa-cogs"></i>&nbsp;
+				Synchronising / Processing
+			</span>
             
             <a *ngIf="sUsername !== ''" [routerLink]="['/' + sUserId + '/settings']" class="ui tiny button">
                 <i class="fa fa-cog" aria-hidden="true"></i>&nbsp;settings
