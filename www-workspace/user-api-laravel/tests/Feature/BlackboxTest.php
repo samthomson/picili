@@ -460,7 +460,9 @@ class BlackboxTest extends TestCase
         $response = $this->json('PUT', $sTestRoute, ['folder' => $sUpdateFolderTo], $sHeader);
         $response
             ->assertStatus(200)
-            ->assertJsonFragment(['success' => false]);
+			->assertJsonFragment(['success' => false]);
+			
+		$oBlockingTask->delete();
 
 
         // test update with valid data
