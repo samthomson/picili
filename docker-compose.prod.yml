@@ -14,6 +14,7 @@ services:
       args:
         - TZ=${WORKSPACE_TIMEZONE}
         - NODE_VERSION=${WORKSPACE_NODE_VERSION}
+    command: [sh, -c, "cd /var/www/auto-scaler && npm run start"]
     environment:
       # app stuff
       - DATABASE_NAME=${DATABASE_NAME}

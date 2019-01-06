@@ -5,7 +5,7 @@
   "repository": "part of picili: https://github.com/samthomson/picili",
   "main": "start.js",
   "scripts": {
-    "start": "node start.js",
+    "start": "nodejs start.js",
     "forever": "forever start start.js"
   },
   "author": "",
