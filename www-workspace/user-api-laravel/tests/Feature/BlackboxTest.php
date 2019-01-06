@@ -255,7 +255,7 @@ class BlackboxTest extends TestCase
             ->assertJsonFragment(['public' => false])
             ->assertJsonStructure(
                 [
-                    'success', 'username', 'dropbox' => ['folder'], 'public'
+                    'success', 'username', 'dropbox' => ['folder'], 'public', 'mitigating-tasks'
                 ]
             );
     }
@@ -443,7 +443,27 @@ class BlackboxTest extends TestCase
         $response = $this->json('PUT', $sTestRoute, ['folder' => '256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256'], $sHeader);
         $response
             ->assertStatus(200)
-            ->assertJsonFragment(['success' => false]);
+			->assertJsonFragment(['success' => false]);
+			
+		// test that it doesn't work while there are mitigating tasks
+		$iSeedUserId = parent::iGetSeedUserId();
+		
+		$oBlockingTask = new Task;
+		$oBlockingTask->processor = 'irrelevant';
+		$oBlockingTask->user_id = $iSeedUserId;
+		$oBlockingTask->related_file_id = -1;
+		$oBlockingTask->iAfter = -1;
+		$oBlockingTask->dDateAfter = date("Y-m-d H:i:s");
+		$oBlockingTask->save();
+
+        $sHeader = parent::getHeaderForTest();
+        $response = $this->json('PUT', $sTestRoute, ['folder' => $sUpdateFolderTo], $sHeader);
+        $response
+            ->assertStatus(200)
+			->assertJsonFragment(['success' => false]);
+			
+		$oBlockingTask->delete();
+
 
         // test update with valid data
         $sHeader = parent::getHeaderForTest();
@@ -453,7 +473,6 @@ class BlackboxTest extends TestCase
             ->assertJsonFragment(['success' => true]);
 
         // test for db modal, verify it is updated
-        $iSeedUserId = parent::iGetSeedUserId();
 
         // and check an initial import task is created
         $oNewFolderSource = DropboxFilesource::where('user_id', $iSeedUserId)->first();

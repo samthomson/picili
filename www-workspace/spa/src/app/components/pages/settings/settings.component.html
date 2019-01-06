@@ -58,7 +58,8 @@
               need to re-authenticate picili to access dropbox on your behalf.
             </div>
 
-            <div class="ui form">
+			<h5 class="ui header">Set a dropbox folder to sync with</h5>
+            <div class="ui form" *ngIf="this.oSettings['mitigating-tasks'] === 0">
               <div class="field clear-fix">
                 <label>folder path:</label>
                 <div class="ui left icon input">
@@ -79,7 +80,10 @@
               >
                 save
               </button>
-            </div>
+			</div>
+			<div class="ui message"  *ngIf="this.oSettings['mitigating-tasks'] > 0">
+				There are still tasks to be processed, for the files in your current folder. Once they are complete, you can change the folder - if you want.
+			</div>
           </div>
 
           <div *ngIf="oSettings.dropbox === null">
