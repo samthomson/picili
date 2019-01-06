@@ -96,7 +96,8 @@ gulp.task('concat-js', function() {
         [
             'node_modules/jquery/dist/jquery.min.js',
             'node_modules/materialize-css/dist/js/materialize.js',
-            'node_modules/semantic-ui-css/components/dropdown.js'
+            'node_modules/semantic-ui-css/components/dropdown.js',
+            'node_modules/semantic-ui-css/components/transition.js'
         ]
     )
     .pipe(concat('compiled.js'))
