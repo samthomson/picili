@@ -192,10 +192,17 @@ class UserController extends Controller
         }
 
         $oUser = Auth::user();
-        $oUser->load('dropboxToken');
+		$oUser->load('dropboxToken');
+		
 
         if(isset($oUser->dropboxToken))
         {
+			$bBlockingTasks = Helper::cMitigatingTasksForUser($oUser->id) > 0;
+
+			if ($bBlockingTasks) {
+				return response()->json(['success' => false, 'errors' => ['blocking-tasks']]);
+			}
+
             // save it into the db and schedule an import task
             $oFolder = DropboxFilesource::where('user_id', $oUser->id)->first();
             if($oFolder === null) {
