@@ -255,7 +255,7 @@ class BlackboxTest extends TestCase
             ->assertJsonFragment(['public' => false])
             ->assertJsonStructure(
                 [
-                    'success', 'username', 'dropbox' => ['folder'], 'public'
+                    'success', 'username', 'dropbox' => ['folder'], 'public', 'mitigating-tasks'
                 ]
             );
     }
