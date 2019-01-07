@@ -3,7 +3,6 @@ services:
   spa:
     build:
       context: ./www-workspace/spa
-    command: [sh, -c, "npm rebuild node-sass && npm run dist-prod"]
     volumes_from:
       - workspace:rw
     depends_on: [workspace]
@@ -14,7 +13,7 @@ services:
       args:
         - TZ=${WORKSPACE_TIMEZONE}
         - NODE_VERSION=${WORKSPACE_NODE_VERSION}
-    command: [sh, -c, "cd /var/www/auto-scaler && npm run start"]
+    command: [sh, -c, "cd /var/www/auto-scaler && npm run start && cd /var/www/spa && npm run dist-prod"]
     environment:
       # app stuff
       - DATABASE_NAME=${DATABASE_NAME}
