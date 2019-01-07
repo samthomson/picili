@@ -3,7 +3,7 @@ services:
   spa:
     build:
       context: ./www-workspace/spa
-    command: npm rebuild node-sass && npm run dist-prod
+    command: [sh, -c, "npm rebuild node-sass && npm run dist-prod"]
     volumes_from:
       - workspace:rw
     depends_on: [workspace]

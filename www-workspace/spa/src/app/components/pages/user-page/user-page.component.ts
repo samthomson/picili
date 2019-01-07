@@ -52,6 +52,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
 		private gbl: GlobalVars,
 		private location: PlatformLocation
 	) {
+		console.log('aws ', this.gbl.awsBucketUrl)
+		
 		this.gbl.sCurrentPageUsername = route.snapshot.params['username'];
 
 		this.aYearsAgo = [

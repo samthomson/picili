@@ -13,7 +13,7 @@ services:
         - "80:4200"
     command: npm run serve
     volumes:
-      - ./www-workspace/spa:/spa
+      - ./www-workspace/spa:/var/www/spa
   
   workspace:
     build:

@@ -28,17 +28,17 @@
             "source": {
               "fileReplacements": [
                 {
-                  "replace": "src/undefined",
-                  "with": "src/environments/environment.ts"
+					"replace": "src/undefined",
+					"with": "src/environments/environment.ts"
                 }
               ]
             },
             "dev": {
               "fileReplacements": [
                 {
-                  "replace": "src/undefined",
-                  "with": "src/environments/environment.ts"
-                }
+					"replace": "src/undefined",
+					"with": "src/environments/environment.ts"
+				}
               ]
             },
             "production": {
