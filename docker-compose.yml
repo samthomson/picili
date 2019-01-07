@@ -13,7 +13,7 @@ services:
         - "80:4200"
     command: npm run serve
     volumes:
-      - ./www-workspace/spa:/spa
+      - ./www-workspace/spa:/var/www/spa
   
   workspace:
     build:
@@ -38,8 +38,8 @@ services:
       - API_OPEN_CAGE_KEY=${API_OPEN_CAGE_KEY}
       - AWS_KEY=${AWS_KEY}
       - AWS_SECRET=${AWS_SECRET}
-      - AWS_REGION=${AWS_REGION}
-      - AWS_BUCKET_NAME=${AWS_BUCKET_NAME}
+      - AWS_REGION=${AWS_REGION_DEV}
+      - AWS_BUCKET_NAME=${AWS_BUCKET_NAME_DEV}
       - AWS_BUCKET_NAME_TESTING=${AWS_BUCKET_NAME_TESTING}
       - API_IMAGGA_KEY=${API_IMAGGA_KEY}
       - API_IMAGGA_SECRET=${API_IMAGGA_SECRET}
