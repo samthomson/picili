@@ -164,7 +164,7 @@ locally the SPA and API run on localhost port 80 and 81 respectively. In product
 - set elastic property on it: `docker-machine ssh picili` and then `sysctl vm.max_map_count=262144` once 'in'
 - switch 'into' it: `eval $(docker-machine env picili)`
 - build: `docker-compose build -f docker-compose.prod.yml`
-- seed: `docker-compose run workspace bash` and then `bash seed.sh`
+- seed: `docker-compose run workspace bash -c "bash seed.sh"`
 - update `USER_API_URL` and `SPA_URL` to the IP/URI of your server/site
 - update your dropbox app to have an allowed redirect URI: `https://[YOUR IP/SITE]/oauth/dropbox`
 - run `docker-compose up -f docker-compose.prod.yml`
