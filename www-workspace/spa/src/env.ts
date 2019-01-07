@@ -8,5 +8,5 @@ export class GlobalVars {
 	sAuthTokenName: string = 'picili.auth_token';
 	sAuthId: string = 'picili.user_id';
 	iResizeTimeout: number = 200;
-	awsBucketUrl: string = environment.awsBucketUrl;
+	awsBucketUrl: string = `https://s3-${process.env.REGION}.amazonaws.com/${process.env.BUCKET}'/t/`
 }
