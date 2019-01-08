@@ -13,7 +13,8 @@ services:
       args:
         - TZ=${WORKSPACE_TIMEZONE}
         - NODE_VERSION=${WORKSPACE_NODE_VERSION}
-    command: [sh, -c, "cd /var/www/auto-scaler && npm run start && cd /var/www/spa && npm run dist-prod"]
+    command: [sh, -c, "cd /var/www/spa && npm run dist-prod && cd /var/www/auto-scaler && npm run start"]
+    restart: always
     environment:
       # app stuff
       - DATABASE_NAME=${DATABASE_NAME}
