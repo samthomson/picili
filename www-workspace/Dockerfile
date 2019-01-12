@@ -1,10 +1,4 @@
-# FROM laradock/workspace:1.8-71
-# copied the contents of the above laradock workspace 
-# dockerfile and replaced put here directly.
-
 FROM phusion/baseimage:latest
-
-MAINTAINER Mahmoud Zalt <mahmoud@zalt.me>
 
 RUN DEBIAN_FRONTEND=noninteractive
 RUN locale-gen en_US.UTF-8
