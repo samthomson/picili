@@ -7,7 +7,6 @@ ENV LANGUAGE=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 ENV LC_CTYPE=en_US.UTF-8
 ENV LANG=en_US.UTF-8
-ENV TERM xterm
 
 # Add the "PHP 7" ppa
 RUN apt-get install -y software-properties-common && \
@@ -105,27 +104,27 @@ RUN if [ ${COMPOSER_GLOBAL_INSTALL} = true ]; then \
 
 USER root
 
-# # Check if NVM needs to be installed
-# ARG NODE_VERSION=10.5.0
-# ENV NODE_VERSION 10.5.0
-# ENV NVM_DIR /home/laradock/.nvm
-# RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash && \
-#         . $NVM_DIR/nvm.sh && \
-#         nvm install ${NODE_VERSION} && \
-#         nvm use ${NODE_VERSION} && \
-#         npm install -g gulp bower vue-cli \
-#         ;fi
+# Check if NVM needs to be installed
+ARG NODE_VERSION=10.5.0
+ENV NODE_VERSION 10.5.0
+ENV NVM_DIR /home/laradock/.nvm
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash && \
+        . $NVM_DIR/nvm.sh && \
+        nvm install ${NODE_VERSION} && \
+        nvm use ${NODE_VERSION} && \
+        npm install -g gulp bower vue-cli \
+        ;fi
 
-# # Wouldn't execute when added to the RUN statement in the above block
-# # Source NVM when loading bash since ~/.profile isn't loaded on non-login shell
-# RUN echo "" >> ~/.bashrc && \
-#         echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc && \
-#         echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc \
-#         ;fi
+# Wouldn't execute when added to the RUN statement in the above block
+# Source NVM when loading bash since ~/.profile isn't loaded on non-login shell
+RUN echo "" >> ~/.bashrc && \
+        echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc && \
+        echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc \
+        ;fi
 
-# alternative install
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN apt-get install -y nodejs
+# # alternative install
+# RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+# RUN apt-get install -y nodejs
 
 # install required things
 RUN apt-get update && apt-get install apt-transport-https && \
@@ -134,7 +133,7 @@ RUN apt-get update && apt-get install apt-transport-https && \
         apt-get update && apt-get install -y --allow-unauthenticated yarn mysql-client
 
 
-# RUN apt-get install npm -y
+RUN apt-get install npm -y
 
 # set npm registry address
 RUN npm config set registry http://registry.npmjs.org/
