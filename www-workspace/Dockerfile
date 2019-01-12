@@ -94,18 +94,6 @@ RUN groupadd -g ${PGID} laradock && \
         useradd -u ${PUID} -g laradock -m laradock && \
         apt-get update -yqq
 
-#####################################
-# Set Timezone
-#####################################
-
-ARG TZ=UTC
-ENV TZ ${TZ}
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-#####################################
-# Composer:
-#####################################
-
 # Add the composer.json
 COPY ./composer.json /home/laradock/.composer/composer.json
 
@@ -123,27 +111,27 @@ RUN if [ ${COMPOSER_GLOBAL_INSTALL} = true ]; then \
 
 USER root
 
-#####################################
-# Node / NVM:
-#####################################
+# # Check if NVM needs to be installed
+# ARG NODE_VERSION=10.5.0
+# ENV NODE_VERSION 10.5.0
+# ENV NVM_DIR /home/laradock/.nvm
+# RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash && \
+#         . $NVM_DIR/nvm.sh && \
+#         nvm install ${NODE_VERSION} && \
+#         nvm use ${NODE_VERSION} && \
+#         npm install -g gulp bower vue-cli \
+#         ;fi
 
-# Check if NVM needs to be installed
-ARG NODE_VERSION=10.5.0
-ENV NODE_VERSION 10.5.0
-ENV NVM_DIR /home/laradock/.nvm
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash && \
-        . $NVM_DIR/nvm.sh && \
-        nvm install ${NODE_VERSION} && \
-        nvm use ${NODE_VERSION} && \
-        npm install -g gulp bower vue-cli \
-        ;fi
+# # Wouldn't execute when added to the RUN statement in the above block
+# # Source NVM when loading bash since ~/.profile isn't loaded on non-login shell
+# RUN echo "" >> ~/.bashrc && \
+#         echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc && \
+#         echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc \
+#         ;fi
 
-# Wouldn't execute when added to the RUN statement in the above block
-# Source NVM when loading bash since ~/.profile isn't loaded on non-login shell
-RUN echo "" >> ~/.bashrc && \
-        echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc && \
-        echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc \
-        ;fi
+# alternative install
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt-get install -y nodejs
 
 # install required things
 RUN apt-get update && apt-get install apt-transport-https && \
@@ -151,36 +139,18 @@ RUN apt-get update && apt-get install apt-transport-https && \
         echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
         apt-get update && apt-get install -y --allow-unauthenticated yarn mysql-client
 
-# Add NVM binaries to root's .bashrc
-USER root
 
-RUN apt-get install npm -y
+# RUN apt-get install npm -y
 
 # set npm registry address
 RUN npm config set registry http://registry.npmjs.org/
 
-
-#
-#--------------------------------------------------------------------------
-# Final Touch
-#--------------------------------------------------------------------------
-#
-
-# Clean up
-USER root
+# clean up
 RUN apt-get clean && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Set default work directory
 WORKDIR /var/www
-
-
-WORKDIR /var/www
-
-USER root
-
-# install auto-scalar deps
-# RUN cd /var/www/auto-scaler && npm i
 
 # php.ini for cli
 ADD ./php-cli.ini /etc/php/7.1/cli/php.ini
