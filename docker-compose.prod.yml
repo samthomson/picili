@@ -1,11 +1,11 @@
 version: "2"
 services:
-  spa:
-    build:
-      context: ./www-workspace/spa
-    volumes_from:
-      - workspace:rw
-    depends_on: [workspace]
+  # spa:
+  #   build:
+  #     context: ./www-workspace/spa
+  #   volumes_from:
+  #     - workspace:rw
+  #   depends_on: [workspace]
   
   workspace:
     build:
@@ -13,8 +13,8 @@ services:
       args:
         - TZ=${WORKSPACE_TIMEZONE}
         - NODE_VERSION=${WORKSPACE_NODE_VERSION}
-    command: [sh, -c, "cd /var/www/spa && npm run dist-prod && cd /var/www/auto-scaler && npm run start"]
-    restart: always
+    # command: [sh, -c, "cd /var/www/spa && npm run dist-prod && cd /var/www/auto-scaler && npm run start"]
+    # restart: always
     environment:
       # app stuff
       - DATABASE_NAME=${DATABASE_NAME}
