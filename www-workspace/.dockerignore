@@ -20,3 +20,4 @@ spa/karma.conf.js
 spa/package.json
 user-api-laravel/tests
 auto/tests
+spa/src/assets/compiled
