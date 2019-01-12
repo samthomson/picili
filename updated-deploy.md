@@ -6,7 +6,11 @@ CREATE:
 - `docker-machine ssh picili`
 - `apt install docker-compose`
 - `cd /picili`
-- `docker-compose up`
+- `docker-compose up -d`
+- run setup script 
+	- ssh in to VPS : `docker-machine ssh picili`
+	- bash in to container: `cd /picili && docker-compose run workspace bash`
+	- run script: `bash ./initial-setup.sh`
 
 - docker-compose up
 - run initial-setup script (~./www-workspace/initial-setup.sh)
