@@ -20,3 +20,11 @@ cd /var/www && ./migrations.sh
 cd /var/www/auto && php artisan db:seed --class=FolderSeeder --force
 # create elastic structure
 cd /var/www/auto && php artisan elastic-create
+
+# build and copy spa into correct folder (gulp dist)
+cd /var/www/spa && npm i -y
+npm rebuild node-sass
+npm run dist-prod
+
+# install auto-scalar deps, start it running?
+cd /var/www/auto-scaler && npm i
