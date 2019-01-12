@@ -8,8 +8,8 @@ CREATE:
 - `cd /picili`
 - `docker-compose up -d`
 - run setup script 
-	- ssh in to VPS : `docker-machine ssh picili`
-	- bash in to container: `cd /picili && docker-compose run workspace bash`
+	 <!-- - ssh in to VPS : `docker-machine ssh picili` -->
+	- bash in to container: `cd /picili && docker-compose -f docker-compose.prod.yml run workspace bash`
 	- run script: `bash ./initial-setup.sh`
 
 - docker-compose up
@@ -20,3 +20,7 @@ UPDATE:
 - git pull
 - docker-compose down
 - docker-compose up
+
+
+remaining:
+- should initial set up have set thread count or whatever it is for elastic in it?
