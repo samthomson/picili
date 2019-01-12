@@ -38,7 +38,7 @@ services:
       - API_IMAGGA_KEY=${API_IMAGGA_KEY}
       - API_IMAGGA_SECRET=${API_IMAGGA_SECRET}
     volumes:
-      - /var/www
+      - ./www-workspace:/var/www
     depends_on: [mysql, elasticsearch]
 
   php-fpm:
@@ -62,8 +62,8 @@ services:
       - SEARCH_CONFIDENCE_THRESHOLD=${SEARCH_CONFIDENCE_THRESHOLD}
       - DROPBOX_CLIENT_ID=${DROPBOX_CLIENT_ID}
       - DROPBOX_CLIENT_SECRET=${DROPBOX_CLIENT_SECRET}
-    volumes_from:
-      - workspace
+    volumes:
+      - ./www-workspace:/var/www
     expose:
       - "9000"
 
@@ -72,8 +72,9 @@ services:
       context: ./docker-containers/nginx
       args:
         - PHP_UPSTREAM=php-fpm
-    volumes_from:
-      - workspace:rw
+    volumes:
+      - ./www-workspace:/var/www
+      - ./docker-containers/nginx/sites:/etc/nginx/sites-available
     ports:
       - "80:80" # http
     depends_on: [php-fpm, mysql, workspace]
