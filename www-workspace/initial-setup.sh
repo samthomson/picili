@@ -11,6 +11,9 @@ chmod -R o+w /var/www/user-api-laravel/bootstrap/cache
 chmod -R o+w /var/www/auto/storage
 chmod -R o+w /var/www/auto/bootstrap/cache
 
+# for elastic
+sysctl vm.max_map_count=262144
+
 # install deps
 cd /var/www/user-api-laravel && composer install
 cd /var/www/auto && composer install
