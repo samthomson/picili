@@ -174,17 +174,13 @@ RUN apt-get clean && \
 # Set default work directory
 WORKDIR /var/www
 
-# install php project dependencies
-
-RUN cd /var/www/user-api-laravel && composer install
-RUN cd /var/www/auto && composer install
 
 WORKDIR /var/www
 
 USER root
 
 # install auto-scalar deps
-RUN cd /var/www/auto-scaler && npm i
+# RUN cd /var/www/auto-scaler && npm i
 
 # php.ini for cli
 ADD ./php-cli.ini /etc/php/7.1/cli/php.ini
