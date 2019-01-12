@@ -1,0 +1,23 @@
+# packages
+spa/node_modules
+auto-scaler/node_modules
+auto/vendor
+user-api-laravel/vendor
+# random files - tests files, logs etc
+auto/dropbox
+auto/resources/test-files
+auto/resources/test-temp
+auto/storage/logs/laravel.log
+user-api-laravel/storage/logs/laravel.log
+auto-scaler/package-lock.json
+auto-scaler/npm-debug.log
+spa/dist
+spa/e2e
+spa/package-lock.json
+spa/npm-debug.log
+spa/.prettierrc
+spa/karma.conf.js
+spa/package.json
+user-api-laravel/tests
+auto/tests
+spa/src/assets/compiled

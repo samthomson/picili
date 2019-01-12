@@ -1,10 +1,4 @@
-# FROM laradock/workspace:1.8-71
-# copied the contents of the above laradock workspace 
-# dockerfile and replaced put here directly.
-
 FROM phusion/baseimage:latest
-
-MAINTAINER Mahmoud Zalt <mahmoud@zalt.me>
 
 RUN DEBIAN_FRONTEND=noninteractive
 RUN locale-gen en_US.UTF-8
@@ -13,7 +7,6 @@ ENV LANGUAGE=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 ENV LC_CTYPE=en_US.UTF-8
 ENV LANG=en_US.UTF-8
-ENV TERM xterm
 
 # Add the "PHP 7" ppa
 RUN apt-get install -y software-properties-common && \
@@ -94,18 +87,6 @@ RUN groupadd -g ${PGID} laradock && \
         useradd -u ${PUID} -g laradock -m laradock && \
         apt-get update -yqq
 
-#####################################
-# Set Timezone
-#####################################
-
-ARG TZ=UTC
-ENV TZ ${TZ}
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-#####################################
-# Composer:
-#####################################
-
 # Add the composer.json
 COPY ./composer.json /home/laradock/.composer/composer.json
 
@@ -122,10 +103,6 @@ RUN if [ ${COMPOSER_GLOBAL_INSTALL} = true ]; then \
         ;fi
 
 USER root
-
-#####################################
-# Node / NVM:
-#####################################
 
 # Check if NVM needs to be installed
 ARG NODE_VERSION=10.5.0
@@ -145,55 +122,28 @@ RUN echo "" >> ~/.bashrc && \
         echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc \
         ;fi
 
+# # alternative install
+# RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+# RUN apt-get install -y nodejs
+
 # install required things
 RUN apt-get update && apt-get install apt-transport-https && \
         curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
         echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
         apt-get update && apt-get install -y --allow-unauthenticated yarn mysql-client
 
-# Add NVM binaries to root's .bashrc
-USER root
 
 RUN apt-get install npm -y
 
 # set npm registry address
 RUN npm config set registry http://registry.npmjs.org/
 
-
-#
-#--------------------------------------------------------------------------
-# Final Touch
-#--------------------------------------------------------------------------
-#
-
-# Clean up
-USER root
+# clean up
 RUN apt-get clean && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Set default work directory
 WORKDIR /var/www
-
-# # copy in our code, so as not to rely on a volume in prod
-COPY . /var/www
-
-# ensure directories we need are writable
-RUN chmod -R o+w /var/www/user-api-laravel/storage
-RUN chmod -R o+w /var/www/user-api-laravel/bootstrap/cache
-RUN chmod -R o+w /var/www/auto/storage
-RUN chmod -R o+w /var/www/auto/bootstrap/cache
-
-# install php project dependencies
-
-RUN cd /var/www/user-api-laravel && composer install
-RUN cd /var/www/auto && composer install
-
-WORKDIR /var/www
-
-USER root
-
-# install auto-scalar deps
-RUN cd /var/www/auto-scaler && npm i
 
 # php.ini for cli
 ADD ./php-cli.ini /etc/php/7.1/cli/php.ini

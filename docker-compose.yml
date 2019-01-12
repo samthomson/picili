@@ -1,10 +1,5 @@
 version: "2"
 services:
-  applications:
-    build:
-      context: ./docker-containers/applications
-    volumes:
-      - ./www-workspace:/var/www
 
   spa:
     build:
@@ -43,9 +38,9 @@ services:
       - AWS_BUCKET_NAME_TESTING=${AWS_BUCKET_NAME_TESTING}
       - API_IMAGGA_KEY=${API_IMAGGA_KEY}
       - API_IMAGGA_SECRET=${API_IMAGGA_SECRET}
-    volumes_from:
-      - applications
-    depends_on: [mysql, applications, elasticsearch]
+    volumes:
+      - ./www-workspace:/var/www
+    depends_on: [mysql, elasticsearch]
 
   php-fpm:
     build:
@@ -68,8 +63,8 @@ services:
       - SEARCH_CONFIDENCE_THRESHOLD=${SEARCH_CONFIDENCE_THRESHOLD}
       - DROPBOX_CLIENT_ID=${DROPBOX_CLIENT_ID}
       - DROPBOX_CLIENT_SECRET=${DROPBOX_CLIENT_SECRET}
-    volumes_from:
-      - applications
+    volumes:
+      - ./www-workspace:/var/www
     expose:
       - "9000"
 
@@ -78,9 +73,8 @@ services:
       context: ./docker-containers/nginx
       args:
         - PHP_UPSTREAM=php-fpm
-    volumes_from:
-      - applications
     volumes:
+      - ./www-workspace:/var/www
       - ./docker-containers/nginx/sites:/etc/nginx/sites-available
     ports:
       - "81:80"
