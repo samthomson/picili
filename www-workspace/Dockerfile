@@ -174,15 +174,6 @@ RUN apt-get clean && \
 # Set default work directory
 WORKDIR /var/www
 
-# # copy in our code, so as not to rely on a volume in prod
-COPY . /var/www
-
-# ensure directories we need are writable
-RUN chmod -R o+w /var/www/user-api-laravel/storage
-RUN chmod -R o+w /var/www/user-api-laravel/bootstrap/cache
-RUN chmod -R o+w /var/www/auto/storage
-RUN chmod -R o+w /var/www/auto/bootstrap/cache
-
 # install php project dependencies
 
 RUN cd /var/www/user-api-laravel && composer install

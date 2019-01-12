@@ -1,8 +1,9 @@
 version: "2"
 services:
-  applications:
+  codebase:
     build:
-      context: ./docker-containers/applications
+      context: ./www-workspace
+      dockerfile: Codebase.Dockerfile
     volumes:
       - ./www-workspace:/var/www
 
@@ -12,8 +13,8 @@ services:
     ports:
         - "80:4200"
     command: npm run serve
-    volumes:
-      - ./www-workspace/spa:/var/www/spa
+    volumes_from:
+      - codebase
   
   workspace:
     build:
@@ -44,8 +45,8 @@ services:
       - API_IMAGGA_KEY=${API_IMAGGA_KEY}
       - API_IMAGGA_SECRET=${API_IMAGGA_SECRET}
     volumes_from:
-      - applications
-    depends_on: [mysql, applications, elasticsearch]
+      - codebase
+    depends_on: [mysql, codebase, elasticsearch]
 
   php-fpm:
     build:
@@ -69,7 +70,7 @@ services:
       - DROPBOX_CLIENT_ID=${DROPBOX_CLIENT_ID}
       - DROPBOX_CLIENT_SECRET=${DROPBOX_CLIENT_SECRET}
     volumes_from:
-      - applications
+      - codebase
     expose:
       - "9000"
 
@@ -79,7 +80,7 @@ services:
       args:
         - PHP_UPSTREAM=php-fpm
     volumes_from:
-      - applications
+      - codebase
     volumes:
       - ./docker-containers/nginx/sites:/etc/nginx/sites-available
     ports:

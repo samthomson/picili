@@ -4,7 +4,7 @@ WORKDIR /var/www/spa
 
 EXPOSE 4200
 
-COPY . /var/www/spa
+# COPY . /var/www/spa # obsolete now as code comes from codebase volume
 
 RUN npm i -y
 
