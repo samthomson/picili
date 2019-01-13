@@ -180,11 +180,10 @@ Seperately:
 
 ### 4.2 Incremental updates - deploying as you work on picili
 
-- ssh in `docker-machine ssh picili`
-- git pull `cd /picili && git pull`
-- docker-compose down: `docker-compose -f docker-compose.prod.yml down`
-- docker-compose up: `docker-compose -f docker-compose.prod.yml -d up`
-- restart auto-scaler: `bash ~/deploy-scripts/start-auto-scaler.sh`
+- update remote files, restart images `bash ./depoy-scripts/run-remote-update.sh`
+- restart auto-scaler: 
+	- `docker-machine ssh picili "docker exec -it $(docker ps -aqf "name=workspace") bash"`
+	- `cd /var/www/auto-scaler && npm run forever && exit`
 
 *If rebuilding SPA, run: `docker-compose -f docker-compose.prod.yml run -d --entrypoint="bash -c 'cd /var/www/spa && npm run dist-prod'" workspace`
 
