@@ -182,7 +182,7 @@ Seperately:
 
 - update remote files, restart images `bash ./deploy-scripts/run-remote-update.sh`
 - restart auto-scaler: 
-	- `docker-machine ssh picili "cd /picili && docker exec -it $(docker ps -qf "name=workspace") bash"`
+	- `docker-machine ssh picili "cd /picili && docker exec -it $(docker ps -qf name=workspace) bash"`
 	- `cd /var/www/auto-scaler && npm run forever && exit`
 
 *If rebuilding SPA, run: `docker-compose -f docker-compose.prod.yml run -d --entrypoint="bash -c 'cd /var/www/spa && npm run dist-prod'" workspace`
