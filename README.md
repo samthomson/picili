@@ -161,35 +161,37 @@ locally the SPA and API run on localhost port 80 and 81 respectively. In product
 - get and set digital ocean token into env `export DO_TOKEN="INSERT_TOKEN_HERE"`
 
 - create remote machine: `docker-machine create --driver=digitalocean --digitalocean-access-token=$DO_TOKEN --digitalocean-size=2gb --digitalocean-region=sgp1 picili`
-- set elastic property on it: `docker-machine ssh picili` and then `sysctl vm.max_map_count=262144` once 'in'
-- switch 'into' it: `eval $(docker-machine env picili)`
-- build: `docker-compose build -f docker-compose.prod.yml`
-- seed: `docker-compose run workspace bash -c "bash seed.sh"`
-- update `USER_API_URL` and `SPA_URL` to the IP/URI of your server/site
-- update your dropbox app to have an allowed redirect URI: `https://[YOUR IP/SITE]/oauth/dropbox`
-- run `docker-compose up -f docker-compose.prod.yml`
+- `docker-machine ssh picili "git clone https://github.com/samthomson/picili.git"`
+- `docker-machine scp .env.prod picili:/picili/.env`
+	- ensure `USER_API_URL` and `SPA_URL` is the URI of your site
+- `docker-machine ssh picili`
+- `apt install docker-compose`
+- `cd /picili`
+- setup script: `docker-compose -f docker-compose.prod.yml run workspace bash` and then `bash ./initial-setup.sh && exit`
+- start services `docker-compose -f docker-compose.prod.yml up -d`
+- start auto-scaler: `bash ~/deploy-scripts/start-auto-scaler.sh`
 
-optional
+- docker-compose up
+- run initial-setup script (~./www-workspace/initial-setup.sh)
+
+Seperately:
+- update your dropbox app to have an allowed redirect URI: `https://[YOUR IP/SITE]/oauth/dropbox`
 - configure swap memory if the vps has low ram: https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04
 
 ### 4.2 Incremental updates - deploying as you work on picili
 
-Rebuild and deploy SPA container
+- ssh in `docker-machine ssh picili`
+- git pull `cd /picili && git pull`
+- docker-compose down: `docker-compose -f docker-compose.prod.yml down`
+- docker-compose up: `docker-compose -f docker-compose.prod.yml -d up`
+- restart auto-scaler: `bash ~/deploy-scripts/start-auto-scaler.sh`
 
-- `eval $(docker-machine env picili)`
-- `docker-compose -f docker-compose.prod.yml build --no-cache spa`
-- `docker-compose -f docker-compose.prod.yml up spa`
+*If rebuilding SPA, run: `docker-compose -f docker-compose.prod.yml run -d --entrypoint="bash -c 'cd /var/www/spa && npm run dist-prod'" workspace`
 
-#### knowing what container to update / restart
-
-Let's say you fixed a bug in the auto processor and want to restart it. You would rebuid and deploy the workspace container, as that's where the file change would be, and then restart php-fpm container with `-V` flag, so it remounts to the volume with new code.
-
-`docker-compose -f docker-compose.prod.yml down`
-`docker-compose -f docker-compose.prod.yml build workspace`
-`docker-compose -f docker-compose.prod.yml up -V`
 
 ### 4.3 other
 
 Bash into a container to see what's going on:
+- ssh in to server: `docker-machine ssh picili`
 - spa: `docker-compose -f docker-compose.prod.yml run spa sh`
 - php-fpm: `docker-compose -f docker-compose.prod.yml run php-fpm bash`
