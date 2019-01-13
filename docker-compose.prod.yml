@@ -109,13 +109,13 @@ services:
     environment:
       - cluster.name=laradock-cluster
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - xpack.security.enabled=false
     ulimits:
       memlock:
         soft: -1
         hard: -1
-    mem_limit: 512m
+    mem_limit: 1024m
     ports:
       - "9200:9200"
       - "9300:9300"
