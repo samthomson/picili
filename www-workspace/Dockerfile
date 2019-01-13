@@ -104,24 +104,6 @@ RUN if [ ${COMPOSER_GLOBAL_INSTALL} = true ]; then \
 
 USER root
 
-# # Check if NVM needs to be installed
-# ARG NODE_VERSION=10.5.0
-# ENV NODE_VERSION 10.5.0
-# ENV NVM_DIR /home/laradock/.nvm
-# RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash && \
-#         . $NVM_DIR/nvm.sh && \
-#         nvm install ${NODE_VERSION} && \
-#         nvm use ${NODE_VERSION} && \
-#         npm install -g gulp bower vue-cli \
-#         ;fi
-
-# # Wouldn't execute when added to the RUN statement in the above block
-# # Source NVM when loading bash since ~/.profile isn't loaded on non-login shell
-# RUN echo "" >> ~/.bashrc && \
-#         echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc && \
-#         echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc \
-#         ;fi
-
 # alternative install
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 RUN apt-get install -y nodejs
@@ -131,9 +113,6 @@ RUN apt-get update && apt-get install apt-transport-https && \
         curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
         echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
         apt-get update && apt-get install -y --allow-unauthenticated yarn mysql-client
-
-
-# RUN apt-get install npm -y
 
 # set npm registry address
 RUN npm config set registry http://registry.npmjs.org/
