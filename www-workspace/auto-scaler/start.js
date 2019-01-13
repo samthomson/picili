@@ -70,7 +70,7 @@ function runCycle() {
 function iPercentFree () {return os.freemem() / os.totalmem() * 10}
 function ChangeBatcheSize(iDelta) {
     iBatchRuns += iDelta
-    if (iBatchRuns < 2) iBatchRuns = 2
+    if (iBatchRuns < 1) iBatchRuns = 1
     if (iBatchRuns > iMaxBatches) iBatchRuns = iMaxBatches
 
     console.log(`batch size now ${iBatchRuns}`)
