@@ -1,12 +1,5 @@
 version: "2"
-services:
-  # spa:
-  #   build:
-  #     context: ./www-workspace/spa
-  #   volumes_from:
-  #     - workspace:rw
-  #   depends_on: [workspace]
-  
+services:  
   workspace:
     build:
       context: ./www-workspace
