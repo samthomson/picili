@@ -111,6 +111,8 @@ services:
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - xpack.security.enabled=false
+    deploy:
+      replicas: 0
     ulimits:
       memlock:
         soft: -1
