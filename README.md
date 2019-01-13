@@ -176,13 +176,13 @@ locally the SPA and API run on localhost port 80 and 81 respectively. In product
 
 Seperately:
 - update your dropbox app to have an allowed redirect URI: `https://[YOUR IP/SITE]/oauth/dropbox`
-- configure swap memory if the vps has low ram: https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04
+- configure swap memory if the vps has low ram: https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04 or run `bash ./scripts/enableswap.sh`
 
 ### 4.2 Incremental updates - deploying as you work on picili
 
-- update remote files, restart images `bash ./depoy-scripts/run-remote-update.sh`
+- update remote files, restart images `bash ./deploy-scripts/run-remote-update.sh`
 - restart auto-scaler: 
-	- `docker-machine ssh picili "docker exec -it $(docker ps -aqf "name=workspace") bash"`
+	- `docker-machine ssh picili "cd /picili && docker exec -it $(docker ps -qf "name=workspace") bash"`
 	- `cd /var/www/auto-scaler && npm run forever && exit`
 
 *If rebuilding SPA, run: `docker-compose -f docker-compose.prod.yml run -d --entrypoint="bash -c 'cd /var/www/spa && npm run dist-prod'" workspace`
