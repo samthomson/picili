@@ -137,8 +137,6 @@ services:
     depends_on:
       - elasticsearch
 
-### configure volumes defined above ###
-
 volumes:
   phpmyadmin:
     driver: "local"
