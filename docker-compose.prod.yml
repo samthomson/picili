@@ -6,7 +6,7 @@ services:
       args:
         - TZ=${WORKSPACE_TIMEZONE}
         - NODE_VERSION=${WORKSPACE_NODE_VERSION}
-    command: [bash, -c, "cd /var/www/spa && npm run dist-prod && cd /var/www/auto-scaler && npm run forever"]
+    command: [bash, -c, "cd /var/www/spa && npm run dist-prod && cd /var/www/auto-scaler && npm run forever && tail -F anything"]
     # restart: always
     environment:
       # app stuff
