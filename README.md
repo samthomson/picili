@@ -181,10 +181,9 @@ Seperately:
 ### 4.2 Incremental updates - deploying as you work on picili
 
 - git push/merge changes to master
-- update remote files, restart images (inc auto-scaler) `bash ./deploy-scripts/run-remote-update.sh`
+- update remote files, restart images (inc auto-scaler, also rebuilds spa) `bash ./deploy-scripts/run-remote-update.sh`
 
-*If rebuilding SPA, run: `docker-compose -f docker-compose.prod.yml run -d --entrypoint="bash -c 'cd /var/www/spa && npm run dist-prod'" workspace`
-
+*If the changes were in the SPA, flush caches (eg cloudflare)
 
 ### 4.3 other
 
