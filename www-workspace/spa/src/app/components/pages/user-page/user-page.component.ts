@@ -82,9 +82,11 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
 			let cAggs: number = 0
 
-			for (let oYearAgo in this.aYearsAgo) {
-				if (this.oHomeAggs && (this.oHomeAggs as any).on_this_day[(oYearAgo as any).key]) {
-					cAggs += ((this.oHomeAggs as any).on_this_day[(oYearAgo as any).key]).length
+			for (let i = 0; i < this.aYearsAgo.length; i++) {
+				let sKey: string = this.aYearsAgo[i].key
+
+				if (this.oHomeAggs && (this.oHomeAggs as any).on_this_day[sKey]) {
+					cAggs += ((this.oHomeAggs as any).on_this_day[sKey]).length
 				}
 			}
 
