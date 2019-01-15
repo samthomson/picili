@@ -9,7 +9,16 @@
 
         <div id="lightbox-file-info" ng-cloak ng-if="jsonLightFile">
             <div *ngIf="!bLoadingInfo && jFileInfo">
-                <div class="ui disabled header" *ngIf="jFileInfo.address && jFileInfo.altitude">{{jFileInfo.address}} ({{jFileInfo.altitude | number : '1.0-0'}}m)
+				<div
+					class="ui disabled header" 
+					*ngIf="jFileInfo.address || jFileInfo.altitude"
+				>
+					<span *ngIf="jFileInfo.address">
+						{{jFileInfo.address}}
+					</span>
+					<span *ngIf="jFileInfo.altitude">
+							<span *ngIf="jFileInfo.address">(</span>{{jFileInfo.altitude | number : '1.0-0'}}m<span *ngIf="jFileInfo.address">)</span>
+					</span>
                     <br/>
                 </div>
                 <h5 class="ui header">{{jFileInfo.date}}</h5>
