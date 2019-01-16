@@ -70,6 +70,7 @@ services:
       - ./docker-containers/nginx/sites:/etc/nginx/sites-available
     ports:
       - "80:80" # http
+      - "443:443" # ssl?
     depends_on: [php-fpm, mysql, workspace]
 
   mysql:
