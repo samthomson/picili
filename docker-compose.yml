@@ -21,7 +21,7 @@ services:
       - DATABASE_NAME=${DATABASE_NAME}
       - DATABASE_NAME_TESTING=${DATABASE_NAME_TESTING}
       - DB_HOST=${MYSQL_HOST}
-      - DB_PASSWORD=${MYSQL_PASSWORD}
+      - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_USER=${MYSQL_USER}
       - APP_KEY=${APP_KEY}
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
@@ -48,7 +48,7 @@ services:
     environment:
       - DATABASE_NAME=${DATABASE_NAME}
       - DB_HOST=${MYSQL_HOST}
-      - DB_PASSWORD=${MYSQL_PASSWORD}
+      - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - DB_PORT=${MYSQL_PORT}
       - MYSQL_HOST=${MYSQL_HOST}
       - MYSQL_USER=${MYSQL_USER}
@@ -86,9 +86,7 @@ services:
       - "3306:3306"
     environment:
       - MYSQL_DATABASE=${DATABASE_NAME}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
       - mysqldata:/var/lib/mysql
 
