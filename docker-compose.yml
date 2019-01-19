@@ -96,9 +96,8 @@ services:
     build: ./docker-containers/phpmyadmin
     environment:
       - PMA_ARBITRARY=1
-      - MYSQL_USER=${PMA_USER}
-      - MYSQL_PASSWORD=${PMA_PASSWORD}
-      - MYSQL_ROOT_PASSWORD=${PMA_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     ports:
       - "8080:80"
     depends_on:
