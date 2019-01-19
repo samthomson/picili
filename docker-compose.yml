@@ -95,7 +95,7 @@ services:
     environment:
       - PMA_ARBITRARY=1
       - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
     ports:
       - "8080:80"
     depends_on:
