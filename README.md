@@ -161,15 +161,15 @@ locally the SPA and API run on localhost port 80 and 81 respectively. In product
 - get and set digital ocean token into env `export DO_TOKEN="INSERT_TOKEN_HERE"`
 
 - create remote machine: `docker-machine create --driver=digitalocean --digitalocean-access-token=$DO_TOKEN --digitalocean-size=2gb --digitalocean-region=sgp1 picili`
-- `docker-machine ssh picili "git clone https://github.com/samthomson/picili.git"`
+- `docker-machine ssh picili "git clone https://github.com/samthomson/picili.git /picili"`
 - `docker-machine scp .env.prod picili:/picili/.env`
 	- ensure `USER_API_URL` and `SPA_URL` is the URI of your site
 - `docker-machine ssh picili`
-- `apt install docker-compose`
+- `apt install docker-compose -y`
 - `cd /picili`
-- setup script: `docker-compose -f docker-compose.prod.yml run workspace bash` and then `bash ./prod-initial-setup.sh && exit`
+- setup script: `docker-compose -f docker-compose.prod.yml run workspace bash "./prod-initial-setup.sh"`
 - start services `docker-compose -f docker-compose.prod.yml up -d`
-- start auto-scaler: `bash ~/deploy-scripts/start-auto-scaler.sh`
+- run `docker-compose ip picili` to get the machine ip, so you can point a domain at server, update dropbox app urls, and browser phpmyadmin
 
 Seperately:
 - update your dropbox app to have an allowed redirect URI: `https://[YOUR IP/SITE]/oauth/dropbox`
