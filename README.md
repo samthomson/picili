@@ -72,7 +72,7 @@ Picili is completely dockerized.
 
 The first time you run picili locally, you should generate necessary seed data:
 
-- `docker-compose run workspace` followed by `bash ./local-setup.sh` in the container
+- `docker-compose run workspace bash "./local-setup.sh"`
 
 * picili is now ready to run and should be accesable from `http://localhost`
 
