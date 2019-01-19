@@ -167,12 +167,9 @@ locally the SPA and API run on localhost port 80 and 81 respectively. In product
 - `docker-machine ssh picili`
 - `apt install docker-compose`
 - `cd /picili`
-- setup script: `docker-compose -f docker-compose.prod.yml run workspace bash` and then `bash ./initial-setup.sh && exit`
+- setup script: `docker-compose -f docker-compose.prod.yml run workspace bash` and then `bash ./prod-initial-setup.sh && exit`
 - start services `docker-compose -f docker-compose.prod.yml up -d`
 - start auto-scaler: `bash ~/deploy-scripts/start-auto-scaler.sh`
-
-- docker-compose up
-- run initial-setup script (~./www-workspace/initial-setup.sh)
 
 Seperately:
 - update your dropbox app to have an allowed redirect URI: `https://[YOUR IP/SITE]/oauth/dropbox`
