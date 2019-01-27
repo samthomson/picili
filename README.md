@@ -164,6 +164,7 @@ locally the SPA and API run on localhost port 80 and 81 respectively. In product
 - `docker-machine ssh picili "git clone https://github.com/samthomson/picili.git /picili"`
 - `docker-machine scp .env.prod picili:/picili/.env`
 	- ensure `USER_API_URL` and `SPA_URL` is the URI of your site
+	- you might want to set `APP_DEBUG` to false
 - `docker-machine ssh picili`
 - `apt install docker-compose -y`
 - `cd /picili`
