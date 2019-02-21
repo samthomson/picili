@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { GlobalVars } from './../../env';
 
+import { AuthService } from './auth.service';
 import { SearchService } from './search.service';
 
 import { Observable } from 'rxjs/Rx';
@@ -34,7 +35,8 @@ export class HttpService {
 	constructor(
 		private http: HttpClient,
 		private gbl: GlobalVars,
-		private searchService: SearchService
+		private searchService: SearchService,
+		private authService: AuthService
 	) {
 		this.authStatus = !!localStorage.getItem(this.gbl.sAuthTokenName);
 		this.sToken = localStorage.getItem(this.gbl.sAuthTokenName);
@@ -86,6 +88,7 @@ export class HttpService {
 			}
 		).catch((error: any) => {
 			alert('error talking to server..')
+			this.checkTokenExpiry(error)
 			throw error;
 		});
 	}
@@ -143,6 +146,7 @@ export class HttpService {
 					resolve();
 				},
 				(err) => {
+					this.checkTokenExpiry(err)
 					this.searchService.bSearching = false;
 					this.bSearchingChanged.emit(false);
 					// todo - set a variable or something that will display state to ui
@@ -168,6 +172,7 @@ export class HttpService {
 				return response;
 			}
 		).catch((error: any) => {
+			this.checkTokenExpiry(error)
 			throw error;
 			// return {'success': false, 'errors': error};
 		});
@@ -193,6 +198,7 @@ export class HttpService {
 			}
 		).catch((error: any) => {
 			this.bMakingRequestToServer = false
+			this.checkTokenExpiry(error)
 			throw error;
 			// return {'success': false, 'errors': error};
 		});
@@ -218,6 +224,7 @@ export class HttpService {
 				}
 			).catch((err: any) => {
 				console.log('error getting home aggs');
+				this.checkTokenExpiry(err)
 				throw err
 				// return {'success': false, 'errors': err}
 			})
@@ -253,7 +260,12 @@ export class HttpService {
 						// return false to indicate failed login
 						return {'success': false, 'errors': data.errors};
 					}
-			});
+			}).catch((err: any) => {
+				console.log('error talking to server');
+				this.checkTokenExpiry(err)
+				throw err
+				// return {'success': false, 'errors': err}
+			})
 	}
 
 	updatePrivacy(bPublic): Observable<any> {
@@ -286,7 +298,12 @@ export class HttpService {
 						// return false to indicate failed login
 						return {'success': false, 'errors': data.errors};
 					}
-			});
+			}).catch((err: any) => {
+				console.log('error talking to server');
+				this.checkTokenExpiry(err)
+				throw err
+				// return {'success': false, 'errors': err}
+			})
 	}
 
 	dropboxOAuth() {
@@ -308,10 +325,12 @@ export class HttpService {
 			(response: any) => {
 				return response;
 			}
-		).catch((error: any) => {
-			throw error;
-			// return {'success': false, 'errors': error};
-		});
+		).catch((err: any) => {
+			console.log('error talking to server');
+			this.checkTokenExpiry(err)
+			throw err
+			// return {'success': false, 'errors': err}
+		})
 	}
 
 	phpBool(bBool) {
@@ -343,6 +362,7 @@ export class HttpService {
 			}
 		).catch((error: any) => {
 			this.bMakingRequestToServer = false
+			this.checkTokenExpiry(error)
 			throw error;
 			// return {'success': false, 'errors': error};
 		});
@@ -374,5 +394,24 @@ export class HttpService {
 		this.preloadActiveDelta(2)
 		this.preloadActiveDelta(-1)
 		this.preloadActiveDelta(-2)
+	}
+
+	checkTokenExpiry(err: any) {
+		// call in each http error handler
+		// if our token has expired we should force a local logout (remove token)
+		// console.log(err)
+		// console.log(err.error.error)
+		// console.log(err.status)
+		if (err && err.error && err.error.error) {
+			if (err.error.error === 'token_expired') {
+				console.log('TOKEN EXPIRED')
+				this.authService.logOut()
+			}
+		}
+		// if (err && err.status) {
+		// 	if (err.status === 401) {
+		// 		console.log('HTTP 401')
+		// 	}
+		// }
 	}
 }
