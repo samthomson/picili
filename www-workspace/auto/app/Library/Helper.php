@@ -1256,20 +1256,30 @@ class Helper {
         $mReturn['value'] = $oFaceDetails;
 
         return $mReturn;
-    }
+	}
+	public static function str_replace_once($str_pattern, $str_replacement, $string){
+
+		if (strpos($string, $str_pattern) !== false){
+			$occurrence = strpos($string, $str_pattern);
+			return substr_replace($string, $str_replacement, strpos($string, $str_pattern), strlen($str_pattern));
+		}
+	
+		return $string;
+	}
+
     public static function aGetFolderComponentsFromDropboxFile($oDropboxFolderSource, $oDropboxFile)
     {
         // parse the path into directories and full directory path minus the file name
         if(isset($oDropboxFile->dropbox_path) && isset($oDropboxFolderSource->folder))
         {
-            $sFullPath = $oDropboxFile->dropbox_path;
-
+			$sFullPath = $oDropboxFile->dropbox_path;
+			
             // remove folder-source from path
-			$sFullPath = ltrim($sFullPath, $oDropboxFolderSource->folder);
-
+			$sFullPath = self::str_replace_once($oDropboxFolderSource->folder, '', $sFullPath);
+			
             // remove leading slash if there
-            $sFullPath = ltrim($sFullPath, '/');
-
+			$sFullPath = ltrim($sFullPath, '/');
+			
             // break by slash
             $saParts = explode('/', $sFullPath);
 
