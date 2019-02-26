@@ -165,63 +165,75 @@ class Helper {
         $iPriority = NULL
     )
     {
-        $oTask = new Task;
+		$cCount = Task::where('processor', $sProcessorName)
+		->where('related_file_id', $iRelatedId)
+		->count();
 
-        $oTask->processor = $sProcessorName;
-        $oTask->related_file_id = $iRelatedId;
-        $oTask->user_id = $iUserId;
+		if ($cCount === 0) {
+			$oTask = new Task;
 
-        if(isset($iTaskDependentOn))
-        {
-            $oTask->iAfter = $iTaskDependentOn;
-        }else{
-            // not dependent
-            $oTask->iAfter = -1;
-        }
-        if(isset($oDateFrom))
-        {
-            $oTask->dDateAfter = $oDateFrom;
-        }else{
-            // asap
-            $oTask->dDateAfter = Carbon::now()->addSeconds(-1);
-        }
-        $oTask->bImporting = $bImporting;
+			$oTask->processor = $sProcessorName;
+			$oTask->related_file_id = $iRelatedId;
+			$oTask->user_id = $iUserId;
 
-        // task priority
-        if($iPriority === null)
-        {
-            $iPriority = 0;
-            // set priority based on processor
-            switch($sProcessorName)
-            {
-                case 'full-dropbox-import':
-                    $oTask->priority = 10;
-                    break;
-                case 'download-dropbox-file':
-                case 'import-new-dropbox-file':
-                case 'import-changed-dropbox-file':
-                    $oTask->priority = 0;
-                    break;
-                case 'physical-file':
-                    $oTask->priority = 1;
-                    break;
-                case 'subject-recognition':
-                    $oTask->priority = 2;
-                    break;
-                case 'geocode':
-                case 'altitude':
-                    $oTask->priority = 3;
-                    break;
-                default:
-                    $oTask->priority = $iPriority;
-                    break;
-            }
-        } else {
-            $oTask->priority = $iPriority;
-        }
+			if(isset($iTaskDependentOn))
+			{
+				$oTask->iAfter = $iTaskDependentOn;
+			}else{
+				// not dependent
+				$oTask->iAfter = -1;
+			}
+			if(isset($oDateFrom))
+			{
+				$oTask->dDateAfter = $oDateFrom;
+			}else{
+				// asap
+				$oTask->dDateAfter = Carbon::now()->addSeconds(-1);
+			}
+			$oTask->bImporting = $bImporting;
 
-        $oTask->save();
-        return $oTask->id;
+			// task priority
+			if($iPriority === null)
+			{
+				$iPriority = 0;
+				// set priority based on processor
+				switch($sProcessorName)
+				{
+					case 'full-dropbox-import':
+						$oTask->priority = 10;
+						break;
+					case 'download-dropbox-file':
+					case 'import-new-dropbox-file':
+					case 'import-changed-dropbox-file':
+						$oTask->priority = 0;
+						break;
+					case 'physical-file':
+						$oTask->priority = 1;
+						break;
+					case 'subject-recognition':
+						$oTask->priority = 2;
+						break;
+					case 'geocode':
+					case 'altitude':
+						$oTask->priority = 3;
+						break;
+					default:
+						$oTask->priority = $iPriority;
+						break;
+				}
+			} else {
+				$oTask->priority = $iPriority;
+			}
+			try {
+				// if the task already exists, we'll get a duplicate index error or similar
+				$oTask->save();
+				return $oTask->id;
+			}catch (Exception $er) {
+				logger('error saving task, duplicate?');
+				logger($er);
+			}
+			return null;
+		}
     }
 
     public static function oAddDropboxFolderSource($sToken, $sFolder, $iUserId)
@@ -265,7 +277,10 @@ class Helper {
                 ->where('related_file_id', '=', $oTask->related_file_id)
                 ->count();
 
-                // there should be one at least, the one we are about to complete/delete
+				// there should be one at least, the one we are about to complete/delete
+				
+				// delete before recreating, so that the key constraint won't be an issue
+				$oTask->delete();
                 if($iExistingImportTasks < 2) {
                     Helper::QueueAnItem(
                         'full-dropbox-import',
@@ -277,9 +292,10 @@ class Helper {
                 } else {
                     logger('there was already a dropbox import task for this user and filesource, skipping creating a new import task..');
                 }
-            }
+            } else {
+				$oTask->delete();
+			}
 
-            $oTask->delete();
 
             $aoUpdatedTasks = Task::where('iAfter', $iTaskId)->get();
             foreach($aoUpdatedTasks as $oUpdateTask)
@@ -776,7 +792,10 @@ class Helper {
                 {
                     $hasher = new ImageHash;
                     $hash = $hasher->hash($oPiciliFile->sTempProcessingFilePath);
-                    $oPiciliFile->phash = $hash;
+					$oPiciliFile->phash = $hash;
+					// clean memory
+					unset($hasher);
+					unset($hash);
                 }else{
                     logger([
                         "error" => "can't phash image as processing file doesn't exist",
@@ -1242,20 +1261,30 @@ class Helper {
         $mReturn['value'] = $oFaceDetails;
 
         return $mReturn;
-    }
+	}
+	public static function str_replace_once($str_pattern, $str_replacement, $string){
+
+		if (strpos($string, $str_pattern) !== false){
+			$occurrence = strpos($string, $str_pattern);
+			return substr_replace($string, $str_replacement, strpos($string, $str_pattern), strlen($str_pattern));
+		}
+	
+		return $string;
+	}
+
     public static function aGetFolderComponentsFromDropboxFile($oDropboxFolderSource, $oDropboxFile)
     {
         // parse the path into directories and full directory path minus the file name
         if(isset($oDropboxFile->dropbox_path) && isset($oDropboxFolderSource->folder))
         {
-            $sFullPath = $oDropboxFile->dropbox_path;
-
+			$sFullPath = $oDropboxFile->dropbox_path;
+			
             // remove folder-source from path
-            $sFullPath = str_replace($oDropboxFolderSource->folder, "", $sFullPath);
-
+			$sFullPath = self::str_replace_once($oDropboxFolderSource->folder, '', $sFullPath);
+			
             // remove leading slash if there
-            $sFullPath = ltrim($sFullPath, '/');
-
+			$sFullPath = ltrim($sFullPath, '/');
+			
             // break by slash
             $saParts = explode('/', $sFullPath);
 

@@ -269,7 +269,9 @@ class PiciliProcessor {
         }catch(Exception $e)
         {
             logger(['process physical file, exception: '.$e]);
-            return false;
+            return [
+                'success' => false
+            ];
         }
     }
 
