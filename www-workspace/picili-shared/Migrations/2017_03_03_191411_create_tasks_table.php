@@ -24,7 +24,9 @@ class CreateTasksTable extends Migration
             $table->integer('iTimesSeenByProccessor')->default(0);
             $table->integer('user_id');
 
-            $table->timestamps();
+			$table->timestamps();
+			
+			$table->unique(['processor', 'related_file_id']);
         });
     }
 

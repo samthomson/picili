@@ -28,5 +28,17 @@ class QueueTest extends TestCase
         $oAssertSet = Task::where('processor', $sTaskName)->first();
 
         $this->assertTrue(isset($oAssertSet));
-    }
+	}
+	public function testNoDuplicateTasks()
+	{
+		$sProcessorName = 'test-duplicate-queue';
+
+        Helper::QueueAnItem($sProcessorName, 1, 1);
+		Helper::QueueAnItem($sProcessorName, 1, 1);
+		
+		$cCount = Task::where('processor', $sProcessorName)
+		->count();
+
+		$this->assertEquals($cCount, 1);
+	}
 }

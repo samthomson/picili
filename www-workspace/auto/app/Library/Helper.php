@@ -165,63 +165,74 @@ class Helper {
         $iPriority = NULL
     )
     {
-        $oTask = new Task;
+		$cCount = Task::where('processor', $sProcessorName)
+		->where('related_file_id', $iRelatedId)
+		->count();
 
-        $oTask->processor = $sProcessorName;
-        $oTask->related_file_id = $iRelatedId;
-        $oTask->user_id = $iUserId;
+		if ($cCount === 0) {
+			$oTask = new Task;
 
-        if(isset($iTaskDependentOn))
-        {
-            $oTask->iAfter = $iTaskDependentOn;
-        }else{
-            // not dependent
-            $oTask->iAfter = -1;
-        }
-        if(isset($oDateFrom))
-        {
-            $oTask->dDateAfter = $oDateFrom;
-        }else{
-            // asap
-            $oTask->dDateAfter = Carbon::now()->addSeconds(-1);
-        }
-        $oTask->bImporting = $bImporting;
+			$oTask->processor = $sProcessorName;
+			$oTask->related_file_id = $iRelatedId;
+			$oTask->user_id = $iUserId;
 
-        // task priority
-        if($iPriority === null)
-        {
-            $iPriority = 0;
-            // set priority based on processor
-            switch($sProcessorName)
-            {
-                case 'full-dropbox-import':
-                    $oTask->priority = 10;
-                    break;
-                case 'download-dropbox-file':
-                case 'import-new-dropbox-file':
-                case 'import-changed-dropbox-file':
-                    $oTask->priority = 0;
-                    break;
-                case 'physical-file':
-                    $oTask->priority = 1;
-                    break;
-                case 'subject-recognition':
-                    $oTask->priority = 2;
-                    break;
-                case 'geocode':
-                case 'altitude':
-                    $oTask->priority = 3;
-                    break;
-                default:
-                    $oTask->priority = $iPriority;
-                    break;
-            }
-        } else {
-            $oTask->priority = $iPriority;
-        }
+			if(isset($iTaskDependentOn))
+			{
+				$oTask->iAfter = $iTaskDependentOn;
+			}else{
+				// not dependent
+				$oTask->iAfter = -1;
+			}
+			if(isset($oDateFrom))
+			{
+				$oTask->dDateAfter = $oDateFrom;
+			}else{
+				// asap
+				$oTask->dDateAfter = Carbon::now()->addSeconds(-1);
+			}
+			$oTask->bImporting = $bImporting;
 
-        $oTask->save();
-        return $oTask->id;
+			// task priority
+			if($iPriority === null)
+			{
+				$iPriority = 0;
+				// set priority based on processor
+				switch($sProcessorName)
+				{
+					case 'full-dropbox-import':
+						$oTask->priority = 10;
+						break;
+					case 'download-dropbox-file':
+					case 'import-new-dropbox-file':
+					case 'import-changed-dropbox-file':
+						$oTask->priority = 0;
+						break;
+					case 'physical-file':
+						$oTask->priority = 1;
+						break;
+					case 'subject-recognition':
+						$oTask->priority = 2;
+						break;
+					case 'geocode':
+					case 'altitude':
+						$oTask->priority = 3;
+						break;
+					default:
+						$oTask->priority = $iPriority;
+						break;
+				}
+			} else {
+				$oTask->priority = $iPriority;
+			}
+			try {
+				// if the task already exists, we'll get a duplicate index error or similar
+				$oTask->save();
+				return $oTask->id;
+			}catch (Exception $er) {
+				logger('error saving task, duplicate?');
+			}
+			return null;
+		}
     }
 
     public static function oAddDropboxFolderSource($sToken, $sFolder, $iUserId)
@@ -1251,7 +1262,7 @@ class Helper {
             $sFullPath = $oDropboxFile->dropbox_path;
 
             // remove folder-source from path
-			$sFullPath = ltrim($sFullPath, $oDropboxFolderSource->folder)
+			$sFullPath = ltrim($sFullPath, $oDropboxFolderSource->folder);
 
             // remove leading slash if there
             $sFullPath = ltrim($sFullPath, '/');
