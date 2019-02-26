@@ -230,6 +230,7 @@ class Helper {
 				return $oTask->id;
 			}catch (Exception $er) {
 				logger('error saving task, duplicate?');
+				logger($er);
 			}
 			return null;
 		}
@@ -276,7 +277,10 @@ class Helper {
                 ->where('related_file_id', '=', $oTask->related_file_id)
                 ->count();
 
-                // there should be one at least, the one we are about to complete/delete
+				// there should be one at least, the one we are about to complete/delete
+				
+				// delete before recreating, so that the key constraint won't be an issue
+				$oTask->delete();
                 if($iExistingImportTasks < 2) {
                     Helper::QueueAnItem(
                         'full-dropbox-import',
@@ -288,9 +292,10 @@ class Helper {
                 } else {
                     logger('there was already a dropbox import task for this user and filesource, skipping creating a new import task..');
                 }
-            }
+            } else {
+				$oTask->delete();
+			}
 
-            $oTask->delete();
 
             $aoUpdatedTasks = Task::where('iAfter', $iTaskId)->get();
             foreach($aoUpdatedTasks as $oUpdateTask)

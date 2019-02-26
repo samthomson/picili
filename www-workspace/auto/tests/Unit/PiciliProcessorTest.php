@@ -220,22 +220,21 @@ class PiciliProcessorTest extends TestCase
 
     public function testRequeueFileImportAfterCompletion()
     {
-        // processing a file import tast should re queue it for x minutes time
-        $sDropboxImportTaskName = 'full-dropbox-import';
-        $iTaskId = Helper::QueueAnItem($sDropboxImportTaskName, 5, 1);
+		$sDropboxImportTaskName = 'full-dropbox-import';
+        // assert there are no file processing tasks already
+		$this->assertTrue(Task::where('processor', $sDropboxImportTaskName)->count() === 0);
+		
+        // processing a file import task should re queue it for x minutes time
+        $iTaskId = Helper::QueueAnItem($sDropboxImportTaskName, 15, 1);
         // assert tasks is in queue
-        $this->assertTrue(Task::find($iTaskId) !== null);
-
-        // assert no other file import task is there
-        $this->assertTrue(count(Task::where('processor', $sDropboxImportTaskName)->get()) === 1);
-
-        // process task, then assert it is gone
-        // PiciliProcessor::bProcessQueue();
+		$this->assertTrue(Task::where('processor', $sDropboxImportTaskName)->count() === 1);
+		
+		// process task
         Helper::completeATask($iTaskId);
-        $this->assertTrue(Task::find($iTaskId) === null);
 
-        // assert new task is there for importing files, from ~x mins away
-        $this->assertTrue(count(Task::where('processor', $sDropboxImportTaskName)->get()) === 1);
+        // assert it is still 1, as file importing is requeued automatically
+		$count = Task::where('processor', $sDropboxImportTaskName)->count();
+		$this->assertTrue($count === 1);
     }
 
     public function testDelayProcessorsTasks()
