@@ -787,7 +787,10 @@ class Helper {
                 {
                     $hasher = new ImageHash;
                     $hash = $hasher->hash($oPiciliFile->sTempProcessingFilePath);
-                    $oPiciliFile->phash = $hash;
+					$oPiciliFile->phash = $hash;
+					// clean memory
+					unset($hasher);
+					unset($hash);
                 }else{
                     logger([
                         "error" => "can't phash image as processing file doesn't exist",
