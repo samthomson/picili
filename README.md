@@ -189,7 +189,9 @@ Bash into a container to see what's going on:
 - ssh in to server: `docker-machine ssh picili`
 - spa: `docker-compose -f docker-compose.prod.yml run spa sh`
 - php-fpm: `docker-compose -f docker-compose.prod.yml run php-fpm bash`
+- workspace: `docker-compose -f docker-compose.prod.yml run workspace bash`
 
-
+Download a log file:
+ssh into server and bash into container, then
 
 cd /picili && docker exec -it $(docker ps -qf name=picili_workspace) bash -c "cd /var/www/auto-scaler && npm run forever && exit"
