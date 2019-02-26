@@ -1251,7 +1251,7 @@ class Helper {
             $sFullPath = $oDropboxFile->dropbox_path;
 
             // remove folder-source from path
-            $sFullPath = str_replace($oDropboxFolderSource->folder, "", $sFullPath);
+			$sFullPath = ltrim($sFullPath, $oDropboxFolderSource->folder)
 
             // remove leading slash if there
             $sFullPath = ltrim($sFullPath, '/');
