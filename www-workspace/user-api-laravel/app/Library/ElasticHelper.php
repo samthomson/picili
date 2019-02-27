@@ -75,8 +75,8 @@ class ElasticHelper {
         */
 
         $aFilters = [
-            ["term" => [ "user_id" => $sUserId]]
-        ];
+			["term" => [ "user_id" => $sUserId]]
+		];
         $bFolderFilter = false;
 
         $bDateQuery = false;
@@ -658,12 +658,15 @@ class ElasticHelper {
                     // print_r($aResults['aggregations']);
                     foreach($aResults['aggregations']['folders']['buckets'] as $aFolderAgg)
                     {
-                        $aSort[strtotime($aFolderAgg['folder']['hits']['hits'][0]['_source']['datetime'])] = [
+						// some pictures have a null date - we'll set those dates as zero so they come last (oldest)
+						$sDateTime = isset($aFolderAgg['folder']['hits']['hits'][0]['_source']['datetime']) ? $aFolderAgg['folder']['hits']['hits'][0]['_source']['datetime'] : 0;
+						
+						$aSort[strtotime($sDateTime)] = [
                             'name' => $aFolderAgg['key'],
                             'file-id' => $aFolderAgg['folder']['hits']['hits'][0]['_id'],
                             'parent' => basename($aFolderAgg['key']),
                             'count' => $aFolderAgg['doc_count'],
-                            'datetime' => $aFolderAgg['folder']['hits']['hits'][0]['_source']['datetime']
+                            'datetime' => $sDateTime
                         ];
                     }
                     krsort($aSort);
