@@ -45,11 +45,37 @@ class IndexAll extends Command
      */
     public function handle()
     {
-        $aoFiles = PiciliFile::all();
+		$aoFiles = PiciliFile::all();
+		
+		$cFilesToIndex = count($aoFiles);
 
-        foreach ($aoFiles as $oFile) {
+		// echo "\n\n$cFilesToIndex files to index";
 
-            ElasticHelper::bSaveFileToElastic($oFile);
-        }
-    }
+		if (true) {
+			// echo "\n\none at a time\n\n";
+			gc_enable();
+			foreach ($aoFiles as $i => $oFile) {
+				// if ($i > 0 && $i % 1 === 0) {
+					gc_collect_cycles();
+				// }
+
+				// if ($i > 0 && $i % 1000 === 0) {
+				// 	echo "\nmem at $i: ", $this->reduceMem(memory_get_usage(true));
+				// }
+				ElasticHelper::bSaveFileToElastic($oFile);
+				$oFile = null;
+				unset($oFile);
+			}
+		} else {
+			// echo "\n\n1000 at a time\n\n";
+			ElasticHelper::bBatchSaveToElastic($aoFiles);			
+		}
+	}
+	
+	// public function reduceMem($iMem) {
+	// 	if ($iMem === 0) {
+	// 		return $iMem;
+	// 	}
+	// 	return ($iMem / 1024 / 1024).' mb';
+	// }
 }
