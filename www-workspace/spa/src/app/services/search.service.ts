@@ -163,6 +163,13 @@ export class SearchService {
 
 		this.addFilter('map', 'map', sValue);
 	}
+	addElevationFilter(iMin, iMax) {
+		// like geo queries, there can only be one elevation query
+		let sValue = iMin + ',' + iMax
+
+		this.removeFilterByType('elevation');
+		this.addFilter('elevation', 'elevation', sValue);
+	}
 	addSetCalendarFilter(sMode, sDisplay, sValue) {
 		this.removeFilterByType('calendar');
 
