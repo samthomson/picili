@@ -1,3 +1,19 @@
-<p>
-  elevation works!
-</p>
+
+<!--
+<p>Min value: <input type="number" step="{{options.step}}" [(ngModel)]="minValue" (ngModelChange)="onValueChange(true)"></p>
+<p>Max value: <input type="number" step="{{options.step}}" [(ngModel)]="maxValue" (ngModelChange)="onValueChange(true)"></p>
+-->
+<ng5-slider
+	[(value)]="minValue"
+	[(highValue)]="maxValue"
+	[options]="options"
+	(valueChange)="onValueChange(false)"
+	(highValueChange)="onValueChange(false)"
+></ng5-slider>
+
+<div id="elevation-results-container" >
+	<div *ngIf="!searchService.bHasSearchResults && !searchService.bSearching">
+		no results for your query..
+	</div>
+	<app-result-grid class="app-result-grid" #appResultGrid></app-result-grid>
+</div>

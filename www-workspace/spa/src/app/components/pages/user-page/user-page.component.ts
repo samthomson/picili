@@ -96,6 +96,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
 		this.searchService.sSearchMode = (typeof route.snapshot.params['searchmode'] === 'undefined') ? 'default' : route.snapshot.params['searchmode'];
 		this.searchService.iPage = 1;
 
+		console.log('search mode: ', this.searchService.sSearchMode)
+
 		//
 		// get query vars
 		//

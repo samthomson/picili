@@ -261,6 +261,10 @@ li#settings-link {
   z-index: 100;
 }
 
+#side-menu ul li a i.icon {
+	height: 36px;
+}
+
 /*
 //
 // APPLICATION
@@ -559,6 +563,19 @@ img.folder-thumb {
   color: $cPiciliRed;
   font-weight: 600;
 }
+
+//
+// elevation
+//
+#elevation-results-container {
+	padding-top: 16px;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 100px;
+	bottom: 0px;
+}
+
 
 //
 // lightbox

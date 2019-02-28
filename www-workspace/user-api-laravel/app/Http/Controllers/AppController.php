@@ -99,25 +99,37 @@ class AppController extends Controller
                                 ]
                             );
                             break;
-                        case 'map':
-                            $iaVals = explode(',', $aFilter['value']);
+						case 'map':
+							$iaVals = explode(',', $aFilter['value']);
 
-                            array_push(
-                                $aQueryForElastic['filters'],
-                                [
-                                    'type' => 'geo',
-                                    'value' => [
-                                        'lat_min' => $iaVals[0],
-                                        'lat_max' => $iaVals[1],
-                                        'lon_min' => $iaVals[2],
-                                        'lon_max' => $iaVals[3],
-                                        'zoom' => $iaVals[4]
-                                    ]
+							array_push(
+								$aQueryForElastic['filters'],
+								[
+									'type' => 'geo',
+									'value' => [
+										'lat_min' => $iaVals[0],
+										'lat_max' => $iaVals[1],
+										'lon_min' => $iaVals[2],
+										'lon_max' => $iaVals[3],
+										'zoom' => $iaVals[4]
+									]
+								]
+							);
+							break;
+						case 'elevation':
+							$iaVals = explode(',', $aFilter['value']);
 
-                                    // $aFilter['type'] => $aFilter['value']
-                                ]
-                            );
-                            break;
+							array_push(
+								$aQueryForElastic['filters'],
+								[
+									'type' => 'elevation',
+									'value' => [
+										'min' => $iaVals[0],
+										'max' => $iaVals[1]
+									]
+								]
+							);
+							break;
                         case 'calendar':
                             // die($aFilter['value']);
                             $saVals = explode(':', $aFilter['value']);
