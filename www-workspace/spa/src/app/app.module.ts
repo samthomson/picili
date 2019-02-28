@@ -47,6 +47,7 @@ import { CalendarPeriodPipe } from './components/pipes/calendar-period';
 import { AgmCoreModule } from '@agm/core';
 
 import { MaterializeModule } from 'angular2-materialize';
+import { Ng5SliderModule } from 'ng5-slider'
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { MaterializeModule } from 'angular2-materialize';
 	AgmCoreModule.forRoot({
 		apiKey: 'AIzaSyDR4kOXozjam-Y3xaMxq9mSABoJxHzsXhM'
 	}),
-	MaterializeModule
+	MaterializeModule,
+	Ng5SliderModule
   ],
   providers: [
 	AuthService,
