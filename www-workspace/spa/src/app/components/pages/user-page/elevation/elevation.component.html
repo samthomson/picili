@@ -10,8 +10,9 @@
 	(highValueChange)="onValueChange(false)"
 ></ng5-slider>
 
-
-<div *ngIf="!searchService.bHasSearchResults && !searchService.bSearching">
-    no results for your query..
+<div id="elevation-results-container" >
+	<div *ngIf="!searchService.bHasSearchResults && !searchService.bSearching">
+		no results for your query..
+	</div>
+	<app-result-grid class="app-result-grid" #appResultGrid></app-result-grid>
 </div>
-<app-result-grid class="app-result-grid" #appResultGrid></app-result-grid>
