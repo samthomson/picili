@@ -134,17 +134,20 @@ class ElasticTest extends TestCase
 	
 	public function testElevationSearch()
     {
-		$aResults = ElasticHelper::aSearch(1, [
+		$aResults = ElasticHelper::aSearch(0, [
 			'q' => '',
 			'filters' => [
-				'elevation' => [
-					'min' => 5400,
-					'max' => 5800
+				[
+					'type' => 'elevation',
+					'value' => [
+						'min' => 5500,
+						'max' => 5800
+					]
 				]
 			]
 		]);
 		
-        $this->assertEquals(1, count($aFileNameSearchResults['results']));
+        $this->assertEquals(1, count($aResults['results']));
     }
 
     public function testFolderAggsOrder()

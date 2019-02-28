@@ -49,6 +49,8 @@ class PiciliFileElasticSeeder extends Seeder
         $oFileOne->id = 1002;
         $oFileOne->user_id = 0;
         $oFileOne->signature = 'file-one';
+		$oFileOne->altitude = 5500.35478;
+		$oFileOne->bHasAltitude = true;
         $oFileOne->bHasThumbs = true;
         $oFileOne->bInFolder = true;
         $oFileOne->datetime = Carbon::parse('2015:06:05 09:46:26');
