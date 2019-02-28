@@ -41,7 +41,7 @@
         <div *ngIf="searchService.sSearchMode === 'default'">
         </div>
 
-        <div *ngIf="searchService.sSearchMode === 'search' || searchService.sSearchMode === 'map'">
+        <div *ngIf="searchService.sSearchMode === 'search' || searchService.sSearchMode === 'map' || searchService.sSearchMode === 'elevation'">
             <div id="sort-block" class="ui vertical segment" [ngClass]="{'disabled': searchService.bHasSearchResults === false}">
                 <div *ngIf="searchService.bHasSearchResults" id="sort-info">
                     showing 1 - {{searchService.mData.search.data.range_max | number}} of  {{searchService.mData.search.data.available | number}} results, <i class="fa fa-bolt" aria-hidden="true"></i> {{searchService.mData.search.data.speed}} ms
