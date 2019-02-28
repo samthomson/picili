@@ -137,7 +137,7 @@ class ElasticTest extends TestCase
 		$aResults = ElasticHelper::aSearch(1, [
 			'q' => '',
 			'filters' => [
-				'attitude' => [
+				'elevation' => [
 					'min' => 5400,
 					'max' => 5800
 				]
