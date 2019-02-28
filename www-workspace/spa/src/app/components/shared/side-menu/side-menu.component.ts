@@ -43,11 +43,11 @@ export class SideMenuComponent implements OnInit {
 				link: '/' + this.sCurrentPageUsername + '/calendar',
 				icon: 'fa fa-calendar'
 			},
-            {
-                name: 'elevation',
-                link: '/' + this.sCurrentPageUsername + '/elevation',
-                icon: 'sliders horizontal icon'
-            }/*,
+			{
+				name: 'elevation',
+				link: '/' + this.sCurrentPageUsername + '/elevation',
+				icon: 'sliders horizontal icon'
+			}/*,
             {
                 name: 'colour',
                 link: '/' + this.sCurrentPageUsername + '/colour',
