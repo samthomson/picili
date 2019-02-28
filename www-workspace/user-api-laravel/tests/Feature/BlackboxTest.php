@@ -385,6 +385,42 @@ class BlackboxTest extends TestCase
                 ]
             );
         
+	}
+	
+	public function testElevationSearch()
+    {
+        $aElasticQuery = [
+            'q' => 'noresultsforthisquery'
+        ];
+        $aRouteParams = ['searchmode' => 'search', 'q' => urlencode(json_encode($aElasticQuery)), 'page' => 1];
+
+        $iUserId = parent::iGetSeedUserId();
+
+        $sTestRoute = '/app/pagestate/'.$iUserId;
+
+        $sTestRoute .= '?' . http_build_query($aRouteParams);
+        
+        // authed
+        $sHeader = parent::getHeaderForTest();
+        $response = $this->json('GET', $sTestRoute, [], $sHeader);
+        
+        $response
+            ->assertStatus(200)
+            ->assertJsonFragment(['success' => true])
+            ->assertJsonStructure(
+                [
+                    'success', 
+                    'search' => [
+                        'data' => [
+                            'available',
+                            'speed',
+                            'more'
+                        ],
+                        'results',
+                        'status'
+                    ]
+                ]
+            );
     }
 
     public function testCurtailingTooHighAPage()

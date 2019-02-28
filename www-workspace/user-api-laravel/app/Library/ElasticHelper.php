@@ -93,6 +93,41 @@ class ElasticHelper {
             {
                 switch ($aFilter['type'])
                 {
+					case 'elevation':
+						$iMin = isset($aFilter['value']['min']) ? $aFilter['value']['min'] : null;
+						$iMax = isset($aFilter['value']['max']) ? $aFilter['value']['max'] : null;
+						
+                        // make sure geo data is valid
+                        if (
+							!isset($iMin) ||
+							!isset($iMax) ||
+							!is_numeric($iMin) ||
+							!is_numeric($iMax) ||
+							$iMin >= $iMax
+						)
+                        {
+                            // invalid
+                            return [
+                                'status' => 'fail',
+                                'errors' => ['invalid elevation bounds'],
+                                'results' => []
+                            ];
+                        }else{
+                            // elevation query
+                            array_push(
+                                $aFilters,
+                                [
+                                    "range" => [
+										"altitude" => [
+											"gte" => $iMin,
+											"lte" =>  $iMax
+										]
+									]
+                                ]
+							);
+                        }
+
+                        break;
                     case 'folder':
                         $bFolderFilter = true;
                         array_push(
@@ -602,8 +637,8 @@ class ElasticHelper {
 
         //
         // process query
-        //
-
+		//
+		
 		$response = $client->search($params);
 
 		$aResults = $response;
