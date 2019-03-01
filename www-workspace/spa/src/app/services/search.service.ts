@@ -168,7 +168,7 @@ export class SearchService {
 		let sValue = iMin + ',' + iMax
 
 		this.removeFilterByType('elevation');
-		this.addFilter('elevation', 'elevation', sValue);
+		this.addFilter('elevation', `elevation: ${iMin}m - ${iMax}m`, sValue);
 	}
 	addSetCalendarFilter(sMode, sDisplay, sValue) {
 		this.removeFilterByType('calendar');
