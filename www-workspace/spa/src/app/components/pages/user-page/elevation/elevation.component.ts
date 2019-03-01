@@ -9,8 +9,6 @@ import { HttpService, SearchService } from './../../../../services';
 })
 export class ElevationComponent implements OnInit {
 
-	minValue: number = -500;
-	maxValue: number = 7000;
 	options: Options = {
 		floor: 0,
 		ceil: 7000,
@@ -49,7 +47,7 @@ export class ElevationComponent implements OnInit {
 
 	this.searchTimeout = setTimeout(() => {
 		// build query
-		this.searchService.addElevationFilter(this.minValue, this.maxValue)
+		this.searchService.addElevationFilter(this.searchService.iElevationMin, this.searchService.iElevationMax)
 		this.httpService.triggerSearch()
 
 	}, iInterval);

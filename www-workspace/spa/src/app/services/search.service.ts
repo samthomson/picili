@@ -42,6 +42,9 @@ export class SearchService {
 	sPeopleSearchState: string = 'all';
 	sPeopleSearchGrouping: string = 'any';
 
+	iElevationMin: number = -500
+	iElevationMax: number = 7000
+
 	constructor(
 		private route: ActivatedRoute,
 		private gbl: GlobalVars,
@@ -165,7 +168,7 @@ export class SearchService {
 	}
 	addElevationFilter(iMin, iMax) {
 		// like geo queries, there can only be one elevation query
-		let sValue = iMin + ',' + iMax
+		let sValue = this.iElevationMin + ',' + this.iElevationMax
 
 		this.removeFilterByType('elevation');
 		this.addFilter('elevation', `elevation: ${iMin}m - ${iMax}m`, sValue);
