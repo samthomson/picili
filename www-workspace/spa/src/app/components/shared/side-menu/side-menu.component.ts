@@ -46,7 +46,7 @@ export class SideMenuComponent implements OnInit {
 			{
 				name: 'elevation',
 				link: '/' + this.sCurrentPageUsername + '/elevation',
-				icon: 'sliders horizontal icon'
+				icon: 'tachometer alternate icon'
 			}/*,
             {
                 name: 'colour',
@@ -60,7 +60,6 @@ export class SideMenuComponent implements OnInit {
             }*/
 		];
 	}
-
   ngOnInit() {
 
 		this.authService.authStatusChanged.subscribe(
