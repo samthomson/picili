@@ -19,7 +19,10 @@ export class ElevationComponent implements OnInit {
 		selectionBarGradient: {
 			from: '#d32f2f',
 			to: '#d32f2f'
-		  }
+		},
+		translate: (value: number): string => {
+			return value + 'm';
+		}
 	};
 
 	searchTimeout;
