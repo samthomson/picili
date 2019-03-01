@@ -579,7 +579,18 @@ img.folder-thumb {
 	top: 85px;
 	bottom: 0px;
 }
+#page-space .ng5-slider .ng5-slider-bar {
+	background-color: $cAvailableGrey;
+}
 
+#page-space .ng5-slider-span.ng5-slider-pointer.ng5-slider-pointer-min, 
+#page-space .ng5-slider-span.ng5-slider-pointer.ng5-slider-pointer-max{
+	background-color: $cPiciliRed;
+}
+
+#page-space .ng5-slider .ng5-slider-pointer::after {
+	background-color: $cPiciliRed;
+}
 
 //
 // lightbox

@@ -13,7 +13,6 @@ export class ElevationComponent implements OnInit {
 		floor: 0,
 		ceil: 7000,
 		step: 1,
-		getPointerColor: () => { return '#d32f2f' },
 		selectionBarGradient: {
 			from: '#d32f2f',
 			to: '#d32f2f'
