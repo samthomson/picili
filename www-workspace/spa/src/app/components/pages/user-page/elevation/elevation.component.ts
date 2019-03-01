@@ -45,8 +45,6 @@ export class ElevationComponent implements OnInit {
 	let iInterval = 500
 
 	this.searchTimeout = setTimeout(() => {
-		console.log('\n\nSEARCH NOW\n\n')
-
 		// build query
 		this.searchService.addElevationFilter(this.minValue, this.maxValue)
 		this.httpService.triggerSearch()
