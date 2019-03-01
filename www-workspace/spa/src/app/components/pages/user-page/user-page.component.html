@@ -27,7 +27,7 @@
         <div id="filters-block" class="ui vertical segment" [ngClass]="{'disabled': searchService.mQuery['filters'].length === 0}">
 
             <div class="ui label" *ngFor="let filter of searchService.mQuery['filters']; let i = index">
-                <i class="fa" [ngClass]="{'fa-folder': filter['type'] === 'folder', 'fa-globe': filter['type'] === 'map', 'fa-calendar': filter['type'] === 'calendar'}"></i> {{filter['display']}}
+                <i class="fa" [ngClass]="{'fa-folder': filter['type'] === 'folder', 'fa-globe': filter['type'] === 'map', 'fa-calendar': filter['type'] === 'calendar', 'tachometer alternate icon': filter['type'] === 'elevation'}"></i> {{filter['display']}}
 
                 <i class="fa fa-times pointer-link" aria-hidden="true" (click)="removeFilter(i)"></i>
             </div>
