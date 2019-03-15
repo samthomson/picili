@@ -1071,7 +1071,7 @@ class Helper {
 
         $sElevationURL  = 'https://maps.googleapis.com/maps/api/elevation/json?locations='.urlencode($fLat).','.urlencode($fLon);
 
-        $sElevationURL .= "&key=".env('GOOGLE_ELEVATION_KEY');
+        $sElevationURL .= "&key=".env('API_GOOGLE_ELEVATION_KEY');
         // echo "url: ", $sElevationURL."<br/><br/>";
 
         $json = @file_get_contents($sElevationURL);
