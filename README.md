@@ -192,6 +192,4 @@ Bash into a container to see what's going on:
 - workspace: `docker-compose -f docker-compose.prod.yml run workspace bash`
 
 Download a log file:
-ssh into server and bash into container, then
-
-cd /picili && docker exec -it $(docker ps -qf name=picili_workspace) bash -c "cd /var/www/auto-scaler && npm run forever && exit"
+`docker-machine scp picili:/picili/www-workspace/user-api-laravel/storage/logs/laravel.log .` will download the `laravel.log` file into local dir
