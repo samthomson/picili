@@ -187,9 +187,7 @@ class ElasticTest extends TestCase
 
         // fuzzy text search
         $aFuzzyTagResult = ElasticHelper::aSearch(0, ['q' => 'trea']);
-        $this->assertEquals(1, count($aFuzzyTagResult['results']));
-        $aFuzzyAddressResult = ElasticHelper::aSearch(0, ['q' => 'trea']);
-        $this->assertEquals(1, count($aFuzzyTagResult['results']));
+        $this->assertEquals(0, count($aFuzzyTagResult['results']));
 
         // match one word of a two word tag e.g. 'Balvicar' of 'Balvicar Drive'
         $aQueryHalfResult = ElasticHelper::aSearch(0, ['q' => 'Balvicar']);
