@@ -80,9 +80,9 @@ class ElasticTest extends TestCase
         // without folder and a term
         $aNoFolderWithQuery = ElasticHelper::aSearch(
             0,
-            ['q' => 'trees'],
+            ['q' => 'tree'],
             'folder'
-        );
+		);
         $this->assertEquals(0, count($aNoFolderWithQuery['results']));
         $this->assertTrue(isset($aNoFolderWithQuery['aggs']));
         $this->assertTrue(count($aNoFolderWithQuery['aggs']) === 1);
@@ -187,9 +187,7 @@ class ElasticTest extends TestCase
 
         // fuzzy text search
         $aFuzzyTagResult = ElasticHelper::aSearch(0, ['q' => 'trea']);
-        $this->assertEquals(1, count($aFuzzyTagResult['results']));
-        $aFuzzyAddressResult = ElasticHelper::aSearch(0, ['q' => 'trea']);
-        $this->assertEquals(1, count($aFuzzyTagResult['results']));
+        $this->assertEquals(0, count($aFuzzyTagResult['results']));
 
         // match one word of a two word tag e.g. 'Balvicar' of 'Balvicar Drive'
         $aQueryHalfResult = ElasticHelper::aSearch(0, ['q' => 'Balvicar']);
@@ -197,7 +195,7 @@ class ElasticTest extends TestCase
 
         // fuzzy missing a letter e.g. "queens" instead of "Queen's"
         $aFuzzyCommaResult = ElasticHelper::aSearch(0, ['q' => 'queens']);
-        $this->assertEquals(1, count($aFuzzyCommaResult['results']));
+        $this->assertEquals(0, count($aFuzzyCommaResult['results']));
 
         // query with spaces e.g. 'queens park'
         $aWithSpaces = ElasticHelper::aSearch(0, ['q' => 'queens park']);

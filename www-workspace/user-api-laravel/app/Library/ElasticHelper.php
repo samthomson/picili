@@ -608,7 +608,7 @@ class ElasticHelper {
                             ]
                         ]
                     ]
-                ],
+				]/*,
                 [
                     "nested" => [
                         "path"=> "tags",
@@ -619,7 +619,7 @@ class ElasticHelper {
                             ]
                         ]
                     ]
-                ]
+                ]*/
             ];
 
             $params['body']['query']['function_score']['query']['bool']["minimum_should_match"] = 1;
