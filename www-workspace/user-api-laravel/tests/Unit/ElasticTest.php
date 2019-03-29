@@ -80,9 +80,9 @@ class ElasticTest extends TestCase
         // without folder and a term
         $aNoFolderWithQuery = ElasticHelper::aSearch(
             0,
-            ['q' => 'trees'],
+            ['q' => 'tree'],
             'folder'
-        );
+		);
         $this->assertEquals(0, count($aNoFolderWithQuery['results']));
         $this->assertTrue(isset($aNoFolderWithQuery['aggs']));
         $this->assertTrue(count($aNoFolderWithQuery['aggs']) === 1);
