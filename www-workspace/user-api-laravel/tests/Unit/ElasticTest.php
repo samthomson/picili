@@ -195,7 +195,7 @@ class ElasticTest extends TestCase
 
         // fuzzy missing a letter e.g. "queens" instead of "Queen's"
         $aFuzzyCommaResult = ElasticHelper::aSearch(0, ['q' => 'queens']);
-        $this->assertEquals(1, count($aFuzzyCommaResult['results']));
+        $this->assertEquals(0, count($aFuzzyCommaResult['results']));
 
         // query with spaces e.g. 'queens park'
         $aWithSpaces = ElasticHelper::aSearch(0, ['q' => 'queens park']);
