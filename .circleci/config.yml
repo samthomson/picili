@@ -88,7 +88,7 @@ jobs:
   test-auto:
     working_directory: /picili
     docker:
-     - image: thecodingmachine/php:7.2-v2-apache
+     - image: php:7.1-apache
        environment:
          - DATABASE_NAME=picili
          - DB_HOST=127.0.0.1
@@ -121,6 +121,7 @@ jobs:
          command: |
            docker-php-ext-install pdo_mysql
            docker-php-ext-install exif
+           docker-php-ext-install gd
      - run:
         name: Install Composer
         command: |
