@@ -477,7 +477,7 @@ class DropboxHelper {
 		/*
 		event is called after noticing a difference in timestamps. need to import the file to check how different it is.
 
-		// and also we will update our the dropbox files timestamp so that it is not flagged again.
+		// and also we will update the dropbox files timestamp so that it is not flagged again.
 		*/
 
 
@@ -493,10 +493,13 @@ class DropboxHelper {
 		$oDropboxFileToUpdate->save();
 
 
-		// queue to be imported
-        
-        $iDownloadFileId = Helper::QueueAnItem('download-dropbox-file', $oDropboxFileToUpdate->id, $oDropboxFileToUpdate->user_id);
-        $iImportTaskId = Helper::QueueAnItem('import-changed-dropbox-file', $oDropboxFileToUpdate->id, $oDropboxFileToUpdate->user_id, $iDownloadFileId);
+		// queue to be imported (if it's a picture)
+		$sExtension = Helper::sExtensionFromPath($sDropboxPath);
+        if($sExtension === 'jpg' || $sExtension === 'jpeg')
+        {
+        	$iDownloadFileId = Helper::QueueAnItem('download-dropbox-file', $oDropboxFileToUpdate->id, $oDropboxFileToUpdate->user_id);
+			$iImportTaskId = Helper::QueueAnItem('import-changed-dropbox-file', $oDropboxFileToUpdate->id, $oDropboxFileToUpdate->user_id, $iDownloadFileId);
+		}
 	}
 
 	public static function handleDeletedFileEvent($sPath)
