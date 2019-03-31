@@ -493,10 +493,13 @@ class DropboxHelper {
 		$oDropboxFileToUpdate->save();
 
 
-		// queue to be imported
-        
-        $iDownloadFileId = Helper::QueueAnItem('download-dropbox-file', $oDropboxFileToUpdate->id, $oDropboxFileToUpdate->user_id);
-        $iImportTaskId = Helper::QueueAnItem('import-changed-dropbox-file', $oDropboxFileToUpdate->id, $oDropboxFileToUpdate->user_id, $iDownloadFileId);
+		// queue to be imported (if it's a picture)
+		$sExtension = Helper::sExtensionFromPath($sDropboxPath);
+        if($sExtension === 'jpg' || $sExtension === 'jpeg')
+        {
+        	$iDownloadFileId = Helper::QueueAnItem('download-dropbox-file', $oDropboxFileToUpdate->id, $oDropboxFileToUpdate->user_id);
+			$iImportTaskId = Helper::QueueAnItem('import-changed-dropbox-file', $oDropboxFileToUpdate->id, $oDropboxFileToUpdate->user_id, $iDownloadFileId);
+		}
 	}
 
 	public static function handleDeletedFileEvent($sPath)
