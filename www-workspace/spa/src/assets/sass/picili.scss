@@ -312,6 +312,12 @@ li#settings-link {
   white-space: nowrap;
   overflow: hidden;
 }
+.folder-summary {
+	text-overflow: ellipsis;
+	/* Required for text-overflow to do anything */
+	white-space: nowrap;
+	overflow: hidden;
+}
 
 .results-block {
   // padding-top: $iMargin;
