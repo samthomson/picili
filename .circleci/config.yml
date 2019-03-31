@@ -88,7 +88,7 @@ jobs:
   test-auto:
     working_directory: /picili
     docker:
-     - image: php:7.1-apache
+     - image: LaraDock/php-fpm:2.2-7.0
        environment:
          - DATABASE_NAME=picili
          - DB_HOST=127.0.0.1
@@ -116,14 +116,12 @@ jobs:
          name: Install server packages
          command: |
            apt-get -qq update
-           apt-get -y install -y git libwebp-dev libjpeg-dev libpng-dev mysql-client libfreetype6-dev
+           apt-get -y install -y git libwebp-dev libjpeg-dev libpng-dev mysql-client
      - run:
          name: Install PHP extensions
          command: |
            docker-php-ext-install pdo_mysql
            docker-php-ext-install exif
-           docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
-           docker-php-ext-install gd
      - run:
         name: Install Composer
         command: |
