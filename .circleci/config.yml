@@ -88,7 +88,7 @@ jobs:
   test-auto:
     working_directory: /picili
     docker:
-     - image: php:7.1.27-apache-stretch
+     - image: louisbl/php:7.1-cli
        environment:
          - DATABASE_NAME=picili
          - DB_HOST=127.0.0.1
@@ -115,6 +115,7 @@ jobs:
          name: Install server packages
          command: |
            apt-get -qq update
+           sed -i '/jessie-updates/d' /etc/apt/sources.list  # Now archived
            apt-get -y install -y git libwebp-dev libjpeg-dev libpng-dev mysql-client
      - run:
          name: Install PHP extensions
