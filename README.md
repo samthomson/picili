@@ -149,7 +149,7 @@ If you want to enter the container, run `docker-compose run spa sh`
 
 The app is served on `localhost:80` and communicates to the API which runs on `localhost:81` (presuming you've already run `docker-compose up [-d]` to start the 'backend'.
 
-If you plan on editing sass files, also run `npm run gulp-watch` (within the container).
+If you plan on editing sass files, also run `docker-compose run spa yarn run gulp-watch`.
 
 
 ## 4.0 Deploying
