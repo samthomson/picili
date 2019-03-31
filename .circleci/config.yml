@@ -88,7 +88,7 @@ jobs:
   test-auto:
     working_directory: /picili
     docker:
-     - image: louisbl/php:7.1-cli
+     - image: php:7.1-apache
        environment:
          - DATABASE_NAME=picili
          - DB_HOST=127.0.0.1
