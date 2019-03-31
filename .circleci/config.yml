@@ -102,6 +102,7 @@ jobs:
          - ELASTICSEARCH_INDEX=files
          - ELASTICSEARCH_INDEX_TESTING=files-testing
          - SEARCH_CONFIDENCE_THRESHOLD=30
+         - PHP_EXTENSIONS=gd
      - image: mysql:5.7
        environment:
          - MYSQL_ROOT_PASSWORD=password
@@ -121,7 +122,6 @@ jobs:
          command: |
            docker-php-ext-install pdo_mysql
            docker-php-ext-install exif
-           docker-php-ext-install gd
      - run:
         name: Install Composer
         command: |
