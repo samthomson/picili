@@ -123,7 +123,7 @@ jobs:
            docker-php-ext-install pdo_mysql
            docker-php-ext-install exif
            docker-php-ext-install gd
-           docker-php-ext-configure gd
+           docker-php-ext-configure gd --with-jpeg-dir=/usr/include/
      - run:
         name: Install Composer
         command: |
