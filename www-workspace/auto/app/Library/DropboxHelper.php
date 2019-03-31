@@ -477,7 +477,7 @@ class DropboxHelper {
 		/*
 		event is called after noticing a difference in timestamps. need to import the file to check how different it is.
 
-		// and also we will update our the dropbox files timestamp so that it is not flagged again.
+		// and also we will update the dropbox files timestamp so that it is not flagged again.
 		*/
 
 

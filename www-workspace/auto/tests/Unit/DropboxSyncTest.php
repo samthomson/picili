@@ -566,8 +566,45 @@ class DropboxSyncTest extends TestCase
 
         $oFindTask = Task::where('related_file_id', $iId)->where('processor', 'import-changed-dropbox-file')->first();
 
-        $this->assertTrue(isset($oFindTask));
-     }
+		$this->assertTrue(isset($oFindTask));
+		
+		// also test it only cares about jpegs
+
+		$sVidSeedPath = "/test pics/non-picture.mov";
+        $sVidOldTime = "2017-03-03 15:26:24";
+        $sVidNewTime = "2017-03-03 16:08:32";
+        $sVidSeedSize = 8395180;
+
+        $oSeedVideoDropboxFile = new DropboxFiles;
+        $oSeedVideoDropboxFile->server_modified = Carbon::parse($sVidOldTime);
+        $oSeedVideoDropboxFile->dropbox_path = $sVidSeedPath;
+        $oSeedVideoDropboxFile->dropbox_id = 2;
+        $oSeedVideoDropboxFile->dropbox_name = 'non-picture.mov';
+        $oSeedVideoDropboxFile->size = 456456;
+        $oSeedVideoDropboxFile->dropbox_folder_id = 9;
+        $oSeedVideoDropboxFile->dropbox_folder_id = 9;
+        $oSeedVideoDropboxFile->sTempFileName = Helper::sTempFilePathForDropboxFile(2);
+        $oSeedVideoDropboxFile->user_id = 2;
+        $oSeedVideoDropboxFile->save();
+        $iId = $oSeedVideoDropboxFile->id;
+
+        DropboxHelper::handleChangedFileEvent(
+            $sVidSeedPath,
+            $sNewTime,
+            $sSeedSize
+        );
+
+
+        $oUpdatedTask = DropboxFiles::where('dropbox_path', $sVidSeedPath)->first();
+
+        // check timestamp updated
+        $this->assertEquals($oUpdatedTask->server_modified, $sVidNewTime);
+
+        $oFindTask = Task::where('related_file_id', $iId)->where('processor', 'import-changed-dropbox-file')->first();
+
+		$this->assertFalse(isset($oFindTask));
+
+    }
 
      public function testDeletedDropboxFileEvent()
      {
