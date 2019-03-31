@@ -116,7 +116,7 @@ jobs:
          name: Install server packages
          command: |
            apt-get -qq update
-           apt-get -y install -y git libwebp-dev libjpeg-dev libpng-dev mysql-client libfreetype6-dev libjpeg62-turbo-dev libpng12-dev
+           apt-get -y install -y git libwebp-dev libjpeg-dev libpng-dev mysql-client libfreetype6-dev libjpeg62-turbo-dev
      - run:
          name: Install PHP extensions
          command: |
