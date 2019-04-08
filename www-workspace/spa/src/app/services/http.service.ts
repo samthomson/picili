@@ -4,8 +4,9 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { GlobalVars } from './../../env';
 
-import { AuthService } from './auth.service';
-import { SearchService } from './search.service';
+import { AuthService } from './auth.service'
+import { HelperService } from './helper.service'
+import { SearchService } from './search.service'
 
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/Rx';
@@ -36,6 +37,7 @@ export class HttpService {
 		private http: HttpClient,
 		private gbl: GlobalVars,
 		private searchService: SearchService,
+		private helperService: HelperService,
 		private authService: AuthService
 	) {
 		this.authStatus = !!localStorage.getItem(this.gbl.sAuthTokenName);
@@ -370,9 +372,14 @@ export class HttpService {
 
 	attemptPreload(iFileIndex) {
 		// todo
-		const sSize = 'xl';
-		let imgPreload = new Image();
-		imgPreload.src = 'https://s3-eu-west-1.amazonaws.com/picili-bucket/t/' + this.gbl.sCurrentPageUsername + '/' + sSize + this.searchService.mData.search.results[iFileIndex].id + '.jpg'
+		const sSize = 'xl'
+		const { id } = this.searchService.mData.search.results[iFileIndex]
+
+		let imgPreload = new Image()
+		imgPreload.src = this.helperService.thumbUrl(
+			sSize,
+			id
+		)
 	}
 
 	preloadActiveDelta(iDelta) {
