@@ -60,7 +60,6 @@ gulp.task('sass', function() {
     .pipe(gulp.dest('src/assets/compiled/css'))
 });
 
-
 gulp.task('concat-css', gulp.series(['sass'], () => {
     return gulp.src(
         [
