@@ -35,7 +35,7 @@
     "enhanced-resolve": "^3.4.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
-    "materialize-css": "^0.100.2",
+    "materialize-css": "1.0.0",
     "moment": "^2.22.1",
     "ng5-slider": "^1.1.13",
     "node-sass": "^4.9.4",
