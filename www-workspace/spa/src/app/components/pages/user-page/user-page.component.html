@@ -66,16 +66,21 @@
             </div>
 
             <div id="cal-sort-menu">
-                <button class="ui left labeled icon mini basic button" (click)="onCalMove(-1)">
-                    <i class="left arrow icon"></i>
-                    Previous
-                </button>
+                <button class="ui left icon mini basic button" (click)="onCalMove(-1)">
+                    <i class="left arrow icon"></i>&nbsp;Previous
+				</button>
+				
+				<!--
+                <span class="ui medium label">{{sCurrentDateDisplay}}
+				-->
+				<!--{{searchService.mdDate | calendarPeriod}}-->
+				<!--
+				</span>
+				-->
 
-                <span class="ui medium label">{{sCurrentDateDisplay}}<!--{{searchService.mdDate | calendarPeriod}}--></span>
-
-                <button class="ui right labeled icon mini basic button" (click)="onCalMove(1)">
+                <button class="ui right icon mini basic button" (click)="onCalMove(1)">
                     <i class="right arrow icon"></i>
-                    Next
+                    Next&nbsp;
                 </button>
             </div>
         </div>
