@@ -80,7 +80,7 @@ import { Ng5SliderModule } from 'ng5-slider'
 	HttpClientModule,
 	routing,
 	AgmCoreModule.forRoot({
-		apiKey: 'AIzaSyDR4kOXozjam-Y3xaMxq9mSABoJxHzsXhM'
+		apiKey: ' AIzaSyD_1hGtLS_vCLpkEc2_mjOS8L0iz3-9eH8'
 	}),
 	MaterializeModule,
 	Ng5SliderModule
