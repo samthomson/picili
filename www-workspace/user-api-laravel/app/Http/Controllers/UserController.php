@@ -360,17 +360,25 @@ class UserController extends Controller
 
         $aTags = [];
 
-        $aoPossibleTags = $oFile->tags->where('type', 'imagga');
-
+		$aoPossibleTags = $oFile->tags->where('confidence', '>', (int)env('SEARCH_CONFIDENCE_THRESHOLD'));
+		
         if (null !== $aoPossibleTags)
         {
             foreach($aoPossibleTags as $aTag) {
-                if ($aTag['confidence'] > env('SEARCH_CONFIDENCE_THRESHOLD')) {
-                    array_push($aTags, [ 'literal' => $aTag['value'], 'confidence' => $aTag['confidence']]);
+				if ($aTag['type'] === 'imagga' || $aTag['type'] === 'opencage') {
+					array_push($aTags, [ 'type' => $aTag['type'], 'literal' => $aTag['value'], 'confidence' => $aTag['confidence']]);
                 }
             }
-        }
-        $oResponse['tags'] = $aTags;
+		}
+		$aImaggaTags = array_filter($aTags, function($value){
+			return $value['type'] === 'imagga';
+		});
+		$aPlaceTags = array_filter($aTags, function($value){
+			return $value['type'] === 'opencage';
+		});
+
+        $oResponse['tags'] = $aImaggaTags;
+        $oResponse['place_tags'] = $aPlaceTags;
 
         if (isset($oFile->dropboxFile) && isset($oFile->dropboxFile->dropbox_path)) {
             $oResponse['dropboxPath'] = $oFile->dropboxFile->dropbox_path;
