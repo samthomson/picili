@@ -189,7 +189,7 @@ class ElasticTest extends TestCase
         $aFuzzyTagResult = ElasticHelper::aSearch(0, ['q' => 'trea']);
         $this->assertEquals(0, count($aFuzzyTagResult['results']));
 
-        // match one word of a two word tag e.g. 'Balvicar' of 'Balvicar Drive'
+		// match one word of a two word tag e.g. 'Balvicar' of 'Balvicar Drive'
         $aQueryHalfResult = ElasticHelper::aSearch(0, ['q' => 'Balvicar']);
         $this->assertEquals(1, count($aQueryHalfResult['results']));
 
@@ -220,7 +220,19 @@ class ElasticTest extends TestCase
                 ],
                 'q' => 'park'
             ]
-        );
+		);
+		
+		// return images that match every term - boolean AND
+		// each
+		$aQueryHalfResult = ElasticHelper::aSearch(0, ['q' => 'tree']);
+		$this->assertEquals(1, count($aQueryHalfResult['results']));
+		$aQueryHalfResult = ElasticHelper::aSearch(0, ['q' => 'city']);
+		$this->assertEquals(5, count($aQueryHalfResult['results']));
+		// both
+		$aQueryHalfResult = ElasticHelper::aSearch(0, ['q' => 'tree,city']);
+		$this->assertEquals(1, count($aQueryHalfResult['results']));
+		
+
         
         $this->assertEquals(1, count($aGeo['results']));
 
