@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core'
+import { Component, HostListener } from '@angular/core'
 import { GlobalVars } from './../../../../env'
 import { HttpService, SearchService, HelperService } from './../../../services'
 
@@ -6,7 +6,7 @@ import { HttpService, SearchService, HelperService } from './../../../services'
 	selector: 'app-lightbox',
 	templateUrl: './lightbox.component.html'
 })
-export class LightboxComponent implements OnInit {
+export class LightboxComponent {
 
 	private bShowingInfo: boolean = false
 	private bLoadingInfo: boolean = false
@@ -41,13 +41,6 @@ export class LightboxComponent implements OnInit {
 		private gbl: GlobalVars
 	) { }
 
-	ngOnInit() {
-		this.searchService.eeThumbClick.subscribe(iIndex => {
-			// lightbox just opened
-			// do lightbox openeing stuff
-			this.lightBoxFileSet()
-		})
-	}
 
 	eCloseLightbox() {
 		this.searchService.eeLightboxClose.emit()
