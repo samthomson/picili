@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core'
+import { Component, HostListener, OnInit } from '@angular/core'
 import { GlobalVars } from './../../../../env'
 import { HttpService, SearchService, HelperService } from './../../../services'
 
@@ -6,11 +6,11 @@ import { HttpService, SearchService, HelperService } from './../../../services'
 	selector: 'app-lightbox',
 	templateUrl: './lightbox.component.html'
 })
-export class LightboxComponent {
+export class LightboxComponent implements OnInit {
 
 	private bShowingInfo: boolean = false
 	private bLoadingInfo: boolean = false
-
+	
 	private jFileInfo: any = null
 	@HostListener('document:keydown', ['$event']) keypress(event) {
 		// 37 = left
@@ -40,7 +40,11 @@ export class LightboxComponent {
 		private helperService: HelperService,
 		private gbl: GlobalVars
 	) { }
-
+	
+	ngOnInit() {
+		// don't register a subscription, just do it - this ngOnInit is run on each lightbox show
+		this.lightBoxFileSet()
+	}
 
 	eCloseLightbox() {
 		this.searchService.eeLightboxClose.emit()
