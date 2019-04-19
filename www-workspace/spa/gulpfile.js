@@ -20,6 +20,16 @@ var rename = require('gulp-rename');
 var concatCss = require('gulp-concat-css');
 
 var concat = require('gulp-concat');
+var version = require('gulp-version-number')
+
+// versioning config for urls in index.html to bust caches
+const versionConfig = {
+	'value': '%MDS%',
+	'append': {
+	  'key': 'v',
+	  'to': ['css', 'js'],
+	},
+}
 
 gulp.task('copy-icomoon-fonts', function(){
     return gulp.src([
@@ -104,7 +114,13 @@ gulp.task('concat-js', function() {
     .pipe(concat('compiled.js'))
     .pipe(gulp.dest('src/assets/compiled/js'));
 });
-  
+
+gulp.task('version html asset urls', () => {
+	return gulp.src('src/index.html')
+		// .pipe($.htmlmin({collapseWhitespace: true}))
+		.pipe(version(versionConfig))
+		.pipe(gulp.dest('src'))
+})
 
 gulp.task('default', gulp.series([
     'concat-css',
@@ -112,8 +128,9 @@ gulp.task('default', gulp.series([
     'copy-icomoon-fonts',
     'copy-semantic-fonts',
     'copy-fa-fonts',
-    'copy-semantic-images'
-]));
+	'copy-semantic-images',
+	'version html asset urls'
+]))
 
 
 gulp.task('watch', function() {
