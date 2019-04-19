@@ -125,12 +125,13 @@ h4 {
   margin-right: 0px;
 }
 
-#sort-menu .ui.button {
+.flatter-button-group-toggle .ui.button {
 	background-color: white;
 	color: $cActiveGrey;
 	border: 1px solid $cAvailableGrey;
+	border-left: 1px solid $cAvailableGrey !important;
 }
-#sort-menu .ui.button.active {
+.flatter-button-group-toggle .ui.button.active {
 	background-color: $cAvailableGrey;
 }
 

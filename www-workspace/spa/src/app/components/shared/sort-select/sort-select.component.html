@@ -1,4 +1,4 @@
-<div class="ui tiny buttons" id="sort-menu" *ngIf="searchService.bHasSearchResults && searchService.mData.search.results.length > 1">
+<div class="ui tiny buttons flatter-button-group-toggle" id="sort-menu" *ngIf="searchService.bHasSearchResults && searchService.mData.search.results.length > 1">
     <div class="ui button" (click)="setSort('relevance')" [ngClass]="{'active': searchService.sCurrentSort === 'relevance'}" *ngIf="!searchService.bEmptyQuery()">
         <i class="fa fa-sort-asc" aria-hidden="true"></i>
         &nbsp;Relevance
