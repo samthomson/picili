@@ -125,6 +125,15 @@ h4 {
   margin-right: 0px;
 }
 
+#sort-menu .ui.button {
+	background-color: white;
+	color: $cActiveGrey;
+	border: 1px solid $cAvailableGrey;
+}
+#sort-menu .ui.button.active {
+	background-color: $cAvailableGrey;
+}
+
 #cal-sort-menu {
   margin-top: 0px;
   float: right;
