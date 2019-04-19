@@ -10,7 +10,7 @@ export class LightboxComponent implements OnInit {
 
 	private bShowingInfo: boolean = false
 	private bLoadingInfo: boolean = false
-	
+
 	private jFileInfo: any = null
 	@HostListener('document:keydown', ['$event']) keypress(event) {
 		// 37 = left
@@ -40,7 +40,7 @@ export class LightboxComponent implements OnInit {
 		private helperService: HelperService,
 		private gbl: GlobalVars
 	) { }
-	
+
 	ngOnInit() {
 		// don't register a subscription, just do it - this ngOnInit is run on each lightbox show
 		this.lightBoxFileSet()
