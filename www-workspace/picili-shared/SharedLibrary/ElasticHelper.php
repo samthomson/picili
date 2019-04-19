@@ -217,7 +217,7 @@ class ElasticHelper {
 	private static function getDocumentForElastic($oPiciliFile) {
 
 		$oDocumentBody = [];
-        $iConfidenceThreshold = env('CONFIDENCE_THRESHOLD');
+        $iConfidenceThreshold = env('SEARCH_CONFIDENCE_THRESHOLD');
 
 
 		if(isset($oPiciliFile->medium_width))
