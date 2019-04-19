@@ -229,7 +229,7 @@ class ElasticTest extends TestCase
 		$aQueryHalfResult = ElasticHelper::aSearch(0, ['q' => 'city']);
 		$this->assertEquals(5, count($aQueryHalfResult['results']));
 		// both
-		$aQueryHalfResult = ElasticHelper::aSearch(0, ['q' => 'tree city']);
+		$aQueryHalfResult = ElasticHelper::aSearch(0, ['q' => 'tree,city']);
 		$this->assertEquals(1, count($aQueryHalfResult['results']));
 		
 

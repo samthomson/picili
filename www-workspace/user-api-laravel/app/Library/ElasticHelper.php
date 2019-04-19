@@ -240,8 +240,35 @@ class ElasticHelper {
                         break;
                 }
             }
-        }
+		}
+		
+		if($sQueryString !== '')
+        {
+			$asTerms = explode(',', $sQueryString);
 
+			for ($cTerms = 0; $cTerms < count($asTerms); $cTerms++) {
+				array_push(
+					$aFilters,
+					[
+						"nested" => [
+							"path" =>  "tags",
+							"score_mode" => "max",
+							"query"=> [
+								"bool"=> [
+									"must" => [
+										[
+											"match"=> [
+												"tags.value" => $asTerms[$cTerms]
+											]
+										]
+									]
+								]
+							]
+						]
+					]
+				);
+			}
+		}
 
         //
         // ask for aggregations before we query but after defining params and filters
@@ -588,43 +615,6 @@ class ElasticHelper {
             $params['body']['size'] = $iSize;
             $params['body']['from'] = $iStartAt;
         }
-
-        if($sQueryString !== '')
-        {
-            $params['body']['query']['function_score']['query']['bool']["should"] = [
-                [
-                    "nested" => [
-                        "path" =>  "tags",
-                        "score_mode" => "max",
-                        "query"=> [
-                            "bool"=> [
-                                "must" => [
-                                    [
-                                        "match"=> [
-                                            "tags.value" => $sQueryString
-                                        ]
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-				]/*,
-                [
-                    "nested" => [
-                        "path"=> "tags",
-                        "score_mode"=> "max",
-                        "query"=> [
-                            "fuzzy"=> [
-                                "tags.value"=>  $sQueryString
-                            ]
-                        ]
-                    ]
-                ]*/
-            ];
-
-            $params['body']['query']['function_score']['query']['bool']["minimum_should_match"] = 1;
-        }
-        /**/
 
         // echo "SEARCHING ELASTIC";
 		// echo json_encode($params);
