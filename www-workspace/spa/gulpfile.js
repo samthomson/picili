@@ -117,7 +117,6 @@ gulp.task('concat-js', function() {
 
 gulp.task('version html asset urls', () => {
 	return gulp.src('src/index.html')
-		// .pipe($.htmlmin({collapseWhitespace: true}))
 		.pipe(version(versionConfig))
 		.pipe(gulp.dest('src'))
 })
