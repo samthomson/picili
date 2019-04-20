@@ -366,23 +366,27 @@ class UserController extends Controller
         {
             foreach($aoPossibleTags as $aTag) {
 				if ($aTag['type'] === 'imagga' || $aTag['type'] === 'opencage') {
-					array_push($aTags, [ 'type' => $aTag['type'], 'literal' => $aTag['value'], 'confidence' => $aTag['confidence']]);
+					array_push($aTags, [
+						'type' => $aTag['type'],
+						'literal' => $aTag['value'],
+						'confidence' => $aTag['confidence']
+					]);
                 }
             }
 		}
-		$aImaggaTags = array_filter($aTags, function($value){
+		$aImaggaTags = array_values(array_filter($aTags, function($value){
 			return $value['type'] === 'imagga';
-		});
-		$aPlaceTags = array_filter($aTags, function($value){
+		}));
+		$aPlaceTags = array_values(array_filter($aTags, function($value){
 			return $value['type'] === 'opencage';
-		});
+		}));
 
         $oResponse['tags'] = $aImaggaTags;
         $oResponse['place_tags'] = $aPlaceTags;
 
         if (isset($oFile->dropboxFile) && isset($oFile->dropboxFile->dropbox_path)) {
             $oResponse['dropboxPath'] = $oFile->dropboxFile->dropbox_path;
-        }
+		}
 
         return response()->json(['success' => true, 'file' => $oResponse]);
     }
