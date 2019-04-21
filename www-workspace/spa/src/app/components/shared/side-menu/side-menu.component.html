@@ -15,7 +15,7 @@
         [routerLink] = "[ mMenuItem.link ]"
         [queryParams]="searchService.getQVars()"
         [routerLinkActive]="['active']"
-        [routerLinkActiveOptions]="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: false }"
         >
             <i class="{{mMenuItem.icon}}" aria-hidden="true"></i>
             <span>{{mMenuItem.name}}</span>
