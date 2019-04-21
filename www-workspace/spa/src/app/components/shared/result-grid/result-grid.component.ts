@@ -29,6 +29,7 @@ export class ResultGridComponent implements OnInit {
 
 	resizeId;
 	@ViewChild('resultsBlock', { read: ElementRef }) public resultsBlock: ElementRef<any>;
+	@ViewChild('justifiedGallery', { read: ElementRef }) public justifiedGallery: ElementRef<any>;
 
 	constructor(
 		private searchService: SearchService,
@@ -170,7 +171,19 @@ export class ResultGridComponent implements OnInit {
 
 	@HostListener('scroll', ['$event'])
 	scrollHandler(event) {
+		// if they have scrolled at all, we want to display the 'to top' button thing
 		this.bShowScrollToTop = this.resultsBlock.nativeElement.scrollTop > 0
+		
+		// if they are more than [75%] we want to automatically load more pictures
+		const { scrollTop, scrollHeight, clientHeight } = this.resultsBlock.nativeElement
+
+		let iScrollPoY: number = clientHeight + scrollTop 
+		let fScrollPercent: number = (iScrollPoY / scrollHeight) * 100
+
+		if (fScrollPercent > 75) {
+			// load more
+			this.showMore()
+		}
 	}
 
 	scrollToTop() {

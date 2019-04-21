@@ -9,7 +9,7 @@
     <div #resultsBlock class="results-block" (scroll)="scrollHandler($event)">
 
         <!-- justified gallery -->
-        <div class="justified-gallery" *ngIf="sDisplayMode === 'justified'">
+        <div #justifiedGallery class="justified-gallery" *ngIf="sDisplayMode === 'justified'">
             <div *ngFor="let oRow of aJustifiedRows;let iRow = index" [style.height]="aJustifiedRowHeights[iRow] + 'px'" class="justified-row">
                 <img
                     *ngFor="let oResult of oRow;let i = index" 
