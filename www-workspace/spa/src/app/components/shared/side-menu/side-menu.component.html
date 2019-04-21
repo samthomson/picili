@@ -2,7 +2,6 @@
     <li>
         <a
         [routerLink] = "'/' + this.sCurrentPageUsername"
-        [queryParams]="searchService.getQVars()"
         [routerLinkActive]="['active']"
         [routerLinkActiveOptions]="{ exact: true }"
         >
