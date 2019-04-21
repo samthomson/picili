@@ -180,7 +180,7 @@ export class ResultGridComponent implements OnInit {
 		let iScrollPoY: number = clientHeight + scrollTop 
 		let fScrollPercent: number = (iScrollPoY / scrollHeight) * 100
 
-		if (fScrollPercent > 75) {
+		if (fScrollPercent > 99) { // at the bottom
 			// load more
 			this.showMore()
 		}
