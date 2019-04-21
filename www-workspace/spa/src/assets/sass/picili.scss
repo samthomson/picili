@@ -20,6 +20,14 @@ $iSmallImageDimension: 125px;
 
 $iLightboxMargin: ($iMargin * 2);
 
+
+@font-face {
+	font-family: 'pt_sans_captionbold';
+    src: url('./fonts/PTC75F-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+  
 /*
 //
 // RESETS
@@ -147,7 +155,7 @@ h4 {
 */
 .header-font {
   position: relative;
-  font-family: "PT Sans Caption", sans-serif;
+  font-family: "pt_sans_captionbold";
   font-size: xx-large;
   line-height: 28px;
 }
