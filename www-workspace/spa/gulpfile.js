@@ -52,6 +52,14 @@ gulp.task('copy-fa-fonts', function(){
     ])
     .pipe(gulp.dest('src/assets/compiled/fonts'));
 })
+gulp.task('copy-header-fonts', function(){
+    return gulp.src([
+		/* pt sans */
+        'src/assets/vendor/fontsquirrel/pt-sans-caption-bold/*',
+    ])
+    .pipe(gulp.dest('src/assets/compiled/css/fonts'));
+})
+
 gulp.task('copy-semantic-images', function(){
     return gulp.src([
         /* semantic */
@@ -125,6 +133,7 @@ gulp.task('default', gulp.series([
     'copy-icomoon-fonts',
     'copy-semantic-fonts',
     'copy-fa-fonts',
+    'copy-header-fonts',
 	'copy-semantic-images',
 	'version html asset urls'
 ]))
