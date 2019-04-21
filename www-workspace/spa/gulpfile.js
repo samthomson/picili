@@ -55,12 +55,10 @@ gulp.task('copy-fa-fonts', function(){
 gulp.task('copy-header-fonts', function(){
     return gulp.src([
 		/* pt sans */
-        'src/assets/fonts/pt-sans-caption-bold/*',
+        'src/assets/vendor/fontsquirrel/pt-sans-caption-bold/*',
     ])
     .pipe(gulp.dest('src/assets/compiled/css/fonts'));
 })
-
-
 
 gulp.task('copy-semantic-images', function(){
     return gulp.src([
