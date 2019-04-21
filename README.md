@@ -6,7 +6,7 @@ picili is an automated image search engine / browser. It syncronises with a chos
 
 https://picili.com
 
-![build status](https://picili.com/images/map_screen.jpeg)
+![picili screenshot](./screenshot.jpeg)
 
 1. [How it works](#10-how-it-works)
 2. [Set up](#20-set-up-picili-locally)
