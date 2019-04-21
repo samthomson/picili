@@ -18,6 +18,7 @@
                     [style.width]="oResult.s_w + 'px'"
                     [style.height]="oResult.s_h + 'px'"
                     (click)="resultThumbClick(oResult.index)"
+                    (mousedown)="resultMouseDown(oResult.index)"
                     class="result-thumb"
 
                 />

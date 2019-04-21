@@ -77,6 +77,10 @@ export class ResultGridComponent implements OnInit {
 		this.searchService.eThumbClick(i);
 	}
 
+	resultMouseDown(i) {
+		this.httpService.attemptPreload(i)
+	}
+
 	calculateJustifiedGallery() {
 		if (this.sDisplayMode === 'justified') {
 			// go through each image, adding to temp line collection, adding widths until passed contained width

@@ -374,12 +374,12 @@ export class HttpService {
 		// todo
 		const sSize = 'xl'
 		const { id } = this.searchService.mData.search.results[iFileIndex]
-
-		let imgPreload = new Image()
-		imgPreload.src = this.helperService.thumbUrl(
+		const sPreloadSrc: string = this.helperService.thumbUrl(
 			sSize,
 			id
 		)
+		let imgPreload = new Image()
+		imgPreload.src = sPreloadSrc
 	}
 
 	preloadActiveDelta(iDelta) {
