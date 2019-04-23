@@ -186,7 +186,8 @@ export class ResultGridComponent implements OnInit {
 
 		if (fScrollPercent > 99) { // at the bottom
 			// load more
-			this.showMore()
+			// console.log('trigger - show more')
+			// this.showMore()
 		}
 	}
 
