@@ -39,7 +39,7 @@
     "materialize-css": "^0.100.2",
     "moment": "^2.22.1",
     "ng5-slider": "^1.1.13",
-    "node-sass": "^4.9.4",
+    "node-sass": "^4.13.1",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
     "semantic-ui-css": "^2.3.1",
