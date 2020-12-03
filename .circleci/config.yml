@@ -20,7 +20,7 @@ jobs:
            npm run build
   lint-spa:
     docker:
-     - image: mhart/alpine-node
+     - image: mhart/alpine-node:10
     working_directory: /picili
     steps:
      - checkout
