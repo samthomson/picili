@@ -10,4 +10,4 @@ RUN npm i -y
 
 RUN npm rebuild node-sass
 
-RUN npm run gulp
+# RUN npm run gulp
