@@ -5,6 +5,9 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use \Exception;
 
+use App\Library\Helper;
+use App\Library\PiciliProcessor;
+
 class Test extends Command
 {
     /**
@@ -36,8 +39,9 @@ class Test extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
+
+    /* old image test */
+    /* 
         echo "hello";
 
         echo "\n mem: ".ini_get("memory_limit")."\n";
@@ -53,5 +57,17 @@ class Test extends Command
             echo "image is ok";
         }
         echo "goodbye";
+    */
+
+
+    public function handle()
+    {
+        // test calling plant net tagger
+        // echo "test plant net data\n\n";
+        // $plantNetTagged = Helper::plantNet(65);
+        // print_r($plantNetTagged);
+
+        // test plant net tagging some images
+        PiciliProcessor::plantDetect(61);
     }
 }

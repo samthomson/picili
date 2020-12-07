@@ -65,6 +65,7 @@ Picili is completely dockerized.
   - API_OPEN_CAGE_KEY
   - API_IMAGGA_KEY
   - API_IMAGGA_SECRET
+  - API_PLANT_NET_KEY
   - AWS_KEY
   - AWS_SECRET
   - AWS_REGION

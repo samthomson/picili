@@ -498,12 +498,12 @@ class Helper {
         {
             case 'production':
             // return 'http://static.picili.com/t/'.$iUserId.'/'.$sThumbSize.$iPiciliFileId.'.jpg';
-            return 'https://s3-'.env('AWS_REGION').'.amazonaws.com/'.env('AWS_BUCKET').'/t/'.$iUserId.'/'.$sThumbSize.$iPiciliFileId.'.jpg';
+            return 'https://s3-'.env('AWS_REGION').'.amazonaws.com/'.env('AWS_BUCKET_NAME').'/t/'.$iUserId.'/'.$sThumbSize.$iPiciliFileId.'.jpg';
                 break;
             case 'local':
             case 'testing':
             default:
-                return 'https://s3-eu-west-1.amazonaws.com/'.env('AWS_BUCKET').'/t/'.$iUserId.'/'.$sThumbSize.$iPiciliFileId.'.jpg';
+                return 'https://s3-eu-west-1.amazonaws.com/'.env('AWS_BUCKET_NAME').'/t/'.$iUserId.'/'.$sThumbSize.$iPiciliFileId.'.jpg';
                 break;
         }
         // return 'http://static.picili.com/'
@@ -1061,6 +1061,122 @@ class Helper {
         }
 
 
+        return $mReturn;
+    }
+
+    public static function plantNet($iPiciliFileId) 
+    {
+        $mReturn = ['status' => 'unknown'];
+
+        try {
+            $oPiciliFile = PiciliFile::find($iPiciliFileId);
+            $sKey = env('API_PLANT_NET_KEY');
+            $sAWSS3Path = self::sS3Path($oPiciliFile->user_id, $iPiciliFileId, 'l');
+
+            $requestURL = "https://my-api.plantnet.org/v2/identify/all?api-key=".$sKey."&organs=flower&images=".$sAWSS3Path;
+
+            $plantNetAPIResponseJSON = @file_get_contents($requestURL, false, $context);
+
+            // get status code
+            list($version, $status_code, $msg) = explode(' ',$http_response_header[0], 3);
+
+            switch($status_code)
+            {
+                case 200:
+                    
+                    $oObj = json_decode($plantNetAPIResponseJSON);
+
+                    $aaTags = [];
+
+                    if(isset($oObj->results) && isset($oObj->results[0])){
+
+                        $bestGuess = $oObj->results[0];
+
+                        $confidence = $bestGuess->score * 100;
+
+                        $scientificName = $bestGuess->species->scientificNameWithoutAuthor;
+                        $genus = $bestGuess->species->genus->scientificNameWithoutAuthor;
+                        $family = $bestGuess->species->family->scientificNameWithoutAuthor;
+                        $commonNames = $bestGuess->species->commonNames;
+                        $gbif = $bestGuess->gbif->id;
+
+                        // scientific name
+                        array_push($aaTags, [
+                            'type' => 'plantnet',
+                            'subtype' => 'scientificname',
+                            'value' => $scientificName,
+                            'confidence' => $confidence,
+                        ]);
+                        // genus 
+                        array_push($aaTags, [
+                            'type' => 'plantnet',
+                            'subtype' => 'genus',
+                            'value' => $genus,
+                            'confidence' => $confidence,
+                        ]);
+
+                        // family 
+                        array_push($aaTags, [
+                            'type' => 'plantnet',
+                            'subtype' => 'family',
+                            'value' => $family,
+                            'confidence' => $confidence,
+                        ]);
+
+                        // common names
+                        foreach($commonNames as $name)
+                        {
+                            array_push($aaTags, [
+                                'type' => 'plantnet',
+                                'subtype' => 'commonname',
+                                'value' => $name,
+                                'confidence' => $confidence,
+                            ]);
+                        }
+                        // gbif
+                        array_push($aaTags, [
+                            'type' => 'plantnet',
+                            'subtype' => 'gbif',
+                            'value' => $gbif,
+                            'confidence' => $confidence,
+                        ]);
+
+                        $mReturn['status'] = 'success';
+                    }
+
+                    $mReturn['tags'] = $aaTags;
+                    $mReturn['status'] = 'success';
+
+                    break;
+                case 429:
+                    // throttled
+                    $mReturn['status'] = 'throttled';
+                    $mReturn['value'] = 'http 429 throttle';
+                    break;
+                default:
+                    // https://my.plantnet.org/account/doc
+                    logger(['plant.net error, unmapped status response', $status_code]);
+                    $mReturn['status'] = 'error';
+                    $mReturn['value'] = 'non 200/429 status returned';
+                    break;
+            }
+
+            $plantNetResult = json_decode($plantNetAPIResponseJSON);
+        }catch (Exception $e) {
+            echo $e;
+            // handle it
+            $mReturn = ['status' => 'fail'];
+
+            // log it
+            Helper::logError(
+                "PlantNetProcessor",
+                "exception",
+                [
+                    "function" => "process",
+                    "exception_message" => $ex
+                ]
+            );
+        }
         return $mReturn;
     }
 
