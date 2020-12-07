@@ -38,6 +38,7 @@ services:
       - AWS_BUCKET_NAME_TESTING=${AWS_BUCKET_NAME_TESTING}
       - API_IMAGGA_KEY=${API_IMAGGA_KEY}
       - API_IMAGGA_SECRET=${API_IMAGGA_SECRET}
+      - API_PLANT_NET_KEY=${API_PLANT_NET_KEY}
     volumes:
       - ./www-workspace:/var/www
     depends_on: [mysql, elasticsearch]

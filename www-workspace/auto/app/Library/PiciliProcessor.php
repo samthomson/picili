@@ -591,4 +591,27 @@ class PiciliProcessor {
         }
     }
 
+    public static function plantDetect($iPiciliFileId)
+    {
+        $mResp = Helper::plantNet($iPiciliFileId);
+        $oPiciliFile = PiciliFile::find($iPiciliFileId);
+
+        if(isset($mResp['status']) && $mResp['status'] === 'success')
+        {
+            if(isset($mResp['tags']))
+            {
+                $aPlantNetTags = [];
+
+                TagHelper::removeTagsOfType($oPiciliFile, 'plantnet');
+                TagHelper::setTagsToFile($oPiciliFile, $mResp['tags']);
+            } else {
+                logger('plantnet returned 0 tags for file: '.$iPiciliFileId);
+            }
+
+            return ['success'=> true];
+        }else{
+            return ['success'=> false, 'error' => $mResp['status']];
+        }
+    }
+
 }

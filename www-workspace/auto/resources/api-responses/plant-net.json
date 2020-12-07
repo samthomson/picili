@@ -1,0 +1,280 @@
+{
+    "query": {
+        "project": "best",
+        "images": [
+            "https://s3-eu-west-1.amazonaws.com/picili-bucket/t/1/xl8.jpg"
+        ],
+        "organs": [
+            "flower"
+        ]
+    },
+    "language": "en",
+    "preferedReferential": "the-plant-list",
+    "results": [
+        {
+            "score": 0.5525233745574951,
+            "species": {
+                "scientificNameWithoutAuthor": "Eschscholzia californica",
+                "scientificNameAuthorship": "Cham.",
+                "genus": {
+                    "scientificNameWithoutAuthor": "Eschscholzia",
+                    "scientificNameAuthorship": ""
+                },
+                "family": {
+                    "scientificNameWithoutAuthor": "Papaveraceae",
+                    "scientificNameAuthorship": ""
+                },
+                "commonNames": [
+                    "California-poppy",
+                    "Amapola de California",
+                    "California Poppy"
+                ]
+            },
+            "gbif": {
+                "id": "2888380"
+            }
+        },
+        {
+            "score": 0.026595965027809143,
+            "species": {
+                "scientificNameWithoutAuthor": "Cosmos sulphureus",
+                "scientificNameAuthorship": "Cav.",
+                "genus": {
+                    "scientificNameWithoutAuthor": "Cosmos",
+                    "scientificNameAuthorship": ""
+                },
+                "family": {
+                    "scientificNameWithoutAuthor": "Compositae",
+                    "scientificNameAuthorship": ""
+                },
+                "commonNames": [
+                    "Orange cosmos",
+                    "Sulphur cosmos",
+                    "Yellow cosmos"
+                ]
+            },
+            "gbif": {
+                "id": "3098951"
+            }
+        },
+        {
+            "score": 0.02562553808093071,
+            "species": {
+                "scientificNameWithoutAuthor": "Calendula stellata",
+                "scientificNameAuthorship": "Cav.",
+                "genus": {
+                    "scientificNameWithoutAuthor": "Calendula",
+                    "scientificNameAuthorship": ""
+                },
+                "family": {
+                    "scientificNameWithoutAuthor": "Compositae",
+                    "scientificNameAuthorship": ""
+                },
+                "commonNames": []
+            },
+            "gbif": {
+                "id": "5391454"
+            }
+        },
+        {
+            "score": 0.022523093968629837,
+            "species": {
+                "scientificNameWithoutAuthor": "Calendula arvensis",
+                "scientificNameAuthorship": "M.Bieb.",
+                "genus": {
+                    "scientificNameWithoutAuthor": "Calendula",
+                    "scientificNameAuthorship": ""
+                },
+                "family": {
+                    "scientificNameWithoutAuthor": "Compositae",
+                    "scientificNameAuthorship": ""
+                },
+                "commonNames": [
+                    "Field marigold"
+                ]
+            },
+            "gbif": {
+                "id": "8078464"
+            }
+        },
+        {
+            "score": 0.017605068162083626,
+            "species": {
+                "scientificNameWithoutAuthor": "Reichardia tingitana",
+                "scientificNameAuthorship": "(L.) Roth",
+                "genus": {
+                    "scientificNameWithoutAuthor": "Reichardia",
+                    "scientificNameAuthorship": ""
+                },
+                "family": {
+                    "scientificNameWithoutAuthor": "Compositae",
+                    "scientificNameAuthorship": ""
+                },
+                "commonNames": [
+                    "False Sow-Thistle",
+                    "False Sowthistle",
+                    "Reichardia"
+                ]
+            },
+            "gbif": {
+                "id": "5385648"
+            }
+        },
+        {
+            "score": 0.013396608643233776,
+            "species": {
+                "scientificNameWithoutAuthor": "Scolymus hispanicus",
+                "scientificNameAuthorship": "L.",
+                "genus": {
+                    "scientificNameWithoutAuthor": "Scolymus",
+                    "scientificNameAuthorship": ""
+                },
+                "family": {
+                    "scientificNameWithoutAuthor": "Compositae",
+                    "scientificNameAuthorship": ""
+                },
+                "commonNames": [
+                    "Golden thistle",
+                    "Spanish oysterplant",
+                    "Spanish salsify"
+                ]
+            },
+            "gbif": {
+                "id": "5403742"
+            }
+        },
+        {
+            "score": 0.010552294552326202,
+            "species": {
+                "scientificNameWithoutAuthor": "Tragopogon pratensis",
+                "scientificNameAuthorship": "L.",
+                "genus": {
+                    "scientificNameWithoutAuthor": "Tragopogon",
+                    "scientificNameAuthorship": ""
+                },
+                "family": {
+                    "scientificNameWithoutAuthor": "Compositae",
+                    "scientificNameAuthorship": ""
+                },
+                "commonNames": [
+                    "Johnny-go-to-bed-at-noon",
+                    "Meadow salsify",
+                    "Shepherd's-clock"
+                ]
+            },
+            "gbif": {
+                "id": "5386897"
+            }
+        },
+        {
+            "score": 0.008610548451542854,
+            "species": {
+                "scientificNameWithoutAuthor": "Calendula officinalis",
+                "scientificNameAuthorship": "L.",
+                "genus": {
+                    "scientificNameWithoutAuthor": "Calendula",
+                    "scientificNameAuthorship": ""
+                },
+                "family": {
+                    "scientificNameWithoutAuthor": "Compositae",
+                    "scientificNameAuthorship": ""
+                },
+                "commonNames": [
+                    "Calendula",
+                    "Garden-marigold",
+                    "Ruddles"
+                ]
+            },
+            "gbif": {
+                "id": "5391480"
+            }
+        },
+        {
+            "score": 0.007209633477032185,
+            "species": {
+                "scientificNameWithoutAuthor": "Eschscholzia caespitosa",
+                "scientificNameAuthorship": "Benth.",
+                "genus": {
+                    "scientificNameWithoutAuthor": "Eschscholzia",
+                    "scientificNameAuthorship": ""
+                },
+                "family": {
+                    "scientificNameWithoutAuthor": "Papaveraceae",
+                    "scientificNameAuthorship": ""
+                },
+                "commonNames": [
+                    "Tufted California-poppy",
+                    "Tufted Poppy"
+                ]
+            },
+            "gbif": {
+                "id": "2888385"
+            }
+        },
+        {
+            "score": 0.0068784742616117,
+            "species": {
+                "scientificNameWithoutAuthor": "Scorzoneroides helvetica",
+                "scientificNameAuthorship": "(Mérat) Holub",
+                "genus": {
+                    "scientificNameWithoutAuthor": "Scorzoneroides",
+                    "scientificNameAuthorship": ""
+                },
+                "family": {
+                    "scientificNameWithoutAuthor": "Compositae",
+                    "scientificNameAuthorship": ""
+                },
+                "commonNames": []
+            },
+            "gbif": {
+                "id": "3133515"
+            }
+        },
+        {
+            "score": 0.006357876118272543,
+            "species": {
+                "scientificNameWithoutAuthor": "Gazania rigens",
+                "scientificNameAuthorship": "(L.) Gaertn.",
+                "genus": {
+                    "scientificNameWithoutAuthor": "Gazania",
+                    "scientificNameAuthorship": ""
+                },
+                "family": {
+                    "scientificNameWithoutAuthor": "Compositae",
+                    "scientificNameAuthorship": ""
+                },
+                "commonNames": [
+                    "Treasure-flower",
+                    "Gazania",
+                    "Trailing Gazania"
+                ]
+            },
+            "gbif": {
+                "id": "3112455"
+            }
+        },
+        {
+            "score": 0.005587732885032892,
+            "species": {
+                "scientificNameWithoutAuthor": "Gazania linearis",
+                "scientificNameAuthorship": "(Thunb.) Druce",
+                "genus": {
+                    "scientificNameWithoutAuthor": "Gazania",
+                    "scientificNameAuthorship": ""
+                },
+                "family": {
+                    "scientificNameWithoutAuthor": "Compositae",
+                    "scientificNameAuthorship": ""
+                },
+                "commonNames": [
+                    "Gazania",
+                    "Treasureflower",
+                    "Clumping Gazania"
+                ]
+            },
+            "gbif": {
+                "id": "3112491"
+            }
+        }
+    ]
+}
