@@ -1,0 +1,19 @@
+{
+    "ParsedResults": [
+        {
+            "TextOverlay": {
+                "Lines": [],
+                "HasOverlay": false,
+                "Message": "No overlay requested."
+            },
+            "TextOrientation": "0",
+            "FileParseExitCode": 1,
+            "ParsedText": "A\nTHE SCENIC AREA ENTRANCE\nNo SthOKhg",
+            "ErrorMessage": "",
+            "ErrorDetails": ""
+        }
+    ],
+    "OCRExitCode": 1,
+    "IsErroredOnProcessing": false,
+    "ProcessingTimeInMilliseconds": "1671"
+}
