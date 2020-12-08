@@ -75,6 +75,14 @@ class Test extends Command
         // print_r($textOCR);
 
         // test tag ocr text on images
-        PiciliProcessor::textOCRDetect(60);
+        // PiciliProcessor::textOCRDetect(60);
+
+
+        // test number plate OCR 
+        // $numberPlateOCR = Helper::numberPlateOCR(41);
+        // print_r($numberPlateOCR);
+
+        // numberplate ocr on images
+        PiciliProcessor::numberPlateOCRDetect(12);
     }
 }

@@ -40,6 +40,7 @@ services:
       - API_IMAGGA_SECRET=${API_IMAGGA_SECRET}
       - API_PLANT_NET_KEY=${API_PLANT_NET_KEY}
       - API_OCR_SPACE_KEY=${API_OCR_SPACE_KEY}
+      - API_PLATE_RECOGNIZER=${API_PLATE_RECOGNIZER}
     volumes:
       - ./www-workspace:/var/www
     depends_on: [mysql, elasticsearch]
