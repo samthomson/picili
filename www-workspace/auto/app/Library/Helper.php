@@ -1326,6 +1326,142 @@ class Helper {
 
     }
 
+    public static function textOCR($iPiciliFileId)
+    {
+        $mReturn = ['status' => 'unknown'];
+
+        // make request
+        $oPiciliFile = PiciliFile::find($iPiciliFileId);
+        $sKey = env('API_OCR_SPACE_KEY');
+        $sAWSS3Path = self::sS3Path($oPiciliFile->user_id, $iPiciliFileId, 'l');
+        
+        $requestURL = "https://api.ocr.space/parse/imageurl?apikey=".$sKey."&OCREngine=2&url=".$sAWSS3Path;
+
+        $json = @file_get_contents($requestURL);
+
+        list($version, $status_code, $msg) = explode(' ',$http_response_header[0], 3);
+
+        // Check the HTTP Status code
+        switch($status_code)
+        {
+            case 200:
+                $oObj = json_decode($json);
+
+                $aaTextTags = [];
+
+                if(isset($oObj->ParsedResults) && isset($oObj->ParsedResults[0])){
+
+                    $parsedText = $oObj->ParsedResults[0]->ParsedText;
+
+                    // sample: "A\nTHE SCENIC AREA ENTRANCE\nNo SthOKhg"
+                    
+                    $replacedReturns = str_replace("\r", '', $parsedText);
+                    
+                    $replacedNewLines = str_replace("\n", '', $replacedReturns);
+
+                    $words = explode(' ', $replacedNewLines);
+                    $nonEmpties = array_diff($words, array(''));
+
+                    foreach($nonEmpties as $word)
+                    {
+                        array_push($aaTextTags, [
+                            'type' => 'ocr.text',
+                            'value' => $word,
+                            'confidence' => 75,
+                        ]);
+                    }
+                }
+                
+                $mReturn['status'] = 'success';
+                $mReturn['tags'] = $aaTextTags;
+                break;
+            default:
+                logger(['text ocr error, unmapped status response from OCR Space', $status_code]);
+                $mReturn['status'] = 'error';
+                $mReturn['value'] = 'non 200 status returned';
+                break;
+        }
+
+        return $mReturn;
+    }
+
+
+    public static function numberPlateOCR($iPiciliFileId)
+    {
+        $mReturn = ['status' => 'unknown'];
+
+        // make request
+        $oPiciliFile = PiciliFile::find($iPiciliFileId);
+        $sKey = env('API_PLATE_RECOGNIZER');
+        $sAWSS3Path = self::sS3Path($oPiciliFile->user_id, $iPiciliFileId, 'l');
+
+        $rawImage = @file_get_contents($sAWSS3Path);
+        $base64Image = base64_encode($rawImage);
+        
+        $requestURL = "https://api.platerecognizer.com/v1/plate-reader";
+
+        $data = array('upload' => $base64Image);
+
+        $context = stream_context_create(array(
+            'http' => array(
+                'header'  => "Authorization: Token ".$sKey,
+                'method' => 'POST',
+                'content' => http_build_query($data)
+            )
+        ));
+
+        $json = @file_get_contents($requestURL, false, $context);
+
+        list($version, $status_code, $msg) = explode(' ',$http_response_header[0], 3);
+
+        // Check the HTTP Status code
+        switch($status_code)
+        {
+            case 201:
+                $oObj = json_decode($json);
+
+                $aaTags = [];
+                if ($oObj->results && $oObj->results[0]) {
+                    $bestResult = $oObj->results[0];
+
+                    // number plate region
+                    if ($bestResult->region && $bestResult->region->code && $bestResult->region->score) {
+                        array_push($aaTags, [
+                            'type' => 'ocr.numberplate',
+                            'subtype' => 'region',
+                            'value' => $bestResult->region->code,
+                            'confidence' => $bestResult->region->score * 100,
+                        ]);
+                    }
+                    // number plate literal
+                    if ($bestResult->candidates && $bestResult->candidates[0] && $bestResult->candidates[0]->plate && $bestResult->candidates[0]->score) {
+                        array_push($aaTags, [
+                            'type' => 'ocr.numberplate',
+                            'subtype' => 'plate',
+                            'value' => $bestResult->candidates[0]->plate,
+                            'confidence' => $bestResult->candidates[0]->score * 100,
+                        ]);
+                    }
+                }
+                $mReturn['tags'] = $aaTags;
+                $mReturn['status'] = 'success';
+                break;
+            case 429:
+                // throttled
+                $mReturn['status'] = 'throttled';
+                $mReturn['value'] = 'http 429 throttle';
+                break;
+            default:
+                logger(['numberplate ocr error, unmapped status response from number plate recognizer', $status_code]);
+                $mReturn['status'] = 'error';
+                $mReturn['value'] = 'non 200 status returned';
+                break;
+        }
+
+        return $mReturn;
+    }
+
+
     public static function mAWSFaceDetect($iPiciliFileId, $bDebug = false)
     {
 

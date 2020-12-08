@@ -1,0 +1,52 @@
+{
+	"processing_time": 148.397,
+	"results": [
+		{
+			"box": {
+				"xmin": 959,
+				"ymin": 578,
+				"xmax": 1030,
+				"ymax": 596
+			},
+			"plate": "cj123ab",
+			"region": {
+				"code": "fr",
+				"score": 0.879
+			},
+			"vehicle": {
+				"score": 0.575,
+				"type": "Van",
+				"box": {
+					"xmin": 641,
+					"ymin": 240,
+					"xmax": 1096,
+					"ymax": 625
+				}
+			},
+			"score": 0.905,
+			"candidates": [
+				{
+					"score": 0.905,
+					"plate": "cj123ab"
+				},
+				{
+					"score": 0.784,
+					"plate": "cj12aab"
+				},
+				{
+					"score": 0.782,
+					"plate": "cj123a1"
+				},
+				{
+					"score": 0.661,
+					"plate": "cj12ab8"
+				}
+			],
+			"dscore": 0.883
+		}
+	],
+	"filename": "1658_kTfEB_da4a3a1f-39c5-40d3-b87e-ad116c5d9a2a.jpg",
+	"version": 1,
+	"camera_id": null,
+	"timestamp": "2020-12-08T16:58:06.674776Z"
+}

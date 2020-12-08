@@ -600,12 +600,52 @@ class PiciliProcessor {
         {
             if(isset($mResp['tags']))
             {
-                $aPlantNetTags = [];
-
                 TagHelper::removeTagsOfType($oPiciliFile, 'plantnet');
                 TagHelper::setTagsToFile($oPiciliFile, $mResp['tags']);
             } else {
                 logger('plantnet returned 0 tags for file: '.$iPiciliFileId);
+            }
+
+            return ['success'=> true];
+        }else{
+            return ['success'=> false, 'error' => $mResp['status']];
+        }
+    }
+
+    public static function textOCRDetect($iPiciliFileId)
+    {
+        $mResp = Helper::textOCR($iPiciliFileId);
+        $oPiciliFile = PiciliFile::find($iPiciliFileId);
+
+        if(isset($mResp['status']) && $mResp['status'] === 'success')
+        {
+            if(isset($mResp['tags']))
+            {
+                TagHelper::removeTagsOfType($oPiciliFile, 'ocr.text');
+                TagHelper::setTagsToFile($oPiciliFile, $mResp['tags']);
+            } else {
+                logger('text OCR returned 0 tags for file: '.$iPiciliFileId);
+            }
+
+            return ['success'=> true];
+        }else{
+            return ['success'=> false, 'error' => $mResp['status']];
+        }
+    }
+
+    public static function numberPlateOCRDetect($iPiciliFileId)
+    {
+        $mResp = Helper::numberPlateOCR($iPiciliFileId);
+        $oPiciliFile = PiciliFile::find($iPiciliFileId);
+
+        if(isset($mResp['status']) && $mResp['status'] === 'success')
+        {
+            if(isset($mResp['tags']))
+            {
+                TagHelper::removeTagsOfType($oPiciliFile, 'ocr.numberplate');
+                TagHelper::setTagsToFile($oPiciliFile, $mResp['tags']);
+            } else {
+                logger('numberplate OCR returned 0 tags for file: '.$iPiciliFileId);
             }
 
             return ['success'=> true];
