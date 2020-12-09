@@ -161,6 +161,7 @@ class PiciliProcessor {
                         Helper::completeATask($oNextTask->id);
                     }else{
                         // log error
+                        // todo: no throttling on imagga API?
                         $mExtra = $mResult['error'];
                         logger('subject recognition error: '. $mExtra);
                     }
@@ -170,9 +171,14 @@ class PiciliProcessor {
                     if($mResult['success']){
                         Helper::completeATask($oNextTask->id);
                     }else{
-                        // log error
-                        $mExtra = $mResult['error'];
-                        logger('plant detection error: '. $mExtra);
+                        if($mResult['error'] === 'throttled') {
+                            logger('plant-net api is throttling, so delay all plant-net tasks one day');
+                            Helper::delayProcessorsTasks('plant-net', 1);
+                        }else{
+                            // log error
+                            $mExtra = $mResult['error'];
+                            logger('plant detection error: '. $mExtra);
+                        }
                     }
                     break;
     
@@ -181,9 +187,14 @@ class PiciliProcessor {
                     if($mResult['success']){
                         Helper::completeATask($oNextTask->id);
                     }else{
-                        // log error
-                        $mExtra = $mResult['error'];
-                        logger('OCR text detection error: '. $mExtra);
+                        if($mResult['error'] === 'throttled') {
+                            logger('ocr-text api is throttling, so delay all ocr-text tasks one day');
+                            Helper::delayProcessorsTasks('ocr-text', 1);
+                        }else{
+                            // log error
+                            $mExtra = $mResult['error'];
+                            logger('OCR text detection error: '. $mExtra);
+                        }
                     }
                     break;
                 case 'ocr-numberplate':
@@ -191,9 +202,14 @@ class PiciliProcessor {
                     if($mResult['success']){
                         Helper::completeATask($oNextTask->id);
                     }else{
-                        // log error
-                        $mExtra = $mResult['error'];
-                        logger('OCR numberplate detection error: '. $mExtra);
+                        if($mResult['error'] === 'throttled') {
+                            logger('ocr-numberplate api is throttling, so delay all ocr-numberplate tasks one day');
+                            Helper::delayProcessorsTasks('ocr-numberplate', 1);
+                        }else{
+                            // log error
+                            $mExtra = $mResult['error'];
+                            logger('OCR numberplate detection error: '. $mExtra);
+                        }
                     }
                     break;
                 case 'face-detection':
