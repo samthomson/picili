@@ -86,6 +86,6 @@ class Test extends Command
         // PiciliProcessor::numberPlateOCRDetect(12);
 
         // test conditional enqueing as part of imagga tagging
-        PiciliProcessor::mSubjectDetect(64);
+        PiciliProcessor::mSubjectDetect(71);
     }
 }

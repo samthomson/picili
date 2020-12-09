@@ -610,7 +610,9 @@ class PiciliProcessor {
                         'value' => $aTag['tag'],
                         'confidence' => $aTag['confidence']
                     ]);
-                    array_push($distinctTags, $aTag['tag']);
+                    if  ($aTag['confidence'] > 10) {
+                        array_push($distinctTags, $aTag['tag']);
+                    }
                 }
 
                 TagHelper::removeTagsOfType($oPiciliFile, 'imagga');
