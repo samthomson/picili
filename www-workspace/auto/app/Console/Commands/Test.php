@@ -83,6 +83,9 @@ class Test extends Command
         // print_r($numberPlateOCR);
 
         // numberplate ocr on images
-        PiciliProcessor::numberPlateOCRDetect(12);
+        // PiciliProcessor::numberPlateOCRDetect(12);
+
+        // test conditional enqueing as part of imagga tagging
+        PiciliProcessor::mSubjectDetect(5);
     }
 }

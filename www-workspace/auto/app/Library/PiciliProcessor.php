@@ -161,8 +161,55 @@ class PiciliProcessor {
                         Helper::completeATask($oNextTask->id);
                     }else{
                         // log error
+                        // todo: no throttling on imagga API?
                         $mExtra = $mResult['error'];
                         logger('subject recognition error: '. $mExtra);
+                    }
+                    break;
+                case 'plant-net':
+                    $mResult = self::plantDetect($oNextTask->related_file_id);
+                    if($mResult['success']){
+                        Helper::completeATask($oNextTask->id);
+                    }else{
+                        if($mResult['error'] === 'throttled') {
+                            logger('plant-net api is throttling, so delay all plant-net tasks one day');
+                            Helper::delayProcessorsTasks('plant-net', 1);
+                        }else{
+                            // log error
+                            $mExtra = $mResult['error'];
+                            logger('plant detection error: '. $mExtra);
+                        }
+                    }
+                    break;
+    
+                case 'ocr-text':
+                    $mResult = self::textOCRDetect($oNextTask->related_file_id);
+                    if($mResult['success']){
+                        Helper::completeATask($oNextTask->id);
+                    }else{
+                        if($mResult['error'] === 'throttled') {
+                            logger('ocr-text api is throttling, so delay all ocr-text tasks one day');
+                            Helper::delayProcessorsTasks('ocr-text', 1);
+                        }else{
+                            // log error
+                            $mExtra = $mResult['error'];
+                            logger('OCR text detection error: '. $mExtra);
+                        }
+                    }
+                    break;
+                case 'ocr-numberplate':
+                    $mResult = self::numberPlateOCRDetect($oNextTask->related_file_id);
+                    if($mResult['success']){
+                        Helper::completeATask($oNextTask->id);
+                    }else{
+                        if($mResult['error'] === 'throttled') {
+                            logger('ocr-numberplate api is throttling, so delay all ocr-numberplate tasks one day');
+                            Helper::delayProcessorsTasks('ocr-numberplate', 1);
+                        }else{
+                            // log error
+                            $mExtra = $mResult['error'];
+                            logger('OCR numberplate detection error: '. $mExtra);
+                        }
                     }
                     break;
                 case 'face-detection':
@@ -553,6 +600,7 @@ class PiciliProcessor {
             if(isset($mResp['tags']))
             {
                 $aImaggaTags = [];
+                $distinctTags = [];
 
                 foreach($mResp['tags'] as $aTag)
                 {
@@ -562,10 +610,89 @@ class PiciliProcessor {
                         'value' => $aTag['tag'],
                         'confidence' => $aTag['confidence']
                     ]);
+                    if  ($aTag['confidence'] > 10) {
+                        array_push($distinctTags, $aTag['tag']);
+                    }
                 }
 
                 TagHelper::removeTagsOfType($oPiciliFile, 'imagga');
                 TagHelper::setTagsToFile($oPiciliFile, $aImaggaTags);
+
+                // conditional queueing.
+                $plantNetTriggers = [
+                    'flower',
+                    'flowers',
+                    'sunflower',
+                    'flowering',
+                    'plant',
+                    'petal',
+                    'leaf',
+                    'leafs',
+                    'bloom',
+                    'blooms',
+                    'blossom',
+                    'blossoms',
+                    'blossoming',
+                    'shrub'
+                ];
+                $ocrTextTriggers = [
+                    'sign',
+                    'signs',
+                    'sign post',
+                    'road sign',
+                    'text',
+                    'textbook',
+                    'word',
+                    'words',
+                    'character',
+                    'book',
+                    'symbol',
+                    'symbols',
+                    'symbolic',
+                    'mark',
+                    'marker',
+                    'figure',
+                    'figures',
+                    'logo',
+                    'emblem',
+                    'badge',
+                    'banner',
+                    'number',
+                    'timepiece',
+                    'information',
+                    'readout'
+                ];
+                $ocrNumberPlateTriggers = [
+                    'car',
+                    'vehicle',
+                    'wheeled vehicle',
+                    'motor vehicle',
+                    'military vehicle',
+                    'self-propelled vehicle',
+                    'public transport',
+                    'recreational vehicle',
+                    'tracked vehicle',
+                    'armored vehicle',
+                    'van',
+                    'truck',
+                    'trailer',
+                    'lorry',
+                    '4x4',
+                    'minibus',
+                    'traffic',
+                    'jeep',
+                    'camper'
+                ];
+                
+                if (Helper::triggerConditionalProcessing($plantNetTriggers, $distinctTags)) {
+                    Helper::QueueAnItem('plant-net', $oPiciliFile->id, $oPiciliFile->user_id);
+                }
+                if (Helper::triggerConditionalProcessing($ocrTextTriggers, $distinctTags)) {
+                    Helper::QueueAnItem('ocr-text', $oPiciliFile->id, $oPiciliFile->user_id);
+                }
+                if (Helper::triggerConditionalProcessing($ocrNumberPlateTriggers, $distinctTags)) {
+                    Helper::QueueAnItem('ocr-numberplate', $oPiciliFile->id, $oPiciliFile->user_id);
+                }
             } else {
                 logger('imagga returned 0 tags for file: '.$iPiciliFileId);
             }

@@ -84,6 +84,11 @@ class Helper {
         }
     }
 
+    public static function triggerConditionalProcessing($aTriggerTags, $actualSubjectTags)
+    {
+        return count(array_intersect($aTriggerTags, $actualSubjectTags)) > 0;
+    }
+
 
 
     //
