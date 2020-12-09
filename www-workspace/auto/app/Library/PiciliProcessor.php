@@ -600,6 +600,7 @@ class PiciliProcessor {
             if(isset($mResp['tags']))
             {
                 $aImaggaTags = [];
+                $distinctTags = [];
 
                 foreach($mResp['tags'] as $aTag)
                 {
@@ -609,10 +610,26 @@ class PiciliProcessor {
                         'value' => $aTag['tag'],
                         'confidence' => $aTag['confidence']
                     ]);
+                    array_push($distinctTags, $aTag['tag']);
                 }
 
                 TagHelper::removeTagsOfType($oPiciliFile, 'imagga');
                 TagHelper::setTagsToFile($oPiciliFile, $aImaggaTags);
+
+                // conditional queueing.
+                $plantNetTriggers = ['plant', 'flower'];
+                $ocrTextTriggers = ['sign'];
+                $ocrNumberPlateTriggers = ['car', 'vehicle', 'camper'];
+                
+                if (Helper::triggerConditionalProcessing($plantNetTriggers, $distinctTags)) {
+                    Helper::QueueAnItem('plant-net', $oPiciliFile->id, $oPiciliFile->user_id);
+                }
+                if (Helper::triggerConditionalProcessing($ocrTextTriggers, $distinctTags)) {
+                    Helper::QueueAnItem('ocr-text', $oPiciliFile->id, $oPiciliFile->user_id);
+                }
+                if (Helper::triggerConditionalProcessing($ocrNumberPlateTriggers, $distinctTags)) {
+                    Helper::QueueAnItem('ocr-numberplate', $oPiciliFile->id, $oPiciliFile->user_id);
+                }
             } else {
                 logger('imagga returned 0 tags for file: '.$iPiciliFileId);
             }
