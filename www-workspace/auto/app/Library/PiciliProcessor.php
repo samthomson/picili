@@ -619,7 +619,7 @@ class PiciliProcessor {
                 TagHelper::setTagsToFile($oPiciliFile, $aImaggaTags);
 
                 // conditional queueing.
-                $plantNetTriggers = 
+                $plantNetTriggers = [
                     'flower',
                     'flowers',
                     'sunflower',
