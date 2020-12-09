@@ -165,6 +165,37 @@ class PiciliProcessor {
                         logger('subject recognition error: '. $mExtra);
                     }
                     break;
+                case 'plant-net':
+                    $mResult = self::plantDetect($oNextTask->related_file_id);
+                    if($mResult['success']){
+                        Helper::completeATask($oNextTask->id);
+                    }else{
+                        // log error
+                        $mExtra = $mResult['error'];
+                        logger('plant detection error: '. $mExtra);
+                    }
+                    break;
+    
+                case 'ocr-text':
+                    $mResult = self::textOCRDetect($oNextTask->related_file_id);
+                    if($mResult['success']){
+                        Helper::completeATask($oNextTask->id);
+                    }else{
+                        // log error
+                        $mExtra = $mResult['error'];
+                        logger('OCR text detection error: '. $mExtra);
+                    }
+                    break;
+                case 'ocr-numberplate':
+                    $mResult = self::numberPlateOCRDetect($oNextTask->related_file_id);
+                    if($mResult['success']){
+                        Helper::completeATask($oNextTask->id);
+                    }else{
+                        // log error
+                        $mExtra = $mResult['error'];
+                        logger('OCR numberplate detection error: '. $mExtra);
+                    }
+                    break;
                 case 'face-detection':
                     $mResult = self::mFaceDetect($oNextTask->related_file_id);
                     if($mResult['success']){
