@@ -619,9 +619,70 @@ class PiciliProcessor {
                 TagHelper::setTagsToFile($oPiciliFile, $aImaggaTags);
 
                 // conditional queueing.
-                $plantNetTriggers = ['plant', 'flower'];
-                $ocrTextTriggers = ['sign'];
-                $ocrNumberPlateTriggers = ['car', 'vehicle', 'camper'];
+                $plantNetTriggers = 
+                    'flower',
+                    'flowers',
+                    'sunflower',
+                    'flowering',
+                    'plant',
+                    'petal',
+                    'leaf',
+                    'leafs',
+                    'bloom',
+                    'blooms',
+                    'blossom',
+                    'blossoms',
+                    'blossoming',
+                    'shrub'
+                ];
+                $ocrTextTriggers = [
+                    'sign',
+                    'signs',
+                    'sign post',
+                    'road sign',
+                    'text',
+                    'textbook',
+                    'word',
+                    'words',
+                    'character',
+                    'book',
+                    'symbol',
+                    'symbols',
+                    'symbolic',
+                    'mark',
+                    'marker',
+                    'figure',
+                    'figures',
+                    'logo',
+                    'emblem',
+                    'badge',
+                    'banner',
+                    'number',
+                    'timepiece',
+                    'information',
+                    'readout'
+                ];
+                $ocrNumberPlateTriggers = [
+                    'car',
+                    'vehicle',
+                    'wheeled vehicle',
+                    'motor vehicle',
+                    'military vehicle',
+                    'self-propelled vehicle',
+                    'public transport',
+                    'recreational vehicle',
+                    'tracked vehicle',
+                    'armored vehicle',
+                    'van',
+                    'truck',
+                    'trailer',
+                    'lorry',
+                    '4x4',
+                    'minibus',
+                    'traffic',
+                    'jeep',
+                    'camper'
+                ];
                 
                 if (Helper::triggerConditionalProcessing($plantNetTriggers, $distinctTags)) {
                     Helper::QueueAnItem('plant-net', $oPiciliFile->id, $oPiciliFile->user_id);
