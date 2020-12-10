@@ -1,5 +1,6 @@
 #!bin/bash
-fallocate -l 2G /swapfile
+sudo swapoff /swapfile
+fallocate -l 4G /swapfile
 chmod 600 /swapfile
 mkswap /swapfile
 swapon /swapfile
