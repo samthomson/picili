@@ -1359,12 +1359,9 @@ class Helper {
                     $parsedText = $oObj->ParsedResults[0]->ParsedText;
 
                     // sample: "A\nTHE SCENIC AREA ENTRANCE\nNo SthOKhg"
-                    
-                    $replacedReturns = str_replace("\r", '', $parsedText);
-                    
-                    $replacedNewLines = str_replace("\n", '', $replacedReturns);
-
-                    $words = explode(' ', $replacedNewLines);
+                    $remove = ["\r", "\n", ",", "."];                    
+                    $replacedText = str_replace($remove, '', $parsedText);                    
+                    $words = explode(' ', $replacedText);
                     $nonEmpties = array_diff($words, array(''));
 
                     foreach($nonEmpties as $word)
