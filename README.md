@@ -159,23 +159,10 @@ locally the SPA and API run on localhost port 80 and 81 respectively. In product
 
 ### 4.1 Setup and first deploy
 
-- get and set digital ocean token into env `export DO_TOKEN="INSERT_TOKEN_HERE"`
-
-- create remote machine: `docker-machine create --driver=digitalocean --digitalocean-access-token=$DO_TOKEN --digitalocean-size=2gb --digitalocean-region=sgp1 picili`
-- `docker-machine ssh picili "git clone https://github.com/samthomson/picili.git /picili"`
-- `docker-machine scp .env.prod picili:/picili/.env`
-	- ensure `USER_API_URL` and `SPA_URL` is the URI of your site
-	- you might want to set `APP_DEBUG` to false
-- `docker-machine ssh picili`
-- `apt install docker-compose -y`
-- `cd /picili`
-- setup script: `docker-compose -f docker-compose.prod.yml run workspace bash "./prod-initial-setup.sh"`
-- start services `docker-compose -f docker-compose.prod.yml up -d`
-- run `docker-compose ip picili` to get the machine ip, so you can point a domain at server, update dropbox app urls, and browser phpmyadmin
+`bash ./deploy-scripts/initial-deploy` will create/configure a VPS and setup the project.
 
 Seperately:
 - update your dropbox app to have an allowed redirect URI: `https://[YOUR IP/SITE]/oauth/dropbox`
-- configure swap memory if the vps has low ram: https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04 or run `bash ./scripts/enableswap.sh`
 
 ### 4.2 Incremental updates - deploying as you work on picili
 
