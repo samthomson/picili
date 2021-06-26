@@ -5,7 +5,7 @@
 picili is an automated image search engine / browser that synchronizes with a chosen folder on your dropbox.
 It automatically analyses all pictures there, staying up to date with any pictures that you add, remove, or change.
 A lightweight web-app facilitates browsing and searching through your pictures. The web-app has been designed for tight alignment with the different kind of tags picili categorizes your pictures with.
-It uses some external APIs to assist with tagging, but is designed to stay within the free tier of each.
+It uses some external APIs to assist with tagging, but is designed to stay within the free tier of each. So only a VPS need be paid for.
 
 ![picili screenshot](./screenshot.jpeg)
 
