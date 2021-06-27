@@ -10,7 +10,7 @@
         <div id="lightbox-file-info" ng-cloak ng-if="jsonLightFile">
             <div *ngIf="!bLoadingInfo && jFileInfo">
 				<div
-					class="ui disabled header" 
+					class="ui disabled header"
 					*ngIf="jFileInfo.address || jFileInfo.altitude"
 				>
 					<span *ngIf="jFileInfo.address">
@@ -35,7 +35,7 @@
 
                 <br />
                 <div class="ui labels">
-                    <a 
+                    <a
                         class="ui label lightbox-fileinfo-tag" *ngFor="let sTag of jFileInfo.tags"
                         [routerLink] = "this.helperService.getBaseRouterLink('search')"
                         [queryParams]="this.helperService.getRawQueryVarsWithNewQuery(sTag.literal)"
@@ -45,7 +45,7 @@
                 </div>
                 <br />
                 <div class="ui labels">
-                    <a 
+                    <a
                         class="ui label lightbox-fileinfo-tag" *ngFor="let sTag of jFileInfo.place_tags"
                         [routerLink] = "this.helperService.getBaseRouterLink('search')"
                         [queryParams]="this.helperService.getRawQueryVarsWithNewQuery(sTag.literal)"
@@ -53,6 +53,62 @@
                         [title]="sTag.confidence + '%'"
                     >{{sTag.literal}}</a>
                 </div>
+                <div *ngIf="jFileInfo.plantdata">
+                  <br />
+                  <div *ngIf="jFileInfo.plantdata.genus">
+                    Genus: <a
+                      class="ui label lightbox-fileinfo-tag"
+                      [routerLink] = "this.helperService.getBaseRouterLink('search')"
+                      [queryParams]="this.helperService.getRawQueryVarsWithNewQuery(jFileInfo.plantdata.genus.literal)"
+                      (click)="tagClicked()"
+                      [title]="jFileInfo.plantdata.genus.confidence + '%'"
+                     >{{jFileInfo.plantdata.genus.literal}}</a><br/>
+                  </div>
+
+                  <div *ngIf="jFileInfo.plantdata.family">
+                    Family: <a
+                      class="ui label lightbox-fileinfo-tag"
+                      [routerLink] = "this.helperService.getBaseRouterLink('search')"
+                      [queryParams]="this.helperService.getRawQueryVarsWithNewQuery(jFileInfo.plantdata.family.literal)"
+                      (click)="tagClicked()"
+                      [title]="jFileInfo.plantdata.family.confidence + '%'"
+                     >{{jFileInfo.plantdata.family.literal}}</a><br/>
+                  </div>
+
+                  <div *ngIf="jFileInfo.plantdata.scientificname">
+                    Scientific name: <a
+                      class="ui label lightbox-fileinfo-tag"
+                      [routerLink] = "this.helperService.getBaseRouterLink('search')"
+                      [queryParams]="this.helperService.getRawQueryVarsWithNewQuery(jFileInfo.plantdata.scientificname.literal)"
+                      (click)="tagClicked()"
+                      [title]="jFileInfo.plantdata.scientificname.confidence + '%'"
+                     >{{jFileInfo.plantdata.scientificname.literal}}</a><br/>
+                  </div>
+
+                  <div *ngIf="jFileInfo.plantdata.gbif">
+                    <a target="_blank" href="https://www.gbif.org/species/{{jFileInfo.plantdata.gbif.literal}}"><u>GBIF*</u></a>: <a
+                      class="ui label lightbox-fileinfo-tag"
+                      [routerLink] = "this.helperService.getBaseRouterLink('search')"
+                      [queryParams]="this.helperService.getRawQueryVarsWithNewQuery(jFileInfo.plantdata.gbif.literal)"
+                      (click)="tagClicked()"
+                      [title]="jFileInfo.plantdata.gbif.confidence + '%'"
+                     >{{jFileInfo.plantdata.gbif.literal}}</a><br/>
+                  </div>
+
+                  <div *ngIf="jFileInfo.plantdata.commonname">
+                    Common name(s):
+                    <a
+                      class="ui label lightbox-fileinfo-tag"
+                      *ngFor="let sTag of jFileInfo.plantdata.commonname"
+                      [routerLink] = "this.helperService.getBaseRouterLink('search')"
+                      [queryParams]="this.helperService.getRawQueryVarsWithNewQuery(sTag.literal)"
+                      (click)="tagClicked()"
+                      [title]="sTag.confidence + '%'"
+                    >{{sTag.literal}}</a>
+                  </div>
+
+                </div>
+
             </div>
             <div class="ui active inverted dimmer" *ngIf="bLoadingInfo">
                 <div class="ui large text loader">loading&nbsp;information..</div>
