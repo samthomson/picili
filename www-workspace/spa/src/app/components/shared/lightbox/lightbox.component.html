@@ -109,6 +109,34 @@
 
                 </div>
 
+
+                <div *ngIf="jFileInfo.ocr">
+                  <br />
+                  <div class="ui labels">
+                    <a
+                        class="ui label lightbox-fileinfo-tag" *ngFor="let sTag of jFileInfo.ocr"
+                        [routerLink] = "this.helperService.getBaseRouterLink('search')"
+                        [queryParams]="this.helperService.getRawQueryVarsWithNewQuery(sTag.literal)"
+                        (click)="tagClicked()"
+                        [title]="sTag.confidence + '%'"
+                    >{{sTag.literal}}</a>
+                  </div>
+                </div>
+
+
+                <div *ngIf="jFileInfo.numberplate">
+                  <br />
+                  <div class="ui labels">
+                    <a
+                        class="ui label lightbox-fileinfo-tag" *ngFor="let sTag of jFileInfo.numberplate"
+                        [routerLink] = "this.helperService.getBaseRouterLink('search')"
+                        [queryParams]="this.helperService.getRawQueryVarsWithNewQuery(sTag.literal)"
+                        (click)="tagClicked()"
+                        [title]="sTag.confidence + '%'"
+                    >{{sTag.literal}}</a>
+                  </div>
+                </div>
+
             </div>
             <div class="ui active inverted dimmer" *ngIf="bLoadingInfo">
                 <div class="ui large text loader">loading&nbsp;information..</div>
