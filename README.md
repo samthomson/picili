@@ -90,7 +90,7 @@ The first time you run picili locally, you should generate necessary seed data:
 
 - `docker-compose run workspace bash "./local-setup.sh"`
 
-* picili is now ready to run and should be accesable from `http://localhost`
+* picili is now ready to run and should be accessible from `http://localhost`
 
 Click 'login' and then register to begin.
 
@@ -111,9 +111,18 @@ Auto tests: `cd /var/www/auto && vendor/bin/phpunit`
 
 `cd /var/www/user-api-laravel && vendor/bin/phpunit --filter testUpdateDropboxFilesource tests/Feature/BlackboxTest`
 
-## use site
+## use / operate containers / services
 
-Site runs at `http://localhost` (SPA) && `http://localhost:81` (API)
+- SPA: http://localhost
+- API directly: http://localhost:81
+- PHP myAdmin: http://localhost:8080
+  - host: mysql
+  - user: root
+  - password: password (doesn't follow env values at all..)
+- kibana http://localhost:5601/
+  - console browser: http://localhost:5601/app/kibana#/dev_tools/console?_g=()
+- dejavu http://localhost:1358
+  - Careful entering the cluster details, the URI should contain the protocol and port along with host: (uri: `http://localhost:9200` and index: `files`)
 
 ### commands
 
@@ -128,35 +137,11 @@ Site runs at `http://localhost` (SPA) && `http://localhost:81` (API)
 
 ### containers / services
 
-#### phpmyadmin container
-
-http://localhost:8080
-
-- host: mysql
-- user: root
-- password: password
-  (doesn't follow env values at all..)
-
 ##### connect to db via a sequel client
 
 - host: 127.0.0.1
 - user: root
 - password: password
-
-#### kibana
-
-http://localhost:5601/
-
-console browser: http://localhost:5601/app/kibana#/dev_tools/console?_g=()
-
-#### dejavu
-
-http://localhost:1358
-
-Careful entering the cluster details, the URI should contain the protocol and port along with host:
-
-uri: `http://localhost:9200`
-index: `files`
 
 ### Working on the SPA
 
