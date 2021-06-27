@@ -359,19 +359,56 @@ class UserController extends Controller
         $oResponse['date'] = $oFile->datetime ? Carbon::parse($oFile->datetime)->format('jS \o\f F, Y g:i a') : null;
 
         $aTags = [];
+        $aPlantData = [];
 
 		$aoPossibleTags = $oFile->tags->where('confidence', '>', (int)env('SEARCH_CONFIDENCE_THRESHOLD'));
 		
         if (null !== $aoPossibleTags)
         {
+            $validTags = ['imagga', 'opencage', 'ocr.text', 'ocr.numberplate'];
+            $aPlantTags = [];
+
             foreach($aoPossibleTags as $aTag) {
-				if ($aTag['type'] === 'imagga' || $aTag['type'] === 'opencage') {
+				if (in_array($aTag['type'] , $validTags)) {
 					array_push($aTags, [
 						'type' => $aTag['type'],
 						'literal' => $aTag['value'],
 						'confidence' => $aTag['confidence']
 					]);
                 }
+                if ($aTag['type'] === 'plantnet') {
+					array_push($aPlantTags, [
+						'type' => $aTag['type'],
+						'subtype' => $aTag['subtype'],
+						'literal' => $aTag['value'],
+						'confidence' => $aTag['confidence']
+					]);
+                }
+            }
+
+            if (count($aPlantTags) > 0) {
+                $aRawPlantTags = array_values($aPlantTags);
+                $genus = array_values(array_filter($aRawPlantTags, function($value){
+                    return $value['subtype'] === 'genus';
+                }));
+                $family = array_values(array_filter($aRawPlantTags, function($value){
+                    return $value['subtype'] === 'family';
+                }));
+                $scientificname = array_values(array_filter($aRawPlantTags, function($value){
+                    return $value['subtype'] === 'scientificname';
+                }));                
+                $gbif = array_values(array_filter($aRawPlantTags, function($value){
+                    return $value['subtype'] === 'gbif';
+                }));
+                
+                $aPlantData['commonname'] = array_values(array_filter($aRawPlantTags, function($value){
+                    return $value['subtype'] === 'commonname';
+                }));
+
+                $aPlantData['genus'] = count($genus) > 0 ? $genus[0] : null;
+                $aPlantData['family'] = count($family) > 0 ? $family[0] : null;
+                $aPlantData['scientificname'] = count($scientificname) > 0 ? $scientificname[0] : null;
+                $aPlantData['gbif'] = count($gbif) > 0 ? $gbif[0] : null;
             }
 		}
 		$aImaggaTags = array_values(array_filter($aTags, function($value){
@@ -379,9 +416,19 @@ class UserController extends Controller
 		}));
 		$aPlaceTags = array_values(array_filter($aTags, function($value){
 			return $value['type'] === 'opencage';
+        }));
+        $aOCRTags = array_values(array_filter($aTags, function($value){
+			return $value['type'] === 'ocr.text';
 		}));
+        $aNumberPlateTags = array_values(array_filter($aTags, function($value){
+			return $value['type'] === 'ocr.numberplate';
+        }));
 
         $oResponse['tags'] = $aImaggaTags;
+        $oResponse['ocr'] = $aOCRTags;
+        $oResponse['numberplate'] = $aNumberPlateTags;
+        $oResponse['plant'] = $aPlantTags;
+        $oResponse['plantdata'] = $aPlantData;
         $oResponse['place_tags'] = $aPlaceTags;
 
         if (isset($oFile->dropboxFile) && isset($oFile->dropboxFile->dropbox_path)) {
