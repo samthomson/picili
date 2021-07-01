@@ -14,3 +14,4 @@ www-workspace/auto-scaler/npm-debug.log
 
 frontend/client/node_modules
 frontend/server/node_modules
+frontend/server/dist

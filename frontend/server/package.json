@@ -13,7 +13,8 @@
   "scripts": {
     "start-server": "node --inspect=0.0.0.0:9229 -r ts-node/register src/server.ts",
     "lint-summary": "eslint '*/**/*.{js,ts,tsx}'",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "watch-server": "tsc-watch --onSuccess \"yarn run start-server\""
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.28.1",
@@ -21,6 +22,7 @@
     "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
-    "prettier": "^2.3.2"
+    "prettier": "^2.3.2",
+    "tsc-watch": "^4.4.0"
   }
 }

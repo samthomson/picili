@@ -141,7 +141,7 @@ services:
 
   frontend:
       build: ./frontend
-      command: [sh, -c, "cd /frontend/server && yarn run start-server & cd /frontend/client && yarn run start"]
+      command: [sh, -c, "cd /frontend/server && yarn run watch-server & cd /frontend/client && yarn run start"]
       environment: 
         - FRONTEND_API_PORT=3200
       ports:
