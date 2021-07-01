@@ -7,13 +7,13 @@ const typeDefs = gql`
 `
 
 const resolvers = {
-    Query: { 
-        ping: () => 'pinged'
+    Query: {
+        ping: () => 'pinged',
     },
 }
 
 const server = new ApolloServer({ typeDefs, resolvers })
 server.listen({ port: process.env.FRONTEND_API_PORT }).then(({ url }) => {
-	// Logger.info(`Server ready at ${url}`)
-	console.log(`server ready: url: ${url}, port: ${process.env.FRONTEND_API_PORT}`)
+    // Logger.info(`Server ready at ${url}`)
+    console.log(`server ready: url: ${url}, port: ${process.env.FRONTEND_API_PORT}`)
 })
