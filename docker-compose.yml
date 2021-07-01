@@ -141,12 +141,12 @@ services:
 
   frontend:
       build: ./frontend
-      command: [sh, -c, "cd /frontend/server && yarn run start-server"]
+      command: [sh, -c, "cd /frontend/server && yarn run start-server & cd /frontend/client && yarn run start"]
       environment: 
         - FRONTEND_API_PORT=3200
       ports:
         - "3200:3200"
-        - "3201:3201"
+        - "3201:3000"
       volumes:
         - ./frontend:/frontend
       depends_on: [mysql, elasticsearch]
