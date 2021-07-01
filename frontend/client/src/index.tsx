@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.scss'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
-import App from './App'
+import App from 'src/App'
 import reportWebVitals from './reportWebVitals'
 
 const uri = `${window.location.protocol}//${window.location.hostname}:3200`

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import GQLTest from './components/GQLTest'
+import GQLTest from 'src/components/GQLTest'
 
 function App() {
 	return (
