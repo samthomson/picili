@@ -1,0 +1,28 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "GPL",
+  "dependencies": {
+    "apollo-server": "^2.25.2",
+    "cors": "^2.8.5",
+    "graphql": "^15.5.1",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
+  },
+  "scripts": {
+    "start-server": "node --inspect=0.0.0.0:9229 -r ts-node/register src/server.ts",
+    "lint-summary": "eslint '*/**/*.{js,ts,tsx}'",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "watch-server": "tsc-watch --onSuccess \"yarn run start-server\""
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.3.2",
+    "tsc-watch": "^4.4.0"
+  }
+}

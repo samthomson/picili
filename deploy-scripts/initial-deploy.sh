@@ -25,9 +25,7 @@ docker-machine ssh $DO_HOST "git clone https://github.com/samthomson/picili.git 
 docker-machine scp .env.prod $DO_HOST:/picili/.env
 
 # bash in to remote machine and instal deps and setup project
-docker-machine ssh $DO_HOST
-
-apt install docker-compose -y
+docker-machine ssh $DO_HOST "apt install docker-compose -y"
 
 cd /picili
 

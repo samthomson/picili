@@ -10,3 +10,8 @@ www-workspace/auto-scaler/npm-debug.log
 
 !www-workspace/user-api-laravel/.env
 !www-workspace/auto/.env
+
+
+frontend/client/node_modules
+frontend/server/node_modules
+frontend/server/dist
