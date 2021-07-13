@@ -64,6 +64,7 @@ Techs:
 ### platform specific notes
 
 Mac: append the workspace volume with `:cached`. So `- ./www-workspace:/var/www` becomes `- ./www-workspace:/var/www:cached`
+
 Linux: you may need to run `sudo sysctl vm.max_map_count=262144` to ensure elasticsearch can run correctly
 
 ### setup
