@@ -1,14 +1,30 @@
 import { ApolloServer, gql } from 'apollo-server'
 
+import * as Mutations from './mutations'
+
 const typeDefs = gql`
+    input AuthInput {
+        email: String
+    }
+    type AuthResponse {
+        token: String
+        error: String
+    }
+
     type Query {
         ping: String
+    }
+    type Mutation {
+        login(authInput: AuthInput!): AuthResponse
     }
 `
 
 const resolvers = {
     Query: {
         ping: () => 'pinged ' + Math.random(),
+    },
+    Mutation: {
+        login: Mutations.login,
     },
 }
 
