@@ -124,6 +124,8 @@ Auto tests: `cd /var/www/auto && vendor/bin/phpunit`
   - console browser: http://localhost:5601/app/kibana#/dev_tools/console?_g=()
 - dejavu http://localhost:1358
   - Careful entering the cluster details, the URI should contain the protocol and port along with host: (uri: `http://localhost:9200` and index: `files`)
+- TS API: http://localhost:3200/graphql
+- React TS frontend: http://localhost:3201
 
 ### commands
 
