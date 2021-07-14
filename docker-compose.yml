@@ -144,12 +144,18 @@ services:
       command: [sh, -c, "cd /frontend/server && yarn run watch-server & cd /frontend/client && yarn run start"]
       environment: 
         - FRONTEND_API_PORT=3200
+
+        - DATABASE_NAME=${DATABASE_NAME}
+        - DATABASE_NAME_TESTING=${DATABASE_NAME_TESTING}
+        - MYSQL_HOST=${MYSQL_HOST}
+        - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        - MYSQL_USER=${MYSQL_USER}
       ports:
         - "3200:3200"
         - "3201:3000"
       volumes:
         - ./frontend:/frontend
-      depends_on: [mysql, elasticsearch]
+      depends_on: [mysql, elasticsearch, phpmyadmin]
       expose:
         - "3200"
         - "3201"
