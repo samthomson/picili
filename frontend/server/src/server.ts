@@ -4,7 +4,8 @@ import * as Mutations from './mutations'
 
 const typeDefs = gql`
     input AuthInput {
-        email: String
+        email: String!
+        password: String!
     }
     type AuthResponse {
         token: String

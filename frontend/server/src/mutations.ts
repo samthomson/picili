@@ -1,3 +1,5 @@
+import * as DBUtil from './util/db'
+
 type LoginResponse = {
     token?: string
     error?: string
@@ -5,10 +7,14 @@ type LoginResponse = {
 
 const fakeToken = 'auth-token'
 
-export const login = (parent, args): LoginResponse => {
+export const login = async (parent, args): Promise<LoginResponse> => {
+
+    const user = await DBUtil.getUser(args.authInput.email, args.authInput.password)
+    console.log('user exists', !!user)
+
     return {
-        token: args?.authInput.email ? fakeToken + Math.random() : undefined,
-        error: !args?.authInput.email ? `no email provided` : undefined,
+        token: user ? fakeToken + Math.random() : undefined,
+        error: !user ? `credentials didn't match a user` : undefined,
     }
 }
 
