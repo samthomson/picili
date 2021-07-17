@@ -1,4 +1,3 @@
-// import { removeAuthToken, saveAuthToken } from 'src/lib/auth'
 import * as AuthUtil from 'src/util/auth'
 import { Action, ActionType } from 'src/redux/actions'
 import { Store } from 'src/redux/store'
@@ -25,7 +24,7 @@ export function appReducers(
 				userIsAuthenticated: true,
 			}
 		case ActionType.AUTH_STATUS_VERIFIED:
-			const userIsAuthenticated = action.validToken
+			const userIsAuthenticated = action.isVerified
 			return {
 				...state,
 				userIsAuthenticated,

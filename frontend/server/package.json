@@ -5,9 +5,14 @@
   "license": "GPL",
   "dependencies": {
     "apollo-server": "^2.25.2",
+    "apollo-server-core": "^3.0.0",
+    "apollo-server-express": "^3.0.0",
+    "apollo-server-plugin-http-headers": "^0.1.4",
     "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "graphql": "^15.5.1",
+    "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.2.5",
     "sequelize": "^6.6.5",
     "ts-node": "^10.0.0",
@@ -20,6 +25,8 @@
     "watch-server": "tsc-watch --onSuccess \"yarn run start-server\""
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.2",
+    "@types/jsonwebtoken": "^8.5.4",
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",
     "eslint": "^7.29.0",

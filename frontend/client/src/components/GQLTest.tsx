@@ -15,17 +15,15 @@ const GQLTest: React.FunctionComponent = () => {
 	}
 	if (error) {
 		console.log(error)
-		return <>error calling api... {error?.message}</>
 	}
-	console.log(data)
-	const { ping } = data
 
 	return (
 		<React.Fragment>
-			api says: {ping}
+			api says: {data?.ping}
 			<a href="#" onClick={() => refetch()}>
 				refetch
 			</a>
+			{error && <p>error calling api... {error.message}</p>}
 		</React.Fragment>
 	)
 }

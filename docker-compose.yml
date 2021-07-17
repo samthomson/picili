@@ -150,6 +150,7 @@ services:
         - MYSQL_HOST=${MYSQL_HOST}
         - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
         - MYSQL_USER=${MYSQL_USER}
+        - JWT_COOKIE_SECRET=${JWT_COOKIE_SECRET}
       ports:
         - "3200:3200"
         - "3201:3000"

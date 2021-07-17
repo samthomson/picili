@@ -24,7 +24,7 @@ export type Action =
 	  }
 	| {
 			type: ActionType.AUTH_STATUS_VERIFIED
-			validToken: boolean
+			isVerified: boolean
 	  }
 
 export type LoginAction = {
@@ -65,9 +65,9 @@ export const verifyAuthStatus = (): Action => {
 	}
 }
 
-export const verifiedAuthStatus = (validToken: boolean): Action => {
+export const verifiedAuthStatus = (isVerified: boolean): Action => {
 	return {
 		type: ActionType.AUTH_STATUS_VERIFIED,
-		validToken,
+		isVerified,
 	}
 }
