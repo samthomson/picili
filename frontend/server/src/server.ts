@@ -38,7 +38,7 @@ const startServer = async () => {
         Query: {
             ping: (parent, args, ctx) => {
                 AuthUtil.verifyRequestIsAuthenticated(ctx)
-                return 'pinged ' + Math.random()
+                return `${ctx?.userId} pinged ${Math.random()}`
             },
             validateToken: (parent, args, { req }) => AuthUtil.requestHasValidAuthenticationCookie(req)
         },
@@ -56,10 +56,11 @@ const startServer = async () => {
         ],
         context: (ctx) => {
             return {
-            setCookies: new Array(),
-            setHeaders: new Array(),
-            isAuthenticated: AuthUtil.requestHasValidAuthenticationCookie(ctx.req),
-        }}
+                setCookies: new Array(),
+                setHeaders: new Array(),
+                userId: AuthUtil.userIdFromRequestCookie(ctx.req),
+            }
+        }
     })
 
     await server.start()

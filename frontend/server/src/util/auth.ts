@@ -1,8 +1,10 @@
 import * as jwt from 'jsonwebtoken'
+import * as DBUtil from './db'
+import * as Models from '../db/models'
 
-export const generateJWT = (): string => {
+export const generateJWT = (userId: string): string => {
 	return jwt.sign(
-		{ 'picili-user': true },
+		{ 'picili-user': true, userId },
 		process.env.JWT_COOKIE_SECRET || 'MISSING_SECRET',
 		{
 			expiresIn: '30 days',
@@ -10,12 +12,14 @@ export const generateJWT = (): string => {
 	)
 }
 
-export const isJWTValid = (jwtToken: string): boolean => {
+export const userIdFromJWT = (jwtToken: string): string | undefined => {
 	try {
-		jwt.verify(jwtToken, process.env.JWT_COOKIE_SECRET || 'MISSING_SECRET')
-		return true
+		// @ts-ignore
+		const { userId } = jwt.verify(jwtToken, process.env.JWT_COOKIE_SECRET || 'MISSING_SECRET')
+		
+		return userId
 	} catch (error) {
-		return false
+		return undefined
 	}
 }
 
@@ -25,15 +29,20 @@ export const requestHasValidAuthenticationCookie = (
 ): boolean => {
 	const authCookie = req?.cookies?.['picili-token']
     
-    const tokenIsFromPicili = isJWTValid(authCookie)
+	return !!userIdFromJWT(authCookie)
+}
 
-	return tokenIsFromPicili
+export const userIdFromRequestCookie = (
+	req,
+): string | undefined => {
+	const authCookie = req?.cookies?.['picili-token']
+    
+	return userIdFromJWT(authCookie)
 }
 
 export const verifyRequestIsAuthenticated = (ctx): boolean => {
-	if (ctx?.isAuthenticated) {
+	if (ctx?.userId) {
 		return true
 	}
 	throw new Error('401')
 }
-

@@ -11,7 +11,7 @@ const fakeToken = 'auth-token'
 export const login = async (parent, args, context): Promise<AuthResponse> => {
 
     const user = await DBUtil.getUser(args.authInput.email, args.authInput.password)
-    const token = AuthUtil.generateJWT()
+    const token = AuthUtil.generateJWT(user.id)
 
     context.setCookies.push({
         name: "picili-token",
@@ -52,9 +52,7 @@ export const register = async (parent, args, context): Promise<AuthResponse> => 
 
     // authenticate user
 
-    const token = AuthUtil.generateJWT()
-
-    console.log('id: ', user.id)
+    const token = AuthUtil.generateJWT(user.id)
 
     context.setCookies.push({
         name: "picili-token",
