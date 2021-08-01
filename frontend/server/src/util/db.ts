@@ -21,3 +21,26 @@ export const getUser = async (email: string, password: string): Promise<Models.U
 
     return passwordsMatch ? user : undefined
 }
+
+export const userWithEmailExists = async (email: string): Promise<Boolean> => {
+    const user = await Models.UserModel.findOne({
+        where: {
+            email
+        },
+    })
+
+    return !!user
+}
+
+export const createUser = async (email: string, password: string): Promise<Models.UserInstance> => {
+
+    const salt = bcrypt.genSaltSync(10)
+    const hashedPassword = await bcrypt.hash(password, salt)
+
+    const user = await Models.UserModel.create({
+        email,
+        password: hashedPassword
+    })
+
+    return user
+}
