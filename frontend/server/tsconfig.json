@@ -5,9 +5,9 @@
 			"ES2015"
 		],
 		"downlevelIteration": true,
-		"outDir": "./dist",
 		"esModuleInterop": true,
 		"module": "commonjs",
 		"target": "ES5",
+		"noEmit": true
   	}
 }
