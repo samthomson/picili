@@ -1,6 +1,6 @@
 import { ApolloServer, gql } from 'apollo-server-express'
 import express from 'express'
-import httpHeadersPlugin from  'apollo-server-plugin-http-headers'
+import httpHeadersPlugin from 'apollo-server-plugin-http-headers'
 import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
@@ -40,7 +40,7 @@ const startServer = async () => {
                 AuthUtil.verifyRequestIsAuthenticated(ctx)
                 return `${ctx?.userId} pinged ${Math.random()}`
             },
-            validateToken: (parent, args, { req }) => AuthUtil.requestHasValidAuthenticationCookie(req)
+            validateToken: (parent, args, { req }) => AuthUtil.requestHasValidAuthenticationCookie(req),
         },
         Mutation: {
             login: Mutations.login,
@@ -51,16 +51,14 @@ const startServer = async () => {
     const server = new ApolloServer({
         typeDefs,
         resolvers,
-        plugins: [
-            httpHeadersPlugin, ApolloServerPluginLandingPageGraphQLPlayground
-        ],
+        plugins: [httpHeadersPlugin, ApolloServerPluginLandingPageGraphQLPlayground],
         context: (ctx) => {
             return {
-                setCookies: new Array(),
-                setHeaders: new Array(),
+                setCookies: [],
+                setHeaders: [],
                 userId: AuthUtil.userIdFromRequestCookie(ctx.req),
             }
-        }
+        },
     })
 
     await server.start()
@@ -76,11 +74,10 @@ const startServer = async () => {
 
     server.applyMiddleware({
         app,
-        cors: false // very important so that express cors middleware settings are used
+        cors: false, // very important so that express cors middleware settings are used
     })
 
-    // @ts-ignore
-    await new Promise(resolve => app.listen({ port: process.env.FRONTEND_API_PORT }, resolve))
+    await new Promise((resolve) => app.listen({ port: process.env.FRONTEND_API_PORT }, resolve))
 
     return { server, app }
 }

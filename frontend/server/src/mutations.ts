@@ -9,17 +9,16 @@ type AuthResponse = {
 const fakeToken = 'auth-token'
 
 export const login = async (parent, args, context): Promise<AuthResponse> => {
-
     const user = await DBUtil.getUser(args.authInput.email, args.authInput.password)
     const token = AuthUtil.generateJWT(user.id)
 
     context.setCookies.push({
-        name: "picili-token",
+        name: 'picili-token',
         value: token,
         options: {
             SameSite: 'Strict',
-            maxAge: 1000 * 60 * 60 * 24 * 31
-        }
+            maxAge: 1000 * 60 * 60 * 24 * 31,
+        },
     })
 
     return {
@@ -29,21 +28,20 @@ export const login = async (parent, args, context): Promise<AuthResponse> => {
 }
 
 export const register = async (parent, args, context): Promise<AuthResponse> => {
-
     const { email, password, passwordConfirmation } = args.authInput
 
     // check email not in use
     const userWithEmailExists = await DBUtil.userWithEmailExists(email)
     if (userWithEmailExists) {
         return {
-            error: "User with email exists"
+            error: 'User with email exists',
         }
     }
 
     // check passwords match
     if (password !== passwordConfirmation) {
         return {
-            error: "Passwords don't match"
+            error: "Passwords don't match",
         }
     }
 
@@ -55,12 +53,12 @@ export const register = async (parent, args, context): Promise<AuthResponse> => 
     const token = AuthUtil.generateJWT(user.id)
 
     context.setCookies.push({
-        name: "picili-token",
+        name: 'picili-token',
         value: token,
         options: {
             SameSite: 'Strict',
-            maxAge: 1000 * 60 * 60 * 24 * 31
-        }
+            maxAge: 1000 * 60 * 60 * 24 * 31,
+        },
     })
 
     // return token or error

@@ -6,10 +6,9 @@ interface UserAttributes {
     email: string
     password: string
 }
-interface UserCreationAttributes extends Sequelize.Optional<UserAttributes, 'id'> {}
+type UserCreationAttributes = Sequelize.Optional<UserAttributes, 'id'>
 
-export interface UserInstance extends Sequelize.Model<UserAttributes, UserCreationAttributes>,
-UserAttributes {
+export interface UserInstance extends Sequelize.Model<UserAttributes, UserCreationAttributes>, UserAttributes {
     createdAt?: Date
     updatedAt?: Date
 }
@@ -21,7 +20,7 @@ export const UserModel = db.define<UserInstance>(
         password: Sequelize.STRING,
     },
     {
-		timestamps: true,
-		underscored: true,
-    }
+        timestamps: true,
+        underscored: true,
+    },
 )
