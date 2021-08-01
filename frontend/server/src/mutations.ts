@@ -1,14 +1,14 @@
 import * as DBUtil from './util/db'
 import * as AuthUtil from './util/auth'
 
-type LoginResponse = {
+type AuthResponse = {
     token?: string
     error?: string
 }
 
 const fakeToken = 'auth-token'
 
-export const login = async (parent, args, context): Promise<LoginResponse> => {
+export const login = async (parent, args, context): Promise<AuthResponse> => {
 
     const user = await DBUtil.getUser(args.authInput.email, args.authInput.password)
     const token = AuthUtil.generateJWT()
@@ -28,9 +28,46 @@ export const login = async (parent, args, context): Promise<LoginResponse> => {
     }
 }
 
-export const register = (parent, args): LoginResponse => {
+export const register = async (parent, args, context): Promise<AuthResponse> => {
+
+    const { email, password, passwordConfirmation } = args.authInput
+
+    // check email not in use
+    const userWithEmailExists = await DBUtil.userWithEmailExists(email)
+    if (userWithEmailExists) {
+        return {
+            error: "User with email exists"
+        }
+    }
+
+    // check passwords match
+    if (password !== passwordConfirmation) {
+        return {
+            error: "Passwords don't match"
+        }
+    }
+
+    // create user
+    const user = await DBUtil.createUser(email, password)
+
+    // authenticate user
+
+    const token = AuthUtil.generateJWT()
+
+    console.log('id: ', user.id)
+
+    context.setCookies.push({
+        name: "picili-token",
+        value: token,
+        options: {
+            SameSite: 'Strict',
+            maxAge: 1000 * 60 * 60 * 24 * 31
+        }
+    })
+
+    // return token or error
     return {
-        token: args?.authInput.email ? fakeToken : undefined,
-        error: !args?.authInput.email ? `no email provided` : undefined,
+        token: user ? token : undefined,
+        error: !user ? `user creation failed` : undefined,
     }
 }

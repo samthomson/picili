@@ -5,7 +5,7 @@ import { useMutation, gql } from '@apollo/client'
 import * as Actions from 'src/redux/actions'
 
 const loginQuery = gql`
-	mutation login($authInput: AuthInput!) {
+	mutation login($authInput: LoginInput!) {
 		login(authInput: $authInput) {
 			token
 			error

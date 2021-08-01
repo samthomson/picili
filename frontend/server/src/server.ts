@@ -10,9 +10,14 @@ import * as AuthUtil from './util/auth'
 
 const startServer = async () => {
     const typeDefs = gql`
-        input AuthInput {
+        input LoginInput {
             email: String!
             password: String!
+        }
+        input RegisterInput {
+            email: String!
+            password: String!
+            passwordConfirmation: String!
         }
         type AuthResponse {
             token: String
@@ -24,7 +29,8 @@ const startServer = async () => {
             validateToken(token: String!): Boolean
         }
         type Mutation {
-            login(authInput: AuthInput!): AuthResponse
+            login(authInput: LoginInput!): AuthResponse
+            register(authInput: RegisterInput!): AuthResponse
         }
     `
 
@@ -38,6 +44,7 @@ const startServer = async () => {
         },
         Mutation: {
             login: Mutations.login,
+            register: Mutations.register,
         },
     }
 
