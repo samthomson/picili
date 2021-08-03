@@ -77,7 +77,8 @@ const startServer = async () => {
         cors: false, // very important so that express cors middleware settings are used
     })
 
-    await new Promise((resolve) => app.listen({ port: process.env.FRONTEND_API_PORT }, resolve))
+    // await new Promise((resolve) => app.listen({ port: process.env.FRONTEND_API_PORT }, resolve))
+    await new Promise(() => app.listen({ port: process.env.FRONTEND_API_PORT }))
 
     return { server, app }
 }
