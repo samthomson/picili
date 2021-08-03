@@ -9,7 +9,7 @@ export class ProtectedRoute extends Route<IProtectedRouteProps> {
 	public render(): React.ReactElement {
 		let redirectPath = ''
 		if (!this.props.isAuthenticated) {
-			redirectPath = '/auth'
+			redirectPath = '/login'
 		}
 
 		if (redirectPath) {

@@ -43,7 +43,6 @@ const Register: React.FunctionComponent = () => {
 
 	return (
 		<React.Fragment>
-			<h2>register</h2>
 			{loading && 'loading..'}
 			<br />
 			{httpError?.message}

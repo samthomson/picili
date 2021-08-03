@@ -1,20 +1,22 @@
 import * as React from 'react'
+import { NavLink } from 'react-router-dom'
 
-import Login from 'src/components/Login'
 import Register from 'src/components/Register'
 import PageTemplate from 'src/components/pages/PageTemplate'
 
-const AuthPage: React.FunctionComponent = () => {
+const RegisterPage: React.FunctionComponent = () => {
 	return (
 		<PageTemplate>
 			<div>
-				<h2>Login or Register</h2>
+				<h2>Register</h2>
 
-				<Login />
 				<Register />
+				<NavLink exact={true} className="item" to="/login">
+					Login
+				</NavLink>
 			</div>
 		</PageTemplate>
 	)
 }
 
-export default AuthPage
+export default RegisterPage

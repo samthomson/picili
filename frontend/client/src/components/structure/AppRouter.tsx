@@ -9,7 +9,8 @@ import {
 	IProtectedRouteProps,
 	ProtectedRoute,
 } from 'src/components/structure/ProtectedRoute'
-import AuthPage from 'src/components/pages/AuthPage'
+import LoginPage from 'src/components/pages/LoginPage'
+import RegisterPage from 'src/components/pages/RegisterPage'
 import HomePage from 'src/components/pages/HomePage'
 import AdminPage from 'src/components/pages/AdminPage'
 
@@ -46,10 +47,18 @@ const AppRouter: React.FunctionComponent = () => {
 
 			<GuestOnlyRoute
 				{...defaultGuestRouteProps}
-				key={'auth'}
-				path={'/auth'}
+				key={'login'}
+				path={'/login'}
 				exact={false}
-				component={AuthPage}
+				component={LoginPage}
+			/>
+
+			<GuestOnlyRoute
+				{...defaultGuestRouteProps}
+				key={'register'}
+				path={'/register'}
+				exact={false}
+				component={RegisterPage}
 			/>
 		</Router>
 	)

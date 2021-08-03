@@ -39,7 +39,6 @@ const Login: React.FunctionComponent = () => {
 
 	return (
 		<React.Fragment>
-			<h2>login</h2>
 			{loading && 'loading..'}
 			<br />
 			{httpError?.message}
