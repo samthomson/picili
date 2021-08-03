@@ -3,7 +3,7 @@ import * as DBUtil from './db'
 import * as Models from '../db/models'
 
 declare module 'jsonwebtoken' {
-    export interface JwtPayload {
+    export interface UserIDJwtPayload extends jwt.JwtPayload {
         userId: string
     }
 }
@@ -16,7 +16,7 @@ export const generateJWT = (userId: string): string => {
 
 export const userIdFromJWT = (jwtToken: string): string | undefined => {
     try {
-        const { userId } = jwt.verify(jwtToken, process.env.JWT_COOKIE_SECRET || 'MISSING_SECRET')
+        const { userId } = <jwt.UserIDJwtPayload>jwt.verify(jwtToken, process.env.JWT_COOKIE_SECRET || 'MISSING_SECRET')
 
         return userId
     } catch (error) {
