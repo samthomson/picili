@@ -1,5 +1,5 @@
-import * as DBUtil from './util/db'
-import * as AuthUtil from './util/auth'
+import * as DBUtil from '../util/db'
+import * as AuthUtil from '../util/auth'
 
 type AuthResponse = {
     token?: string
@@ -8,7 +8,7 @@ type AuthResponse = {
 
 const fakeToken = 'auth-token'
 
-export const login = async (parent, args, context): Promise<AuthResponse> => {
+const login = async (parent, args, context): Promise<AuthResponse> => {
     const user = await DBUtil.getUser(args.authInput.email, args.authInput.password)
     const token = AuthUtil.generateJWT(user.id)
 
@@ -27,7 +27,7 @@ export const login = async (parent, args, context): Promise<AuthResponse> => {
     }
 }
 
-export const register = async (parent, args, context): Promise<AuthResponse> => {
+const register = async (parent, args, context): Promise<AuthResponse> => {
     const { email, password, passwordConfirmation } = args.authInput
 
     // check email not in use
@@ -67,3 +67,10 @@ export const register = async (parent, args, context): Promise<AuthResponse> => 
         error: !user ? `user creation failed` : undefined,
     }
 }
+
+const mutations = {
+    login,
+    register,
+}
+
+export default mutations
