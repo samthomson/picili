@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import PageTemplate from 'src/components/pages/PageTemplate'
-import GQLTest from 'src/components/GQLTest'
+import GQLTest from 'src/componenytrts/GQLTest'
 
 const HomePage: React.FunctionComponent = () => {
 	return (
