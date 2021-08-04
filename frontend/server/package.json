@@ -1,0 +1,38 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "GPL",
+  "dependencies": {
+    "apollo-server": "^2.25.2",
+    "apollo-server-core": "^3.0.0",
+    "apollo-server-express": "^3.0.0",
+    "apollo-server-plugin-http-headers": "^0.1.4",
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "graphql": "^15.5.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.6.5",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
+  },
+  "scripts": {
+    "start-server": "node --inspect=0.0.0.0:9229 -r ts-node/register src/server.ts",
+    "lint-summary": "eslint '*/**/*.{js,ts,tsx}'",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "watch-server": "tsc-watch --onSuccess \"yarn run start-server\""
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.2",
+    "@types/jsonwebtoken": "^8.5.4",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.3.2",
+    "tsc-watch": "^4.4.0"
+  }
+}

@@ -64,6 +64,7 @@ Techs:
 ### platform specific notes
 
 Mac: append the workspace volume with `:cached`. So `- ./www-workspace:/var/www` becomes `- ./www-workspace:/var/www:cached`
+
 Linux: you may need to run `sudo sysctl vm.max_map_count=262144` to ensure elasticsearch can run correctly
 
 ### setup
@@ -123,6 +124,8 @@ Auto tests: `cd /var/www/auto && vendor/bin/phpunit`
   - console browser: http://localhost:5601/app/kibana#/dev_tools/console?_g=()
 - dejavu http://localhost:1358
   - Careful entering the cluster details, the URI should contain the protocol and port along with host: (uri: `http://localhost:9200` and index: `files`)
+- TS API: http://localhost:3200/graphql
+- React TS frontend: http://localhost:3201
 
 ### commands
 
@@ -152,6 +155,9 @@ The app is served on `localhost:80` and communicates to the API which runs on `l
 
 If you plan on editing sass files, also run `docker-compose run spa yarn run gulp-watch`.
 
+### Working on the node API
+
+Debugging is enabled via a vscode task. Add breakpoints to any serverside code, then press F5 to start debugging. App will pause when it hits (via an http request) a breakpoint.
 
 ## 4.0 Deploying
 

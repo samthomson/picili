@@ -1,0 +1,15 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+	  {
+		"type": "node",
+		"request": "attach",
+		"name": "Docker: Attach to Node",
+		"port": 9229,
+		"address": "127.0.0.1",
+		"sourceMapPathOverrides": {
+		  "/frontend/server/*": "${workspaceRoot}/frontend/server/*"
+		}
+	  },
+	]
+  }
