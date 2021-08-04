@@ -18,6 +18,18 @@ jobs:
            npm rebuild node-sass
            npm run gulp
            npm run build
+  build-react-spa:
+    docker:
+     - image: mhart/alpine-node:10
+    working_directory: /picili
+    steps:
+     - checkout
+     - run:
+         name: "Build"
+         command: |
+           cd frontend/client
+           npm install -y
+           npm run build
   lint-spa:
     docker:
      - image: mhart/alpine-node:10
@@ -167,5 +179,6 @@ workflows:
       - lint-spa
       - lint-react-spa
       - build-spa
+      - build-react-spa
       - test-api
       - test-auto
