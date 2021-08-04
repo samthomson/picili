@@ -165,6 +165,7 @@ workflows:
   all:
     jobs:
       - lint-spa
+      - lint-react-spa
       - build-spa
       - test-api
       - test-auto
