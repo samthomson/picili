@@ -30,6 +30,19 @@ jobs:
            cd www-workspace/spa
            npm install -y
            npm run lint
+  lint-react-spa:
+    docker:
+     - image: mhart/alpine-node:10
+    working_directory: /picili
+    steps:
+     - checkout
+     - run:
+         name: "Valid Typescript?"
+         command: |
+           cd frontend/client
+           npm install -y
+           npm run lint
+    
   test-api:
     docker:
      - image: php:7.1-apache
