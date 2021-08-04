@@ -155,6 +155,9 @@ The app is served on `localhost:80` and communicates to the API which runs on `l
 
 If you plan on editing sass files, also run `docker-compose run spa yarn run gulp-watch`.
 
+### Working on the node API
+
+Debugging is enabled via a vscode task. Add breakpoints to any serverside code, then press F5 to start debugging. App will pause when it hits (via an http request) a breakpoint.
 
 ## 4.0 Deploying
 
