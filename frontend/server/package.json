@@ -19,6 +19,7 @@
     "typescript": "^4.3.4"
   },
   "scripts": {
+    "build": "tsc",
     "start-server": "node --inspect=0.0.0.0:9229 -r ts-node/register src/server.ts",
     "lint-summary": "eslint '*/**/*.{js,ts,tsx}'",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",

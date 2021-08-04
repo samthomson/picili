@@ -54,6 +54,18 @@ jobs:
            cd frontend/client
            npm install -y
            npm run lint
+  build-ts-api:
+    docker:
+     - image: mhart/alpine-node:10
+    working_directory: /picili
+    steps:
+     - checkout
+     - run:
+         name: "Build"
+         command: |
+           cd frontend/server
+           npm install -y
+           npm run build
     
   test-api:
     docker:
@@ -176,9 +188,10 @@ workflows:
   version: 2
   all:
     jobs:
-      - lint-spa
+      - build-ts-api
       - lint-react-spa
-      - build-spa
       - build-react-spa
+      - lint-spa
+      - build-spa
       - test-api
       - test-auto
