@@ -165,7 +165,7 @@ locally the SPA and API run on localhost port 80 and 81 respectively. In product
 
 - angular - old - SPA: `https://[YOUR IP/SITE]`
 - php - old - API: `https://[YOUR IP/SITE]:81`
-- react - new - SPA: `https://[YOUR IP/SITE]:82`
+- react - new - SPA: `http://[YOUR IP/SITE]:82` (note: not https/ssl)
 - ts - new - API: `https://[YOUR IP/SITE]:3200`
 
 ### 4.1 Setup and first deploy
