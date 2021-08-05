@@ -10,41 +10,44 @@ interface Props {
 const AdminTemplate: React.FunctionComponent<Props> = ({ children }: Props) => {
 	return (
 		<PageTemplate>
-			<div>
-				<h2>Admin</h2>
-				<hr />
-				<ul>
-					<li>
-						<NavLink exact={true} className="item" to="/admin">
-							Overview
-						</NavLink>
-					</li>
-					<li>
-						<NavLink
-							exact={true}
-							className="item"
-							to="/admin/queues"
-						>
-							Queues
-						</NavLink>
-					</li>
-					<li>
-						<NavLink exact={true} className="item" to="/admin/keys">
-							Keys
-						</NavLink>
-					</li>
-					<li>
-						<NavLink
-							exact={true}
-							className="item"
-							to="/admin/dropbox"
-						>
-							Dropbox
-						</NavLink>
-					</li>
-				</ul>
-				<hr />
-				{children}
+			<div id="main-page">
+				<div className="ui grid">
+					<div className="four wide column">
+						<div className="ui vertical fluid tabular menu">
+							<NavLink exact={true} className="item" to="/admin">
+								Overview
+							</NavLink>
+
+							<NavLink
+								exact={true}
+								className="item"
+								to="/admin/queues"
+							>
+								Queues
+							</NavLink>
+
+							<NavLink
+								exact={true}
+								className="item"
+								to="/admin/keys"
+							>
+								Keys
+							</NavLink>
+
+							<NavLink
+								exact={true}
+								className="item"
+								to="/admin/dropbox"
+							>
+								Dropbox
+							</NavLink>
+						</div>
+					</div>
+
+					<div className="twelve wide stretched column">
+						{children}
+					</div>
+				</div>
 			</div>
 		</PageTemplate>
 	)
