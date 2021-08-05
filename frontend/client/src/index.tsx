@@ -16,8 +16,9 @@ import AppRouter from 'src/components/structure/AppRouter'
 import { Store } from 'src/redux/store'
 import { Provider } from 'react-redux'
 import { appReducers } from 'src/redux/reducers'
-import './index.scss'
+
 import 'semantic-ui-css/semantic.min.css'
+import './index.scss'
 
 const uri = `${window.location.protocol}//${window.location.hostname}:3200/graphql`
 

@@ -1,3 +1,755 @@
+/*
+//
+// PICILI SASS DECLARATIONS
+//
+*/
+$iHeaderHeight: 58px;
+$iNavWidth: 100px;
+
+$iMainContainerWidth: 1000px;
+$iContainerContentWidth: ($iMainContainerWidth - $iNavWidth);
+
+$iMargin: 8px;
+$iPadding: 6px;
+
+$cPiciliRed: maroon;
+$cAvailableGrey: #e0e0e0;
+$cActiveGrey: grey;
+
+$iSmallImageDimension: 125px;
+
+$iLightboxMargin: ($iMargin * 2);
+
+
+// @font-face {
+// 	font-family: 'pt_sans_captionbold';
+//     src: url('./fonts/PTC75F-webfont.woff') format('woff');
+//     font-weight: normal;
+//     font-style: normal;
+// }
+  
+/*
+//
+// RESETS
+//
+*/
 body {
-	color: maroon;
+  margin: 0px;
+}
+a,
+a:hover,
+a:visited,
+a:active {
+  color: black;
+}
+.ui.vertical.segment {
+  border-bottom: 0px;
+}
+h3 {
+  font-size: 1.29rem;
+}
+h4 {
+  font-size: 1.07rem;
+}
+h3,
+h4 {
+  font-weight: 700;
+}
+
+.ui.label {
+    background: white;
+    border: 1px solid $cAvailableGrey;
+    font-weight: 500;
+}
+.ui.form .field .left {
+    float: none !important;
+}
+
+/*
+//
+// STRUCTURE
+//
+*/
+#header {
+  /*border-bottom: 1px solid #e7e7e7;*/
+  height: $iHeaderHeight;
+  padding: $iMargin;
+  padding-top: ($iMargin * 1.5);
+  border-bottom: 1px solid $cAvailableGrey;
+}
+#search-input-container {
+  width: $iMainContainerWidth;
+}
+#header input#free-text-input {
+  height: 30.84px;
+}
+#processing-header-output {
+	padding: 10px;
+    margin-right: 8px;
+}
+
+#main-page {
+  padding: $iMargin;
+}
+
+#menu-search-container {
+  position: absolute;
+  top: $iHeaderHeight + $iMargin;
+  left: $iMargin;
+  right: $iMargin;
+  bottom: $iMargin;
+
+  // width: 1000px;
+  // margin: auto;
+}
+#side-menu {
+  float: left;
+  width: $iNavWidth;
+  padding-right: $iMargin;
+}
+#results-space {
+  margin-left: $iNavWidth + (2 * $iMargin) + 1;
+  position: absolute;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  top: 0px;
+}
+
+#top-right-links {
+  float: right;
+  position: relative;
+}
+
+#sort-block {
+  height: 60px;
+  // padding-top: (1.5 * $iMargin);
+  padding-top: 0;
+}
+
+#sort-menu {
+  margin-top: 0px;
+  float: right;
+  margin-right: 0px;
+}
+
+.flatter-button-group-toggle .ui.button {
+	background-color: white;
+	color: $cActiveGrey;
+	border: 1px solid $cAvailableGrey;
+	border-left: 1px solid $cAvailableGrey !important;
+}
+.flatter-button-group-toggle .ui.button.active {
+	background-color: $cAvailableGrey;
+}
+
+#cal-sort-menu {
+  margin-top: 0px;
+  float: right;
+}
+
+/*
+//
+// SMALL HELPERS
+//
+*/
+.header-font {
+  position: relative;
+  font-family: "pt_sans_captionbold";
+  font-size: xx-large;
+  line-height: 28px;
+}
+
+.middle-form-column {
+  position: relative;
+  top: 150px;
+  width: 350px;
+}
+
+.ui.button.primary,
+.ui.button.primary:link,
+.ui.button.primary:visited,
+.ui.button.primary:hover,
+.ui.button.primary:focus,
+.ui.button.primary:active {
+  background: $cPiciliRed;
+}
+
+a.picili-link,
+a.picili-link:link,
+a.picili-link:visited,
+a.picili-link:focus,
+a.picili-link:hover,
+a.picili-link:active {
+  color: $cPiciliRed;
+}
+
+.loading-gray-text {
+  color: grey;
+}
+.success-green-text {
+  color: green;
+  font-weight: 800;
+}
+
+.pointer-link {
+  cursor: pointer;
+}
+
+.progress.indeterminate-loading-bar {
+  margin: 0;
+  position: absolute;
+  background-color: #fff;
+  z-index: 11000;
+}
+.progress.indeterminate-loading-bar .indeterminate {
+  background-color: $cPiciliRed;
+}
+
+.clear-fix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.hidden{
+	display: none !important;
+}
+
+.center {
+	text-align: center;
+}
+
+/*
+//
+// MENUS
+//
+*/
+#side-menu {
+  margin-top: 160px;
+}
+#side-menu ul {
+  list-style: none;
+  padding-left: 0px;
+}
+
+#side-menu ul li {
+  margin-bottom: ($iMargin * 5);
+}
+#side-menu ul li a {
+  color: $cAvailableGrey;
+  display: block;
+  width: 100%;
+}
+#side-menu ul li a.active {
+  color: $cActiveGrey;
+  font-weight: bold;
+}
+
+#side-menu ul li a.active span {
+  font-size: 16px;
+}
+
+#side-menu ul li a.active i {
+  font-size: 30px;
+}
+
+#side-menu ul li a i,
+#side-menu ul li a span {
+  width: 100%;
+  display: block;
+  text-align: center;
+}
+#side-menu ul li a i {
+  font-size: 26px;
+  padding-bottom: $iPadding;
+}
+#side-menu ul li a span {
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+li#settings-link {
+  border-top: 1px solid gray;
+}
+
+// header menus
+#user-menu-button {
+  position: relative;
+}
+#user-dropdown-menu {
+  position: absolute;
+  right: 0px;
+  background: white;
+  z-index: 100;
+}
+
+#side-menu ul li a i.icon {
+	height: 36px;
+}
+
+/*
+//
+// APPLICATION
+//
+*/
+
+// search input
+#search-bar-space {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+#search-input {
+  width: 100%;
+}
+
+//
+// filters
+//
+#filters-block.ui.segment {	
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 8px;
+  height: 46px;
+}
+#clear-filters {
+  float: right;
+  margin-right: 0px;
+  padding-bottom: 7px;
+}
+
+#filters-block .ui.label i.fa {
+	margin-right: 0.25em;
+}
+
+// folders page
+.ui.piled.segment.folder-overview {
+  width: 158px;
+  float: left;
+  margin-right: ($iMargin * 2);
+  margin-bottom: ($iMargin * 2);
+}
+.folder-title {
+  text-overflow: ellipsis;
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
+}
+.folder-summary {
+	text-overflow: ellipsis;
+	/* Required for text-overflow to do anything */
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.results-block {
+  // padding-top: $iMargin;
+  overflow-y: auto;
+  position: absolute;
+  bottom: 0px;
+  height: 100%;
+}
+.justified-gallery {
+    margin-right: 24px;
+}
+
+img.result-thumb {
+  margin-right: $iMargin;
+  margin-bottom: $iMargin;
+  vertical-align: top;
+  display: inline-block;
+  cursor: pointer;
+}
+img.result-thumb.square {
+  width: $iSmallImageDimension;
+  height: $iSmallImageDimension;
+}
+img.result-thumb:hover {
+  opacity: 0.8;
+}
+
+.show-more {
+  width: 100%;
+  border: 1px solid $cAvailableGrey;
+  text-align: center;
+  padding: $iPadding;
+  display: block;
+  color: $cActiveGrey;
+}
+.show-more:hover {
+  border-color: $cActiveGrey;
+  color: black;
+}
+
+.app-result-grid {
+  display: block;
+}
+
+.justified-row {
+  margin-bottom: 8px;
+  white-space: nowrap;
+}
+
+.justified-row img {
+  width: auto;
+  max-height: 100%;
+  margin-right: 8px;
+}
+.justified-row img:last-child {
+  margin-right: 0px;
+}
+
+.scroll-to-top-button {
+    position: fixed;
+    bottom: 40px;
+    right: 60px;
+    background: white;
+    padding: 8px;
+    border-radius: 12px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+.scroll-to-top-button:hover {
+    cursor: pointer
+}
+.scroll-to-top-button i {
+    font-size: 2.4em;
+    line-height: 32px;
+}
+
+//
+// sort block
+//
+#sort-info {
+  float: left;
+}
+#sort-block {
+  line-height: 40px;
+}
+//
+// main search 'pages'
+//
+#page-space {
+  padding-top: ($iMargin * 2);
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 128px;
+  bottom: 0px;
+}
+
+//
+// folder
+//
+img.folder-thumb {
+  display: block;
+  height: 125px;
+  width: 125px;
+}
+
+//
+// map
+//
+#map-results-container {
+  position: absolute;
+  height: 100%;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+#map-container {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+}
+#map {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.sebm-google-map-container {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+#map-results {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  overflow-y: auto;
+}
+
+//
+// calendar
+//
+.calendar-filters{
+	height: 46px;
+}
+.month {
+  height: 100%;
+}
+.week {
+  height: 100%;
+}
+
+.day {
+  width: (1%/7) * 100;
+  display: inline-block;
+  vertical-align: top;
+}
+.week .day {
+  height: 100%;
+}
+.month .day {
+  height: 18%;
+  overflow: hidden;
+}
+.calendar-date {
+  font-size: 24px;
+  color: $cAvailableGrey;
+}
+.calendar-date.with-files {
+  color: $cActiveGrey;
+}
+
+.month .day.today {
+  // different background colour? border?
+  border: 1px solid $cPiciliRed;
+  border-radius: 5px;
+}
+
+.day .day-title {
+  font-size: 1.1em;
+  padding-bottom: 16px;
+  color: $cAvailableGrey;
+}
+.day-title.with-files {
+  color: $cActiveGrey;
+}
+.day-title .day-count {
+  display: none;
+}
+.day-title.with-files .day-count {
+  display: inline-block;
+}
+.day img {
+  padding: 2px;
+}
+.week .day img {
+  width: 45%;
+}
+.month .day img {
+    height: 80%;
+    width: auto;
+    max-width: 80%;
+    display: inline-block;
+}
+
+.month .day.day-header {
+  height: 10%;
+  overflow: hidden;
+  color: $cAvailableGrey;
+}
+.day-header.same-as-today {
+  font-weight: bold;
+  color: $cActiveGrey;
+}
+
+#centered-calendar-header {
+  font-size: larger;
+  margin-left: auto;
+  font-size: larger;
+  margin-right: auto;
+  display: inline-block;
+  left: 300px;
+  right: 300px;
+  position: absolute;
+  text-align: center;
+}
+
+.year-month {
+  width: 24%;
+  display: inline-block;
+  vertical-align: top;
+}
+.year-month-day-header {
+  text-align: center;
+  font-weight: 600;
+}
+.year-month-date {
+  display: inline-block;
+  width: 13%;
+  text-align: center;
+  font-weight: 100;
+  color: $cAvailableGrey;
+}
+.year-month-date.has-pics {
+  color: $cPiciliRed;
+  font-weight: 600;
+}
+
+//
+// elevation
+//
+#elevation-results-container {
+	padding-top: 16px;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 85px;
+	bottom: 0px;
+}
+#page-space .ng5-slider .ng5-slider-bar {
+	background-color: $cAvailableGrey;
+}
+
+#page-space .ng5-slider-span.ng5-slider-pointer.ng5-slider-pointer-min, 
+#page-space .ng5-slider-span.ng5-slider-pointer.ng5-slider-pointer-max{
+	background-color: $cPiciliRed;
+}
+
+#page-space .ng5-slider .ng5-slider-pointer::after {
+	background-color: $cPiciliRed;
+}
+
+//
+// lightbox
+//
+
+#lightbox {
+  position: fixed;
+  z-index: 10000;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+
+  background: white;
+}
+#lightbox-contained {
+  right: 40px;
+  top: 0px;
+  bottom: 0px;
+}
+#lightbox-file-content {
+  position: absolute;
+  left: 8px;
+  right: 80px;
+  top: 8px;
+  bottom: 8px;
+}
+#lightbox-file-content img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  margin: auto;
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+
+#lightbox-file-info {
+  position: absolute;
+  right: 50px;
+  top: $iLightboxMargin;
+  bottom: $iLightboxMargin;
+  width: 0px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.lightbox-button {
+  position: absolute;
+  right: $iLightboxMargin;
+  cursor: pointer;
+  font-size: 36px;
+  color: $cAvailableGrey;
+}
+
+.lightbox-button:hover {
+  color: $cPiciliRed;
+}
+
+#lightbox-close {
+  top: $iMargin;
+  margin-right: -5px;
+}
+#lightbox-info {
+  top: ($iMargin * 7);
+  font-size: 26px;
+}
+
+#lightbox-left {
+  bottom: ($iMargin * 7);
+}
+#lightbox-right {
+  bottom: $iMargin;
+}
+
+/* while lightbox info is open */
+#lightbox.with-info #lightbox-file-content {
+  right: 300px;
+}
+#lightbox.with-info #lightbox-file-info {
+  width: 240px;
+}
+#lightbox.with-info #lightbox-info {
+  color: $cPiciliRed;
+}
+
+#lightbox-map img {
+  max-width: 100%;
+  height: auto;
+}
+
+//
+// ICON FONTS
+//
+// @font-face {
+//   font-family: "icomoon";
+//   src: url("./themes/default/assets/fonts/icomoon.eot");
+//   src: url("./themes/default/assets/fonts/icomoon.eot")
+//       format("embedded-opentype"),
+//     url("./themes/default/assets/fonts/icomoon.woff") format("woff"),
+//     url("./themes/default/assets/fonts/icomoon.ttf") format("truetype"),
+//     url("./themes/default/assets/fonts/icomoon.svg") format("svg");
+//   font-weight: normal;
+//   font-style: normal;
+// }
+
+[class^="icon-"],
+[class*=" icon-"] {
+  font-family: "icomoon";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/*
+.icon-pricetags:before {
+	content: "\e602";
+}
+*/
+.icon-tag:before {
+  content: "\e601";
+}
+.icon-close:before {
+  content: "\e600";
 }
