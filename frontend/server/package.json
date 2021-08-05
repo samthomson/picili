@@ -21,9 +21,11 @@
   "scripts": {
     "build": "tsc",
     "start-server": "node --inspect=0.0.0.0:9229 -r ts-node/register src/server.ts",
+    "start-raw-server": "ts-node src/server.ts",
     "lint-summary": "eslint '*/**/*.{js,ts,tsx}'",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
-    "watch-server": "tsc-watch --onSuccess \"yarn run start-server\""
+    "watch-server": "tsc-watch --onSuccess \"yarn run start-server\"",
+    "prod-start": "yarn --silent && yarn run start-raw-server"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",

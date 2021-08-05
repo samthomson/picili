@@ -118,6 +118,32 @@ services:
       - "9200:9200"
       - "9300:9300"
 
+  frontend:
+      build: ./frontend
+      command: [sh, -c, "cd /frontend/server && yarn run prod-start & cd /frontend/client && yarn run prod-start"]
+      environment: 
+        - FRONTEND_API_PORT=3200
+
+        - DATABASE_NAME=${DATABASE_NAME}
+        - DATABASE_NAME_TESTING=${DATABASE_NAME_TESTING}
+        - MYSQL_HOST=${MYSQL_HOST}
+        - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        - MYSQL_USER=${MYSQL_USER}
+        - JWT_COOKIE_SECRET=${JWT_COOKIE_SECRET}
+      ports:
+        - "3200:3200"
+        - "3201:3000"
+        - "9229:9229"
+        - "81:81"
+      volumes:
+        - ./frontend:/frontend
+      depends_on: [mysql, elasticsearch, phpmyadmin]
+      expose:
+        - "3200"
+        - "3201"
+        - "9229"
+        - "81"
+
 volumes:
   phpmyadmin:
     driver: "local"
