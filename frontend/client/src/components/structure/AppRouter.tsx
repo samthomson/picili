@@ -12,6 +12,7 @@ import {
 import LoginPage from 'src/components/pages/LoginPage'
 import RegisterPage from 'src/components/pages/RegisterPage'
 import HomePage from 'src/components/pages/HomePage'
+import AdminOverview from 'src/components/pages/AdminOverview'
 import AdminQueues from 'src/components/pages/AdminQueues'
 import AdminKeys from 'src/components/pages/AdminKeys'
 import AdminDropbox from 'src/components/pages/AdminDropbox'
@@ -62,6 +63,12 @@ const AppRouter: React.FunctionComponent = () => {
 						<ProtectedRoute
 							{...defaultProtectedRouteProps}
 							path={`${url}/`}
+							component={AdminOverview}
+							exact
+						/>
+						<ProtectedRoute
+							{...defaultProtectedRouteProps}
+							path={`${url}/queues`}
 							component={AdminQueues}
 							exact
 						/>

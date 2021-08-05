@@ -16,6 +16,15 @@ const AdminTemplate: React.FunctionComponent<Props> = ({ children }: Props) => {
 				<ul>
 					<li>
 						<NavLink exact={true} className="item" to="/admin">
+							Overview
+						</NavLink>
+					</li>
+					<li>
+						<NavLink
+							exact={true}
+							className="item"
+							to="/admin/queues"
+						>
 							Queues
 						</NavLink>
 					</li>
