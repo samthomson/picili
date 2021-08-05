@@ -34,7 +34,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "lint-summary": "eslint 'src/**/*.{js,ts,tsx}'",
-    "serve": "serve -s build -l 81",
+    "serve": "serve -s build -l 8443",
     "prod-start": "yarn && yarn run build && yarn run serve"
   },
   "eslintConfig": {
