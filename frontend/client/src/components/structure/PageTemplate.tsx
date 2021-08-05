@@ -40,6 +40,7 @@ const PageTemplate: React.FunctionComponent<Props> = ({ children }: Props) => {
 						</ul>
 						{isAuthenticated && <>[authed]</>}
 						<button onClick={logOut}>logout</button>
+						<hr />
 					</>
 				)}
 			</div>

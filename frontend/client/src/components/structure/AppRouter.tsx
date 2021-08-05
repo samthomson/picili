@@ -12,7 +12,9 @@ import {
 import LoginPage from 'src/components/pages/LoginPage'
 import RegisterPage from 'src/components/pages/RegisterPage'
 import HomePage from 'src/components/pages/HomePage'
-import AdminPage from 'src/components/pages/AdminPage'
+import AdminQueues from 'src/components/pages/AdminQueues'
+import AdminKeys from 'src/components/pages/AdminKeys'
+import AdminDropbox from 'src/components/pages/AdminDropbox'
 
 const AppRouter: React.FunctionComponent = () => {
 	const isAuthenticated = ReactRedux.useSelector(
@@ -29,22 +31,6 @@ const AppRouter: React.FunctionComponent = () => {
 
 	return (
 		<Router>
-			<ProtectedRoute
-				{...defaultProtectedRouteProps}
-				key={'home'}
-				path={'/'}
-				exact={true}
-				component={HomePage}
-			/>
-
-			<ProtectedRoute
-				{...defaultProtectedRouteProps}
-				key={'admin'}
-				path={'/admin'}
-				exact={false}
-				component={AdminPage}
-			/>
-
 			<GuestOnlyRoute
 				{...defaultGuestRouteProps}
 				key={'login'}
@@ -59,6 +45,38 @@ const AppRouter: React.FunctionComponent = () => {
 				path={'/register'}
 				exact={false}
 				component={RegisterPage}
+			/>
+			<ProtectedRoute
+				{...defaultProtectedRouteProps}
+				key={'home'}
+				path={'/'}
+				exact={true}
+				component={HomePage}
+			/>
+
+			<ProtectedRoute
+				{...defaultProtectedRouteProps}
+				path="/admin"
+				render={({ match: { url } }) => (
+					<>
+						<ProtectedRoute
+							{...defaultProtectedRouteProps}
+							path={`${url}/`}
+							component={AdminQueues}
+							exact
+						/>
+						<ProtectedRoute
+							{...defaultProtectedRouteProps}
+							path={`${url}/keys`}
+							component={AdminKeys}
+						/>
+						<ProtectedRoute
+							{...defaultProtectedRouteProps}
+							path={`${url}/dropbox`}
+							component={AdminDropbox}
+						/>
+					</>
+				)}
 			/>
 		</Router>
 	)

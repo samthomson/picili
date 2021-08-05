@@ -1,5 +1,5 @@
 import * as React from 'react'
-import PageTemplate from 'src/components/pages/PageTemplate'
+import PageTemplate from 'src/components/structure/PageTemplate'
 
 const AdminPage: React.FunctionComponent = () => {
 	return (
