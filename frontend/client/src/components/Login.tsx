@@ -53,11 +53,7 @@ const Login: React.FunctionComponent = () => {
 					<form onSubmit={loginHandler} className="ui large form">
 						{loginFailed && (
 							<div className="ui red segment">
-								<strong>
-									{httpError?.message}
-									{data.login.error}
-									{error}
-								</strong>
+								<strong>{loginFailed}</strong>
 							</div>
 						)}
 
