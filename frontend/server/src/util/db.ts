@@ -52,3 +52,15 @@ export const createUser = async (email: string, password: string): Promise<Model
 
     return user
 }
+
+export const overviewStats = async () => {
+    const taskCount = await Models.TaskModel.count({
+        // where: {
+        //     email,
+        // },
+    })
+
+    return {
+        unprocessedTasksCount: taskCount,
+    }
+}

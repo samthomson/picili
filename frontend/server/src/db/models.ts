@@ -24,3 +24,25 @@ export const UserModel = db.define<UserInstance>(
         underscored: true,
     },
 )
+
+interface TaskAttributes {
+    id: string
+    processor: string
+}
+type TaskCreationAttributes = Sequelize.Optional<TaskAttributes, 'id'>
+
+export interface TaskInstance extends Sequelize.Model<TaskAttributes, TaskCreationAttributes>, TaskAttributes {
+    createdAt?: Date
+    updatedAt?: Date
+}
+
+export const TaskModel = db.define<TaskInstance>(
+    'tasks',
+    {
+        processor: Sequelize.STRING,
+    },
+    {
+        timestamps: true,
+        underscored: true,
+    },
+)

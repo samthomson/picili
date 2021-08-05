@@ -21,10 +21,14 @@ const typeDefs = gql`
         token: String
         error: String
     }
+    type OverviewResponse {
+        unprocessedTasksCount: Int
+    }
 
     type Query {
         ping: String
         validateToken(token: String!): Boolean
+        overview: OverviewResponse
     }
     type Mutation {
         login(authInput: LoginInput!): AuthResponse
