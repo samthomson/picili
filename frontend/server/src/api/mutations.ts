@@ -10,20 +10,28 @@ const fakeToken = 'auth-token'
 
 const login = async (parent, args, context): Promise<AuthResponse> => {
     const user = await DBUtil.getUser(args.authInput.email, args.authInput.password)
-    const token = AuthUtil.generateJWT(user.id)
 
-    context.setCookies.push({
-        name: 'picili-token',
-        value: token,
-        options: {
-            SameSite: 'Strict',
-            maxAge: 1000 * 60 * 60 * 24 * 31,
-        },
-    })
+    if (user) {
+        const token = AuthUtil.generateJWT(user.id)
 
-    return {
-        token: user ? token : undefined,
-        error: !user ? `credentials didn't match a user` : undefined,
+        context.setCookies.push({
+            name: 'picili-token',
+            value: token,
+            options: {
+                SameSite: 'Strict',
+                maxAge: 1000 * 60 * 60 * 24 * 31,
+            },
+        })
+
+        return {
+            token,
+            error: undefined,
+        }
+    } else {
+        return {
+            token: undefined,
+            error: `credentials didn't match a user`,
+        }
     }
 }
 
