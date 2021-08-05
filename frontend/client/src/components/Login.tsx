@@ -1,6 +1,8 @@
 import * as React from 'react'
 import * as ReactRedux from 'react-redux'
 import { useMutation, gql } from '@apollo/client'
+import classNames from 'classnames'
+import { NavLink } from 'react-router-dom'
 
 import * as Actions from 'src/redux/actions'
 
@@ -37,37 +39,98 @@ const Login: React.FunctionComponent = () => {
 		await loginMutation({ variables: { authInput: { email, password } } })
 	}
 
+	const loginFailed = httpError?.message || data?.login.error || error
+	const formDisabled = loading || !(email !== '' && password !== '')
+
 	return (
 		<React.Fragment>
-			{loading && 'loading..'}
-			<br />
-			{httpError?.message}
-			{data?.login.error && <b>{data.login.error}</b>}
-			<form onSubmit={loginHandler}>
-				{error && <b>{error}</b>}
-				<input
-					type="text"
-					value={email}
-					onChange={(e) => setEmail(e.target.value)}
-					disabled={loading}
-					placeholder="email"
-				/>
-				<br />
+			<div className="ui middle aligned center aligned grid">
+				<div className="middle-form-column">
+					<h2 className="ui header">
+						<div className="content">Login</div>
+					</h2>
 
-				<input
-					type="password"
-					value={password}
-					onChange={(e) => setPassword(e.target.value)}
-					disabled={loading}
-					placeholder="password"
-				/>
-				<br />
+					<form onSubmit={loginHandler} className="ui large form">
+						{loginFailed && (
+							<div className="ui red segment">
+								<strong>
+									{httpError?.message}
+									{data.login.error}
+									{error}
+								</strong>
+							</div>
+						)}
 
-				<button type="submit" disabled={loading}>
-					login
-				</button>
-			</form>
-			<hr />
+						<div
+							className={classNames({
+								'ui stacked segment': true,
+								loading: loading,
+							})}
+						>
+							<div
+								className={classNames({
+									field: true,
+									error: loginFailed,
+								})}
+							>
+								<div className="ui left icon input">
+									<i className="user icon"></i>
+
+									<input
+										type="text"
+										value={email}
+										onChange={(e) =>
+											setEmail(e.target.value)
+										}
+										disabled={loading}
+										placeholder="email"
+									/>
+								</div>
+							</div>
+
+							<div
+								className={classNames({
+									field: true,
+									error: loginFailed,
+								})}
+							>
+								<div className="ui left icon input">
+									<i className="lock icon"></i>
+
+									<input
+										type="password"
+										value={password}
+										onChange={(e) =>
+											setPassword(e.target.value)
+										}
+										disabled={loading}
+										placeholder="password"
+									/>
+								</div>
+							</div>
+
+							<button
+								type="submit"
+								disabled={formDisabled}
+								className="ui fluid large button primary submit"
+							>
+								Login
+							</button>
+						</div>
+					</form>
+
+					<div>
+						or{' '}
+						<NavLink
+							exact={true}
+							className="picili-link"
+							to="/register"
+						>
+							register
+						</NavLink>
+					</div>
+				</div>
+			</div>
 		</React.Fragment>
 	)
 }
