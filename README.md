@@ -163,6 +163,11 @@ Debugging is enabled via a vscode task. Add breakpoints to any serverside code, 
 
 locally the SPA and API run on localhost port 80 and 81 respectively. In production they both run on port 80, and are served as the same website. The API serves the SPA which has been copied into its public folder as part of the build process.
 
+- angular - old - SPA: `https://[YOUR IP/SITE]`
+- php - old - API: `https://[YOUR IP/SITE]:81`
+- react - new - SPA: `https://[YOUR IP/SITE]:82`
+- ts - new - API: `https://[YOUR IP/SITE]:3200`
+
 ### 4.1 Setup and first deploy
 
 `bash ./deploy-scripts/initial-deploy` will create/configure a VPS and setup the project.
