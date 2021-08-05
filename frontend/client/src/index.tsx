@@ -17,6 +17,7 @@ import { Store } from 'src/redux/store'
 import { Provider } from 'react-redux'
 import { appReducers } from 'src/redux/reducers'
 import './index.scss'
+import 'semantic-ui-css/semantic.min.css'
 
 const uri = `${window.location.protocol}//${window.location.hostname}:3200/graphql`
 
