@@ -4,7 +4,7 @@ WORKDIR /frontend
 
 EXPOSE 3200
 EXPOSE 3201
-EXPOSE 8443
+EXPOSE 82
 
 # ADD /frontend /frontend
 
