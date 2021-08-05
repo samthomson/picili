@@ -142,7 +142,7 @@ services:
         - "3200"
         - "3201"
         - "9229"
-        - "81"
+        - "8443"
 
 volumes:
   phpmyadmin:
