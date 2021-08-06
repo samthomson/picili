@@ -1,14 +1,10 @@
 import * as DBUtil from '../util/db'
 import * as AuthUtil from '../util/auth'
-
-type AuthResponse = {
-    token?: string
-    error?: string
-}
+import * as Types from '../declarations'
 
 const fakeToken = 'auth-token'
 
-const login = async (parent, args, context): Promise<AuthResponse> => {
+const login = async (parent, args, context): Promise<Types.API.Response.Auth> => {
     const user = await DBUtil.getUser(args.authInput.email, args.authInput.password)
 
     if (user) {
@@ -35,7 +31,7 @@ const login = async (parent, args, context): Promise<AuthResponse> => {
     }
 }
 
-const register = async (parent, args, context): Promise<AuthResponse> => {
+const register = async (parent, args, context): Promise<Types.API.Response.Auth> => {
     const { email, password, passwordConfirmation } = args.authInput
 
     // check email not in use

@@ -1,11 +1,8 @@
 import * as AuthUtil from '../util/auth'
 import * as DBUtil from '../util/db'
+import * as Types from '../declarations'
 
-type OverviewResponse = {
-    unprocessedTasksCount: number
-}
-
-const overview = async (): Promise<OverviewResponse> => {
+const overview = async (): Promise<Types.API.Response.Overview> => {
     return await DBUtil.overviewStats()
 }
 
