@@ -135,7 +135,7 @@ services:
         - "3201:3000"
         - "9229:9229"
         - "82:82"
-        - "443:82"
+        - "8443:82"
       volumes:
         - ./frontend:/frontend
       depends_on: [mysql, elasticsearch, phpmyadmin]
@@ -144,7 +144,7 @@ services:
         - "3201"
         - "9229"
         - "82"
-        - "443"
+        - "8443"
 
 volumes:
   phpmyadmin:
