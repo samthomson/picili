@@ -24,10 +24,9 @@ export const userIdFromJWT = (jwtToken: string): string | undefined => {
     }
 }
 
-export const requestHasValidAuthenticationCookie = (req): boolean => {
-    const authCookie = req?.cookies?.['picili-token']
-
-    return !!userIdFromJWT(authCookie)
+export const requestHasValidCookieToken = (ctx): boolean => {
+    // if it did, middleware will have set it already
+    return !!ctx.userId
 }
 
 export const userIdFromRequestCookie = (req): string | undefined => {

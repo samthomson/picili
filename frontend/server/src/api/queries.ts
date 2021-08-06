@@ -14,7 +14,7 @@ const queries = {
         AuthUtil.verifyRequestIsAuthenticated(ctx)
         return `${ctx?.userId} pinged ${Math.random()}`
     },
-    validateToken: (parent, args, { req }) => AuthUtil.requestHasValidAuthenticationCookie(req),
+    validateToken: (parent, args, ctx) => AuthUtil.requestHasValidCookieToken(ctx),
     overview,
 }
 
