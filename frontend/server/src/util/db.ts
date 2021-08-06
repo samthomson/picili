@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt'
+import Sequelize from 'sequelize'
 
 import * as Models from '../db/models'
 import db from '../db/connection'
@@ -69,8 +70,14 @@ export const overviewStats = async (): Promise<Types.API.Response.Overview> => {
 export const queueSummaries = async (): Promise<Types.API.Response.Queue> => {
     const taskCount = await Models.TaskModel.count()
 
+    const query = `SELECT processor, COUNT(*) as taskCount FROM tasks GROUP BY processor; `
+    const result = await db.query(query, { type: Sequelize.QueryTypes.SELECT })
+
+    // @ts-ignore
+    // const queueSummaries = result.map({ processor, count })
+
     return {
         unprocessedTasksCount: taskCount,
-        queueSummaries: [],
+        queueSummaries: result,
     }
 }
