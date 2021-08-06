@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt'
 
 import * as Models from '../db/models'
 import db from '../db/connection'
+import * as Types from '../declarations'
 
 export const getUser = async (email: string, password: string): Promise<Models.UserInstance> => {
     const user = await Models.UserModel.findOne({
@@ -53,7 +54,7 @@ export const createUser = async (email: string, password: string): Promise<Model
     return user
 }
 
-export const overviewStats = async () => {
+export const overviewStats = async (): Promise<Types.API.Response.Overview> => {
     const taskCount = await Models.TaskModel.count({
         // where: {
         //     email,
@@ -62,5 +63,14 @@ export const overviewStats = async () => {
 
     return {
         unprocessedTasksCount: taskCount,
+    }
+}
+
+export const queueSummaries = async (): Promise<Types.API.Response.Queue> => {
+    const taskCount = await Models.TaskModel.count()
+
+    return {
+        unprocessedTasksCount: taskCount,
+        queueSummaries: [],
     }
 }

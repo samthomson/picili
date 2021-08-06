@@ -24,11 +24,21 @@ const typeDefs = gql`
     type OverviewResponse {
         unprocessedTasksCount: Int
     }
+    type QueueSummary {
+        processor: String
+        taskCount: Int
+        oldest: String
+    }
+    type QueueResponse {
+        unprocessedTasksCount: Int
+        queueSummaries: [QueueSummary]
+    }
 
     type Query {
         ping: String
         validateToken(token: String!): Boolean
         overview: OverviewResponse
+        queues: QueueResponse
     }
     type Mutation {
         login(authInput: LoginInput!): AuthResponse

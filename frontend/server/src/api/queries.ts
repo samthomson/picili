@@ -6,6 +6,10 @@ const overview = async (): Promise<Types.API.Response.Overview> => {
     return await DBUtil.overviewStats()
 }
 
+const queues = async (): Promise<Types.API.Response.Queue> => {
+    return await DBUtil.queueSummaries()
+}
+
 const queries = {
     ping: (parent, args, ctx) => {
         AuthUtil.verifyRequestIsAuthenticated(ctx)
@@ -13,6 +17,7 @@ const queries = {
     },
     validateToken: (parent, args, ctx) => AuthUtil.requestHasValidCookieToken(ctx),
     overview,
+    queues,
 }
 
 export default queries
