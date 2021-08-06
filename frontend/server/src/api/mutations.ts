@@ -2,8 +2,6 @@ import * as DBUtil from '../util/db'
 import * as AuthUtil from '../util/auth'
 import * as Types from '../declarations'
 
-const fakeToken = 'auth-token'
-
 const login = async (parent, args, context): Promise<Types.API.Response.Auth> => {
     const user = await DBUtil.getUser(args.authInput.email, args.authInput.password)
 
