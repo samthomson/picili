@@ -6,9 +6,12 @@ import * as Actions from 'src/redux/actions'
 import * as Selectors from 'src/redux/selectors'
 
 const Header: React.FunctionComponent = () => {
-	const loadingSomething = false // searchService.bSearching || httpService.bMakingRequestToServer
+	// const loadingSomething = false // searchService.bSearching || httpService.bMakingRequestToServer
 	const isAuthenticated = ReactRedux.useSelector(
 		Selectors.userIsAuthenticated,
+	)
+	const isSomethingLoading = ReactRedux.useSelector(
+		Selectors.somethingIsLoading,
 	)
 
 	const dispatch = ReactRedux.useDispatch()
@@ -16,7 +19,7 @@ const Header: React.FunctionComponent = () => {
 
 	return (
 		<React.Fragment>
-			{loadingSomething && (
+			{isSomethingLoading && (
 				<div className="indeterminate-loading-bar progress">
 					<div className="indeterminate"></div>
 				</div>
@@ -28,6 +31,7 @@ const Header: React.FunctionComponent = () => {
 						picili
 					</NavLink>
 				</span>
+				{isSomethingLoading && 'loading'}
 
 				<div id="top-right-links">
 					{isAuthenticated && (
