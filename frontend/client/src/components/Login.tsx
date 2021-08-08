@@ -34,6 +34,10 @@ const Login: React.FunctionComponent = () => {
 		}
 	}, [data])
 
+	React.useEffect(() => {
+		dispatch(Actions.setGlobalLoadingState(loading))
+	}, [loading])
+
 	const loginHandler = async (e: React.FormEvent) => {
 		e.preventDefault()
 		await loginMutation({ variables: { authInput: { email, password } } })

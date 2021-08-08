@@ -35,6 +35,10 @@ const Register: React.FunctionComponent = () => {
 		}
 	}, [data])
 
+	React.useEffect(() => {
+		dispatch(Actions.setGlobalLoadingState(loading))
+	}, [loading])
+
 	const registerHandler = async (e: React.FormEvent) => {
 		e.preventDefault()
 		await registerMutation({

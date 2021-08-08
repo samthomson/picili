@@ -1,5 +1,8 @@
 import * as React from 'react'
+import * as ReactRedux from 'react-redux'
 import { useQuery, gql } from '@apollo/client'
+
+import * as Actions from 'src/redux/actions'
 
 const pingQuery = gql`
 	query ping {
@@ -8,7 +11,15 @@ const pingQuery = gql`
 `
 
 const GQLTest: React.FunctionComponent = () => {
-	const { loading, error, data, refetch } = useQuery(pingQuery)
+	const { loading, error, data, refetch } = useQuery(pingQuery, {
+		notifyOnNetworkStatusChange: true,
+	})
+
+	const dispatch = ReactRedux.useDispatch()
+
+	React.useEffect(() => {
+		dispatch(Actions.setGlobalLoadingState(loading))
+	}, [loading])
 
 	if (loading) {
 		return <>loading...</>
