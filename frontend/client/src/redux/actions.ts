@@ -5,6 +5,7 @@ export enum ActionType {
 	LOGOUT = 'LOGOUT',
 	AUTH_STATUS_VERIFIED = 'AUTH_STATUS_VERIFIED',
 	AUTH_STATUS_VERIFY = 'AUTH_STATUS_VERIFY',
+	SET_GLOBAL_LOADING_STATE = 'SET_GLOBAL_LOADING_STATE',
 }
 
 export type Action =
@@ -25,6 +26,10 @@ export type Action =
 	| {
 			type: ActionType.AUTH_STATUS_VERIFIED
 			isVerified: boolean
+	  }
+	| {
+			type: ActionType.SET_GLOBAL_LOADING_STATE
+			somethingIsLoading: boolean
 	  }
 
 export type LoginAction = {
@@ -69,5 +74,12 @@ export const verifiedAuthStatus = (isVerified: boolean): Action => {
 	return {
 		type: ActionType.AUTH_STATUS_VERIFIED,
 		isVerified,
+	}
+}
+
+export const setGlobalLoadingState = (somethingIsLoading: boolean): Action => {
+	return {
+		type: ActionType.SET_GLOBAL_LOADING_STATE,
+		somethingIsLoading,
 	}
 }

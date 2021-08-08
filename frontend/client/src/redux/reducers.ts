@@ -4,6 +4,7 @@ import { Store } from 'src/redux/store'
 
 const initialState: Store = {
 	userIsAuthenticated: false,
+	somethingIsLoading: false,
 }
 
 export function appReducers(
@@ -28,6 +29,12 @@ export function appReducers(
 			return {
 				...state,
 				userIsAuthenticated,
+			}
+		case ActionType.SET_GLOBAL_LOADING_STATE:
+			const { somethingIsLoading } = action
+			return {
+				...state,
+				somethingIsLoading,
 			}
 
 		default:
