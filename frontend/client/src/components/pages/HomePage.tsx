@@ -1,17 +1,9 @@
 import * as React from 'react'
 
-import PageTemplate from 'src/components/structure/PageTemplate'
-import GQLTest from 'src/components/GQLTest'
+import SearchPageTemplate from 'src/components/pages//SearchPages/SearchPageTemplate'
 
 const HomePage: React.FunctionComponent = () => {
-	return (
-		<PageTemplate>
-			<div>
-				<h2>Home</h2>
-				<GQLTest />
-			</div>
-		</PageTemplate>
-	)
+	return <SearchPageTemplate>[home aggs?]</SearchPageTemplate>
 }
 
 export default HomePage

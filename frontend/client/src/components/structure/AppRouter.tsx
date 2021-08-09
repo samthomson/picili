@@ -9,9 +9,15 @@ import {
 	IProtectedRouteProps,
 	ProtectedRoute,
 } from 'src/components/structure/ProtectedRoute'
+
 import LoginPage from 'src/components/pages/LoginPage'
 import RegisterPage from 'src/components/pages/RegisterPage'
 import HomePage from 'src/components/pages/HomePage'
+import DefaultSearch from 'src/components/pages/SearchPages/DefaultSearch'
+import FolderSearch from 'src/components/pages/SearchPages/FolderSearch'
+import MapSearch from 'src/components/pages/SearchPages/MapSearch'
+import CalendarSearch from 'src/components/pages/SearchPages/CalendarSearch'
+
 import AdminOverview from 'src/components/pages/AdminOverview'
 import AdminQueues from 'src/components/pages/AdminQueues'
 import AdminKeys from 'src/components/pages/AdminKeys'
@@ -47,12 +53,41 @@ const AppRouter: React.FunctionComponent = () => {
 				exact={false}
 				component={RegisterPage}
 			/>
+
 			<ProtectedRoute
 				{...defaultProtectedRouteProps}
 				key={'home'}
 				path={'/'}
 				exact={true}
 				component={HomePage}
+			/>
+			<ProtectedRoute
+				{...defaultProtectedRouteProps}
+				key={'search'}
+				path={'/search'}
+				exact={true}
+				component={DefaultSearch}
+			/>
+			<ProtectedRoute
+				{...defaultProtectedRouteProps}
+				key={'folders'}
+				path={'/folders'}
+				exact={true}
+				component={FolderSearch}
+			/>
+			<ProtectedRoute
+				{...defaultProtectedRouteProps}
+				key={'map'}
+				path={'/map'}
+				exact={true}
+				component={MapSearch}
+			/>
+			<ProtectedRoute
+				{...defaultProtectedRouteProps}
+				key={'calendar'}
+				path={'/calendar'}
+				exact={true}
+				component={CalendarSearch}
 			/>
 
 			<ProtectedRoute
