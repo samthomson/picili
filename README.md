@@ -192,3 +192,5 @@ Bash into a container to see what's going on:
 
 Download a log file:
 `docker-machine scp picili:/picili/www-workspace/user-api-laravel/storage/logs/laravel.log .` will download the `laravel.log` file into local dir
+
+Download all logs (to `./serverlogs`): `bash ./deploy-scripts/download.logs.sh`
