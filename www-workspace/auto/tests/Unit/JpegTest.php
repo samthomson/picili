@@ -32,6 +32,28 @@ class JpegTest extends TestCase
 
         $this->assertTrue(isset($oFoundAgainFile->phash));
     }   
+
+    public function testProcessComplexColoursFile()
+    {
+        // todo: test the actual problem, test extracting colours via palette library
+        echo "\n0.0 testProcessComplexColoursFile.";
+        $oPiciliFile = new PiciliFile;
+        $oPiciliFile->sTempProcessingFilePath = resource_path('test-files/jpegs/taungi-color-extract-memory-limit-test.JPG');
+        $oPiciliFile->user_id = 0;
+        $oPiciliFile->signature = 'signature-2';
+        $oPiciliFile->save();
+
+        $this->assertTrue(Helper::bProcessPhysicalFile($oPiciliFile->id));
+
+        // file has a signature now?
+
+        $iFileId = $oPiciliFile->id;
+        unset($oPiciliFile);
+        $oFoundAgainFile = PiciliFile::find($iFileId);
+
+        $this->assertTrue(isset($oFoundAgainFile->phash));
+    }
+
     public function testSignatureFile()
     {
         $saSeeds = [
