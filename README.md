@@ -97,7 +97,7 @@ Click 'login' and then register to begin.
 
 You will need to start the auto-scalar, for image processing to happen 'in the background'.
 
-To start the auto processor(s): `cd /var/www/auto-scaler && npm start` (this should be run from within the workspace container)
+To start the auto processor(s): `cd /var/www/auto-scaler && npm start` (this should be run from within the workspace container - `docker-compose run workspace bash "cd /var/www/auto-scaler && npm start"`)
 
 ## 3.0 Working on picili
 
