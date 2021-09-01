@@ -149,7 +149,7 @@ class JpegTest extends TestCase
             'taungi-color-extract-memory-limit-test.JPG'
         ];
 
-        $aColours = Helper::aGetColours(resource_path('test-files/colour-test/'.[7]));
+        $aColours = Helper::aGetColours(resource_path('test-files/colour-test/'.$saP[7]));
 
         $this->assertTrue(isset($aColours['best']));
         $this->assertTrue(is_integer($aColours['best']['r']));
