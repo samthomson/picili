@@ -33,27 +33,6 @@ class JpegTest extends TestCase
         $this->assertTrue(isset($oFoundAgainFile->phash));
     }   
 
-    public function testProcessComplexColoursFile()
-    {
-        // todo: test the actual problem, test extracting colours via palette library
-        echo "\n0.0 testProcessComplexColoursFile.";
-        $oPiciliFile = new PiciliFile;
-        $oPiciliFile->sTempProcessingFilePath = resource_path('test-files/jpegs/taungi-color-extract-memory-limit-test.JPG');
-        $oPiciliFile->user_id = 0;
-        $oPiciliFile->signature = 'signature-2';
-        $oPiciliFile->save();
-
-        $this->assertTrue(Helper::bProcessPhysicalFile($oPiciliFile->id));
-
-        // file has a signature now?
-
-        $iFileId = $oPiciliFile->id;
-        unset($oPiciliFile);
-        $oFoundAgainFile = PiciliFile::find($iFileId);
-
-        $this->assertTrue(isset($oFoundAgainFile->phash));
-    }
-
     public function testSignatureFile()
     {
         $saSeeds = [
@@ -159,17 +138,7 @@ class JpegTest extends TestCase
 
     public function testColourExtraction()
     {
-        $saP = [
-            '1.jpg',
-            '2.jpg',
-            '3.jpg',
-            '4.jpg',
-            '5.jpg',
-            '6.jpg',
-            'corrupt.jpg'
-        ];
-
-        $aColours = Helper::aGetColours(resource_path('test-files/colour-test/'.$saP[5]));
+        $aColours = Helper::aGetColours(resource_path('test-files/colour-test/taungi-color-extract-memory-limit-test.JPG'));
 
         $this->assertTrue(isset($aColours['best']));
         $this->assertTrue(is_integer($aColours['best']['r']));
