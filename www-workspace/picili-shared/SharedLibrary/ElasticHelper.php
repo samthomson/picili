@@ -182,13 +182,8 @@ class ElasticHelper {
                 'body' => $oDocumentBody
             ];
 
-			$oPiciliFile = null;
 			$oDocumentBody = null;
-			unset($oPiciliFile);
 			unset($oDocumentBody);
-
-			$sIndexToUse = null;
-			unset($sIndexToUse);
 
             try
             {
@@ -207,7 +202,13 @@ class ElasticHelper {
             {
                 logger("elasticsearch was offline, couldn't save file {$oPiciliFile->id}");
                 return false;
-            }
+            } finally {
+				$oPiciliFile = null;
+				unset($oPiciliFile);
+
+				$sIndexToUse = null;
+				unset($sIndexToUse);
+			}
         }else{
             // echo "skippping, no thumbs";
             return false;
