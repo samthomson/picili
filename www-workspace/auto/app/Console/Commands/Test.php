@@ -64,8 +64,8 @@ class Test extends Command
     {
         // test calling plant net tagger
         // echo "test plant net data\n\n";
-        // $plantNetTagged = Helper::plantNet(65);
-        // print_r($plantNetTagged);
+        $plantNetTagged = Helper::plantNet(11);
+        print_r($plantNetTagged);
 
         // test plant net tagging some images
         // PiciliProcessor::plantDetect(61);
@@ -75,7 +75,7 @@ class Test extends Command
         // print_r($textOCR);
 
         // test tag ocr text on images
-        PiciliProcessor::textOCRDetect(25);
+        // PiciliProcessor::textOCRDetect(25);
 
 
         // test number plate OCR 
