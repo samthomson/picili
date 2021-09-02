@@ -1153,6 +1153,11 @@ class Helper {
                     $mReturn['status'] = 'success';
 
                     break;
+                case 404:
+                    // no plant species found, return empty set of tags
+                    $mReturn['tags'] = [];
+                    $mReturn['status'] = 'success';
+                    break;
                 case 429:
                     // throttled
                     $mReturn['status'] = 'throttled';
