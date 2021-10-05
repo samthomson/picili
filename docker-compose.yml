@@ -99,6 +99,7 @@ services:
       - PMA_ARBITRARY=1
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - UPLOAD_LIMIT=1G
     ports:
       - "8080:80"
     depends_on:
