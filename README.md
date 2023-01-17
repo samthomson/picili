@@ -2,6 +2,10 @@
 
 ![build status](https://circleci.com/gh/samthomson/picili.svg?&style=shield) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
+
+
+NOTE: THIS REPO HAS BEEN REPLACED BY [picili-ts](https://github.com/samthomson/picili-ts). 
+
 picili is an automated image search engine / browser that synchronizes with a chosen folder on your dropbox.
 It automatically analyses all pictures there, staying up to date with any pictures that you add, remove, or change.
 A lightweight web-app facilitates browsing and searching through your pictures. The web-app has been designed for tight alignment with the different kind of tags picili categorizes your pictures with.
